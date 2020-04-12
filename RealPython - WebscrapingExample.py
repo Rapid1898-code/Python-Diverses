@@ -3,10 +3,10 @@
 import requests
 from bs4 import BeautifulSoup
 
-URL = "https://www.monster.at/jobs/suche/?q=Software-Devel&where=Graz"
-page = requests.get(URL)
-soup = BeautifulSoup(page.content, "html.parser")
-results = soup.find(id="SearchResults")
+URL = "https://www.monster.at/jobs/suche/?q=Software-Devel&where=Graz"  # Ergebnisseite mit Suche nach Software-Devel und Graz
+page = requests.get(URL)    # Internetseite in Python speichern
+soup = BeautifulSoup(page.content, "html.parser")   # Internetseite mit BeautifulSoup einlesen und parsen
+results = soup.find(id="SearchResults")     # HTML-mit den Suchresultaten wird eingelsen - Abfrage auf ID - daher eindeutig
 # print(results.prettify())
 
 job_elems = results.find_all("section", class_="card-content")
@@ -21,4 +21,7 @@ for job_elem in job_elems:
     print(company_elem.text.strip())
     print(location_elem.text.strip(), "\n")
 
+python_jobs = results.find_all("h2",
+                               string=lambda text: "area" in text.lower())
+print (len(python_jobs))
 
