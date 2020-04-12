@@ -19,7 +19,7 @@ for job_elem in job_elems:
     location_elem = job_elem.find("div", class_="location")
     if None in (title_elem, company_elem, location_elem):   # Wenn Absturz wg. leerem Element - z.B. wg. Foto ohne Text
         continue                                            # erfolgt keine Weiterverarbeitung
-    link = title_elem.find ('a')['href']
+    link = title_elem.find ('a')['href']        #Link zur Bewertung wird ausgelesen und später ausgegeben
     print(title_elem.text.strip())      # Textteil wird herauskopiert für den jeweiligen Bereich
     print(company_elem.text.strip())
     print(location_elem.text.strip())
@@ -27,5 +27,7 @@ for job_elem in job_elems:
 
 python_jobs = results.find_all("h2",
                                string=lambda text: "area" in text.lower())
+    # Suche nach einem bestimmten Text auch mögoich
+
 #print (len(python_jobs))
 
