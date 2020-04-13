@@ -7,6 +7,6 @@ with open("test.csv","w",newline="") as fp:
     data=[["Stock","Sales"],
           ["100","24"],
           ["120","33"],
-          ["23","5"]]
+          ["99","666"]]
     a.writerows(data)
 

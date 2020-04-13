@@ -3,28 +3,43 @@ import requests
 import csv
 from bs4 import BeautifulSoup
 
-URL = "https://www.macrotrends.net/stocks/charts/AAPL/apple/shares-outstanding"
-page = requests.get(URL)
-soup = BeautifulSoup(page.content, "html.parser")
+data=[]
+stocks=["/AAPL/apple/","/SAP/sap-se/"]
 
-results = soup.find(id="style-1")
-# print(results.prettify())
+def row_shares_outstanding(url,stock):
+    page = requests.get(url)
+    soup = BeautifulSoup(page.content, "html.parser")
 
-entries = results.find_all("div", class_="col-xs-6")
-entries.pop(0)
-# print(entries)
+    results = soup.find(id="style-1")
+    # print(results.prettify())
 
-entries2 = entries[0].find_all("td")
+    entries = results.find_all("div", class_="col-xs-6")
+    entries.pop(0)
+    # print(entries)
 
-time_ow = ""
-row = ["AAPL"]
-for i, entry in enumerate(entries2):
-    if i%2 == 0: time_ow += entry
-    else: row.append(int(entry))
+    entries2 = entries[0].find_all("td")
+
+    time_ow = ""
+    row = [stock]
+    for i, entry in enumerate(entries2):
+        if i%2 == 0: time_ow += " "+entry.text
+        else: row.append(int(entry.text.replace(",","")))
+    row.insert(1, time_ow)
+
+    # print(time_ow)
+    # print(row)
+    return(row)
+
+for stock in stocks:
+    url= "https://www.macrotrends.net/stocks/charts"+stock+"shares-outstanding"
+    tmp_row = row_shares_outstanding(url,stock)
+    data.append(tmp_row)
+print(data)
 
 
-
-
+with open ("marketshare.csv","w",newline="") as fp:
+    a = csv.writer(fp,delimiter=",")
+    a.writerows(data)
 
 
 
