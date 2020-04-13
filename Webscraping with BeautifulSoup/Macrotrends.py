@@ -4,7 +4,8 @@ import csv
 from bs4 import BeautifulSoup
 
 data=[]
-stocks=["/AAPL/apple/","/SAP/sap-se/","/ADDYY/adidas-ag/","/ALIZY/allianz-se/","/BASFY/basf-se/","/BAYRY/bayer/","/BAMXF/bmw/","/CTTAY/continental-ag/"]
+stocks=["/AAPL/apple/","/SAP/sap-se/","/ADDYY/adidas-ag/","/BASFY/basf-se/","/BAYRY/bayer/","/BAMXF/bmw/","/CTTAY/continental-ag/"]
+# stocks=["/AAPL/apple/","/SAP/sap-se/","/ADDYY/adidas-ag/","/ALIZY/allianz-se/","/BASFY/basf-se/","/BAYRY/bayer/","/BAMXF/bmw/","/CTTAY/continental-ag/"]
 
 def row_shares_outstanding(url,stock):
     page = requests.get(url)
@@ -23,7 +24,11 @@ def row_shares_outstanding(url,stock):
     row = [stock]
     for i, entry in enumerate(entries2):
         if i%2 == 0: time_ow += " "+entry.text
-        else: row.append(int(entry.text.replace(",","")))
+        else:
+            try:
+                row.append(int(entry.text.replace(",","")))
+            except:
+                continue
     row.insert(1, time_ow)
 
     # print(time_ow)
