@@ -4,7 +4,7 @@ import csv
 from bs4 import BeautifulSoup
 
 data=[]
-stocks=["/AAPL/apple/","/SAP/sap-se/"]
+stocks=["/AAPL/apple/","/SAP/sap-se/","/ADDYY/adidas-ag/"]
 
 def row_shares_outstanding(url,stock):
     page = requests.get(url)
