@@ -1,17 +1,12 @@
-import urllib.request
+# https://www.freecodecamp.org/news/how-to-scrape-websites-with-python-and-beautifulsoup-5946935d93fe/
+
+import requests
 from bs4 import BeautifulSoup
 
+URL = "https://www.bloomberg.com/quote/SPX:IND"
+page = requests.get(URL)
+soup = BeautifulSoup(page.content, "html.parser")
 
-# specify the url
-quote_page = "https://www.bloomberg.com/quote/SPX:IND"
 
-# query the website and return the html to the variable "page"
-page = urllib.request.urlopen(quote_page)
-
-# parse the html using beautiful soup and store in variable "soup"
-soup = BeautifulSoup(page)
-
-# Take out the <div> of name and get its value
-price_box = soup.find_all("div",{"class":"priceText__1853e8a5"}).get_text()
-print(price_box)
-
+name_box = soup.find("h1", attrs={"class": "companyName__99a4824b"})
+print (name_box)

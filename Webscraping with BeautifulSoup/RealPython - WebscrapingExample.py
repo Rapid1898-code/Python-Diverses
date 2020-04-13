@@ -25,9 +25,3 @@ for job_elem in job_elems:
     print(location_elem.text.strip())
     print("Apply here: ", link, "\n")
 
-python_jobs = results.find_all("h2",
-                               string=lambda text: "area" in text.lower())
-    # Suche nach einem bestimmten Text auch mögoich
-
-#print (len(python_jobs))
-
