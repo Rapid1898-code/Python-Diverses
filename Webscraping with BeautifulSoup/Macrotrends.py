@@ -1,8 +1,6 @@
 # https://www.macrotrends.net/stocks/charts/AAPL/apple/shares-outstanding
-
 import requests
-import datetime
-import re
+import csv
 from bs4 import BeautifulSoup
 
 URL = "https://www.macrotrends.net/stocks/charts/AAPL/apple/shares-outstanding"
@@ -14,17 +12,16 @@ results = soup.find(id="style-1")
 
 entries = results.find_all("div", class_="col-xs-6")
 entries.pop(0)
-print(entries)
+# print(entries)
 
-"""
-    entries_final = []
-    for i, entry in enumerate(entries):
-        if i%2 != 0:
-            continue
-        else:
-            datetime.datetime.strptime(entry, "%y/%m/%d")
-    print(i, entry.text)
-"""
+entries2 = entries[0].find_all("td")
+
+time_ow = ""
+row = ["AAPL"]
+for i, entry in enumerate(entries2):
+    if i%2 == 0: time_ow += entry
+    else: row.append(int(entry))
+
 
 
 
