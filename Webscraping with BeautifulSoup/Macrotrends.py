@@ -34,7 +34,7 @@ for stock in stocks:
     url= "https://www.macrotrends.net/stocks/charts"+stock+"shares-outstanding"
     tmp_row = row_shares_outstanding(url,stock)
     data.append(tmp_row)
-print(data)
+# print(data)
 
 
 with open ("marketshare.csv","w",newline="") as fp:
