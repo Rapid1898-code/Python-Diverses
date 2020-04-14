@@ -73,15 +73,14 @@ stocks = ["/apple-aktie","/wirecard-aktie", "/volkswagen_vz-aktie", "/fresenius-
  "/lufthansa-aktie", "/heidelbergcement-aktie", "/infineon-aktie", "/e-on-aktie", "/mtu_aero_engines-aktie",
  "/thyssenkrupp-aktie","/commerzbank-aktie","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","",""]
 """
-stocks = ["/apple-aktie"]
+stocks = ["/apple-aktie","/wirecard-aktie"]
 
 start_year = 2020
-start_month = 2
+start_month = 3
 output = []
 datelist = ["Datum"]
 datelist.extend(date_list(date.today(), date(start_year, start_month,1)))
 output.append(datelist)
-print(len(datelist))
 
 # für jeden Aktientiel aus der Liste Ermittlung einer Zeile mit den Datümern und eine Zeile mit Schlusskursen
 for stock in stocks:
@@ -95,6 +94,16 @@ for stock in stocks:
             if j[0] == "price": stock_row.append(j[1])
     output.append(title_row)
     output.append(stock_row)
+
+#for i in range(len(output[0])):
+#    empty=True
+#    print(i)
+
+print(output)
+
+
+
+
 
 # Transponieren der Tabelle und Ausgabe als CSV-File
 result = [list(filter(None,i)) for i in zip_longest(*output)]
