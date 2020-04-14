@@ -1,6 +1,7 @@
 import requests
 import csv
 import datetime
+import calendar
 from bs4 import BeautifulSoup
 
 """
@@ -40,7 +41,7 @@ def month_year_iter( start_month, start_year, end_month, end_year ):
         y, m = divmod( ym, 12 )
         #yield y, m+1
         #yield m+1, y
-        #
+        yield datetime.date(y,m+1,calendar.monthrange(y,m+1)[1])
 
 #stock = "/apple-aktie"
 #month = "2020-04-30"
