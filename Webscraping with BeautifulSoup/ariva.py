@@ -37,10 +37,9 @@ def stock_prices (stock,month):
 def month_year_iter( start_month, start_year, end_month, end_year ):
     ym_start= 12*start_year + start_month - 1
     ym_end= 12*end_year + end_month - 1
-    for ym in range( ym_start, ym_end ):
+    for ym in range(ym_end, ym_start-1, -1):
         y, m = divmod( ym, 12 )
-        #yield y, m+1
-        #yield m+1, y
+        #yield y,m+1
         yield datetime.date(y,m+1,calendar.monthrange(y,m+1)[1])
 
 #stock = "/apple-aktie"
