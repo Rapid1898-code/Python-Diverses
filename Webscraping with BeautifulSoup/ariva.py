@@ -6,14 +6,8 @@ page = requests.get ("https://www.ariva.de/apple-aktie/historische_kurse?boerse_
 soup = BeautifulSoup (page.content, "html.parser")
 
 # read table with monatlichen Kursen
-results = soup.find_all("tr", class_="arrow0")
-results2 = []
-
-for result in results:
-    results2.append(result.find_all("td"))
-
-for result in results2:
-    for row in result:
+for result in soup.find_all("tr", class_="arrow0"):
+    for row in result.find_all("td"):
         if row.text[0].isdigit(): print (row.text.strip())
 
 
