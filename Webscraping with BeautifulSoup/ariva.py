@@ -4,6 +4,8 @@ from datetime import datetime
 from datetime import date
 import calendar
 from bs4 import BeautifulSoup
+import pandas as pd
+from itertools import zip_longest
 
 
 # DAX-Unternehmen einlesen
@@ -25,7 +27,6 @@ def dax_stocks ():
             #print(row.get("class"))
             #print(row)
     print(dax)
-
 
 
 # Aktienkurse für eine Unternehmen einlesen
@@ -54,6 +55,15 @@ def month_year_iter( start_month, start_year, end_month, end_year ):
         #yield y,m+1
         yield date(y,m+1,calendar.monthrange(y,m+1)[1])
 
+
+# Erstellung einer Datums-Liste vom aktuellstem bis zum  ältesten Datum im Format jjjj-mm-dd
+def date_list (datum_von, datum_bis):
+    mydates2  = []
+    mydates = pd.date_range(datum_bis, datum_von).tolist()
+    for i in range(len(mydates)-1,-1,-1): mydates2.append(mydates[i].strftime('%d.%m.%y'))
+    return(mydates2)
+
+
 """
 stocks = ["/apple-aktie","/wirecard-aktie", "/volkswagen_vz-aktie", "/fresenius-aktie", "/sap-aktie", "/bayer-aktie",
  "/deutsche_b%C3%B6rse-aktie", "/merck_kgaa-aktie", "/fresenius_medical_care-aktie", "/linde_plc-aktie",
@@ -68,26 +78,31 @@ stocks = ["/apple-aktie"]
 start_year = 2020
 start_month = 2
 output = []
+datelist = ["Datum"]
+datelist.extend(date_list(date.today(), date(start_year, start_month,1)))
+output.append(datelist)
+print(len(datelist))
 
+# für jeden Aktientiel aus der Liste Ermittlung einer Zeile mit den Datümern und eine Zeile mit Schlusskursen
 for stock in stocks:
     title_row = [stock]
     stock_row = [stock]
     for i in month_year_iter(start_month, start_year, datetime.now().month, datetime.now().year):
         for j in stock_prices(stock,str(i)):
-            print(j[1])
-            if j[0] == "datum": title_row.append(j[1])
+            if j[0] == "datum":
+                title_row.append(j[1])
+#                print (j[1])
             if j[0] == "price": stock_row.append(j[1])
     output.append(title_row)
     output.append(stock_row)
-    print (title_row)
-    print (stock_row)
-
 
 # Transponieren der Tabelle und Ausgabe als CSV-File
+result = [list(filter(None,i)) for i in zip_longest(*output)]
+
+# Ausgabe der Liste als CSV-File
 with open ("prices_dax.csv","w",newline="") as fp:
     a = csv.writer(fp,delimiter=",")
-    a.writerows(map(list,zip(*output)))
-
+    a.writerows(result)
 
 
 
