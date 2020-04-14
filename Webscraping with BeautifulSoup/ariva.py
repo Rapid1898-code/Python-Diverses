@@ -8,7 +8,8 @@ table  = soup.find(id="result_table_0")
 for row  in table.find_all("td"):
     try:
         if row.get("class") == ['ellipsis', 'nobr', 'new', 'padding-right-5']:
-            print(row)
+            print(row.text)
+            print(row.find("a")["href"])
 
 
         #print(row.get("class"))
