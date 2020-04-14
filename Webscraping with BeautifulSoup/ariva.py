@@ -1,6 +1,7 @@
 import requests
 import csv
-import datetime
+from datetime import datetime
+from datetime import date
 import calendar
 from bs4 import BeautifulSoup
 
@@ -34,20 +35,24 @@ def stock_prices (stock,month):
                     or row.get("class") == ['font-size-14', 'right', 'colloss']:
                        print (row.text.strip())
 
+# Monatsultimo ermitteln
 def month_year_iter( start_month, start_year, end_month, end_year ):
     ym_start= 12*start_year + start_month - 1
     ym_end= 12*end_year + end_month - 1
     for ym in range(ym_end, ym_start-1, -1):
         y, m = divmod( ym, 12 )
         #yield y,m+1
-        yield datetime.date(y,m+1,calendar.monthrange(y,m+1)[1])
+        yield date(y,m+1,calendar.monthrange(y,m+1)[1])
+
 
 #stock = "/apple-aktie"
 #month = "2020-04-30"
 #stock_prices(stock,month)
 
-for i in month_year_iter(8, 2010, 5, 2012):
+for i in month_year_iter(8, 2010, datetime.now().month, datetime.now().year):
     print (i)
+
+
 
 
 
