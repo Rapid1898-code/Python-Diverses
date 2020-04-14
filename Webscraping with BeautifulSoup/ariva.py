@@ -8,6 +8,10 @@ soup = BeautifulSoup (page.content, "html.parser")
 # read table with monatlichen Kursen
 for result in soup.find_all("tr", class_="arrow0"):
     for row in result.find_all("td"):
-        if row.text[0].isdigit(): print (row.text.strip())
+        if row.get("class") == None \
+                or row.get("class") == ['font-size-14', 'right', 'colwin']\
+                or row.get("class") == ['font-size-14', 'right', 'colloss']:
+                   print (row.text.strip())
+
 
 
