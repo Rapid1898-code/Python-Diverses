@@ -4,7 +4,8 @@ import csv
 from bs4 import BeautifulSoup
 
 data=[]
-stocks=["/AAPL/apple/","/SAP/sap-se/","/ADDYY/adidas-ag/","/BASFY/basf-se/","/BAYRY/bayer/","/BAMXF/bmw/","/CTTAY/continental-ag/"]
+stocks=["/AAPL/apple/", "/SAP/sap-se/","/ADDYY/adidas-ag/","/BASFY/basf-se/",
+        "/BAYRY/bayer/","/BAMXF/bmw/","/CTTAY/continental-ag/"]
 # stocks=["/AAPL/apple/","/SAP/sap-se/","/ADDYY/adidas-ag/","/ALIZY/allianz-se/","/BASFY/basf-se/","/BAYRY/bayer/","/BAMXF/bmw/","/CTTAY/continental-ag/"]
 
 def row_shares_outstanding(url,stock):
