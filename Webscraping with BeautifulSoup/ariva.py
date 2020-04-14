@@ -38,12 +38,12 @@ def stock_prices (stock,month):
 
     # read table with monatlichen Kursen
     for result in soup.find_all("tr", class_="arrow0"):
-        for row in result.find_all("td"):
-            if row.get("class") == None:
-                yield "datum", row.text.strip()
-            elif row.get("class") == ["font-size-14", "right", "colwin"]\
-                  or row.get("class") == ["font-size-14", "right", "colloss"]:
-                yield "price", row.text.strip()
+        for col_id, col_content in enumerate(result.find_all("td")):
+            if col_id == 0:     # 1.Spalte Datum
+                yield "datum", col_content.text.strip()
+            elif col_id == 4:   # 5.Spalte Schlusskurs
+                yield "price", col_content.text.strip()
+
 
 # Monatsultimo ermitteln
 def month_year_iter( start_month, start_year, end_month, end_year ):
@@ -54,16 +54,27 @@ def month_year_iter( start_month, start_year, end_month, end_year ):
         #yield y,m+1
         yield date(y,m+1,calendar.monthrange(y,m+1)[1])
 
+"""
+stocks = ["/apple-aktie","/wirecard-aktie", "/volkswagen_vz-aktie", "/fresenius-aktie", "/sap-aktie", "/bayer-aktie",
+ "/deutsche_b%C3%B6rse-aktie", "/merck_kgaa-aktie", "/fresenius_medical_care-aktie", "/linde_plc-aktie",
+ "/allianz-aktie", "/deutsche_post-aktie", "/covestro-aktie", "/henkel_vz-aktie", "/siemens-aktie",
+ "/beiersdorf-aktie", "/continental-aktie", "/deutsche_telekom-aktie", "/bmw-aktie", "/vonovia-aktie",
+ "/deutsche_bank-aktie", "/daimler-aktie", "/basf-aktie", "/adidas-aktie", "/rwe-aktie", "/munich_re-aktie",
+ "/lufthansa-aktie", "/heidelbergcement-aktie", "/infineon-aktie", "/e-on-aktie", "/mtu_aero_engines-aktie",
+ "/thyssenkrupp-aktie","/commerzbank-aktie","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","",""]
+"""
+stocks = ["/apple-aktie"]
 
-stocks = ["/apple-aktie","/wirecard-aktie","/volkswagen_vz-aktie"]
-end_year = 2019
+start_year = 2020
+start_month = 2
 output = []
 
 for stock in stocks:
     title_row = [stock]
     stock_row = [stock]
-    for i in month_year_iter(1, end_year, datetime.now().month, datetime.now().year):
+    for i in month_year_iter(start_month, start_year, datetime.now().month, datetime.now().year):
         for j in stock_prices(stock,str(i)):
+            print(j[1])
             if j[0] == "datum": title_row.append(j[1])
             if j[0] == "price": stock_row.append(j[1])
     output.append(title_row)
@@ -71,6 +82,11 @@ for stock in stocks:
     print (title_row)
     print (stock_row)
 
+
+# Transponieren der Tabelle und Ausgabe als CSV-File
+with open ("prices_dax.csv","w",newline="") as fp:
+    a = csv.writer(fp,delimiter=",")
+    a.writerows(map(list,zip(*output)))
 
 
 
