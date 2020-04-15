@@ -101,7 +101,7 @@ stocks = ["/apple-aktie","/wirecard-aktie", "/volkswagen_vz-aktie", "/fresenius-
 
 stocks = ["/prosiebensat-1_media-aktie","/linde_plc-aktie","/uniper-aktie",
  "/k-s-6-aktie","/lanxess-aktie","/osram_licht-aktie","/ceconomy_st-aktie","/man-aktie","/salzgitter-aktie",
- "/hannover_rück-aktie","/infineon-aktie","/tui-aktie","/lanxess-aktie","/mlp-aktie","/daimler-aktie"]
+ "/hannover_rück-aktie","/infineon-aktie","/tui-aktie","/lanxess-aktie","/mlp-aktie"]
 
 
 start_gesamt = timeit.default_timer()
@@ -143,7 +143,7 @@ for stock in stocks:
     output.append(title_row)
     output.append(stock_row)
     stop_stock = timeit.default_timer ()
-    print("Laufzeit Aktie ",stock," : ",stop_stock-start_stock)
+    print("Laufzeit Aktie ",stock," : ",round((stop_stock-start_stock)/60,2),"min")
 stop_readstocks = timeit.default_timer()
 
 start_spaltenaufbereitung = timeit.default_timer()
@@ -189,7 +189,7 @@ csv_write(result)
 
 stop_spaltenaufbereitung = timeit.default_timer()
 stop_gesamt = timeit.default_timer()
-print("Gesamtlaufzeit: ", stop_gesamt-start_gesamt)
-print("Aktienkurse Gesamt: ", stop_readstocks-start_readstocks)
-print("Spaltenaufbereiung: ", stop_spaltenaufbereitung-start_spaltenaufbereitung)
+print("Gesamtlaufzeit: ", round((stop_gesamt-start_gesamt)/60,2), "min")
+print("Aktienkurse Gesamt: ", round((stop_readstocks-start_readstocks)/60,2), "min")
+print("Spaltenaufbereiung: ", round((stop_spaltenaufbereitung-start_spaltenaufbereitung)/60,2), "min")
 
