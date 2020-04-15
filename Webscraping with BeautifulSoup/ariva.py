@@ -113,22 +113,16 @@ for i in range(1, len(output[0])-1):
                 output[j].insert(i,"")
                 output[j+1].insert (i, "")
         else: continue
+# Check ob die letzte Spalte bei den Aktientiteln leer ist - sonst fehlt eine Spalte am Ende bei den Aktientiteln
 for i in range(1,len(output)-1):
-    if i == 1 and len(output[0]) != len(output[i]):
+    if i%2 == 1 and len(output[0]) != len(output[i]):
         output[i].insert (len(output[i]), "")
         output[i + 1].insert (len(output[i+1]), "")
-
-print (output)
-print (len(output[0]))
-print (len(output[1]))
-print (len(output[2]))
-print (len(output[3]))
-print (len(output[4]))
 
 # Leere Spalten löschen
 # kein Kurse für eine Aktie an diesem Tag
 pos_del = []
-for i in range(1, len(output[0])-1):
+for i in range(1, len(output[0])):
     empty=True
     for j in range (1, len (output) - 1):
         if output[j][i] != "":
