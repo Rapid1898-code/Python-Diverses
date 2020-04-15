@@ -33,7 +33,6 @@ def dax_stocks ():
 # boerse_id ist fix =>  6 = Xetra
 # Input Stock: Aktienkennung lt. Ariva.de z.b. /apple-aktie oder /wirecard-aktie
 # Input Month: Monatsultimo im Format z.B. 2019-04-30
-
 def stock_prices (stock,month):
     url = "https://www.ariva.de" + stock + "/historische_kurse?boerse_id=6&month=" + month + "&currency=EUR&clean_split=1&clean_split=0&clean_payout=0&clean_bezug=1&clean_bezug=0"
     page = requests.get (url)
@@ -68,6 +67,11 @@ def date_list (datum_von, datum_bis):
     for i in range(len(mydates)-1,-1,-1): mydates2.append(mydates[i].strftime('%d.%m.%y'))
     return(mydates2)
 
+# Ausgabe der Liste als CSV-File
+def csv_write(result):
+    with open ("prices_dax.csv","w",newline="") as fp:
+        a = csv.writer(fp,delimiter=",")
+        a.writerows(result)
 
 """
 stocks = ["/apple-aktie","/wirecard-aktie", "/volkswagen_vz-aktie", "/fresenius-aktie", "/sap-aktie", "/bayer-aktie",
@@ -88,11 +92,17 @@ datelist.extend(date_list(date.today(), date(start_year, start_month,1)))
 output.append(datelist)
 
 
+print("Aktienkurse lesen...")
 # für jeden Aktientiel aus der Liste Ermittlung einer Zeile mit den Datümern und eine Zeile mit Schlusskursen
 for stock in stocks:
     title_row = [stock]
     stock_row = [stock]
+    year = datetime.now().year
+    print(stock + " " + str(year))
     for i in month_year_iter(start_month, start_year, datetime.now().month, datetime.now().year):
+        if i.year != year:
+            year -= 1
+            print(stock + " " + str(year))
         for j in stock_prices(stock,str(i)):
             if j[0] == "datum":
                 title_row.append(j[1])
@@ -104,11 +114,19 @@ for stock in stocks:
     output.append(title_row)
     output.append(stock_row)
 
+print(len(output[0]))
+print(len(output[1]))
+print(len(output[2]))
+print(len(output[3]))
+print(len(output[4]))
 
+print("Spalten bereinigen...")
 # Datum-Spalten vereinheitlichen
 for i in range(1, len(output[0])-1):
     for j in range(1,len(output)-1):
         if j%2 == 1:
+            print ("Zeile: ", j)
+            print ("Spalte: ", i)
             if output[j][i] != output[0][i]:
                 output[j].insert(i,"")
                 output[j+1].insert (i, "")
@@ -135,12 +153,10 @@ for k in pos_del:
         del output[m][k]
 
 
+print("Transponieren und Ausgeben...")
 # Transponieren der Tabelle und Ausgabe als CSV-File
-result = output
-#result = [list(filter(None,i)) for i in zip_longest(*output)]
+# result = output       #Output mit Datümern auf Spaltenebene - funktioniert nur bis zu einer gewissen Größe...
+result = [list(filter(None,i)) for i in zip_longest(*output)]
+csv_write(result)
 
 
-# Ausgabe der Liste als CSV-File
-with open ("prices_dax.csv","w",newline="") as fp:
-    a = csv.writer(fp,delimiter=",")
-    a.writerows(result)
