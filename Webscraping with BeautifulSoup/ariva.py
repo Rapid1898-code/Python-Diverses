@@ -115,6 +115,20 @@ for i in range(1, len(output[0])-1):
         else: continue
 print (output)
 
+# Leere Spalten löschen
+# kein Kurse für eine Aktie an diesem Tag
+pos_del = []
+for i in range(1, len(output[0])-1):
+    empty=True
+    for j in range (1, len (output) - 1):
+        if output[j][i] != "":
+            empty=False
+            break
+    if empty == True: pos_del.append(i)
+pos_del.reverse()
+for k in pos_del:
+    for m in range (len(output)):
+        del output[m][k]
 
 # Transponieren der Tabelle und Ausgabe als CSV-File
 result = output
