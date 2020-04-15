@@ -7,6 +7,7 @@ from bs4 import BeautifulSoup
 import pandas as pd
 from itertools import zip_longest
 import dateutil.parser as parser
+import timeit
 
 
 # DAX-Unternehmen einlesen
@@ -73,25 +74,44 @@ def date_list (datum_von, datum_bis):
 
 # Ausgabe der Liste als CSV-File
 def csv_write(result):
-    with open ("prices_dax.csv","w",newline="") as fp:
-        a = csv.writer(fp,delimiter=",")
-        a.writerows(result)
+    while True:
+        try:
+            with open ("prices_dax.csv","w",newline="") as fp:
+                a = csv.writer(fp,delimiter=",")
+                a.writerows(result)
+                break
+        except:
+            input ("Datei kann nicht geöffent werden - bitte schließen und <Enter> drücken!")
 
 """
+# DAX30 Unternehmen + Ex-Unternehmen
 stocks = ["/apple-aktie","/wirecard-aktie", "/volkswagen_vz-aktie", "/fresenius-aktie", "/sap-aktie", "/bayer-aktie",
  "/deutsche_b%C3%B6rse-aktie", "/merck_kgaa-aktie", "/fresenius_medical_care-aktie", "/linde_plc-aktie",
  "/allianz-aktie", "/deutsche_post-aktie", "/covestro-aktie", "/henkel_vz-aktie", "/siemens-aktie",
  "/beiersdorf-aktie", "/continental-aktie", "/deutsche_telekom-aktie", "/bmw-aktie", "/vonovia-aktie",
  "/deutsche_bank-aktie", "/daimler-aktie", "/basf-aktie", "/adidas-aktie", "/rwe-aktie", "/munich_re-aktie",
  "/lufthansa-aktie", "/heidelbergcement-aktie", "/infineon-aktie", "/e-on-aktie", "/mtu_aero_engines-aktie",
- "/thyssenkrupp-aktie","/commerzbank-aktie","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","",""]
+ "/thyssenkrupp-aktie","/commerzbank-aktie","/prosiebensat-1_media-aktie","/linde_plc-aktie","/uniper-aktie",
+ "/k-s-6-aktie","/lanxess-aktie","/osram_licht-aktie","/ceconomy_st-aktie","/man-aktie","/salzgitter-aktie",
+ "/hannover_rück-aktie","/infineon-aktie","/tui-aktie","/lanxess-aktie","/mlp-aktie","/daimler-aktie"]
 """
-stocks = ["/apple-aktie","/wirecard-aktie"]
 
-start_year = 2019
-start_month = 3
-end_year = 2019
-end_month = 9
+# stocks = ["/apple-aktie","/wirecard-aktie"]
+
+
+stocks = ["/merck_kgaa-aktie", "/fresenius_medical_care-aktie", "/linde_plc-aktie",
+ "/allianz-aktie", "/deutsche_post-aktie", "/covestro-aktie", "/henkel_vz-aktie", "/siemens-aktie",
+ "/beiersdorf-aktie", "/continental-aktie", "/deutsche_telekom-aktie", "/bmw-aktie", "/vonovia-aktie",
+ "/deutsche_bank-aktie", "/daimler-aktie", "/basf-aktie", "/adidas-aktie", "/rwe-aktie", "/munich_re-aktie",
+ "/lufthansa-aktie", "/heidelbergcement-aktie", "/infineon-aktie", "/e-on-aktie", "/mtu_aero_engines-aktie",
+ "/thyssenkrupp-aktie","/commerzbank-aktie"]
+
+
+start_gesamt = timeit.default_timer()
+start_year = 1998
+start_month = 1
+end_year = 0
+end_month = 0
 if end_year == 0:
     end_year = datetime.now().year
     end_month = datetime.now().month
@@ -103,7 +123,9 @@ output.append(datelist)
 
 print("Aktienkurse lesen...")
 # für jeden Aktientiel aus der Liste Ermittlung einer Zeile mit den Datümern und eine Zeile mit Schlusskursen
+start_readstocks = timeit.default_timer()
 for stock in stocks:
+    start_stock = timeit.default_timer()
     title_row = [stock]
     stock_row = [stock]
     year = datetime.now().year
@@ -123,7 +145,11 @@ for stock in stocks:
                 title_row.append(j[1])
     output.append(title_row)
     output.append(stock_row)
+    stop_stock = timeit.default_timer ()
+    print("Laufzeit Aktie ",stock," : ",stop_stock-start_stock)
+stop_readstocks = timeit.default_timer()
 
+start_spaltenaufbereitung = timeit.default_timer()
 print("Spalten bereinigen...")
 # Datum-Spalten vereinheitlichen
 for i in range(1, len(output[0])-1):
@@ -164,4 +190,9 @@ print("Transponieren und Ausgeben...")
 result = [list(filter(None,i)) for i in zip_longest(*output)]
 csv_write(result)
 
+stop_spaltenaufbereitung = timeit.default_timer()
+stop_gesamt = timeit.default_timer()
+print("Gesamtlaufzeit: ", stop_gesamt-start_gesamt)
+print("Aktienkurse Gesamt: ", stop_readstocks-start_readstocks)
+print("Spaltenaufbereiung: ", stop_spaltenaufbereitung-start_spaltenaufbereitung)
 
