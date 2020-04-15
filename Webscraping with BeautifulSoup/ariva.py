@@ -113,7 +113,17 @@ for i in range(1, len(output[0])-1):
                 output[j].insert(i,"")
                 output[j+1].insert (i, "")
         else: continue
+for i in range(1,len(output)-1):
+    if i == 1 and len(output[0]) != len(output[i]):
+        output[i].insert (len(output[i]), "")
+        output[i + 1].insert (len(output[i+1]), "")
+
 print (output)
+print (len(output[0]))
+print (len(output[1]))
+print (len(output[2]))
+print (len(output[3]))
+print (len(output[4]))
 
 # Leere Spalten löschen
 # kein Kurse für eine Aktie an diesem Tag
@@ -130,20 +140,13 @@ for k in pos_del:
     for m in range (len(output)):
         del output[m][k]
 
+
 # Transponieren der Tabelle und Ausgabe als CSV-File
 result = output
 #result = [list(filter(None,i)) for i in zip_longest(*output)]
-
 
 
 # Ausgabe der Liste als CSV-File
 with open ("prices_dax.csv","w",newline="") as fp:
     a = csv.writer(fp,delimiter=",")
     a.writerows(result)
-
-
-
-
-
-
-
