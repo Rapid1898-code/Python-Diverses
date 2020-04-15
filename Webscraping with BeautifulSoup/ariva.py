@@ -30,7 +30,10 @@ def dax_stocks ():
 
 
 # Aktienkurse für eine Unternehmen einlesen
-# boerse_id 6 = Xetra
+# boerse_id ist fix =>  6 = Xetra
+# Input Stock: Aktienkennung lt. Ariva.de z.b. /apple-aktie oder /wirecard-aktie
+# Input Month: Monatsultimo im Format z.B. 2019-04-30
+
 def stock_prices (stock,month):
     url = "https://www.ariva.de" + stock + "/historische_kurse?boerse_id=6&month=" + month + "&currency=EUR&clean_split=1&clean_split=0&clean_payout=0&clean_bezug=1&clean_bezug=0"
     page = requests.get (url)
@@ -45,7 +48,6 @@ def stock_prices (stock,month):
             elif col_id == 4:   # 5.Spalte Schlusskurs
                 yield "price", col_content.text.strip()
 
-
 # Monatsultimo ermitteln für Zeitraum
 # Input z.B. (3, 2015, datetime.now().month, datetime.now().year) bei Aufruf
 # Output z.b. Ultimo-Datum z.b. 2016-04-30
@@ -55,7 +57,7 @@ def month_year_iter( start_month, start_year, end_month, end_year ):
     for ym in range(ym_end, ym_start-1, -1):
         y, m = divmod( ym, 12 )
         #yield y,m+1
-        print(date(y,m+1,calendar.monthrange(y,m+1)[1]))
+        #print(date(y,m+1,calendar.monthrange(y,m+1)[1]))
         yield date(y,m+1,calendar.monthrange(y,m+1)[1])
 
 
@@ -85,6 +87,7 @@ datelist = ["Datum"]
 datelist.extend(date_list(date.today(), date(start_year, start_month,1)))
 output.append(datelist)
 
+
 # für jeden Aktientiel aus der Liste Ermittlung einer Zeile mit den Datümern und eine Zeile mit Schlusskursen
 for stock in stocks:
     title_row = [stock]
@@ -94,22 +97,30 @@ for stock in stocks:
             if j[0] == "datum":
                 title_row.append(j[1])
 #                print (j[1])
-            if j[0] == "price": stock_row.append(j[1])
+            elif j[0] == "price": stock_row.append(j[1])
+            elif j[0] == "blank":
+                stock_row.append(j[1])
+                title_row.append(j[1])
     output.append(title_row)
     output.append(stock_row)
 
-#for i in range(len(output[0])):
-#    empty=True
-#    print(i)
 
-print(output)
-
-
-
+# Datum-Spalten vereinheitlichen
+for i in range(1, len(output[0])-1):
+    for j in range(1,len(output)-1):
+        if j%2 == 1:
+            if output[j][i] != output[0][i]:
+                output[j].insert(i,"")
+                output[j+1].insert (i, "")
+        else: continue
+print (output)
 
 
 # Transponieren der Tabelle und Ausgabe als CSV-File
-result = [list(filter(None,i)) for i in zip_longest(*output)]
+result = output
+#result = [list(filter(None,i)) for i in zip_longest(*output)]
+
+
 
 # Ausgabe der Liste als CSV-File
 with open ("prices_dax.csv","w",newline="") as fp:

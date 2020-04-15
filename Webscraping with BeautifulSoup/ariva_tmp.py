@@ -9,10 +9,21 @@ print(len(l))
 for i in range(1, len(l[0])-1):
     for j in range(1,len(l)-1):
         if j%2 == 1:
-            if l[j][i] != l[0][i]: l[j].insert(i,"")
+            if l[j][i] != l[0][i]:
+                l[j].insert(i,"")
+                l[j+1].insert (i, "")
         else: continue
 print (l)
 
+for i in range(1, len(l[0])-1):
+    empty=True
+    for j in range (1, len (l) - 1):
+        if l[j][i] != "":
+            empty=False
+            break
+    if empty == True:
+        for k in range (len(l)-1): del l[k][i]
+print (l)
 
 
 
