@@ -99,12 +99,9 @@ stocks = ["/apple-aktie","/wirecard-aktie", "/volkswagen_vz-aktie", "/fresenius-
 # stocks = ["/apple-aktie","/wirecard-aktie"]
 
 
-stocks = ["/merck_kgaa-aktie", "/fresenius_medical_care-aktie", "/linde_plc-aktie",
- "/allianz-aktie", "/deutsche_post-aktie", "/covestro-aktie", "/henkel_vz-aktie", "/siemens-aktie",
- "/beiersdorf-aktie", "/continental-aktie", "/deutsche_telekom-aktie", "/bmw-aktie", "/vonovia-aktie",
- "/deutsche_bank-aktie", "/daimler-aktie", "/basf-aktie", "/adidas-aktie", "/rwe-aktie", "/munich_re-aktie",
- "/lufthansa-aktie", "/heidelbergcement-aktie", "/infineon-aktie", "/e-on-aktie", "/mtu_aero_engines-aktie",
- "/thyssenkrupp-aktie","/commerzbank-aktie"]
+stocks = ["/prosiebensat-1_media-aktie","/linde_plc-aktie","/uniper-aktie",
+ "/k-s-6-aktie","/lanxess-aktie","/osram_licht-aktie","/ceconomy_st-aktie","/man-aktie","/salzgitter-aktie",
+ "/hannover_rück-aktie","/infineon-aktie","/tui-aktie","/lanxess-aktie","/mlp-aktie","/daimler-aktie"]
 
 
 start_gesamt = timeit.default_timer()
