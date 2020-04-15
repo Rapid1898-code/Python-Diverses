@@ -6,6 +6,7 @@ import calendar
 from bs4 import BeautifulSoup
 import pandas as pd
 from itertools import zip_longest
+import dateutil.parser as parser
 
 
 # DAX-Unternehmen einlesen
@@ -38,10 +39,13 @@ def stock_prices (stock,month):
     page = requests.get (url)
     soup = BeautifulSoup (page.content, "html.parser")
     # page = requests.get ("https://www.ariva.de/apple-aktie/historische_kurse?boerse_id=40&month=2020-04-30&currency=EUR&clean_split=1&clean_split=0&clean_payout=0&clean_bezug=1&clean_bezug=0")
-
     # read table with monatlichen Kursen
     for result in soup.find_all("tr", class_="arrow0"):
         for col_id, col_content in enumerate(result.find_all("td")):
+            # wenn Ausgabejahr nicht mit dem gesuchten Jahr zusammenpasst => break
+            if col_id == 0 and parser.parse(col_content.text.strip()).year != parser.parse(month).year:
+                break
+            # Datum des Kurse bzw. Schlusskurs auslesen
             if col_id == 0:     # 1.Spalte Datum
                 yield "datum", col_content.text.strip()
             elif col_id == 4:   # 5.Spalte Schlusskurs
@@ -84,8 +88,13 @@ stocks = ["/apple-aktie","/wirecard-aktie", "/volkswagen_vz-aktie", "/fresenius-
 """
 stocks = ["/apple-aktie","/wirecard-aktie"]
 
-start_year = 2020
-start_month = 2
+start_year = 2019
+start_month = 3
+end_year = 2019
+end_month = 9
+if end_year == 0:
+    end_year = datetime.now().year
+    end_month = datetime.now().month
 output = []
 datelist = ["Datum"]
 datelist.extend(date_list(date.today(), date(start_year, start_month,1)))
@@ -99,7 +108,8 @@ for stock in stocks:
     stock_row = [stock]
     year = datetime.now().year
     print(stock + " " + str(year))
-    for i in month_year_iter(start_month, start_year, datetime.now().month, datetime.now().year):
+    for i in month_year_iter(start_month, start_year, end_month, end_year):
+        #Ausgabe zur Fortschrittskontrolle des Programms
         if i.year != year:
             year -= 1
             print(stock + " " + str(year))
@@ -114,23 +124,15 @@ for stock in stocks:
     output.append(title_row)
     output.append(stock_row)
 
-print(len(output[0]))
-print(len(output[1]))
-print(len(output[2]))
-print(len(output[3]))
-print(len(output[4]))
-
 print("Spalten bereinigen...")
 # Datum-Spalten vereinheitlichen
 for i in range(1, len(output[0])-1):
     for j in range(1,len(output)-1):
         if j%2 == 1:
-            print ("Zeile: ", j)
-            print ("Spalte: ", i)
-
-            if j==1 and i==74: csv_write(output)
-
-            if output[j][i] != output[0][i]:
+            if i == len(output[j]):
+                output[j].insert (i, "")
+                output[j + 1].insert (i, "")
+            elif output[j][i] != output[0][i]:
                 output[j].insert(i,"")
                 output[j+1].insert (i, "")
         else: continue
