@@ -85,7 +85,7 @@ stocks = ["/apple-aktie","/wirecard-aktie", "/volkswagen_vz-aktie", "/fresenius-
 stocks = ["/apple-aktie","/wirecard-aktie"]
 
 start_year = 2020
-start_month = 3
+start_month = 2
 output = []
 datelist = ["Datum"]
 datelist.extend(date_list(date.today(), date(start_year, start_month,1)))
@@ -127,6 +127,9 @@ for i in range(1, len(output[0])-1):
         if j%2 == 1:
             print ("Zeile: ", j)
             print ("Spalte: ", i)
+
+            if j==1 and i==74: csv_write(output)
+
             if output[j][i] != output[0][i]:
                 output[j].insert(i,"")
                 output[j+1].insert (i, "")
