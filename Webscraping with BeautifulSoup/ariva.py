@@ -46,13 +46,16 @@ def stock_prices (stock,month):
                 yield "price", col_content.text.strip()
 
 
-# Monatsultimo ermitteln
+# Monatsultimo ermitteln für Zeitraum
+# Input z.B. (3, 2015, datetime.now().month, datetime.now().year) bei Aufruf
+# Output z.b. Ultimo-Datum z.b. 2016-04-30
 def month_year_iter( start_month, start_year, end_month, end_year ):
     ym_start= 12*start_year + start_month - 1
     ym_end= 12*end_year + end_month - 1
     for ym in range(ym_end, ym_start-1, -1):
         y, m = divmod( ym, 12 )
         #yield y,m+1
+        print(date(y,m+1,calendar.monthrange(y,m+1)[1]))
         yield date(y,m+1,calendar.monthrange(y,m+1)[1])
 
 
