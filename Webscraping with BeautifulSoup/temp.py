@@ -23,10 +23,10 @@ for i in range(len(products_list)):
             products_list[i][j] = products_list[i][j].strftime("%d.%m.%Y")
         if pandas.isnull(products_list[i][j]):
             products_list[i][j] = ""
+        if products_list[0][j] == "21.03.2016":
+            print(products_list[i][j])
 
-print(products_list)
-
-
+#print(products_list)
 
 #result = [list(filter(None,i)) for i in zip_longest(*products_list)]
 #result = products_list

@@ -8,6 +8,7 @@ from itertools import zip_longest
 import dateutil.parser as parser
 import timeit
 import time
+from random import randrange
 
 
 # DAX-Unternehmen einlesen
@@ -37,7 +38,7 @@ def dax_stocks ():
 # Input Month: Monatsultimo im Format z.B. 2019-04-30
 def stock_prices (stock,month):
     #Verzögerung von x Sekunden
-    time.sleep(1)
+    time.sleep(randrange(5))
     # read table with monatlichen Kursen
     url = "https://www.ariva.de" + stock + "/historische_kurse?boerse_id=6&month=" + month + "&currency=EUR&clean_split=1&clean_split=0&clean_payout=0&clean_bezug=1&clean_bezug=0"
     page = requests.get (url)
@@ -106,9 +107,7 @@ stocks = ["/apple-aktie","/wirecard-aktie", "/volkswagen_vz-aktie", "/fresenius-
  "/hannover_rück-aktie","/infineon-aktie","/tui-aktie","/lanxess-aktie","/mlp-aktie","/daimler-aktie"]
 """
 
-stocks = ["/covestro-aktie", "/henkel_vz-aktie", "/siemens-aktie",
- "/beiersdorf-aktie", "/continental-aktie", "/deutsche_telekom-aktie", "/bmw-aktie", "/vonovia-aktie",
- "/deutsche_bank-aktie", "/daimler-aktie", "/basf-aktie", "/adidas-aktie", "/rwe-aktie", "/munich_re-aktie",
+stocks = ["/rwe-aktie", "/munich_re-aktie",
  "/lufthansa-aktie", "/heidelbergcement-aktie", "/infineon-aktie", "/e-on-aktie", "/mtu_aero_engines-aktie",
  "/thyssenkrupp-aktie","/commerzbank-aktie","/prosiebensat-1_media-aktie","/linde_plc-aktie","/uniper-aktie",
  "/k-s-6-aktie","/lanxess-aktie","/osram_licht-aktie","/ceconomy_st-aktie","/man-aktie","/salzgitter-aktie",
