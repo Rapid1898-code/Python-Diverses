@@ -1,3 +1,4 @@
+import xlrd     # Einlesen von Excel-Sheet
 import requests
 import csv
 import datetime
@@ -82,6 +83,7 @@ def date_list (datum_von, datum_bis):
     for i in range(len(mydates)-1,-1,-1): mydates2.append(mydates[i].strftime('%d.%m.%y'))
     return(mydates2)
 
+
 # Ausgabe der Liste als CSV-File
 def csv_write(result, filename):
     while True:
@@ -93,6 +95,28 @@ def csv_write(result, filename):
         except:
             input ("Datei kann nicht geöffent werden - bitte schließen und <Enter> drücken!")
     fp.close()
+
+
+# Einlesen eines Ergebnis-XLS um die Datümer zusätzlich abzugleichen
+# Durchgängiges Datum muss noch vorne ergänzt werden
+def read_XLS():
+    workbook = xlrd.open_workbook ("DAX Price2.xlsx")
+    sheet = workbook.sheet_by_index (0)
+    liste = []
+    for row in range (sheet.nrows):
+        zeile=[]
+        for col in range(sheet.ncols):
+            if sheet.cell(row,col).ctype == 3:
+                zeile.append(datetime(*xlrd.xldate_as_tuple(sheet.cell(row,col).value,0)).strftime("%d.%m.%Y"))
+            else:
+                zeile.append(sheet.cell(row,col).value)
+        liste.append(zeile)
+    #print(liste)
+
+    result = [list(filter(None,i)) for i in zip_longest(*liste)]
+    print(result)
+    csv_write(result, "testout.csv")
+
 
 # DAX30 Unternehmen + Ex-Unternehmen
 """
