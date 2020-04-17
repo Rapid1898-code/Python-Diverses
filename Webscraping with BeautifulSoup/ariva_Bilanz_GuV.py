@@ -1,5 +1,6 @@
 import requests
 import csv
+import re
 from bs4 import BeautifulSoup
 
 # Ausgabe der Liste als CSV-File inkl. Prüfung ob Datei geöffnet ist
@@ -20,7 +21,8 @@ soup = BeautifulSoup (page.content, "html.parser")
 table = soup.find_all ("div", class_="column twothirds table")
 output = []
 for i in table:
-    for j in i.find_all("tr"):
+#    for j in i.find_all("tr", id=re.compile("^((?!Quartal).)*$")):
+    for j in i.find_all ("tr"):
         print (j.prettify ())
         row = []
         for k in j.find_all("td"):

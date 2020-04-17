@@ -27,4 +27,7 @@
 ###Ausgabe schon formatiert
     print(results.prettify())
 
+###Check ob etwas in soap.text enthalten ist
+    if "Kein Zugriff" in soup.text:
+
 
