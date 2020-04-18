@@ -9,7 +9,8 @@ from itertools import zip_longest
 import dateutil.parser as parser
 import timeit
 import time
-from random import randrange
+import random
+import subprocess
 
 
 # DAX-Unternehmen einlesen
@@ -33,13 +34,18 @@ def dax_stocks ():
     print(dax)
 
 
+def vpn_switch():
+    countries = ["Albania", "Argentina", "Australia", "Austria", "Belgium", "Canada", "Germany", "Israel", "Italy",
+                 "Norway", "Poland", "Portugal", "Romania", "Serbia", "Switzerland", "United Kingdom"]
+    subprocess.call (["C:/Program Files (x86)/NordVPN/NordVPN.exe", "-c", "-g", countries[random.randrange(len(countries)-1)]])
+    time.sleep(10)  #Verzögerung von x Sekunden
+
+
 # Aktienkurse für eine Unternehmen einlesen
 # boerse_id ist fix =>  6 = Xetra
 # Input Stock: Aktienkennung lt. Ariva.de z.b. /apple-aktie oder /wirecard-aktie
 # Input Month: Monatsultimo im Format z.B. 2019-04-30
 def stock_prices (stock,month):
-    #Verzögerung von x Sekunden
-    time.sleep(randrange(5))
     # read table with monatlichen Kursen
     url = "https://www.ariva.de" + stock + "/historische_kurse?boerse_id=6&month=" + month + "&currency=EUR&clean_split=1&clean_split=0&clean_payout=0&clean_bezug=1&clean_bezug=0"
     page = requests.get (url)
@@ -161,6 +167,7 @@ print("Aktienkurse lesen...")
 start_readstocks = timeit.default_timer()
 for stock in stocks:
     if abbruch == True: break
+    vpn_switch()
     start_stock = timeit.default_timer()
     title_row = [stock]
     stock_row = [stock]
