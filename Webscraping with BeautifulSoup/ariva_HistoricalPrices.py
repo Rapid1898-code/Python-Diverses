@@ -13,6 +13,8 @@ import random
 import subprocess
 
 
+print()
+
 # DAX-Unternehmen einlesen
 # DAX30 Unternehmen + Ex-Unternehmen
 def dax_stocks ():
@@ -35,7 +37,7 @@ def vpn_switch():
     rand_country = random.randrange(len(countries)-1)
     subprocess.call (["C:/Program Files (x86)/NordVPN/NordVPN.exe", "-c", "-g", countries[rand_country]])
     time.sleep(30)  #Verzögerung von x Sekunden
-    print ("Connected to ", rand_country,"...")
+    print ("Connected to ", countries[rand_country],"...")
 
 
 # Aktienkurse für eine Unternehmen einlesen
@@ -135,15 +137,18 @@ stocks = ["/apple-aktie","/wirecard-aktie", "/volkswagen_vz-aktie", "/fresenius-
 """
 
 #stocks = ["/prosiebensat-1_media-aktie","/linde_plc-aktie"]
-stocks = ["/prosiebensat-1_media-aktie"]
+stocks = ["/apple-aktie","/wirecard-aktie", "/volkswagen_vz-aktie", "/fresenius-aktie", "/sap-aktie", "/bayer-aktie",
+ "/deutsche_b%C3%B6rse-aktie", "/merck_kgaa-aktie", "/fresenius_medical_care-aktie", "/linde_plc-aktie",
+ "/allianz-aktie", "/deutsche_post-aktie", "/covestro-aktie", "/henkel_vz-aktie", "/siemens-aktie",
+ "/beiersdorf-aktie"]
 
 # OFFEN: Linde, Daimler, BASF, Adidas
 
 start_gesamt = timeit.default_timer()
-start_year = 2004
+start_year = 1995
 start_month = 1
-end_year = 2005
-end_month = 1
+end_year = 0
+end_month = 0
 if end_year == 0:
     end_year = datetime.datetime.now().year
     end_month = datetime.datetime.now().month
@@ -157,6 +162,7 @@ abbruch = False
 print("Aktienkurse lesen...")
 # für jeden Aktientiel aus der Liste Ermittlung einer Zeile mit den Datümern und eine Zeile mit Schlusskursen
 start_readstocks = timeit.default_timer()
+
 for stock in stocks:
     if abbruch == True: break
     vpn_switch()
@@ -184,6 +190,10 @@ for stock in stocks:
                 title_row.append(j[1])
     output.append(title_row)
     output.append(stock_row)
+
+    print(title_row)
+    print(stock_row)
+
     stop_stock = timeit.default_timer ()
     print("Laufzeit Aktie ",stock," : ",round((stop_stock-start_stock)/60,2),"min")
 stop_readstocks = timeit.default_timer()
