@@ -139,6 +139,8 @@ stocks = ["/rwe-aktie", "/munich_re-aktie",
 
 # stocks = ["/prosiebensat-1_media-aktie","/linde_plc-aktie"]
 
+# OFFEN: Linde, Daimler, BASF, Adidas
+
 start_gesamt = timeit.default_timer()
 start_year = 1995
 start_month = 1
