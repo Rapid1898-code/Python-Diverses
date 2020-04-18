@@ -21,15 +21,14 @@ def dax_stocks ():
     page = requests.get ("https://www.ariva.de/dax-30")
     soup = BeautifulSoup (page.content, "html.parser")
     table  = soup.find(id="result_table_0")
-    dax = []
+    dax = {}
     for row  in table.find_all("td"):
         if row.get("class") == ["ellipsis", "nobr", "new", "padding-right-5"]:
-            dax.append(row.find("a")["href"])
+            dax[row.find("a")["href"]] = row.text.strip()
             #print(row.find("a")["href"])
             #print(row.get("class"))
             #print(row)
     print(dax)
-
 
 def vpn_switch():
     countries = ["Albania", "Argentina", "Australia", "Austria", "Belgium", "Canada", "Germany", "Israel", "Italy",
@@ -125,22 +124,41 @@ def read_XLS():
 
 # DAX30 Unternehmen + Ex-Unternehmen
 """
+stocks_dic = {'/apple-aktie': 'Apple', '/infineon-aktie': 'Infineon', '/volkswagen_vz-aktie': 'Volkswagen Vz', '/continental-aktie': 'Continental',
+'/bmw-aktie': 'BMW St', '/heidelbergcement-aktie': 'HeidelbergCement', '/mtu_aero_engines-aktie': 'MTU Aero Engines', '/covestro-aktie': 'Covestro',
+'/siemens-aktie': 'Siemens', '/daimler-aktie': 'Daimler', '/munich_re-aktie': 'Munich Re', '/basf-aktie': 'BASF', '/deutsche_bank-aktie': 'Dt. Bank',
+'/deutsche_post-aktie': 'Dt. Post', '/adidas-aktie': 'adidas', '/allianz-aktie': 'Allianz', '/sap-aktie': 'SAP', '/deutsche_telekom-aktie': 'Dt. Telekom',
+'/linde_plc-aktie': 'Linde PLC', '/bayer-aktie': 'Bayer', '/henkel_vz-aktie': 'Henkel Vz', '/lufthansa-aktie': 'Lufthansa', '/beiersdorf-aktie': 'Beiersdorf',
+'/merck_kgaa-aktie': 'Merck KGaA', '/fresenius_medical_care-aktie': 'Fresenius Medical Care', '/deutsche_b%C3%B6rse-aktie': 'Dt. Börse', '/fresenius-aktie': 'Fresenius',
+'/wirecard-aktie': 'Wirecard', '/rwe-aktie': 'RWE St', '/e-on-aktie': 'E.ON', '/vonovia-aktie': 'Vonovia', '/thyssenkrupp-akti': 'ThyssenKrupp',
+'/commerzbank-aktie': 'Commerzbank', '/prosiebensat-1_media-aktie': 'ProSiebenSat-1 Media', '/uniper-aktie': 'Uniper', '/k-s-6-aktie': 'KS6',
+ '/lanxess-aktie': 'Lanxess', '/osram_licht-aktie': 'Osram Licht', '/ceconomy_st-aktie': 'Ceconomy St', '/man-aktie': 'MAN', '/salzgitter-aktie': 'Salzgitter'
+ , '/hannover_rück-aktie': 'Hannover Rück', '/tui-aktie': 'TUI', '/mlp-aktie': 'MLP'}
+
 stocks = ["/apple-aktie","/wirecard-aktie", "/volkswagen_vz-aktie", "/fresenius-aktie", "/sap-aktie", "/bayer-aktie",
  "/deutsche_b%C3%B6rse-aktie", "/merck_kgaa-aktie", "/fresenius_medical_care-aktie", "/linde_plc-aktie",
  "/allianz-aktie", "/deutsche_post-aktie", "/covestro-aktie", "/henkel_vz-aktie", "/siemens-aktie",
  "/beiersdorf-aktie", "/continental-aktie", "/deutsche_telekom-aktie", "/bmw-aktie", "/vonovia-aktie",
  "/deutsche_bank-aktie", "/daimler-aktie", "/basf-aktie", "/adidas-aktie", "/rwe-aktie", "/munich_re-aktie",
  "/lufthansa-aktie", "/heidelbergcement-aktie", "/infineon-aktie", "/e-on-aktie", "/mtu_aero_engines-aktie",
- "/thyssenkrupp-aktie","/commerzbank-aktie","/prosiebensat-1_media-aktie","/linde_plc-aktie","/uniper-aktie",
+ 
+ "/thyssenkrupp-aktie","/commerzbank-aktie","/prosiebensat-1_media-aktie","/uniper-aktie",
  "/k-s-6-aktie","/lanxess-aktie","/osram_licht-aktie","/ceconomy_st-aktie","/man-aktie","/salzgitter-aktie",
- "/hannover_rück-aktie","/infineon-aktie","/tui-aktie","/lanxess-aktie","/mlp-aktie","/daimler-aktie"]
+ "/hannover_rück-aktie","/infineon-aktie","/tui-aktie","/mlp-aktie","/daimler-aktie"]
 """
 
 #stocks = ["/prosiebensat-1_media-aktie","/linde_plc-aktie"]
-stocks = ["/apple-aktie","/wirecard-aktie", "/volkswagen_vz-aktie", "/fresenius-aktie", "/sap-aktie", "/bayer-aktie",
+#stocks = ["/apple-aktie","/wirecard-aktie", "/rwe-aktie", "/heidelbergcement-aktie"]
+
+stocks = ["/volkswagen_vz-aktie", "/fresenius-aktie", "/sap-aktie", "/bayer-aktie",
  "/deutsche_b%C3%B6rse-aktie", "/merck_kgaa-aktie", "/fresenius_medical_care-aktie", "/linde_plc-aktie",
  "/allianz-aktie", "/deutsche_post-aktie", "/covestro-aktie", "/henkel_vz-aktie", "/siemens-aktie",
- "/beiersdorf-aktie"]
+ "/beiersdorf-aktie", "/continental-aktie", "/deutsche_telekom-aktie", "/bmw-aktie", "/vonovia-aktie",
+ "/deutsche_bank-aktie", "/daimler-aktie", "/basf-aktie", "/adidas-aktie", "/munich_re-aktie",
+ "/lufthansa-aktie", "/infineon-aktie", "/e-on-aktie", "/mtu_aero_engines-aktie",
+ "/thyssenkrupp-aktie","/commerzbank-aktie","/prosiebensat-1_media-aktie","/linde_plc-aktie","/uniper-aktie",
+ "/k-s-6-aktie","/lanxess-aktie","/osram_licht-aktie","/ceconomy_st-aktie","/man-aktie","/salzgitter-aktie",
+ "/hannover_rück-aktie","/infineon-aktie","/tui-aktie","/lanxess-aktie","/mlp-aktie","/daimler-aktie"]
 
 # OFFEN: Linde, Daimler, BASF, Adidas
 
@@ -237,7 +255,10 @@ for k in pos_del:
 print("Transponieren und Ausgeben...")
 # Transponieren der Tabelle und Ausgabe als CSV-File
 # result = output       #Output mit Datümern auf Spaltenebene - funktioniert nur bis zu einer gewissen Größe...
-result = [list(filter(None,i)) for i in zip_longest(*output)]
+
+#result = [list(filter(None,i)) for i in zip_longest(*output)]
+result = list(zip_longest(*output))
+
 csv_write(result, "prices_dax_withdates.csv")
 
 stop_spaltenaufbereitung = timeit.default_timer()
