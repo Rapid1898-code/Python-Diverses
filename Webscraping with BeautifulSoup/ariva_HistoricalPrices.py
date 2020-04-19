@@ -6,14 +6,12 @@ import calendar
 from bs4 import BeautifulSoup
 import pandas as pd
 from itertools import zip_longest
-import dateutil.parser as parser
 import timeit
 import time
 import random
 import subprocess
+import json
 
-
-print()
 
 # DAX-Unternehmen einlesen
 # DAX30 Unternehmen + Ex-Unternehmen
@@ -30,8 +28,9 @@ def dax_stocks ():
             #print(row)
     print(dax)
 
+
 def vpn_switch():
-    countries = ["Albania", "Argentina", "Australia", "Austria", "Belgium", "Canada", "Germany", "Israel", "Italy",
+    countries = ["Argentina", "Australia", "Austria", "Belgium", "Canada", "Germany", "Israel", "Italy",
                  "Norway", "Poland", "Portugal", "Romania", "Serbia", "Switzerland", "United Kingdom"]
     rand_country = random.randrange(len(countries)-1)
     subprocess.call (["C:/Program Files (x86)/NordVPN/NordVPN.exe", "-c", "-g", countries[rand_country]])
@@ -67,6 +66,7 @@ def stock_prices (stock,month):
             elif col_id == 4:   # 5.Spalte Schlusskurs
                 yield "price", col_content.text.strip()
 
+
 # Monatsultimo ermitteln für Zeitraum
 # Input z.B. (3, 2015, datetime.now().month, datetime.now().year) bei Aufruf
 # Output z.b. Ultimo-Datum z.b. 2016-04-30
@@ -97,7 +97,8 @@ def csv_write(result, filename):
                 a.writerows(result)
                 break
         except:
-            input ("Datei kann nicht geöffent werden - bitte schließen und <Enter> drücken!")
+            print("Datei ", filename, " kann nicht geöffnet werden - bitte schließen und <Enter> drücken!")
+            input()
     fp.close()
 
 
@@ -134,59 +135,68 @@ stocks_dic = {'/apple-aktie': 'Apple', '/infineon-aktie': 'Infineon', '/volkswag
 '/commerzbank-aktie': 'Commerzbank', '/prosiebensat-1_media-aktie': 'ProSiebenSat-1 Media', '/uniper-aktie': 'Uniper', '/k-s-6-aktie': 'KS6',
  '/lanxess-aktie': 'Lanxess', '/osram_licht-aktie': 'Osram Licht', '/ceconomy_st-aktie': 'Ceconomy St', '/man-aktie': 'MAN', '/salzgitter-aktie': 'Salzgitter'
  , '/hannover_rück-aktie': 'Hannover Rück', '/tui-aktie': 'TUI', '/mlp-aktie': 'MLP'}
-
-stocks = ["/apple-aktie","/wirecard-aktie", "/volkswagen_vz-aktie", "/fresenius-aktie", "/sap-aktie", "/bayer-aktie",
- "/deutsche_b%C3%B6rse-aktie", "/merck_kgaa-aktie", "/fresenius_medical_care-aktie", "/linde_plc-aktie",
- "/allianz-aktie", "/deutsche_post-aktie", "/covestro-aktie", "/henkel_vz-aktie", "/siemens-aktie",
- "/beiersdorf-aktie", "/continental-aktie", "/deutsche_telekom-aktie", "/bmw-aktie", "/vonovia-aktie",
- "/deutsche_bank-aktie", "/daimler-aktie", "/basf-aktie", "/adidas-aktie", "/rwe-aktie", "/munich_re-aktie",
- "/lufthansa-aktie", "/heidelbergcement-aktie", "/infineon-aktie", "/e-on-aktie", "/mtu_aero_engines-aktie",
- 
- "/thyssenkrupp-aktie","/commerzbank-aktie","/prosiebensat-1_media-aktie","/uniper-aktie",
- "/k-s-6-aktie","/lanxess-aktie","/osram_licht-aktie","/ceconomy_st-aktie","/man-aktie","/salzgitter-aktie",
- "/hannover_rück-aktie","/infineon-aktie","/tui-aktie","/mlp-aktie","/daimler-aktie"]
 """
 
+stocks_dic = {'/apple-aktie': 'Apple', '/infineon-aktie': 'Infineon'}
+
+
 #stocks = ["/prosiebensat-1_media-aktie","/linde_plc-aktie"]
-#stocks = ["/apple-aktie","/wirecard-aktie", "/rwe-aktie", "/heidelbergcement-aktie"]
+#stocks = ["/apple-aktie","/wirecard-aktie", "/rwe-aktie", "/heidelbergcement-aktie","/volkswagen_vz-aktie"]
+#stocks = ["/apple-aktie"]
 
-stocks = ["/volkswagen_vz-aktie", "/fresenius-aktie", "/sap-aktie", "/bayer-aktie",
- "/deutsche_b%C3%B6rse-aktie", "/merck_kgaa-aktie", "/fresenius_medical_care-aktie", "/linde_plc-aktie",
- "/allianz-aktie", "/deutsche_post-aktie", "/covestro-aktie", "/henkel_vz-aktie", "/siemens-aktie",
- "/beiersdorf-aktie", "/continental-aktie", "/deutsche_telekom-aktie", "/bmw-aktie", "/vonovia-aktie",
- "/deutsche_bank-aktie", "/daimler-aktie", "/basf-aktie", "/adidas-aktie", "/munich_re-aktie",
- "/lufthansa-aktie", "/infineon-aktie", "/e-on-aktie", "/mtu_aero_engines-aktie",
- "/thyssenkrupp-aktie","/commerzbank-aktie","/prosiebensat-1_media-aktie","/linde_plc-aktie","/uniper-aktie",
- "/k-s-6-aktie","/lanxess-aktie","/osram_licht-aktie","/ceconomy_st-aktie","/man-aktie","/salzgitter-aktie",
- "/hannover_rück-aktie","/infineon-aktie","/tui-aktie","/lanxess-aktie","/mlp-aktie","/daimler-aktie"]
-
-# OFFEN: Linde, Daimler, BASF, Adidas
+#stocks = ["/volkswagen_vz-aktie", "/fresenius-aktie", "/sap-aktie", "/bayer-aktie",
+# "/deutsche_b%C3%B6rse-aktie", "/merck_kgaa-aktie", "/fresenius_medical_care-aktie", "/linde_plc-aktie",
+# "/allianz-aktie", "/deutsche_post-aktie", "/covestro-aktie", "/henkel_vz-aktie", "/siemens-aktie",
+# "/beiersdorf-aktie", "/continental-aktie", "/deutsche_telekom-aktie", "/bmw-aktie", "/vonovia-aktie",
+# "/deutsche_bank-aktie", "/daimler-aktie", "/basf-aktie", "/adidas-aktie", "/munich_re-aktie",
+# "/lufthansa-aktie", "/infineon-aktie", "/e-on-aktie", "/mtu_aero_engines-aktie",
+# "/thyssenkrupp-aktie","/commerzbank-aktie","/prosiebensat-1_media-aktie","/linde_plc-aktie","/uniper-aktie",
+# "/k-s-6-aktie","/lanxess-aktie","/osram_licht-aktie","/ceconomy_st-aktie","/man-aktie","/salzgitter-aktie",
+# "/hannover_rück-aktie","/infineon-aktie","/tui-aktie","/lanxess-aktie","/mlp-aktie","/daimler-aktie"]
+#
 
 start_gesamt = timeit.default_timer()
-start_year = 1995
-start_month = 1
+start_year = 2020
+start_month = 4
 end_year = 0
 end_month = 0
 if end_year == 0:
     end_year = datetime.datetime.now().year
     end_month = datetime.datetime.now().month
 output = []
-datelist = ["Datum"]
+#Datumszeile erstellen für den gesamten Zeitraum pro Tag
+datelist = ["Kürzel","Datum"]
 datelist.extend(date_list(datetime.date.today(), datetime.date(start_year, start_month,1)))
 output.append(datelist)
+
+#Temp-Daten aus vorherigen Läufen einlesen...
+try:
+    with open("tempdata.txt") as f:
+        for line in f:
+            line = line.replace ("'", '"')
+            output.append (json.loads (line.strip()))
+except: pass
+
 abbruch = False
-
-
 print("Aktienkurse lesen...")
 # für jeden Aktientiel aus der Liste Ermittlung einer Zeile mit den Datümern und eine Zeile mit Schlusskursen
 start_readstocks = timeit.default_timer()
-
-for stock in stocks:
+for stock in stocks_dic:
     if abbruch == True: break
+    #check if stock ist bereits im Tempfile vorhanden
+    skip = False
+    for i in range(len(output)-1):
+        if output[i][0] == stock:
+            print(stock, " bereits in tempdata.txt vorhanden... daher skip...")
+            skip = True
+            break
+    if skip == True:
+        continue
+    #switch der vpn-verbindung
     vpn_switch()
     start_stock = timeit.default_timer()
-    title_row = [stock]
-    stock_row = [stock]
+    title_row = [stock,stocks_dic.get(stock)]
+    stock_row = [stock,stocks_dic.get(stock)]
     year = datetime.datetime.now().year
     if year <= end_year: print(stock + " " + str(year))
     for i in month_year_iter(start_month, start_year, end_month, end_year):
@@ -201,7 +211,6 @@ for stock in stocks:
                 break
             if j[0] == "datum":
                 title_row.append(j[1])
-#                print (j[1])
             elif j[0] == "price": stock_row.append(j[1])
             elif j[0] == "blank":
                 stock_row.append(j[1])
@@ -209,19 +218,24 @@ for stock in stocks:
     output.append(title_row)
     output.append(stock_row)
 
+    # Ausgabe der Zeilen in Temp-Textfile...
     print(title_row)
     print(stock_row)
+    with open('tempdata.txt', 'a') as file:
+        file.write("%s\n" %title_row)
+        file.write ("%s\n" %stock_row)
 
     stop_stock = timeit.default_timer ()
     print("Laufzeit Aktie ",stock," : ",round((stop_stock-start_stock)/60,2),"min")
 stop_readstocks = timeit.default_timer()
 
-csv_write([list(filter(None,i)) for i in zip_longest(*output)], "prices_dax_unordered.csv")
+# csv_write([list(filter(None,i)) for i in zip_longest(*output)], "prices_dax_unordered.csv")
+csv_write(list(zip_longest(*output)), "prices_dax_unordered.csv")
 
 start_spaltenaufbereitung = timeit.default_timer()
 print("Spalten bereinigen...")
 # Datum-Spalten vereinheitlichen
-for i in range(1, len(output[0])-1):
+for i in range(2, len(output[0])-1):
     for j in range(1,len(output)-1):
         if j%2 == 1:
             if i == len(output[j]):
@@ -232,7 +246,7 @@ for i in range(1, len(output[0])-1):
                 output[j+1].insert (i, "")
         else: continue
 # Check ob die letzte Spalte bei den Aktientiteln leer ist - sonst fehlt eine Spalte am Ende bei den Aktientiteln
-for i in range(1,len(output)-1):
+for i in range(2,len(output)-1):
     if i%2 == 1 and len(output[0]) != len(output[i]):
         output[i].insert (len(output[i]), "")
         output[i + 1].insert (len(output[i+1]), "")
@@ -240,7 +254,8 @@ for i in range(1,len(output)-1):
 # Leere Spalten löschen
 # kein Kurse für eine Aktie an diesem Tag
 pos_del = []
-for i in range(1, len(output[0])):
+
+for i in range(2, len(output[0])):
     empty=True
     for j in range (1, len (output) - 1):
         if output[j][i] != "":
