@@ -137,8 +137,16 @@ stocks_dic = {'/apple-aktie': 'Apple', '/infineon-aktie': 'Infineon', '/volkswag
  , '/hannover_rück-aktie': 'Hannover Rück', '/tui-aktie': 'TUI', '/mlp-aktie': 'MLP'}
 """
 
-stocks_dic = {'/apple-aktie': 'Apple', '/infineon-aktie': 'Infineon'}
-
+#stocks_dic = {'/apple-aktie': 'Apple', '/infineon-aktie': 'Infineon'}
+stocks_dic = {'/bmw-aktie': 'BMW St', '/heidelbergcement-aktie': 'HeidelbergCement', '/mtu_aero_engines-aktie': 'MTU Aero Engines', '/covestro-aktie': 'Covestro',
+'/siemens-aktie': 'Siemens', '/daimler-aktie': 'Daimler', '/munich_re-aktie': 'Munich Re', '/basf-aktie': 'BASF', '/deutsche_bank-aktie': 'Dt. Bank',
+'/deutsche_post-aktie': 'Dt. Post', '/adidas-aktie': 'adidas', '/allianz-aktie': 'Allianz', '/sap-aktie': 'SAP', '/deutsche_telekom-aktie': 'Dt. Telekom',
+'/linde_plc-aktie': 'Linde PLC', '/bayer-aktie': 'Bayer', '/henkel_vz-aktie': 'Henkel Vz', '/lufthansa-aktie': 'Lufthansa', '/beiersdorf-aktie': 'Beiersdorf',
+'/merck_kgaa-aktie': 'Merck KGaA', '/fresenius_medical_care-aktie': 'Fresenius Medical Care', '/deutsche_b%C3%B6rse-aktie': 'Dt. Börse', '/fresenius-aktie': 'Fresenius',
+'/wirecard-aktie': 'Wirecard', '/rwe-aktie': 'RWE St', '/e-on-aktie': 'E.ON', '/vonovia-aktie': 'Vonovia', '/thyssenkrupp-akti': 'ThyssenKrupp',
+'/commerzbank-aktie': 'Commerzbank', '/prosiebensat-1_media-aktie': 'ProSiebenSat-1 Media', '/uniper-aktie': 'Uniper', '/k-s-6-aktie': 'KS6',
+ '/lanxess-aktie': 'Lanxess', '/osram_licht-aktie': 'Osram Licht', '/ceconomy_st-aktie': 'Ceconomy St', '/man-aktie': 'MAN', '/salzgitter-aktie': 'Salzgitter'
+ , '/hannover_rück-aktie': 'Hannover Rück', '/tui-aktie': 'TUI', '/mlp-aktie': 'MLP'}
 
 #stocks = ["/prosiebensat-1_media-aktie","/linde_plc-aktie"]
 #stocks = ["/apple-aktie","/wirecard-aktie", "/rwe-aktie", "/heidelbergcement-aktie","/volkswagen_vz-aktie"]
@@ -156,8 +164,8 @@ stocks_dic = {'/apple-aktie': 'Apple', '/infineon-aktie': 'Infineon'}
 #
 
 start_gesamt = timeit.default_timer()
-start_year = 2020
-start_month = 4
+start_year = 1989
+start_month = 1
 end_year = 0
 end_month = 0
 if end_year == 0:
@@ -246,15 +254,14 @@ for i in range(2, len(output[0])-1):
                 output[j+1].insert (i, "")
         else: continue
 # Check ob die letzte Spalte bei den Aktientiteln leer ist - sonst fehlt eine Spalte am Ende bei den Aktientiteln
-for i in range(2,len(output)-1):
+for i in range(1,len(output)-1):
     if i%2 == 1 and len(output[0]) != len(output[i]):
         output[i].insert (len(output[i]), "")
-        output[i + 1].insert (len(output[i+1]), "")
+        output[i+1].insert (len(output[i+1]), "")
 
 # Leere Spalten löschen
 # kein Kurse für eine Aktie an diesem Tag
 pos_del = []
-
 for i in range(2, len(output[0])):
     empty=True
     for j in range (1, len (output) - 1):
