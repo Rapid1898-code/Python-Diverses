@@ -19,14 +19,14 @@ def csv_write(content,filename):
 def read_bilanz(stock):
     output_temp = []
     output_gesamt = []
-    page = 0
+    seite = 0
     jahre_titelleiste = []
 
     # output_gesamt initial definieren
-    # output bilden für page (+bereinigung)
+    # output bilden für seite (+bereinigung)
     # SPRUNG1: aktuelle titelzeitleiste speichern
-    # page um 6 erhöhen
-    # output bilden für (neue) page (+bereinigung)
+    # seite um 6 erhöhen
+    # output bilden für (neue) seite (+bereinigung)
     # wenn titelzeitleiste = gespeicherte titelzeitleiste => Break! aus while True Schleife und return des ergebnises
     # ermitteln welche Spalten eingefügt werden müssen
         #von rechts nach links lesen
@@ -35,7 +35,7 @@ def read_bilanz(stock):
     # zu SPRUNG1
 
     while True:
-        link = "https://www.ariva.de" + stock + "/bilanz-guv?page=" + str(page) + "#stammdaten"
+        link = "https://www.ariva.de" + stock + "/bilanz-guv?page=" + str(seite) + "#stammdaten"
         page = requests.get (link)
         soup = BeautifulSoup (page.content, "html.parser")
         #Kennzahlen auslesen
@@ -65,29 +65,42 @@ def read_bilanz(stock):
             #Formate und Texte anpassen
 
         #Eckdaten Kennzahlen ermitteln und links oben im Sheet speichern
-        if page == 0:
+        if seite == 0:
             table = soup.find_all ("h3", class_="arhead undef")
             for i in table:
                 if "Bilanz" in i.text and "Geschäftsjahresende" in i.text:
                     output_temp[0][0] = "Bilanz in Mio. " + i.text.strip()[18:22] + " per " + i.text.strip()[-7:-1]
 
         #Einfügen weiterer Jahreswerte
-        if output_temp[0][1:6] == jahre_titelleiste:
+
+        #print (output_temp[0][1:7])
+        #print (jahre_titelleiste)
+
+        if output_temp[0][1:7] == jahre_titelleiste:
             break
         else:
-            jahre_titelleiste = output_temp[0][1:6]
-            page += 6;
-            if output_gesamt == []: output_gesamt = output_temp
+            jahre_titelleiste = output_temp[0][1:7]
+            seite +=6;
+            if output_gesamt == []:
+                output_gesamt = output_temp
             else:
-                for i in range(len(output)-1,1-1):
-                    if output[0][i] in output_gesamt[0][1:len(output_gesamt[0])-1]: continue
+
+                print ("drinne!", len(output_temp[0]))
+
+                for i in range(len(output_temp[0])-1,1,-1):
+
+                    print(i)
+                    #print(output_temp[0][i])
+                    #print(output_gesamt[0][1:len(output_gesamt[0])-1])
+
+                    if output_temp[0][i] in output_gesamt[0][1:len(output_gesamt[0])-1]: continue
                     else:
                         pos_insert = i
                         break
                 for i in range(pos_insert,1,-1):
                     for j in range (0,len(output_gesamt)-1):
                         output_gesamt[j][1] = output_temp[j][i]
-                        if j > 0 and output_gesamt[j] != output_temp[j]
+                        if j > 0 and output_gesamt[j] != output_temp[j]:
                             print("Beschriftung unterschiedlich in Output-Gesamt und Output-Temp in Zeile: ",j)
             output_temp = []
     return output
