@@ -22,7 +22,8 @@ def read_index(index_name):
     for row  in table.find_all("td"):
         if row.get("class") == ["ellipsis", "nobr", "new", "padding-right-5"]:
             index_stocks[row.find("a")["href"]] = row.text.strip()
-    index_stocks = sorted(index_stocks.items (), key=lambda x: x[1])
+    #Dict sortieren nach Value
+    index_stocks = {k: v for k, v in sorted(index_stocks.items(), key=lambda item: item[1])}
     return(index_stocks)
 
 # VPN-Switch bei NordVPN mit x Sekunden Verzögerung
@@ -180,7 +181,7 @@ stocks_dic = {'/thyssenkrupp-aktie': 'ThyssenKrupp'}
 #Input - start_year, start_month: wie weit in die Historie zurückgegangen wird (z.b. bis 1995 06)
 #Input - end_year, end_month: von welchem Datum die Ermittlung weg erfolgt - wenn year = 0 wird aktuelles Tagesdatum genommen
 #Input - sek: Anzahl der Sekunden der Verzögerung bei VPN-Switch
-index = 0
+index = "tecdax"
 start_year = 1989
 start_month = 1
 end_year = 0
