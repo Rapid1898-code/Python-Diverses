@@ -15,15 +15,21 @@ import json
 # Unternehmen eines bestimmten Index werden eingelesen
 # Output: Dict in der Form Kürzel von Ariva.de + Name des Titels (z.b '/apple-aktie': 'Apple')
 def read_index(index_name):
-    page = requests.get ("https://www.ariva.de/"+index_name)
-    soup = BeautifulSoup (page.content, "html.parser")
-    table  = soup.find(id="result_table_0")
+    page_nr=0
     index_stocks = {}
-    for row  in table.find_all("td"):
-        if row.get("class") == ["ellipsis", "nobr", "new", "padding-right-5"]:
-            index_stocks[row.find("a")["href"]] = row.text.strip()
-    #Dict sortieren nach Value
-    index_stocks = {k: v for k, v in sorted(index_stocks.items(), key=lambda item: item[1])}
+    temp_stocks = {}
+    while True:
+        page = requests.get ("https://www.ariva.de/"+index_name+"?page="+str(page_nr))
+        soup = BeautifulSoup (page.content, "html.parser")
+        table  = soup.find(id="result_table_0")
+        for row  in table.find_all("td"):
+            if row.get("class") == ["ellipsis", "nobr", "new", "padding-right-5"]:
+                index_stocks[row.find("a")["href"]] = row.text.strip().capitalize()
+        #Dict sortieren nach Value
+        index_stocks = {k: v for k, v in sorted(index_stocks.items(), key=lambda item: item[1])}
+        if temp_stocks == index_stocks: break
+        page_nr += 1
+        temp_stocks = index_stocks
     return(index_stocks)
 
 # VPN-Switch bei NordVPN mit x Sekunden Verzögerung
@@ -33,8 +39,9 @@ def vpn_switch(sek):
                  "Norway", "Poland", "Portugal", "Romania", "Serbia", "Switzerland", "United Kingdom"]
     rand_country = random.randrange(len(countries)-1)
     subprocess.call (["C:/Program Files (x86)/NordVPN/NordVPN.exe", "-c", "-g", countries[rand_country]])
+    print ("VPN Switch to",countries[rand_country],"...")
     time.sleep(sek)  #Verzögerung von x Sekunden
-    print ("Connected to ", countries[rand_country],"...")
+    print ("Connected to", countries[rand_country],"...")
     return(countries[rand_country])
 
 # Aktienkurse für eine Unternehmen einlesen
@@ -182,8 +189,8 @@ stocks_dic = {'/thyssenkrupp-aktie': 'ThyssenKrupp'}
 #Input - end_year, end_month: von welchem Datum die Ermittlung weg erfolgt - wenn year = 0 wird aktuelles Tagesdatum genommen
 #Input - sek: Anzahl der Sekunden der Verzögerung bei VPN-Switch
 index = "tecdax"
-start_year = 1989
-start_month = 1
+start_year = 2020
+start_month = 2
 end_year = 0
 end_month = 0
 sek = 30
