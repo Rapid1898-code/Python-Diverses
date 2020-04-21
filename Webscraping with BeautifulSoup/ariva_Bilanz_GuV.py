@@ -1,7 +1,9 @@
 import requests
 import csv
-import re
 from bs4 import BeautifulSoup
+import pandas as pd
+import numpy as np
+from openpyxl import load_workbook
 
 # Ausgabe der Liste als CSV-File inkl. Prüfung ob Datei geöffnet ist
 # Input content: ist eine Matrix Liste [[][]]
@@ -13,6 +15,31 @@ def csv_write(content,filename):
                 a = csv.writer(fp,delimiter=",")
                 a.writerows(content)
                 break
+        except:
+            input ("Datei kann nicht geöffent werden - bitte schließen und <Enter> drücken!")
+
+
+# Ausgabe der Liste als XLS-File inkl. Prüfung ob Datei geöffnet ist
+# Input stock: Name der Aktie
+# Input content: Inhalt in Listenform
+# Input filenmae: Name des XLSX-File
+# Input append: 1=>anhängen von neuen Worksheets, 0=>überschreiben des XLS
+def save_xls(stock, content, filename, append):
+    while True:
+        try:
+            if append == 0:
+                writer = pd.ExcelWriter(filename, engine = 'openpyxl')
+                pd.DataFrame(content).to_excel (writer, sheet_name=stock, header=False, index=False)
+                writer.save ()
+                writer.close ()
+            elif append == 1:
+                book = load_workbook (filename)
+                writer = pd.ExcelWriter(filename, engine = 'openpyxl')
+                writer.book = book
+                pd.DataFrame(content).to_excel (writer, sheet_name=stock, header=False, index=False)
+                writer.save ()
+                writer.close ()
+            break
         except:
             input ("Datei kann nicht geöffent werden - bitte schließen und <Enter> drücken!")
 
@@ -93,10 +120,12 @@ def read_bilanz(stock):
 
     return output_gesamt
 
-stocks_dic = {'/sap-aktie': 'Apple'}
+stocks_dic = {'/sap-aktie': 'SAP'}
 for stock in stocks_dic:
     output = read_bilanz(stock)
-csv_write(output,"ariva_data.csv")
+    save_xls(stocks_dic.get(stock), output, "test.xlsx" , 0)
+
+# csv_write(output,"ariva_data.csv")
 
 
 
