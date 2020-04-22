@@ -7,6 +7,7 @@ from openpyxl import load_workbook
 import random
 import subprocess
 import time
+import re
 
 # Ausgabe der Liste als XLS-File inkl. Prüfung ob Datei geöffnet ist
 # Input stock: Name der Aktie
@@ -41,6 +42,9 @@ def read_bilanz(stock):
     link = "https://www.ariva.de" + stock + "/bilanz-guv?page=" + "0" + "#stammdaten"
     page = requests.get (link)
     soup = BeautifulSoup (page.content, "html.parser")
+
+    # Stammdaten und Kontakte auslesen
+    output.append(["Stammdaten"])
     table = soup.find_all ("div", class_="column twothirds")
     for i in table:
         for j in i.find_all ("tr"):
@@ -48,11 +52,31 @@ def read_bilanz(stock):
             row = []
             for k in j.find_all ("td"):
                 # print (k.prettify (), "\n")
-                row.append (k.text.strip ())
+                # Umwandlung in Float wenn möglich
+                if k.text.strip() == "Adresse": output.append(["Kontakt"])
+                if k.text.strip() == "": row.append ("-")
+                else: row.append (k.text.strip())
+            output.append (row)
+
+    # Termine auslesen
+    table = soup.find_all ("div", class_="termine abstand new")
+    # Termine - Überschrift auslesen
+    for i in table:
+        cont = [i.find("h3", class_="arhead undef").text.strip()]
+        output.append(cont)
+    # Termine Inhalt auslesen
+    for i in table:
+        for j in i.find_all ("tr"):
+            row = []
+            for k in j.find_all ("td"):
+                #Prüfung ob Tag.Monat damit Jahr ergänzt wird
+                pattern = '^[0-9][0-9].[0-9][0-9].$'
+                if re.match(pattern, k.text.strip()): row.append (k.text.strip()+cont[0][-4:])
+                else: row.append (k.text.strip())
             output.append (row)
     return(output)
 
 output = read_bilanz("/apple-aktie")
-save_xls("/Apple",output,"Test2.xlsx",0)
+save_xls("Apple",output,"Test2.xlsx",0)
 
 
