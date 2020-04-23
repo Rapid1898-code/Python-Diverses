@@ -11,6 +11,7 @@ import time
 import random
 import subprocess
 import json
+import sys
 
 # Unternehmen eines bestimmten Index werden eingelesen
 # Output: Dict in der Form Kürzel von Ariva.de + Name des Titels (z.b '/apple-aktie': 'Apple')
@@ -40,8 +41,11 @@ def vpn_switch(sek):
     rand_country = random.randrange(len(countries)-1)
     subprocess.call (["C:/Program Files (x86)/NordVPN/NordVPN.exe", "-c", "-g", countries[rand_country]])
     print ("VPN Switch to",countries[rand_country],"...")
-    time.sleep(sek)  #Verzögerung von x Sekunden
-    print ("Connected to", countries[rand_country],"...")
+    for i in range (sek, 0, -1):
+        sys.stdout.write (str (i) + ' ')
+        sys.stdout.flush ()
+        time.sleep (1)
+    print ("Connected to",countries[rand_country],"...")
     return(countries[rand_country])
 
 # Aktienkurse für eine Unternehmen einlesen
@@ -103,9 +107,9 @@ def csv_write(result, filename):
                 a = csv.writer(fp,delimiter=",")
                 a.writerows(result)
                 break
-        except:
-            print("Datei ", filename, " kann nicht geöffnet werden - bitte schließen und <Enter> drücken!")
-            input()
+        except Exception as e:
+            print ("Error: ", e)
+            input ("Datei kann nicht geöffnet werden - bitte schließen und <Enter> drücken!")
     fp.close()
 
 # Spalten bereinigen der Tabelle

@@ -37,46 +37,81 @@ def save_xls(stock, content, filename, append):
             input ("Datei ist evt. bereits geöffnet - bitte schließen und <Enter> drücken!")
 
 
-def read_bilanz(stock):
+def read_stamm(stock):
     output = []
     link = "https://www.ariva.de" + stock + "/bilanz-guv?page=" + "0" + "#stammdaten"
     page = requests.get (link)
     soup = BeautifulSoup (page.content, "html.parser")
 
-    # Stammdaten und Kontakte auslesen
-    output.append(["Stammdaten"])
-    table = soup.find_all ("div", class_="column twothirds")
+    # Stammdaten auslesen
+    output.append(["Stammdaten",""])
+    table = soup.find_all ("div", class_="column half")
     for i in table:
         for j in i.find_all ("tr"):
-            # print (j.prettify(),"\n")
             row = []
             for k in j.find_all ("td"):
-                # print (k.prettify (), "\n")
-                # Umwandlung in Float wenn möglich
-                if k.text.strip() == "Adresse": output.append(["Kontakt"])
                 if k.text.strip() == "": row.append ("-")
                 else: row.append (k.text.strip())
             output.append (row)
 
+    # Kontakte auslesen
+    output[0].extend(["Kontakt",""])
+    table = soup.find_all ("div", class_="column half last")
+    nr = 1
+    for i in table:
+        for j in i.find_all ("tr"):
+            for k in j.find_all ("td"):
+                if k.text.strip() == "": output[nr].append ("-")
+                else: output[nr].append (k.text.strip())
+            nr += 1
+
     # Termine auslesen
     table = soup.find_all ("div", class_="termine abstand new")
+    nr = 1
     # Termine - Überschrift auslesen
     for i in table:
-        cont = [i.find("h3", class_="arhead undef").text.strip()]
-        output.append(cont)
+        cont = i.find("h3", class_="arhead undef").text.strip()
+        output[0].append(cont)
     # Termine Inhalt auslesen
+    for i in table:
+        for j in i.find_all ("tr"):
+            for k in j.find_all ("td"):
+                #Prüfung ob Tag.Monat damit Jahr ergänzt wird
+                pattern = '^[0-9][0-9].[0-9][0-9].$'
+                if re.match(pattern, k.text.strip()): output[nr].append (k.text.strip()+cont[-4:])
+                else: output[nr].append (k.text.strip())
+            nr += 1
+
+    # Aktionäre
+    output[0].extend(["Aktionäre",""])
+    table = soup.find_all ("div", class_="aktStruktur abstand new")
+    nr = 1
+    for i in table:
+        for j in i.find_all ("tr"):
+            for k in j.find_all ("td"):
+                output[nr].append (k.text.strip())
+            nr += 1
+
+    # Management / Aufsichtsrat
+    table = soup.find_all ("div", class_="management abstand new")
     for i in table:
         for j in i.find_all ("tr"):
             row = []
             for k in j.find_all ("td"):
-                #Prüfung ob Tag.Monat damit Jahr ergänzt wird
-                pattern = '^[0-9][0-9].[0-9][0-9].$'
-                if re.match(pattern, k.text.strip()): row.append (k.text.strip()+cont[0][-4:])
-                else: row.append (k.text.strip())
+                row.append (k.text.strip())
             output.append (row)
+
+    # Profil
+    table  = soup.find(id="profil_text")
+    txt = ""
+    for i in table.find_all ("p"):
+        if txt == "": txt = txt + i.text.strip()
+        else: txt = txt + " " + i.text.strip()
+    output.append(["Profil",txt])
+
     return(output)
 
-output = read_bilanz("/apple-aktie")
+output = read_stamm("/apple-aktie")
 save_xls("Apple",output,"Test2.xlsx",0)
 
 

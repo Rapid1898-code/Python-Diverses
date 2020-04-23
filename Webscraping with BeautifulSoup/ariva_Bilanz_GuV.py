@@ -3,9 +3,13 @@ import csv
 from bs4 import BeautifulSoup
 import pandas as pd
 from openpyxl import load_workbook
+from openpyxl.utils import get_column_letter
+from openpyxl.styles import Font, PatternFill, Border, Side
 import random
 import subprocess
 import time
+import re
+import sys
 
 # Ausgabe der Liste als CSV-File inkl. Prüfung ob Datei geöffnet ist
 # Input content: ist eine Matrix Liste [[][]]
@@ -17,8 +21,9 @@ def csv_write(content,filename):
                 a = csv.writer(fp,delimiter=",")
                 a.writerows(content)
                 break
-        except:
-            input ("Datei kann nicht geöffent werden - bitte schließen und <Enter> drücken!")
+        except Exception as e:
+            print ("Error: ", e)
+            input ("Datei kann nicht geöffnet werden - bitte schließen und <Enter> drücken!")
 
 # Ausgabe der Liste als XLS-File inkl. Prüfung ob Datei geöffnet ist
 # Input stock: Name der Aktie
@@ -26,7 +31,7 @@ def csv_write(content,filename):
 # Input filenmae: Name des XLSX-File
 # Input append: 1=>anhängen von neuen Worksheets, 0=>überschreiben des XLS
 def save_xls(stock, content, filename, append):
-    #check ob append ausgewählt - aber file nicht vorhanden - dann Wechsel über Überschreibmodus 0
+    #check ob append ausgewählt - aber wenn file nicht vorhanden - dann Wechsel über Überschreibmodus 0
     try:
         book = load_workbook (filename)
     except:
@@ -35,26 +40,65 @@ def save_xls(stock, content, filename, append):
         try:
             if append == 0:
                 writer = pd.ExcelWriter(filename, engine = 'openpyxl', options={'strings_to_numbers': True})
-            else:
+            elif append == 1:
                 book = load_workbook (filename)
                 writer = pd.ExcelWriter(filename, engine = 'openpyxl', options={'strings_to_numbers': True})
                 writer.book = book
             pd.DataFrame(content).to_excel (writer, sheet_name=stock, header=False, index=False)
-            writer.save ()
-            writer.close ()
             break
-        except:
+        except Exception as e:
+            print ("Error: ", e)
             input ("Datei kann nicht geöffnet werden - bitte schließen und <Enter> drücken!")
+
+    # Automatische Anpassung der Spalten nach best fit
+    column_widths = []
+    ws = writer.sheets[stock]
+    # Ermittlung des längsten Wertes pro Spalte
+    for row in content:
+        for i, cell in enumerate (row):
+            if len (column_widths) > i:
+                if len (str (cell)) > column_widths[i]:
+                    column_widths[i] = len (str (cell))
+            else:
+                column_widths += [len (str (cell))]
+    for i, column_width in enumerate (column_widths):
+        # Spalte 2 mit langem Profil fix mit Breite 17 - restliche Spaten immer mit maximalen Wert pro Spalte
+        if i == 1: ws.column_dimensions[get_column_letter (i + 1)].width = 17
+        else: ws.column_dimensions[get_column_letter (i + 1)].width = column_width
+
+    # Formatierung des Excel-Sheets
+    bold = Font(bold=True)
+    bg_yellow = PatternFill(fill_type="solid", start_color='fcba03',end_color='fcba03')
+    fr = Border (outline=Side (style='thin'), right=Side (style='thin'), top=Side (style='thin'), bottom=Side (style='thin'))
+    # Formatierung Titelleiste Jahre
+    for i,cont in enumerate (content):
+        if cont == []: continue     # Leerzeile überspringe...
+        if cont[0].find("Bilanz in ") != -1:
+            row = i+1
+            break
+
+    for cell in ws[f"{row}:{row}"]:
+        cell.font = bold
+        cell.fill = bg_yellow
+        cell.border = fr
+
+    writer.save ()
+    writer.close ()
 
 # VPN-Switch bei NordVPN mit x Sekunden Verzögerung
 # Output: Rückgabe des zufällig gewählten Landes
 def vpn_switch(sek):
-    countries = ["Argentina", "Australia", "Austria", "Belgium", "Canada", "Germany", "Israel", "Italy",
-                 "Norway", "Poland", "Portugal", "Romania", "Serbia", "Switzerland", "United Kingdom"]
+    countries = ["Austria", "Belgium", "Canada", "Germany", "Israel", "Italy","Bosnia and Herzogovina",
+                 "Norway", "Poland", "Portugal", "Romania", "Serbia", "Switzerland", "United Kingdom",
+                 "Bulgaria","Croatia","Denmark","Estonia","Finland","France","Gerogia","Greece","Hong Kong",
+                 "Hungary","Iceland","India","Latvia","Netherlands"]
     rand_country = random.randrange(len(countries)-1)
     subprocess.call (["C:/Program Files (x86)/NordVPN/NordVPN.exe", "-c", "-g", countries[rand_country]])
     print ("VPN Switch to",countries[rand_country],"...")
-    time.sleep(sek)  #Verzögerung von x Sekunden
+    for i in range (sek, 0, -1):
+        sys.stdout.write (str (i) + ' ')
+        sys.stdout.flush ()
+        time.sleep (1)
     print ("Connected to",countries[rand_country],"...")
     return(countries[rand_country])
 
@@ -166,21 +210,121 @@ def read_bilanz(stock):
                 del output_gesamt[j][i]
     return output_gesamt
 
-stocks_dic = {'/apple-aktie': 'Apple', '/infineon-aktie': 'Infineon'}
-#stocks_dic = {'/apple-aktie': 'Apple'}
+# Stammdaten für das Unternehmen lt. Parameter lesen
+# Input Stock: Aktienkennung lt. Ariva.de z.b. /apple-aktie oder /wirecard-aktie
+def read_stamm(stock):
+    output = []
+    link = "https://www.ariva.de" + stock + "/bilanz-guv?page=" + "0" + "#stammdaten"
+    page = requests.get (link)
+    soup = BeautifulSoup (page.content, "html.parser")
+
+    # Stammdaten auslesen
+    output.append(["Stammdaten",""])
+    table = soup.find_all ("div", class_="column half")
+    for i in table:
+        for j in i.find_all ("tr"):
+            row = []
+            for k in j.find_all ("td"):
+                if k.text.strip() == "": row.append ("-")
+                else: row.append (k.text.strip())
+            output.append (row)
+
+    # Kontakte auslesen
+    output[0].extend(["Kontakt",""])
+    table = soup.find_all ("div", class_="column half last")
+    nr = 1
+    for i in table:
+        for j in i.find_all ("tr"):
+            # Adresse wird unten vor der Zeile Management eingefügt, weil sie zu groß ist
+            next_one_adress = False
+            for k in j.find_all ("td"):
+                if next_one_adress == True:
+                    next_one_adress = False
+                    if k.text.strip() == "": next_one_adress_row.append("-")
+                    else: next_one_adress_row.append(k.text.strip())
+                    continue
+                if k.text.strip() == "Adresse":
+                    next_one_adress = True
+                    next_one_adress_row = ["Adresse"]
+                    nr -= 1
+                    continue
+                if k.text.strip() == "": output[nr].append ("-")
+                else: output[nr].append (k.text.strip())
+            nr += 1
+
+    # Termine auslesen
+    table = soup.find_all ("div", class_="termine abstand new")
+    nr = 1
+    # Termine - Überschrift auslesen
+    for i in table:
+        cont = i.find("h3", class_="arhead undef").text.strip()
+        output[0].extend([cont,""])
+    # Termine Inhalt auslesen
+    for i in table:
+        for j in i.find_all ("tr"):
+            for k in j.find_all ("td"):
+                #Prüfung ob Tag.Monat damit Jahr ergänzt wird
+                pattern = '^[0-9][0-9].[0-9][0-9].$'
+                if re.match(pattern, k.text.strip()): output[nr].append (k.text.strip()+cont[-4:])
+                else: output[nr].append (k.text.strip())
+            nr += 1
+
+    # Aktionäre
+    output[0].extend(["Aktionäre",""])
+    table = soup.find_all ("div", class_="aktStruktur abstand new")
+    nr = 1
+    for i in table:
+        for j in i.find_all ("tr"):
+            for k in j.find_all ("td"):
+                if nr <= 10:
+                    while (len(output[nr])<6): output[nr].append("")
+                    output[nr].append (k.text.strip())
+            nr += 1
+
+    # Adresse von oben einfügen
+    output.append(next_one_adress_row)
+
+    # Management / Aufsichtsrat
+    table = soup.find_all ("div", class_="management abstand new")
+    for i in table:
+        for j in i.find_all ("tr"):
+            row = []
+            for k in j.find_all ("td"):
+                row.append (k.text.strip())
+            output.append (row)
+
+    # Profil
+    table  = soup.find(id="profil_text")
+    txt = ""
+    for i in table.find_all ("p"):
+        if txt == "": txt = txt + i.text.strip()
+        else: txt = txt + " " + i.text.strip()
+    output.append(["Profil",txt])
+
+    return(output)
+
+#stocks_dic = {'/apple-aktie': 'Apple', '/infineon-aktie': 'Infineon'}
+stocks_dic = {'/bayer-aktie': 'Bayer'}
 
 #Input-Parameter
 #Input - Angabe welcher Index gelesen werden soll (z.B. DAX-30) - bei Angabe von 0 wird individuell lt. stocks_dic eingelesen
 #Input - sek: Anzahl der Sekunden der Verzögerung bei VPN-Switch
 index=0
-sek=30
-vpn_land = vpn_switch (sek)
+vpn_land = "no-vpn"
+#index="dax-30"
+sek=17
+#vpn_land = vpn_switch (sek)
+
 if index != 0:
     stocks_dic = read_index(index)
 for stock in stocks_dic:
     print("Verarbeitung ",stock," with VPN ",vpn_land)
     output = read_bilanz(stock)
-    save_xls(stocks_dic.get(stock), output, "Ariva_Data.xlsx" , 1)
+    output_stamm = read_stamm(stock)
+    output.insert(0,[])
+    for i in range(len(output_stamm)-1,-1,-1):
+        output.insert(0,output_stamm[i])
+    save_xls(stocks_dic.get(stock), output, "Ariva_Data.xlsx" , 0)
 
 
 
