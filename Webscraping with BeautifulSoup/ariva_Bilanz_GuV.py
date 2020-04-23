@@ -57,23 +57,24 @@ def save_xls(stock, content, filename, append):
                 column_widths += [len (str (cell))]
     for i, column_width in enumerate (column_widths):
         # Spalte 2 mit langem Profil fix mit Breite 17 - restliche Spaten immer mit maximalen Wert pro Spalte
-        if i == 1: ws.column_dimensions[get_column_letter (i + 1)].width = 17
+        if i == 0: ws.column_dimensions[get_column_letter (i + 1)].width = 35
+        elif i == 1: ws.column_dimensions[get_column_letter (i + 1)].width = 32
         else: ws.column_dimensions[get_column_letter (i + 1)].width = column_width+2
 
     # Formatierung des Excel-Sheets
     bold = Font(bold=True)
     bg_yellow = PatternFill(fill_type="solid", start_color='fbfce1',end_color='fbfce1')
     bg_grey = PatternFill (fill_type="solid", start_color='babab6', end_color='babab6')
+    bg_green = PatternFill (fill_type="solid", start_color='c7ffcd', end_color='fffbc7')
     frame_all = Border (left=Side (style='thin'),right=Side (style='thin'), top=Side (style='thin'), bottom=Side (style='thin'))
     frame_upanddown = Border (top=Side (style='thin'), bottom=Side (style='thin'))
 
-    # Formatierung Titelleiste Jahre
+    # Formatierung Excel-Sheet
     for i,cont in enumerate (content):
         if cont == []: continue     # Leerzeile überspringen...
         if cont[0].find("Bilanz in ") != -1:
             row = i+1
             break
-
     for cell in ws["A:A"]:
         cell.font = bold
         cell.fill = bg_yellow
@@ -90,6 +91,11 @@ def save_xls(stock, content, filename, append):
     for cell in ws[f"{row-1}:{row-1}"]:
         cell.fill = bg_grey
         cell.border = frame_upanddown
+    row_end = len(content)
+    for cell in ws[f"B{row}:B{len(content)}"]:
+        cell[0].fill = bg_yellow
+        cell[0].font = bold
+        cell[0].border = frame_all
     while True:
         try:
             writer.save ()
@@ -150,6 +156,7 @@ def read_bilanz(stock):
                 for k in j.find_all("td"):
                     row.append(k.text.strip())
                 output_temp.append(row)
+
         #Bereinigung und Formatierung
         for i in range(len(output_temp)-1,0,-1):
             #Quartalswerte entfernen
@@ -161,13 +168,6 @@ def read_bilanz(stock):
             if empty == True: del output_temp[i]
             #Doppelte Jahreszahlen entfernen
             if i != 0 and output_temp[i] == output_temp[0]: del output_temp[i]
-            #Formate und Texte anpassen
-
-            """
-            text_dic = {'Umsatz': 'Revenue in M', 'Bruttoergebnis vom Umsatz': 'Gross Profit in M ', 'Operatives Ergebnis (EBIT)': 'EBIT in M',
-                        'Finanzergebnis':'Financial Result in M','key':'val','key':'val','key':'val','key':'val','key':'val','key':'val','key':'val','key':'val',
-                        }
-            """
 
         #Eckdaten Kennzahlen ermitteln und links oben im Sheet speichern
         if seite == 0:
@@ -175,6 +175,7 @@ def read_bilanz(stock):
             for i in table:
                 if "Bilanz" in i.text and "Geschäftsjahresende" in i.text:
                     output_temp[0][0] = "Bilanz in Mio. " + i.text.strip()[18:22] + " per " + i.text.strip()[-7:-1]
+                    bilanz_english = "Balance Sheet in M " + i.text.strip()[18:22] + " per " + i.text.strip()[-7:-1]
 
         #Einfügen weiterer Jahreswerte
         if output_temp[0][1:7] == jahre_titelleiste:
@@ -196,6 +197,12 @@ def read_bilanz(stock):
                         if j > 0 and output_gesamt[j][0] != output_temp[j][0]:
                             print("FEHLER !!! Beschriftung unterschiedlich in Output-Gesamt und Output-Temp in Zeile: ",j)
             output_temp = []
+
+    #Jahresreihenfolge auf absteigend ändern
+    for i,cont in enumerate(output_gesamt):
+        teil2 = cont[1:]
+        teil2.reverse()
+        output_gesamt[i] = cont[0:1]+teil2
 
     #Leerspalten bereinigen (wo nur "-" enthalten ist
     #Tausender-Punkte entfernen
@@ -220,7 +227,51 @@ def read_bilanz(stock):
         if empty==True:
             for j in range (len(output_gesamt)):
                 del output_gesamt[j][i]
+
+
+    #Formate und Texte anpassen
+    text_dic = {'Umsatz': 'Revenue', 'Bruttoergebnis vom Umsatz': 'Gross Profit',
+                'Operatives Ergebnis (EBIT)': 'EBIT Earning Before Interest & Tax', 'Finanzergebnis':'Financial Result',
+                'Ergebnis vor Steuer (EBT)':'EBT Earning Before Tax','Steuern auf Einkommen und Ertrag':'Taxes on income and earnings',
+                'Ergebnis nach Steuer':'Earnings after tax','Minderheitenanteil':'Minority Share',
+                'Jahresüberschuss/-fehlbetrag':'Net Income','Summe Umlaufvermögen':'Total Current Assets',
+                'Summe Anlagevermögen':'Summe Aktiva','Summe Aktiva':'Total Assets',
+                'Summe kurzfristiges Fremdkapital': 'Total Short-Term Debt','Summe langfristiges Fremdkapital': 'Total Long-Term Debt',
+                'Summe Fremdkapital': 'Total Debt Capital','Minderheitenanteil': 'Minority Share',
+                'Summe Eigenkapital': 'Total Equity','Summe Passiva': 'Total Liabilities',
+                'Mio.Aktien im Umlauf': 'Million shares outstanding', 'Gezeichnetes Kapital (in Mio.)': 'Subscribed Capital in M',
+                'Ergebnis je Aktie (brutto)': 'Earnings per share','Ergebnis je Aktie (unverwässert)': 'Basic Earnings per share',
+                'Ergebnis je Aktie (verwässert)': 'Diluted Earnings per share','Dividende je Aktie': 'Dividend per share',
+                'Dividendenausschüttung in Mio': 'Dividend Payment in M',
+                'Umsatz je Aktie': 'Revenue per share','Buchwert je Aktie': 'Book value per share',
+                'Cashflow je Aktie': 'Cashflow per share','Bilanzsumme je Aktie': 'Total assets per share',
+                'Personal am Ende des Jahres': 'Staff at the end of year','Personalaufwand in Mio. EUR': 'Personnel expenses in M',
+                'Aufwand je Mitarbeiter in EUR': 'Effort per employee','Umsatz je Mitarbeiter in EUR': 'Turnover per employee',
+                'Bruttoergebnis je Mitarbeiter in EUR': 'Gross Profit per employee','KGV (Kurs/Gewinn)': 'PE (price/earnings)',
+                'KUV (Kurs/Umsatz)': 'PS (price/sales)','KBV (Kurs/Buchwert)': 'PB (price/book value)',
+                'KCV (Kurs/Cashflow)': 'PC (prce/cashflow)','Dividendenrendite in %': 'Dividend Yield in %',
+                'Gewinnrendite in %': 'Return on profit in %','Eigenkapitalrendite in %': 'Return on Equity in %',
+                'Umsatzrendite in %': 'Return on sales in %','Gesamtkapitalrendite in %': 'Total Return on Investment in %',
+                'Return on Investment in %': 'Return on Investment in %','Arbeitsintensität in %': 'Work Intensity in %',
+                'Eigenkapitalquote in %': 'Equity Ratio in %','Fremdkapitalquote in %': 'Debt Ratio in %',
+                'Working Capital in Mio': 'Working Capital in M','Gewinn je Mitarbeiter in EUR': 'Earnings per employee',
+                'Verschuldungsgrad in %': 'Finance Gearing in %'}
+
+    #Text bereinigen und englische Spalte ergänzen
+    text_dic[output_gesamt[0][0]] = bilanz_english
+    umsatz_count = 0
+    for i in range(len(output_gesamt)):
+        if output_gesamt[i][0] == "Summe Anlagevermögen (*)": output_gesamt[i][0] = "Summe Anlagevermögen"
+        if "Working Capital" in output_gesamt[i][0] : output_gesamt[i][0] = "Working Capital in Mio"
+        if "Aktien im Umlauf" in output_gesamt[i][0]: output_gesamt[i][0] = "Mio.Aktien im Umlauf"
+        if "Umsatz" in output_gesamt[i][0] and umsatz_count == 0: umsatz_count += 1
+        if "Umsatz" in output_gesamt[i][0] and umsatz_count == 1: output_gesamt[i][0] = "Umsatz je Aktie"
+
+        if output_gesamt[i][0] in text_dic: output_gesamt[i].insert(1,text_dic.get(output_gesamt[i][0]))
+        else: output_gesamt[i].insert(1,"")
+
     return output_gesamt
+
 
 # Stammdaten für das Unternehmen lt. Parameter lesen
 # Input Stock: Aktienkennung lt. Ariva.de z.b. /apple-aktie oder /wirecard-aktie
@@ -231,7 +282,7 @@ def read_stamm(stock):
     soup = BeautifulSoup (page.content, "html.parser")
 
     # Stammdaten auslesen
-    output.append(["STAMMDATEN",""])
+    output.append(["STAMMDATEN","",""])
     table = soup.find_all ("div", class_="column half")
     for i in table:
         for j in i.find_all ("tr"):
@@ -239,7 +290,8 @@ def read_stamm(stock):
             for k in j.find_all ("td"):
                 if k.text.strip() == "": row.append ("-")
                 else: row.append (k.text.strip())
-            output.append (row)
+            row.append("")
+            output.append(row)
 
     # Kontakte auslesen
     output[0].extend(["KONTAKT",""])
@@ -262,6 +314,7 @@ def read_stamm(stock):
                     continue
                 if k.text.strip() == "": output[nr].append ("-")
                 else: output[nr].append (k.text.strip())
+            output[nr].append("")
             nr += 1
 
     # Termine auslesen
@@ -270,7 +323,7 @@ def read_stamm(stock):
     # Termine - Überschrift auslesen
     for i in table:
         cont = i.find("h3", class_="arhead undef").text.strip().upper()
-        output[0].extend([cont,""])
+        output[0].extend([cont,"",""])
     # Termine Inhalt auslesen
     for i in table:
         for j in i.find_all ("tr"):
@@ -279,6 +332,7 @@ def read_stamm(stock):
                 pattern = '^[0-9][0-9].[0-9][0-9].$'
                 if re.match(pattern, k.text.strip()): output[nr].append (k.text.strip()+cont[-4:])
                 else: output[nr].append (k.text.strip())
+            output[nr].append("")
             nr += 1
 
     # Aktionäre
@@ -289,7 +343,7 @@ def read_stamm(stock):
         for j in i.find_all ("tr"):
             for k in j.find_all ("td"):
                 if nr <= 10:
-                    while (len(output[nr])<6): output[nr].append("")
+                    while (len(output[nr])<9): output[nr].append("")
                     output[nr].append (k.text.strip())
             nr += 1
 
@@ -336,7 +390,7 @@ for stock in stocks_dic:
     output.insert(0,[])
     for i in range(len(output_stamm)-1,-1,-1):
         output.insert(0,output_stamm[i])
-    save_xls(stocks_dic.get(stock), output, "Ariva_Data.xlsx" , 1)
+    save_xls(stocks_dic.get(stock), output, "Ariva_Data.xlsx" , 0)
 
 
 
