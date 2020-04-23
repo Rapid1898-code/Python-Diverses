@@ -36,19 +36,13 @@ def save_xls(stock, content, filename, append):
         book = load_workbook (filename)
     except:
         append = 0
-    while True:
-        try:
-            if append == 0:
-                writer = pd.ExcelWriter(filename, engine = 'openpyxl', options={'strings_to_numbers': True})
-            elif append == 1:
-                book = load_workbook (filename)
-                writer = pd.ExcelWriter(filename, engine = 'openpyxl', options={'strings_to_numbers': True})
-                writer.book = book
-            pd.DataFrame(content).to_excel (writer, sheet_name=stock, header=False, index=False)
-            break
-        except Exception as e:
-            print ("Error: ", e)
-            input ("Datei kann nicht geöffnet werden - bitte schließen und <Enter> drücken!")
+    if append == 0:
+        writer = pd.ExcelWriter(filename, engine = 'openpyxl', options={'strings_to_numbers': True})
+    elif append == 1:
+        book = load_workbook (filename)
+        writer = pd.ExcelWriter(filename, engine = 'openpyxl', options={'strings_to_numbers': True})
+        writer.book = book
+    pd.DataFrame(content).to_excel (writer, sheet_name=stock, header=False, index=False)
 
     # Automatische Anpassung der Spalten nach best fit
     column_widths = []
@@ -70,7 +64,8 @@ def save_xls(stock, content, filename, append):
     bold = Font(bold=True)
     bg_yellow = PatternFill(fill_type="solid", start_color='fbfce1',end_color='fbfce1')
     bg_grey = PatternFill (fill_type="solid", start_color='babab6', end_color='babab6')
-    fr = Border (left=Side (style='thin'),right=Side (style='thin'), top=Side (style='thin'), bottom=Side (style='thin'))
+    frame_all = Border (left=Side (style='thin'),right=Side (style='thin'), top=Side (style='thin'), bottom=Side (style='thin'))
+    frame_upanddown = Border (top=Side (style='thin'), bottom=Side (style='thin'))
 
     # Formatierung Titelleiste Jahre
     for i,cont in enumerate (content):
@@ -82,32 +77,27 @@ def save_xls(stock, content, filename, append):
     for cell in ws["A:A"]:
         cell.font = bold
         cell.fill = bg_yellow
-        cell.border = fr
+        cell.border = frame_all
     for cell in ws["1:1"]:
         cell.font = bold
         cell.fill = bg_yellow
-        cell.border = fr
+        cell.border = frame_all
     for cell in ws["A1:A2"]: cell[0].fill = bg_yellow
-    """    
-    ws["C1"].font = bold
-    ws["C1"].fill = bg_yellow
-    ws["C1"].border = fr
-    ws["E1"].font = bold
-    ws["E1"].fill = bg_yellow
-    ws["E1"].border = fr
-    ws["G1"].font = bold
-    ws["G1"].fill = bg_yellow
-    ws["G1"].border = fr
-    """
     for cell in ws[f"{row}:{row}"]:
         cell.font = bold
         cell.fill = bg_yellow
-        cell.border = fr
+        cell.border = frame_all
     for cell in ws[f"{row-1}:{row-1}"]:
         cell.fill = bg_grey
-
-    writer.save ()
-    writer.close ()
+        cell.border = frame_upanddown
+    while True:
+        try:
+            writer.save ()
+            writer.close ()
+            break
+        except Exception as e:
+            print ("Error: ", e)
+            input ("Datei kann nicht geöffnet werden - bitte schließen und <Enter> drücken!")
 
 # VPN-Switch bei NordVPN mit x Sekunden Verzögerung
 # Output: Rückgabe des zufällig gewählten Landes
@@ -156,10 +146,8 @@ def read_bilanz(stock):
         table = soup.find_all ("div", class_="column twothirds table")
         for i in table:
             for j in i.find_all ("tr"):
-                #print (j.prettify(),"\n")
                 row = []
                 for k in j.find_all("td"):
-                    #print (k.prettify (), "\n")
                     row.append(k.text.strip())
                 output_temp.append(row)
         #Bereinigung und Formatierung
@@ -348,7 +336,7 @@ for stock in stocks_dic:
     output.insert(0,[])
     for i in range(len(output_stamm)-1,-1,-1):
         output.insert(0,output_stamm[i])
-    save_xls(stocks_dic.get(stock), output, "Ariva_Data.xlsx" , 0)
+    save_xls(stocks_dic.get(stock), output, "Ariva_Data.xlsx" , 1)
 
 
 
