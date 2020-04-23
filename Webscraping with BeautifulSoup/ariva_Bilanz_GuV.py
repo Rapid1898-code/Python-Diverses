@@ -64,23 +64,47 @@ def save_xls(stock, content, filename, append):
     for i, column_width in enumerate (column_widths):
         # Spalte 2 mit langem Profil fix mit Breite 17 - restliche Spaten immer mit maximalen Wert pro Spalte
         if i == 1: ws.column_dimensions[get_column_letter (i + 1)].width = 17
-        else: ws.column_dimensions[get_column_letter (i + 1)].width = column_width
+        else: ws.column_dimensions[get_column_letter (i + 1)].width = column_width+2
 
     # Formatierung des Excel-Sheets
     bold = Font(bold=True)
-    bg_yellow = PatternFill(fill_type="solid", start_color='fcba03',end_color='fcba03')
-    fr = Border (outline=Side (style='thin'), right=Side (style='thin'), top=Side (style='thin'), bottom=Side (style='thin'))
+    bg_yellow = PatternFill(fill_type="solid", start_color='fbfce1',end_color='fbfce1')
+    bg_grey = PatternFill (fill_type="solid", start_color='babab6', end_color='babab6')
+    fr = Border (left=Side (style='thin'),right=Side (style='thin'), top=Side (style='thin'), bottom=Side (style='thin'))
+
     # Formatierung Titelleiste Jahre
     for i,cont in enumerate (content):
-        if cont == []: continue     # Leerzeile überspringe...
+        if cont == []: continue     # Leerzeile überspringen...
         if cont[0].find("Bilanz in ") != -1:
             row = i+1
             break
 
+    for cell in ws["A:A"]:
+        cell.font = bold
+        cell.fill = bg_yellow
+        cell.border = fr
+    for cell in ws["1:1"]:
+        cell.font = bold
+        cell.fill = bg_yellow
+        cell.border = fr
+    for cell in ws["A1:A2"]: cell[0].fill = bg_yellow
+    """    
+    ws["C1"].font = bold
+    ws["C1"].fill = bg_yellow
+    ws["C1"].border = fr
+    ws["E1"].font = bold
+    ws["E1"].fill = bg_yellow
+    ws["E1"].border = fr
+    ws["G1"].font = bold
+    ws["G1"].fill = bg_yellow
+    ws["G1"].border = fr
+    """
     for cell in ws[f"{row}:{row}"]:
         cell.font = bold
         cell.fill = bg_yellow
         cell.border = fr
+    for cell in ws[f"{row-1}:{row-1}"]:
+        cell.fill = bg_grey
 
     writer.save ()
     writer.close ()
@@ -219,7 +243,7 @@ def read_stamm(stock):
     soup = BeautifulSoup (page.content, "html.parser")
 
     # Stammdaten auslesen
-    output.append(["Stammdaten",""])
+    output.append(["STAMMDATEN",""])
     table = soup.find_all ("div", class_="column half")
     for i in table:
         for j in i.find_all ("tr"):
@@ -230,7 +254,7 @@ def read_stamm(stock):
             output.append (row)
 
     # Kontakte auslesen
-    output[0].extend(["Kontakt",""])
+    output[0].extend(["KONTAKT",""])
     table = soup.find_all ("div", class_="column half last")
     nr = 1
     for i in table:
@@ -257,7 +281,7 @@ def read_stamm(stock):
     nr = 1
     # Termine - Überschrift auslesen
     for i in table:
-        cont = i.find("h3", class_="arhead undef").text.strip()
+        cont = i.find("h3", class_="arhead undef").text.strip().upper()
         output[0].extend([cont,""])
     # Termine Inhalt auslesen
     for i in table:
@@ -270,7 +294,7 @@ def read_stamm(stock):
             nr += 1
 
     # Aktionäre
-    output[0].extend(["Aktionäre",""])
+    output[0].extend(["AKTIONÄRE",""])
     table = soup.find_all ("div", class_="aktStruktur abstand new")
     nr = 1
     for i in table:
