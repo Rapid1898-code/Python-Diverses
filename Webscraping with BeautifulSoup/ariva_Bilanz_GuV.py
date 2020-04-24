@@ -59,6 +59,7 @@ def save_xls(stock, content, filename, append):
         # Spalte 2 mit langem Profil fix mit Breite 17 - restliche Spaten immer mit maximalen Wert pro Spalte
         if i == 0: ws.column_dimensions[get_column_letter (i + 1)].width = 35
         elif i == 1: ws.column_dimensions[get_column_letter (i + 1)].width = 32
+        elif 2 <= i  <= 10:   ws.column_dimensions[get_column_letter (i + 1)].width = 15
         else: ws.column_dimensions[get_column_letter (i + 1)].width = column_width+2
 
     # Formatierung des Excel-Sheets
@@ -79,23 +80,40 @@ def save_xls(stock, content, filename, append):
         cell.font = bold
         cell.fill = bg_yellow
         cell.border = frame_all
-    for cell in ws["1:1"]:
-        cell.font = bold
-        cell.fill = bg_yellow
-        cell.border = frame_all
     for cell in ws["A1:A2"]: cell[0].fill = bg_yellow
     for cell in ws[f"{row}:{row}"]:
         cell.font = bold
         cell.fill = bg_yellow
         cell.border = frame_all
-    for cell in ws[f"{row-1}:{row-1}"]:
-        cell.fill = bg_grey
-        cell.border = frame_upanddown
-    row_end = len(content)
     for cell in ws[f"B{row}:B{len(content)}"]:
         cell[0].fill = bg_yellow
         cell[0].font = bold
         cell[0].border = frame_all
+    for cell in ws["C3:C10"]:
+        cell[0].fill = bg_yellow
+        cell[0].border = frame_all
+        cell[0].font = bold
+    for cell in ws["D3:D10"]:
+        cell[0].fill = bg_yellow
+        cell[0].border = frame_all
+        cell[0].font = bold
+    for cell in ws[f"{row-1}:{row-1}"]:
+        cell.fill = bg_grey
+        cell.border = frame_upanddown
+    for cell in ws["2:2"]:
+        cell.fill = bg_grey
+        cell.border = frame_upanddown
+    ws["G3"].font = bold
+    ws["G3"].fill = bg_yellow
+    ws["G3"].border = frame_all
+    ws["J3"].font = bold
+    ws["J3"].fill = bg_yellow
+    ws["J3"].border = frame_all
+    for cell in ws["1:1"]:
+        cell.font = bold
+        cell.fill = bg_green
+        cell.border = frame_all
+
     while True:
         try:
             writer.save ()
@@ -272,29 +290,39 @@ def read_bilanz(stock):
 
     return output_gesamt
 
-
 # Stammdaten für das Unternehmen lt. Parameter lesen
 # Input Stock: Aktienkennung lt. Ariva.de z.b. /apple-aktie oder /wirecard-aktie
 def read_stamm(stock):
     output = []
+
+    # Stammdaten auslesen
     link = "https://www.ariva.de" + stock + "/bilanz-guv?page=" + "0" + "#stammdaten"
     page = requests.get (link)
     soup = BeautifulSoup (page.content, "html.parser")
 
-    # Stammdaten auslesen
-    output.append(["STAMMDATEN","",""])
+    output.append(["STAMMDATEN / BASE DATA",""])
     table = soup.find_all ("div", class_="column half")
     for i in table:
         for j in i.find_all ("tr"):
             row = []
             for k in j.find_all ("td"):
                 if k.text.strip() == "": row.append ("-")
+                elif k.text.strip () == "Gründungsjahr": row.append ("Gründungsjahr / Founding Year")
+                elif k.text.strip () == "Gelistet seit":row.append ("Gelistet Seit / Listed Since")
+                elif k.text.strip () == "Nennwert / Aktie":row.append ("Nominalwert / Nominal Value")
+                elif k.text.strip () == "Land":row.append ("Land / Country")
+                elif k.text.strip () == "Währung":row.append ("Währung / Currency")
+                elif k.text.strip () == "Branche":row.append ("Branche / Industry")
+                elif k.text.strip () == "Aktientyp":row.append ("Aktientyp / Share Type")
+                elif k.text.strip () == "Sektor":row.append ("Sektor / Sector")
+                elif k.text.strip () == "Gattung":row.append ("Typ / Genre")
+                elif k.text.strip () == "Adresse":row.append ("Adresse / Address")
+                elif k.text.strip () == "Profil":row.append ("Beschreibung / Profile")
                 else: row.append (k.text.strip())
-            row.append("")
             output.append(row)
 
     # Kontakte auslesen
-    output[0].extend(["KONTAKT",""])
+    output[0].extend(["KONTAKT / CONTACT","",""])
     table = soup.find_all ("div", class_="column half last")
     nr = 1
     for i in table:
@@ -313,6 +341,13 @@ def read_stamm(stock):
                     nr -= 1
                     continue
                 if k.text.strip() == "": output[nr].append ("-")
+                elif k.text.strip() ==  "Telefon": output[nr].extend(["Telefon / Phone",""])
+                elif k.text.strip() ==  "Fax": output[nr].extend(["Fax",""])
+                elif k.text.strip() ==  "Internet":output[nr].extend(["Internet",""])
+                elif k.text.strip () == "E-Mail":output[nr].extend (["E-Mail", ""])
+                elif k.text.strip () == "IR Telefon":output[nr].extend (["Inv. Relations Telefon / Phone", ""])
+                elif k.text.strip () == "IR E-Mail":output[nr].extend (["Inv. Relations E-Mail", ""])
+                elif k.text.strip () == "Kontaktperson":output[nr].extend (["Kontaktperson / Contact Person", ""])
                 else: output[nr].append (k.text.strip())
             output[nr].append("")
             nr += 1
@@ -343,8 +378,12 @@ def read_stamm(stock):
         for j in i.find_all ("tr"):
             for k in j.find_all ("td"):
                 if nr <= 10:
-                    while (len(output[nr])<9): output[nr].append("")
-                    output[nr].append (k.text.strip())
+                    if k.text.strip ().find ("%") != -1:
+                        while (len (output[nr]) < 11): output[nr].append ("")
+                        output[nr].append (k.text.strip ())
+                    else:
+                        while (len(output[nr])<9): output[nr].append("")
+                        output[nr].append (k.text.strip())
             nr += 1
 
     # Adresse von oben einfügen
@@ -367,6 +406,18 @@ def read_stamm(stock):
         else: txt = txt + " " + i.text.strip()
     output.append(["Profil",txt])
 
+    # Aktien Kennzeichnungen lesen und als Titel einfügen
+    link = "https://www.ariva.de" + stock
+    page = requests.get (link)
+    soup = BeautifulSoup (page.content, "html.parser")
+    table = soup.find_all ("div", class_="snapshotHeader abstand")
+    for i in table:
+        for j in i.find_all ("div", class_="verlauf snapshotInfo"):
+            tmp_str = j.text.strip().replace("\n","").replace("\t","")
+    output.insert (0,[stock[1:].upper(),tmp_str])
+    output.insert (1,[""])
+
+
     return(output)
 
 #stocks_dic = {'/apple-aktie': 'Apple', '/infineon-aktie': 'Infineon'}
@@ -378,7 +429,9 @@ stocks_dic = {'/bayer-aktie': 'Bayer'}
 index=0
 vpn_land = "no-vpn"
 #index="dax-30"
-sek=17
+#index="tecdax"
+
+sek=20
 #vpn_land = vpn_switch (sek)
 
 if index != 0:

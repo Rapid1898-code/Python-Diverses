@@ -185,19 +185,20 @@ stocks_dic = {'/apple-aktie': 'Apple', '/infineon-aktie': 'Infineon', '/volkswag
  , '/hannover_rück-aktie': 'Hannover Rück', '/tui-aktie': 'TUI', '/mlp-aktie': 'MLP'}
 """
 
-stocks_dic = {'/thyssenkrupp-aktie': 'ThyssenKrupp'}
+stocks_dic = {'/apple-aktie': 'Apple'}
 
 #Input-Parameter
 #Input - Angabe welcher Index gelesen werden soll (z.B. DAX-30) - bei Angabe von 0 wird individuell lt. stocks_dic eingelesen
 #Input - start_year, start_month: wie weit in die Historie zurückgegangen wird (z.b. bis 1995 06)
 #Input - end_year, end_month: von welchem Datum die Ermittlung weg erfolgt - wenn year = 0 wird aktuelles Tagesdatum genommen
 #Input - sek: Anzahl der Sekunden der Verzögerung bei VPN-Switch
-index = "tecdax"
+index = 0
+#index = "tecdax"
 start_year = 2020
 start_month = 2
 end_year = 0
 end_month = 0
-sek = 30
+sek = 17
 
 start_gesamt = timeit.default_timer()
 if index != 0:
@@ -222,7 +223,7 @@ except: pass
 
 abbruch = False
 print("Aktienkurse lesen...")
-# für jeden Aktientiel aus der Liste Ermittlung einer Zeile mit den Datümern und eine Zeile mit Schlusskursen
+# für jeden Aktientitel aus der Liste Ermittlung einer Zeile mit den Datümern und eine Zeile mit Schlusskursen
 start_readstocks = timeit.default_timer()
 for stock in stocks_dic:
     if abbruch == True: break
