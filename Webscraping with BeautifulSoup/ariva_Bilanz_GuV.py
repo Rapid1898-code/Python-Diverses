@@ -149,7 +149,7 @@ def read_index(index_name):
     index_stocks = {}
     for row  in table.find_all("td"):
         if row.get("class") == ["ellipsis", "nobr", "new", "padding-right-5"]:
-            index_stocks[row.find("a")["href"]] = row.text.strip()
+            index_stocks[row.find("a")["href"][1:]] = row.text.strip()
     #Dict sortieren nach Value
     index_stocks = {k: v for k, v in sorted(index_stocks.items(), key=lambda item: item[1])}
     return(index_stocks)
@@ -163,7 +163,7 @@ def read_bilanz(stock):
     jahre_titelleiste = []
 
     while True:
-        link = "https://www.ariva.de" + stock + "/bilanz-guv?page=" + str(seite) + "#stammdaten"
+        link = "https://www.ariva.de/" + stock + "/bilanz-guv?page=" + str(seite) + "#stammdaten"
         page = requests.get (link)
         soup = BeautifulSoup (page.content, "html.parser")
         #Kennzahlen auslesen
@@ -296,7 +296,7 @@ def read_stamm(stock):
     output = []
 
     # Stammdaten auslesen
-    link = "https://www.ariva.de" + stock + "/bilanz-guv?page=" + "0" + "#stammdaten"
+    link = "https://www.ariva.de/" + stock + "/bilanz-guv?page=" + "0" + "#stammdaten"
     page = requests.get (link)
     soup = BeautifulSoup (page.content, "html.parser")
 
@@ -407,7 +407,7 @@ def read_stamm(stock):
     output.append(["Profil",txt])
 
     # Aktien Kennzeichnungen lesen und als Titel einfügen
-    link = "https://www.ariva.de" + stock
+    link = "https://www.ariva.de/" + stock
     page = requests.get (link)
     soup = BeautifulSoup (page.content, "html.parser")
     table = soup.find_all ("div", class_="snapshotHeader abstand")
@@ -421,16 +421,16 @@ def read_stamm(stock):
     return(output)
 
 #stocks_dic = {'/apple-aktie': 'Apple', '/infineon-aktie': 'Infineon'}
-stocks_dic = {'/bayer-aktie': 'Bayer'}
+stocks_dic = {'/bayer-aktie': 'Bayer', '/apple-aktie': 'Apple'}
 
 #Input-Parameter
 #Input - Angabe welcher Index gelesen werden soll (z.B. DAX-30) - bei Angabe von 0 wird individuell lt. stocks_dic eingelesen
 #Input - sek: Anzahl der Sekunden der Verzögerung bei VPN-Switch
 index=0
 vpn_land = "no-vpn"
+writemodus = 0
 #index="dax-30"
 #index="tecdax"
-
 sek=20
 #vpn_land = vpn_switch (sek)
 
@@ -443,7 +443,8 @@ for stock in stocks_dic:
     output.insert(0,[])
     for i in range(len(output_stamm)-1,-1,-1):
         output.insert(0,output_stamm[i])
-    save_xls(stocks_dic.get(stock), output, "Ariva_Data.xlsx" , 0)
+    save_xls(stocks_dic.get(stock), output, "Ariva_Data.xlsx" , writemodus)
+    if writemodus == 0: writemodus = 1
 
 
 

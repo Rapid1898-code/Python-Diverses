@@ -193,12 +193,12 @@ stocks_dic = {'/apple-aktie': 'Apple'}
 #Input - end_year, end_month: von welchem Datum die Ermittlung weg erfolgt - wenn year = 0 wird aktuelles Tagesdatum genommen
 #Input - sek: Anzahl der Sekunden der Verzögerung bei VPN-Switch
 index = 0
-#index = "tecdax"
-start_year = 2020
-start_month = 2
+index = "mdax"
+start_year = 1989
+start_month = 6
 end_year = 0
 end_month = 0
-sek = 17
+sek = 45
 
 start_gesamt = timeit.default_timer()
 if index != 0:
