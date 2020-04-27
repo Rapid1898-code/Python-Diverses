@@ -60,10 +60,11 @@ def vpn_switch(sek):
 # Output: bei Spaltenposition 0: Ausgabe/Yield von Schlüsselwort "datum" + Inhalt des Datumsfeldes im Format dd.mm.yyyy
 # Output: bei Spaltenposition 4: Ausgabe/Yield von Schlüsselwort "price" + Inhalt des Schlusskurses als Zahl
 # Output: wenn IP-Seitensperre erfolgt ist (Kein Zugriff auf HTML-Seite im Text): Ausgabe/Yield von Schlüsselwort "abbruch" + Textinhalt
-def stock_prices_month (stock,month):
+def stock_prices_month (stock,month,whg,boerse_id):
     # read table with monatlichen Kursen
-    url = "https://www.ariva.de/" + stock + "/historische_kurse?boerse_id=6&month=" + month + \
-          "&currency=EUR&clean_split=1&clean_split=0&clean_payout=0&clean_bezug=1&clean_bezug=0"
+    # Börse-ID: 6 => Xetra, 21 => NYSE, 40 => Nasdaq
+    url = "https://www.ariva.de/" + stock + "/historische_kurse?boerse_id=" + str(boerse_id) + "&month=" + month + \
+          "&currency=" + whg + "&clean_split=1&clean_split=0&clean_payout=0&clean_bezug=1&clean_bezug=0"
     page = requests.get (url)
     soup = BeautifulSoup (page.content, "html.parser")
     # Check ob Zugriff auf die IP-Adresse gesperrt ist
@@ -93,14 +94,12 @@ def month_year_iter( start_month, start_year, end_month, end_year ):
     ym_end= 12*end_year + end_month - 1
     for ym in range(ym_end, ym_start-1, -1):
         y, m = divmod( ym, 12 )
-        #yield y,m+1
-        #print(datetime.date(y,m+1,calendar.monthrange(y,m+1)[1]))
         yield datetime.date(y,m+1,calendar.monthrange(y,m+1)[1])
 
 # Historische Kurse eines Aktientitels lesen mit Angabe von Zeitraum
-def read_prices(stock,start_month, start_year, end_month, end_year):
+def read_prices(stock,start_month, start_year, end_month, end_year,whg):
     global abbruch
-    output = [["Datum",stock.upper().replace("-"," ").replace("AKTIE","").replace("_"," ")]]
+    output = [["Datum",stock.upper().replace("-"," ").replace("AKTIE","").replace("_"," "),"in "+whg]]
     year = datetime.datetime.now().year
     if year <= end_year: print(stock + " " + str(year))
     for i in month_year_iter(start_month, start_year, end_month, end_year):
@@ -109,17 +108,26 @@ def read_prices(stock,start_month, start_year, end_month, end_year):
         if i.year != year:
             year -= 1
             if year <= end_year: print(stock + " " + str(year))
-        for j in stock_prices_month(stock,str(i)):
-            if j[0] =="abbruch":
-                abbruch = True
-                break
-            if j[0] == "datum":
-                row=[]
-                row.append(datetime.datetime.strptime(j[1],"%d.%m.%y").strftime("%d.%m.%Y"))
-            elif j[0] == "price":
-                row.append(float(j[1].replace(",",".")))
-                output.append(row)
-            elif j[0] == "blank": pass
+
+        temp_output = []
+        for boerse_id in [6,21,40]:
+            for j in stock_prices_month(stock,str(i),whg,boerse_id):
+                if j[0] =="abbruch":
+                    abbruch = True
+                    break
+                if j[0] == "datum":
+                    temp_output.append(datetime.datetime.strptime(j[1],"%d.%m.%y").strftime("%d.%m.%Y"))
+                elif j[0] == "price":
+                    temp_output.append(float(j[1].replace(",",".")))
+                elif j[0] == "blank": pass
+        temp_month = []
+        for k_id, k_cont in enumerate(temp_output):
+            if k_id%2 == 0:
+                if k_cont not in temp_month: temp_month.extend([temp_output[k_id], temp_output[k_id + 1]])
+        temp_month2 = []
+        for k in range(0, len(temp_month),2): temp_month2.append([temp_month[k],temp_month[k+1]])
+        temp_month2.sort(reverse=True)
+        for k in temp_month2: output.append(k)
     return  output
 
 # Erstellung einer Datums-Liste vom aktuellstem bis zum  ältesten Datum im Format jjjj-mm-dd
@@ -304,10 +312,12 @@ stocks_dic = {'apple-aktie': 'Apple'}
 #Input - start_year, start_month: wie weit in die Historie zurückgegangen wird (z.b. bis 1995 06)
 #Input - end_year, end_month: von welchem Datum die Ermittlung weg erfolgt - wenn year = 0 wird aktuelles Tagesdatum genommen
 #Input - sek: Anzahl der Sekunden der Verzögerung bei VPN-Switch
+whg = "USD"
 index = 0
+vpn_land = "no-vpn"
 writemodus = 1
-index = "mdax"
-#index="dax-30"
+#index = "mdax"
+index="dax-30"
 #index="tecdax"
 sek = 45        #bei 0 Sekunden => kein VPN
 start_year = 1989
@@ -336,14 +346,12 @@ for stock in stocks_dic:
     if index == 0: check = check_xls(stocks_dic.get(stock), "Stock_Prices.xlsx")
     else: check = check_xls(stocks_dic.get(stock), index+"_Stock_Prices.xlsx")
     if check == True: continue
-
     if sek !=0:
         vpn_land = vpn_switch (sek)
         print("Verarbeitung:",stock,"with VPN:",vpn_land,"Aktienkurse lesen...")
     else:
         print ("Verarbeitung:", stock, "without VPN... Aktienkurse lesen...")
-
-    output =  read_prices(stock,start_month, start_year, end_month, end_year)
+    output =  read_prices(stock,start_month, start_year, end_month, end_year, whg)
     if index == 0: save_xls(stocks_dic.get(stock), output, "Stock_Prices.xlsx")
     else: save_xls(stocks_dic.get(stock), output, index+"_Stock_Prices.xlsx")
 

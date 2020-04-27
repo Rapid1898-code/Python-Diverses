@@ -48,8 +48,8 @@ def check_xls(stock,filename):
 # Input append: 1=>anhängen von neuen Worksheets, 0=>überschreiben des XLS
 def save_xls(stock, content, filename):
     global writemodus
-
     #check ob append ausgewählt - aber wenn file nicht vorhanden - dann Wechsel über Überschreibmodus 0
+
     try:
         book = load_workbook (filename)
     except:
@@ -65,12 +65,9 @@ def save_xls(stock, content, filename):
         writer.book = book
     pd.DataFrame(content).to_excel (writer, sheet_name=stock, header=False, index=False)
 
-
     # Ausgabe von leerem Arbeitsblatt wenn Inhalt  leer
     if content == []:
-
-        print("Aktie: ",stock)
-
+        content.append([])
         while True:
             try:
                 writer.save ()
@@ -507,7 +504,9 @@ def read_stamm(stock):
     return(output)
 
 #stocks_dic = {'apple-aktie': 'Apple', 'infineon-aktie': 'Infineon'}
-stocks_dic = {'continental-aktie': 'Continental', 'apple-aktie': 'Apple'}
+#stocks_dic = {'continental-aktie': 'Continental', 'apple-aktie': 'Apple'}
+#stocks_dic = {'zimmer_holdings-aktie': 'Zimmer Holdings', 'zebra_technologies-aktie': 'Zebra Technologies'}
+stocks_dic = {'alaska_air_group-aktie': 'Alaska','alliance_data_systems-aktie': 'Alliance'}
 
 #Input-Parameter
 #Input - Angabe welcher Index gelesen werden soll (z.B. DAX-30) - bei Angabe von 0 wird individuell lt. stocks_dic eingelesen
@@ -519,7 +518,8 @@ writemodus = 1
 #index="tecdax"
 #index="sdax"
 #index="eurostoxx-50"
-index="s-p_500-index/kursliste"
+#index="s-p_500-index/kursliste"
+index="nasdaq-100-index/kursliste"
 
 sek=20
 #vpn_land = vpn_switch (sek)
@@ -530,7 +530,7 @@ if index != 0:
 for stock in stocks_dic:
     print("Verarbeitung:",stock,"with VPN:",vpn_land)
     if index == 0: check = check_xls(stocks_dic.get(stock), "Stock_Data.xlsx")
-    else: check = check_xls(stocks_dic.get(stock), index+"_Stock_Data.xlsx")
+    else: check = check_xls(stocks_dic.get(stock), index.replace("/","_").replace("kursliste","")+"_Stock_Data.xlsx")
     if check ==  True: continue
     output = read_bilanz(stock)
     if output != []:
@@ -538,8 +538,10 @@ for stock in stocks_dic:
         output.insert(0,[])
         for i in range(len(output_stamm)-1,-1,-1):
             output.insert(0,output_stamm[i])
-    if index == 0: save_xls(stocks_dic.get(stock), output, "Stock_Data.xlsx")
-    else: save_xls(stocks_dic.get(stock), output, index.replace("/","_").replace("kursliste","")+"_Stock_Data.xlsx")
+    if index == 0:
+        save_xls(stocks_dic.get(stock), output, "Stock_Data.xlsx")
+    else:
+        save_xls(stocks_dic.get(stock), output, index.replace("/","_").replace("kursliste","")+"_Stock_Data.xlsx")
     if writemodus == 0: writemodus = 1
 stop_readstocks = timeit.default_timer()
 print ("Verarbeitung beendet - Gesamtlaufzeit: ", round((stop_readstocks-start_readstocks)/60,2), "min")
