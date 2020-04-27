@@ -10,6 +10,7 @@ import subprocess
 import time
 import re
 import sys
+import timeit
 
 # Ausgabe der Liste als CSV-File inkl. Prüfung ob Datei geöffnet ist
 # Input content: ist eine Matrix Liste [[][]]
@@ -25,24 +26,59 @@ def csv_write(content,filename):
             print ("Error: ", e)
             input ("Datei kann nicht geöffnet werden - bitte schließen und <Enter> drücken!")
 
+#Check ob Aktie schon enthalten ist im XLS
+def check_xls(stock,filename):
+    global writemodus
+    try:
+        book = load_workbook (filename)
+        if writemodus == 0:
+            wahl = input("Es befinden sich Daten im Excel-Sheet "+filename+" wollen Sie wirklich die Datei überschreiben (j/n)=")
+            if wahl.upper() == "N": writemodus = 1
+    except:
+        writemodus = 0
+        return False
+    if stock in book.sheetnames and writemodus == 1:
+        print ("Aktie: ",stock," bereits im XLS: ",filename," enthalten - Aktie wird übersprungen")
+        return True
+
 # Ausgabe der Liste als XLS-File inkl. Prüfung ob Datei geöffnet ist
 # Input stock: Name der Aktie
 # Input content: Inhalt in Listenform
 # Input filenmae: Name des XLSX-File
 # Input append: 1=>anhängen von neuen Worksheets, 0=>überschreiben des XLS
-def save_xls(stock, content, filename, append):
+def save_xls(stock, content, filename):
+    global writemodus
+
     #check ob append ausgewählt - aber wenn file nicht vorhanden - dann Wechsel über Überschreibmodus 0
     try:
         book = load_workbook (filename)
     except:
-        append = 0
-    if append == 0:
+        writemodus = 0      # Writemodus auf Neuerstellen 0 setzen, wenn er auf 1 steht aber kein XLS vorhanden ist
+    if writemodus == 0:
         writer = pd.ExcelWriter(filename, engine = 'openpyxl', options={'strings_to_numbers': True})
-    elif append == 1:
+    elif writemodus == 1:
         book = load_workbook (filename)
+        if stock in book.sheetnames:
+            print ("Aktie: ",stock," bereits im XLS: ",filename," enthalten - Aktie wird übersprungen")
+            return
         writer = pd.ExcelWriter(filename, engine = 'openpyxl', options={'strings_to_numbers': True})
         writer.book = book
     pd.DataFrame(content).to_excel (writer, sheet_name=stock, header=False, index=False)
+
+
+    # Ausgabe von leerem Arbeitsblatt wenn Inhalt  leer
+    if content == []:
+
+        print("Aktie: ",stock)
+
+        while True:
+            try:
+                writer.save ()
+                writer.close ()
+                return
+            except Exception as e:
+                print ("Error: ", e)
+                input ("Datei kann nicht geöffnet werden - bitte schließen und <Enter> drücken!")
 
     # Automatische Anpassung der Spalten nach best fit
     column_widths = []
@@ -69,6 +105,7 @@ def save_xls(stock, content, filename, append):
     bg_green = PatternFill (fill_type="solid", start_color='c7ffcd', end_color='fffbc7')
     frame_all = Border (left=Side (style='thin'),right=Side (style='thin'), top=Side (style='thin'), bottom=Side (style='thin'))
     frame_upanddown = Border (top=Side (style='thin'), bottom=Side (style='thin'))
+    size14 = Font(bold=True, size="14")
 
     # Formatierung Excel-Sheet
     for i,cont in enumerate (content):
@@ -113,6 +150,9 @@ def save_xls(stock, content, filename, append):
         cell.font = bold
         cell.fill = bg_green
         cell.border = frame_all
+    ws["A1"].font = size14
+    freeze = ws["B2"]
+    ws.freeze_panes = freeze
 
     while True:
         try:
@@ -126,10 +166,10 @@ def save_xls(stock, content, filename, append):
 # VPN-Switch bei NordVPN mit x Sekunden Verzögerung
 # Output: Rückgabe des zufällig gewählten Landes
 def vpn_switch(sek):
-    countries = ["Austria", "Belgium", "Canada", "Germany", "Israel", "Italy","Bosnia and Herzogovina",
+    countries = ["Austria", "Belgium", "Germany", "Israel", "Italy","Bosnia and Herzogovina",
                  "Norway", "Poland", "Portugal", "Romania", "Serbia", "Switzerland", "United Kingdom",
-                 "Bulgaria","Croatia","Denmark","Estonia","Finland","France","Gerogia","Greece","Hong Kong",
-                 "Hungary","Iceland","India","Latvia","Netherlands"]
+                 "Bulgaria","Croatia","Estonia","Finland","France","Georgia","Greece",
+                 "Hungary","Iceland","Latvia","Netherlands"]
     rand_country = random.randrange(len(countries)-1)
     subprocess.call (["C:/Program Files (x86)/NordVPN/NordVPN.exe", "-c", "-g", countries[rand_country]])
     print ("VPN Switch to",countries[rand_country],"...")
@@ -143,15 +183,29 @@ def vpn_switch(sek):
 # Unternehmen eines bestimmten Index werden eingelesen
 # Output: Dict in der Form Kürzel von Ariva.de + Name des Titels (z.b '/apple-aktie': 'Apple')
 def read_index(index_name):
-    page = requests.get ("https://www.ariva.de/"+index_name)
-    soup = BeautifulSoup (page.content, "html.parser")
-    table  = soup.find(id="result_table_0")
+    page_nr=0
     index_stocks = {}
-    for row  in table.find_all("td"):
-        if row.get("class") == ["ellipsis", "nobr", "new", "padding-right-5"]:
-            index_stocks[row.find("a")["href"][1:]] = row.text.strip()
-    #Dict sortieren nach Value
-    index_stocks = {k: v for k, v in sorted(index_stocks.items(), key=lambda item: item[1])}
+    temp_stocks = {}
+    while True:
+        try:
+            page = requests.get ("https://www.ariva.de/"+index_name+"?page="+str(page_nr))
+        except requests.ConnectionError:
+            print ("No Connection - Wait für Reconnection...")
+            for i in range (60, 0, -1):
+                sys.stdout.write (str (i) + ' ')
+                sys.stdout.flush ()
+                time.sleep (1)
+            page = requests.get ("https://www.ariva.de/"+index_name+"?page="+str(page_nr))
+        soup = BeautifulSoup (page.content, "html.parser")
+        table  = soup.find(id="result_table_0")
+        for row  in table.find_all("td"):
+            if row.get("class") == ["ellipsis", "nobr", "new", "padding-right-5"]:
+                index_stocks[row.find("a")["href"][1:]] = row.text.strip().capitalize()
+        #Dict sortieren nach Value
+        index_stocks = {k: v for k, v in sorted(index_stocks.items(), key=lambda item: item[1])}
+        if temp_stocks == index_stocks: break
+        page_nr += 1
+        temp_stocks = index_stocks
     return(index_stocks)
 
 # Kennzahlen für das Unternehmen lt. Parameter lesen
@@ -164,7 +218,15 @@ def read_bilanz(stock):
 
     while True:
         link = "https://www.ariva.de/" + stock + "/bilanz-guv?page=" + str(seite) + "#stammdaten"
-        page = requests.get (link)
+        try:
+            page = requests.get (link)
+        except requests.ConnectionError:
+            print ("No Connection - Wait für Reconnection...")
+            for i in range (60, 0, -1):
+                sys.stdout.write (str (i) + ' ')
+                sys.stdout.flush ()
+                time.sleep (1)
+            page = requests.get (link)
         soup = BeautifulSoup (page.content, "html.parser")
         #Kennzahlen auslesen
         table = soup.find_all ("div", class_="column twothirds table")
@@ -196,6 +258,7 @@ def read_bilanz(stock):
                     bilanz_english = "Balance Sheet in M " + i.text.strip()[18:22] + " per " + i.text.strip()[-7:-1]
 
         #Einfügen weiterer Jahreswerte
+        if output_temp == [] and output_gesamt == []: return[]
         if output_temp[0][1:7] == jahre_titelleiste:
             break
         else:
@@ -253,7 +316,7 @@ def read_bilanz(stock):
                 'Ergebnis vor Steuer (EBT)':'EBT Earning Before Tax','Steuern auf Einkommen und Ertrag':'Taxes on income and earnings',
                 'Ergebnis nach Steuer':'Earnings after tax','Minderheitenanteil':'Minority Share',
                 'Jahresüberschuss/-fehlbetrag':'Net Income','Summe Umlaufvermögen':'Total Current Assets',
-                'Summe Anlagevermögen':'Summe Aktiva','Summe Aktiva':'Total Assets',
+                'Summe Anlagevermögen':'Total Fixed Assets','Summe Aktiva':'Total Assets',
                 'Summe kurzfristiges Fremdkapital': 'Total Short-Term Debt','Summe langfristiges Fremdkapital': 'Total Long-Term Debt',
                 'Summe Fremdkapital': 'Total Debt Capital','Minderheitenanteil': 'Minority Share',
                 'Summe Eigenkapital': 'Total Equity','Summe Passiva': 'Total Liabilities',
@@ -264,6 +327,8 @@ def read_bilanz(stock):
                 'Umsatz je Aktie': 'Revenue per share','Buchwert je Aktie': 'Book value per share',
                 'Cashflow je Aktie': 'Cashflow per share','Bilanzsumme je Aktie': 'Total assets per share',
                 'Personal am Ende des Jahres': 'Staff at the end of year','Personalaufwand in Mio. EUR': 'Personnel expenses in M',
+                'Personalaufwand in Mio. USD': 'Personnel expenses in M', 'Aufwand je Mitarbeiter in USD': 'Effort per employee',
+                'Umsatz je Mitarbeiter in USD': 'Turnover per employee','Bruttoergebnis je Mitarbeiter in USD': 'Gross Profit per employee',
                 'Aufwand je Mitarbeiter in EUR': 'Effort per employee','Umsatz je Mitarbeiter in EUR': 'Turnover per employee',
                 'Bruttoergebnis je Mitarbeiter in EUR': 'Gross Profit per employee','KGV (Kurs/Gewinn)': 'PE (price/earnings)',
                 'KUV (Kurs/Umsatz)': 'PS (price/sales)','KBV (Kurs/Buchwert)': 'PB (price/book value)',
@@ -273,7 +338,9 @@ def read_bilanz(stock):
                 'Return on Investment in %': 'Return on Investment in %','Arbeitsintensität in %': 'Work Intensity in %',
                 'Eigenkapitalquote in %': 'Equity Ratio in %','Fremdkapitalquote in %': 'Debt Ratio in %',
                 'Working Capital in Mio': 'Working Capital in M','Gewinn je Mitarbeiter in EUR': 'Earnings per employee',
-                'Verschuldungsgrad in %': 'Finance Gearing in %'}
+                'Verschuldungsgrad in %': 'Finance Gearing in %','Gewinn je Mitarbeiter in USD': 'Earnings per employee',
+                'Ertrag': 'Income','Ertrag je Mitarbeiter in EUR': 'Income per employee','Ertrag je Mitarbeiter in USD': 'Income per employee',
+                'Gesamtertrag': 'Total Income','Sonderdividende je Aktie': 'Special Dividend per share'}
 
     #Text bereinigen und englische Spalte ergänzen
     text_dic[output_gesamt[0][0]] = bilanz_english
@@ -282,8 +349,11 @@ def read_bilanz(stock):
         if output_gesamt[i][0] == "Summe Anlagevermögen (*)": output_gesamt[i][0] = "Summe Anlagevermögen"
         if "Working Capital" in output_gesamt[i][0] : output_gesamt[i][0] = "Working Capital in Mio"
         if "Aktien im Umlauf" in output_gesamt[i][0]: output_gesamt[i][0] = "Mio.Aktien im Umlauf"
-        if "Umsatz" in output_gesamt[i][0] and umsatz_count == 0: umsatz_count += 1
-        if "Umsatz" in output_gesamt[i][0] and umsatz_count == 1: output_gesamt[i][0] = "Umsatz je Aktie"
+        if "Umsatz" in output_gesamt[i][0] and umsatz_count == 2:
+            output_gesamt[i][0] = "Umsatz je Aktie"
+            umsatz_count = 99
+        if "Umsatz" in output_gesamt[i][0] and umsatz_count != 2: umsatz_count += 1
+
 
         if output_gesamt[i][0] in text_dic: output_gesamt[i].insert(1,text_dic.get(output_gesamt[i][0]))
         else: output_gesamt[i].insert(1,"")
@@ -297,7 +367,15 @@ def read_stamm(stock):
 
     # Stammdaten auslesen
     link = "https://www.ariva.de/" + stock + "/bilanz-guv?page=" + "0" + "#stammdaten"
-    page = requests.get (link)
+    try:
+        page = requests.get (link)
+    except requests.ConnectionError:
+        print ("No Connection - Wait für Reconnection...")
+        for i in range (60, 0, -1):
+            sys.stdout.write (str (i) + ' ')
+            sys.stdout.flush ()
+            time.sleep (1)
+        page = requests.get (link)
     soup = BeautifulSoup (page.content, "html.parser")
 
     output.append(["STAMMDATEN / BASE DATA",""])
@@ -408,44 +486,63 @@ def read_stamm(stock):
 
     # Aktien Kennzeichnungen lesen und als Titel einfügen
     link = "https://www.ariva.de/" + stock
-    page = requests.get (link)
+    try:
+        page = requests.get (link)
+    except requests.ConnectionError:
+        print ("No Connection - Wait für Reconnection...")
+        for i in range (60, 0, -1):
+            sys.stdout.write (str (i) + ' ')
+            sys.stdout.flush ()
+            time.sleep (1)
+        page = requests.get (link)
     soup = BeautifulSoup (page.content, "html.parser")
     table = soup.find_all ("div", class_="snapshotHeader abstand")
     for i in table:
         for j in i.find_all ("div", class_="verlauf snapshotInfo"):
             tmp_str = j.text.strip().replace("\n","").replace("\t","")
-    output.insert (0,[stock[1:].upper(),tmp_str])
+    output.insert (0,[stock.upper().replace("-"," ").replace("AKTIE","").replace("_"," "),tmp_str])
     output.insert (1,[""])
 
 
     return(output)
 
-#stocks_dic = {'/apple-aktie': 'Apple', '/infineon-aktie': 'Infineon'}
-stocks_dic = {'/bayer-aktie': 'Bayer', '/apple-aktie': 'Apple'}
+#stocks_dic = {'apple-aktie': 'Apple', 'infineon-aktie': 'Infineon'}
+stocks_dic = {'continental-aktie': 'Continental', 'apple-aktie': 'Apple'}
 
 #Input-Parameter
 #Input - Angabe welcher Index gelesen werden soll (z.B. DAX-30) - bei Angabe von 0 wird individuell lt. stocks_dic eingelesen
 #Input - sek: Anzahl der Sekunden der Verzögerung bei VPN-Switch
 index=0
 vpn_land = "no-vpn"
-writemodus = 0
+writemodus = 1
 #index="dax-30"
 #index="tecdax"
+#index="sdax"
+#index="eurostoxx-50"
+index="s-p_500-index/kursliste"
+
 sek=20
 #vpn_land = vpn_switch (sek)
 
+start_readstocks = timeit.default_timer()
 if index != 0:
     stocks_dic = read_index(index)
 for stock in stocks_dic:
-    print("Verarbeitung ",stock," with VPN ",vpn_land)
+    print("Verarbeitung:",stock,"with VPN:",vpn_land)
+    if index == 0: check = check_xls(stocks_dic.get(stock), "Stock_Data.xlsx")
+    else: check = check_xls(stocks_dic.get(stock), index+"_Stock_Data.xlsx")
+    if check ==  True: continue
     output = read_bilanz(stock)
-    output_stamm = read_stamm(stock)
-    output.insert(0,[])
-    for i in range(len(output_stamm)-1,-1,-1):
-        output.insert(0,output_stamm[i])
-    save_xls(stocks_dic.get(stock), output, "Ariva_Data.xlsx" , writemodus)
+    if output != []:
+        output_stamm = read_stamm(stock)
+        output.insert(0,[])
+        for i in range(len(output_stamm)-1,-1,-1):
+            output.insert(0,output_stamm[i])
+    if index == 0: save_xls(stocks_dic.get(stock), output, "Stock_Data.xlsx")
+    else: save_xls(stocks_dic.get(stock), output, index.replace("/","_").replace("kursliste","")+"_Stock_Data.xlsx")
     if writemodus == 0: writemodus = 1
-
+stop_readstocks = timeit.default_timer()
+print ("Verarbeitung beendet - Gesamtlaufzeit: ", round((stop_readstocks-start_readstocks)/60,2), "min")
 
 
 

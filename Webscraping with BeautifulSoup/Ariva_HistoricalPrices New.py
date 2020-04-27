@@ -1,6 +1,7 @@
 import xlrd     # Einlesen von Excel-Sheet
 import requests
 import csv
+from datetime import datetime
 import datetime
 import calendar
 from bs4 import BeautifulSoup
@@ -10,8 +11,10 @@ import timeit
 import time
 import random
 import subprocess
-import json
 import sys
+from openpyxl import load_workbook
+from openpyxl.utils import get_column_letter
+from openpyxl.styles import Font, PatternFill, Border, Side
 
 # Unternehmen eines bestimmten Index werden eingelesen
 # Output: Dict in der Form Kürzel von Ariva.de + Name des Titels (z.b '/apple-aktie': 'Apple')
@@ -25,7 +28,7 @@ def read_index(index_name):
         table  = soup.find(id="result_table_0")
         for row  in table.find_all("td"):
             if row.get("class") == ["ellipsis", "nobr", "new", "padding-right-5"]:
-                index_stocks[row.find("a")["href"]] = row.text.strip().capitalize()
+                index_stocks[row.find("a")["href"][1:]] = row.text.strip().capitalize()
         #Dict sortieren nach Value
         index_stocks = {k: v for k, v in sorted(index_stocks.items(), key=lambda item: item[1])}
         if temp_stocks == index_stocks: break
@@ -36,8 +39,10 @@ def read_index(index_name):
 # VPN-Switch bei NordVPN mit x Sekunden Verzögerung
 # Output: Rückgabe des zufällig gewählten Landes
 def vpn_switch(sek):
-    countries = ["Argentina", "Australia", "Austria", "Belgium", "Canada", "Germany", "Israel", "Italy",
-                 "Norway", "Poland", "Portugal", "Romania", "Serbia", "Switzerland", "United Kingdom"]
+    countries = ["Austria", "Belgium", "Germany", "Israel", "Italy","Bosnia and Herzogovina",
+                 "Poland", "Portugal", "Romania", "Serbia", "Switzerland", "United Kingdom",
+                 "Bulgaria","Croatia","Estonia","France","Greece",
+                 "Hungary","Iceland","Latvia","Netherlands"]
     rand_country = random.randrange(len(countries)-1)
     subprocess.call (["C:/Program Files (x86)/NordVPN/NordVPN.exe", "-c", "-g", countries[rand_country]])
     print ("VPN Switch to",countries[rand_country],"...")
@@ -55,9 +60,9 @@ def vpn_switch(sek):
 # Output: bei Spaltenposition 0: Ausgabe/Yield von Schlüsselwort "datum" + Inhalt des Datumsfeldes im Format dd.mm.yyyy
 # Output: bei Spaltenposition 4: Ausgabe/Yield von Schlüsselwort "price" + Inhalt des Schlusskurses als Zahl
 # Output: wenn IP-Seitensperre erfolgt ist (Kein Zugriff auf HTML-Seite im Text): Ausgabe/Yield von Schlüsselwort "abbruch" + Textinhalt
-def stock_prices (stock,month):
+def stock_prices_month (stock,month):
     # read table with monatlichen Kursen
-    url = "https://www.ariva.de" + stock + "/historische_kurse?boerse_id=6&month=" + month + \
+    url = "https://www.ariva.de/" + stock + "/historische_kurse?boerse_id=6&month=" + month + \
           "&currency=EUR&clean_split=1&clean_split=0&clean_payout=0&clean_bezug=1&clean_bezug=0"
     page = requests.get (url)
     soup = BeautifulSoup (page.content, "html.parser")
@@ -92,6 +97,31 @@ def month_year_iter( start_month, start_year, end_month, end_year ):
         #print(datetime.date(y,m+1,calendar.monthrange(y,m+1)[1]))
         yield datetime.date(y,m+1,calendar.monthrange(y,m+1)[1])
 
+# Historische Kurse eines Aktientitels lesen mit Angabe von Zeitraum
+def read_prices(stock,start_month, start_year, end_month, end_year):
+    global abbruch
+    output = [["Datum",stock.upper().replace("-"," ").replace("AKTIE","").replace("_"," ")]]
+    year = datetime.datetime.now().year
+    if year <= end_year: print(stock + " " + str(year))
+    for i in month_year_iter(start_month, start_year, end_month, end_year):
+        if abbruch == True: break
+        #Ausgabe zur Fortschrittskontrolle des Programms
+        if i.year != year:
+            year -= 1
+            if year <= end_year: print(stock + " " + str(year))
+        for j in stock_prices_month(stock,str(i)):
+            if j[0] =="abbruch":
+                abbruch = True
+                break
+            if j[0] == "datum":
+                row=[]
+                row.append(datetime.datetime.strptime(j[1],"%d.%m.%y").strftime("%d.%m.%Y"))
+            elif j[0] == "price":
+                row.append(float(j[1].replace(",",".")))
+                output.append(row)
+            elif j[0] == "blank": pass
+    return  output
+
 # Erstellung einer Datums-Liste vom aktuellstem bis zum  ältesten Datum im Format jjjj-mm-dd
 def date_list (datum_von, datum_bis):
     mydates2  = []
@@ -112,7 +142,90 @@ def csv_write(result, filename):
             input ("Datei kann nicht geöffnet werden - bitte schließen und <Enter> drücken!")
     fp.close()
 
+# Ausgabe der Liste als XLS-File inkl. Prüfung ob Datei geöffnet ist
+# Input stock: Name der Aktie
+# Input content: Inhalt in Listenform
+# Input filenmae: Name des XLSX-File
+# Input append: 1=>anhängen von neuen Worksheets, 0=>überschreiben des XLS
+def save_xls(stock, content, filename):
+    global writemodus
+
+    #check ob append ausgewählt - aber wenn file nicht vorhanden - dann Wechsel über Überschreibmodus 0
+    try:
+        book = load_workbook (filename)
+    except:
+        writemodus = 0
+    if writemodus == 0:
+        writer = pd.ExcelWriter(filename, engine = 'openpyxl', options={'strings_to_numbers': True})
+    elif writemodus == 1:
+        book = load_workbook (filename)
+        if stock in book.sheetnames:
+            print ("Aktie: ",stock," bereits im XLS: ",filename," enthalten - Aktie wird übersprungen")
+            return
+        writer = pd.ExcelWriter(filename, engine = 'openpyxl', options={'strings_to_numbers': True})
+        writer.book = book
+    pd.DataFrame(content).to_excel (writer, sheet_name=stock, header=False, index=False)
+    if writemodus == 0: writemodus = 1
+
+    # Automatische Anpassung der Spalten nach best fit
+    column_widths = []
+    ws = writer.sheets[stock]
+    # Ermittlung des längsten Wertes pro Spalte
+    for row in content:
+        for i, cell in enumerate (row):
+            if len (column_widths) > i:
+                if len (str (cell)) > column_widths[i]:
+                    column_widths[i] = len (str (cell))
+            else:
+                column_widths += [len (str (cell))]
+    for i, column_width in enumerate (column_widths):
+        ws.column_dimensions[get_column_letter (i + 1)].width = column_width+2
+
+    # Formatierung des Excel-Sheets
+    bold = Font (bold=True)
+    bg_yellow = PatternFill (fill_type="solid", start_color='fbfce1', end_color='fbfce1')
+    bg_grey = PatternFill (fill_type="solid", start_color='babab6', end_color='babab6')
+    bg_green = PatternFill (fill_type="solid", start_color='c7ffcd', end_color='fffbc7')
+    frame_all = Border (left=Side (style='thin'), right=Side (style='thin'), top=Side (style='thin'),bottom=Side (style='thin'))
+    frame_upanddown = Border (top=Side (style='thin'), bottom=Side (style='thin'))
+    for cell in ws["A:A"]:
+        cell.font = bold
+        cell.fill = bg_green
+        cell.border = frame_all
+    for cell in ws["1:1"]:
+        cell.font = bold
+        cell.fill = bg_green
+        cell.border = frame_all
+    freeze = ws["B2"]
+    ws.freeze_panes = freeze
+
+    # Excel Sheet speichern
+    while True:
+        try:
+            writer.save ()
+            writer.close ()
+            break
+        except Exception as e:
+            print ("Error: ", e)
+            input ("Datei kann nicht geöffnet werden - bitte schließen und <Enter> drücken!")
+
+#Check ob Aktie schon enthalten ist im XLS
+def check_xls(stock,filename):
+    global writemodus
+    try:
+        book = load_workbook (filename)
+        if writemodus == 0:
+            wahl = input("Es befinden sich Daten im Excel-Sheet "+filename+" wollen Sie wirklich die Datei überschreiben (j/n)=")
+            if wahl.upper() == "N": writemodus = 1
+    except:
+        writemodus = 0
+        return False
+    if stock in book.sheetnames and writemodus == 1:
+        print ("Aktie: ",stock," bereits im XLS: ",filename," enthalten - Aktie wird übersprungen")
+        return True
+
 # Spalten bereinigen der Tabelle
+
 # Datum vereinheitlichen + leere Spalten löschen
 def spalten_bereinigen(output):
     # Datum-Spalten vereinheitlichen
@@ -169,7 +282,6 @@ def read_XLS():
     print(result)
     csv_write(result, "testout.csv")
 
-
 # DAX30 Unternehmen + Ex-Unternehmen
 # Input: Für welche Aktientitel die Verarbeitung erfolgen soll
 """
@@ -185,7 +297,7 @@ stocks_dic = {'/apple-aktie': 'Apple', '/infineon-aktie': 'Infineon', '/volkswag
  , '/hannover_rück-aktie': 'Hannover Rück', '/tui-aktie': 'TUI', '/mlp-aktie': 'MLP'}
 """
 
-stocks_dic = {'/apple-aktie': 'Apple'}
+stocks_dic = {'apple-aktie': 'Apple'}
 
 #Input-Parameter
 #Input - Angabe welcher Index gelesen werden soll (z.B. DAX-30) - bei Angabe von 0 wird individuell lt. stocks_dic eingelesen
@@ -193,12 +305,15 @@ stocks_dic = {'/apple-aktie': 'Apple'}
 #Input - end_year, end_month: von welchem Datum die Ermittlung weg erfolgt - wenn year = 0 wird aktuelles Tagesdatum genommen
 #Input - sek: Anzahl der Sekunden der Verzögerung bei VPN-Switch
 index = 0
+writemodus = 1
 index = "mdax"
+#index="dax-30"
+#index="tecdax"
+sek = 45        #bei 0 Sekunden => kein VPN
 start_year = 1989
-start_month = 6
+start_month = 1
 end_year = 0
 end_month = 0
-sek = 45
 
 start_gesamt = timeit.default_timer()
 if index != 0:
@@ -206,92 +321,41 @@ if index != 0:
 if end_year == 0:
     end_year = datetime.datetime.now().year
     end_month = datetime.datetime.now().month
-output = []
-vpn_performance = []
-#Datumszeile erstellen für den gesamten Zeitraum pro Tag
-datelist = ["Kürzel","Datum"]
-datelist.extend(date_list(datetime.date.today(), datetime.date(start_year, start_month,1)))
-output.append(datelist)
 
-#Temp-Daten aus vorherigen Läufen einlesen...
-try:
-    with open("tempdata.txt") as f:
-        for line in f:
-            line = line.replace ("'", '"')
-            output.append (json.loads (line.strip()))
-except: pass
+vpn_performance = []
 
 abbruch = False
-print("Aktienkurse lesen...")
 # für jeden Aktientitel aus der Liste Ermittlung einer Zeile mit den Datümern und eine Zeile mit Schlusskursen
 start_readstocks = timeit.default_timer()
 for stock in stocks_dic:
     if abbruch == True: break
-    #check if stock ist bereits im Tempfile vorhanden
-    skip = False
-    for i in range(len(output)-1):
-        if output[i][0] == stock:
-            print(stock, " bereits in tempdata.txt vorhanden... daher skip...")
-            skip = True
-            break
-    if skip == True:
-        continue
-    #switch der vpn-verbindung mit sek-Verzögerung
-    vpn_land = vpn_switch(sek)
-    start_stock = timeit.default_timer()
-    title_row = [stock,stocks_dic.get(stock)]
-    stock_row = [stock,stocks_dic.get(stock)]
-    year = datetime.datetime.now().year
-    if year <= end_year: print(stock + " " + str(year))
-    for i in month_year_iter(start_month, start_year, end_month, end_year):
-        if abbruch == True: break
-        #Ausgabe zur Fortschrittskontrolle des Programms
-        if i.year != year:
-            year -= 1
-            if year <= end_year: print(stock + " " + str(year))
-        for j in stock_prices(stock,str(i)):
-            if j[0] =="abbruch":
-                abbruch = True
-                break
-            if j[0] == "datum":
-                title_row.append(j[1])
-            elif j[0] == "price": stock_row.append(j[1])
-            elif j[0] == "blank":
-                stock_row.append(j[1])
-                title_row.append(j[1])
-    output.append(title_row)
-    output.append(stock_row)
 
-    # Ausgabe der Zeilen in Temp-Textfile...
-    with open('tempdata.txt', 'a') as file:
-        file.write("%s\n" %title_row)
-        file.write ("%s\n" %stock_row)
+    start_stock = timeit.default_timer()
+
+    # Check ob Aktie bereits im XLS enthalten ist - wenn ja wird nächte Aktie verarbeitet
+    if index == 0: check = check_xls(stocks_dic.get(stock), "Stock_Prices.xlsx")
+    else: check = check_xls(stocks_dic.get(stock), index+"_Stock_Prices.xlsx")
+    if check == True: continue
+
+    if sek !=0:
+        vpn_land = vpn_switch (sek)
+        print("Verarbeitung:",stock,"with VPN:",vpn_land,"Aktienkurse lesen...")
+    else:
+        print ("Verarbeitung:", stock, "without VPN... Aktienkurse lesen...")
+
+    output =  read_prices(stock,start_month, start_year, end_month, end_year)
+    if index == 0: save_xls(stocks_dic.get(stock), output, "Stock_Prices.xlsx")
+    else: save_xls(stocks_dic.get(stock), output, index+"_Stock_Prices.xlsx")
 
     stop_stock = timeit.default_timer ()
     laufzeit = round((stop_stock-start_stock)/60,2)
     print("Laufzeit Aktie ",stock," : ",laufzeit,"min mit Server aus ", vpn_land)
     vpn_performance.append("Laufzeit Aktie "+stock+" : "+str(laufzeit)+"min mit Server aus "+vpn_land)
 
-
 stop_readstocks = timeit.default_timer()
-
-#Transponieren der Tabelle + Ausgabe als Zwischentabelle in CSV
-csv_write(list(zip_longest(*output)), "prices_dax_unordered.csv")
-
-start_spaltenaufbereitung = timeit.default_timer()
-print ("Spalten bereinigen...")
-output = spalten_bereinigen(output)
-print("Transponieren und Ausgeben...")
-# Transponieren der Tabelle und Ausgabe als CSV-File
-result = list(zip_longest(*output))
-# Aussgabe der finalen Ergebnistabelle als CSV
-csv_write(result, "prices_dax_withdates.csv")
-stop_spaltenaufbereitung = timeit.default_timer()
-
 stop_gesamt = timeit.default_timer()
 print("Gesamtlaufzeit: ", round((stop_gesamt-start_gesamt)/60,2), "min")
 print("Aktienkurse Gesamt: ", round((stop_readstocks-start_readstocks)/60,2), "min")
-print("Spaltenaufbereiung: ", round((stop_spaltenaufbereitung-start_spaltenaufbereitung)/60,2), "min")
 print("Statistik VPNs:")
 for i in vpn_performance: print(i)
 
