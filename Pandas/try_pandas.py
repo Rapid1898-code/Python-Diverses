@@ -32,9 +32,14 @@ pd.set_option ("display.max_rows", 100)  # dadurch werden alle Zeilen ausgegeben
 #df.set_index("cases", inplace=True)
 #print(df.sort_index(ascending=False))
 
-countries =  ["Austria","Germany","Switzerland"]
-filt = (df["countriesAndTerritories"] == "Austria")
+#countries =  ["Austria","Germany","Switzerland"]
+#filt = (df["countriesAndTerritories"] == "Austria")
+#filt2 = (df["countriesAndTerritories"].isin(countries))
+
 #print(df[filt])
-print(df.loc[filt,["cases","countriesAndTerritories"]])
+#print(df.loc[filt,["cases","countriesAndTerritories"]])
+print(df.loc[filt2,["cases","countriesAndTerritories"]])
+
+df.
 
 

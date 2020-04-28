@@ -312,11 +312,11 @@ def read_bilanz(stock):
                 'Operatives Ergebnis (EBIT)': 'EBIT Earning Before Interest & Tax', 'Finanzergebnis':'Financial Result',
                 'Ergebnis vor Steuer (EBT)':'EBT Earning Before Tax','Steuern auf Einkommen und Ertrag':'Taxes on income and earnings',
                 'Ergebnis nach Steuer':'Earnings after tax','Minderheitenanteil':'Minority Share',
-                'Jahresüberschuss/-fehlbetrag':'Net Income','Summe Umlaufvermögen':'Total Current Assets',
-                'Summe Anlagevermögen':'Total Fixed Assets','Summe Aktiva':'Total Assets',
-                'Summe kurzfristiges Fremdkapital': 'Total Short-Term Debt','Summe langfristiges Fremdkapital': 'Total Long-Term Debt',
-                'Summe Fremdkapital': 'Total Debt Capital','Minderheitenanteil': 'Minority Share',
-                'Summe Eigenkapital': 'Total Equity','Summe Passiva': 'Total Liabilities',
+                'Jahresüberschuss/-fehlbetrag':'Net Income','Summe Umlaufvermögen':'Current Assets',
+                'Summe Anlagevermögen':'Fixed Assets','Summe Aktiva':'Total Assets',
+                'Summe kurzfristiges Fremdkapital': 'Short-Term Debt','Summe langfristiges Fremdkapital': 'Long-Term Debt',
+                'Summe Fremdkapital': 'Total Liabilities','Minderheitenanteil': 'Minority Share',
+                'Summe Eigenkapital': 'Equity','Summe Passiva': 'Liabilities & Shareholder Equity',
                 'Mio.Aktien im Umlauf': 'Million shares outstanding', 'Gezeichnetes Kapital (in Mio.)': 'Subscribed Capital in M',
                 'Ergebnis je Aktie (brutto)': 'Earnings per share','Ergebnis je Aktie (unverwässert)': 'Basic Earnings per share',
                 'Ergebnis je Aktie (verwässert)': 'Diluted Earnings per share','Dividende je Aktie': 'Dividend per share',
@@ -354,6 +354,27 @@ def read_bilanz(stock):
 
         if output_gesamt[i][0] in text_dic: output_gesamt[i].insert(1,text_dic.get(output_gesamt[i][0]))
         else: output_gesamt[i].insert(1,"")
+
+    #Kennzahlen ergänzen
+    revenue_row = 0
+    grossprofit_row = 0
+    netincome_row = 0
+    equity_row = 0
+    for i_idx, i_cont in enumerate(output_gesamt):
+        if i_cont[1] == "Revenue": revenue_row = i_idx
+        if i_cont[1] == "Gross Profit": grossprofit_row = i_idx
+        if i_cont[1] == "Jahresüberschuss/-fehlbetrag": netincome_row = i_idx
+        if i_cont[1] == "Summe Eigenkapital": equity_row = i_idx
+    if revenue_row != 0 and grossprofit_row != 0:
+        row1 = ["Bruttoergebnis Marge in %","Gross Profit Marge in %"]
+        row2 = ["Eigenkapitalrendite in %", "ROE Return on Equity in %"]
+        for i in range (2,len(output_gesamt[len(output_gesamt)-1])-1):
+            row1.append(round(output_gesamt[grossprofit_row][i]/output_gesamt[revenue_row][i]*100,2))
+            row2.append (round (output_gesamt[netincome_row][i] / output_gesamt[equity_row][i] * 100, 2))
+        output_gesamt.extend[row1,row2]
+
+
+
 
     return output_gesamt
 
@@ -503,23 +524,24 @@ def read_stamm(stock):
 
     return(output)
 
+stocks_dic = {'apple-aktie': 'Apple'}
 #stocks_dic = {'apple-aktie': 'Apple', 'infineon-aktie': 'Infineon'}
 #stocks_dic = {'continental-aktie': 'Continental', 'apple-aktie': 'Apple'}
 #stocks_dic = {'zimmer_holdings-aktie': 'Zimmer Holdings', 'zebra_technologies-aktie': 'Zebra Technologies'}
-stocks_dic = {'alaska_air_group-aktie': 'Alaska','alliance_data_systems-aktie': 'Alliance'}
+#stocks_dic = {'alaska_air_group-aktie': 'Alaska','alliance_data_systems-aktie': 'Alliance'}
 
 #Input-Parameter
 #Input - Angabe welcher Index gelesen werden soll (z.B. DAX-30) - bei Angabe von 0 wird individuell lt. stocks_dic eingelesen
 #Input - sek: Anzahl der Sekunden der Verzögerung bei VPN-Switch
 index=0
 vpn_land = "no-vpn"
-writemodus = 1
+writemodus = 0
 #index="dax-30"
 #index="tecdax"
 #index="sdax"
 #index="eurostoxx-50"
 #index="s-p_500-index/kursliste"
-index="nasdaq-100-index/kursliste"
+#index="nasdaq-100-index/kursliste"
 
 sek=20
 #vpn_land = vpn_switch (sek)

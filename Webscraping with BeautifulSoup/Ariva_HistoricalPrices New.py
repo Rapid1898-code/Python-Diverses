@@ -316,8 +316,8 @@ whg = "USD"
 index = 0
 vpn_land = "no-vpn"
 writemodus = 1
-#index = "mdax"
-index="dax-30"
+index = "mdax"
+#index="dax-30"
 #index="tecdax"
 sek = 45        #bei 0 Sekunden => kein VPN
 start_year = 1989
@@ -344,7 +344,7 @@ for stock in stocks_dic:
 
     # Check ob Aktie bereits im XLS enthalten ist - wenn ja wird nächte Aktie verarbeitet
     if index == 0: check = check_xls(stocks_dic.get(stock), "Stock_Prices.xlsx")
-    else: check = check_xls(stocks_dic.get(stock), index+"_Stock_Prices.xlsx")
+    else: check = check_xls(stocks_dic.get(stock), index + "_Stock_Prices_" + whg + ".xlsx")
     if check == True: continue
     if sek !=0:
         vpn_land = vpn_switch (sek)
@@ -353,7 +353,7 @@ for stock in stocks_dic:
         print ("Verarbeitung:", stock, "without VPN... Aktienkurse lesen...")
     output =  read_prices(stock,start_month, start_year, end_month, end_year, whg)
     if index == 0: save_xls(stocks_dic.get(stock), output, "Stock_Prices.xlsx")
-    else: save_xls(stocks_dic.get(stock), output, index+"_Stock_Prices.xlsx")
+    else: save_xls(stocks_dic.get(stock), output, index + "_Stock_Prices_" + whg + ".xlsx")
 
     stop_stock = timeit.default_timer ()
     laufzeit = round((stop_stock-start_stock)/60,2)
