@@ -16,6 +16,13 @@ from openpyxl import load_workbook
 from openpyxl.utils import get_column_letter
 from openpyxl.styles import Font, PatternFill, Border, Side
 
+#TODO
+# Marktkapitalisierung pro Tag im Kurs-XLS ergänzen (evt. mit eigenem Programm)
+
+
+
+
+
 # Unternehmen eines bestimmten Index werden eingelesen
 # Output: Dict in der Form Kürzel von Ariva.de + Name des Titels (z.b '/apple-aktie': 'Apple')
 def read_index(index_name):
@@ -39,10 +46,8 @@ def read_index(index_name):
 # VPN-Switch bei NordVPN mit x Sekunden Verzögerung
 # Output: Rückgabe des zufällig gewählten Landes
 def vpn_switch(sek):
-    countries = ["Austria", "Belgium", "Germany", "Israel", "Italy","Bosnia and Herzogovina",
-                 "Poland", "Portugal", "Romania", "Serbia", "Switzerland", "United Kingdom",
-                 "Bulgaria","Croatia","Estonia","France","Greece",
-                 "Hungary","Iceland","Latvia","Netherlands"]
+    countries = ["Austria", "Belgium", "Germany", "Italy", "Poland", "Romania", "Serbia", "Switzerland", "United Kingdom",
+                 "Croatia","Estonia","France","Greece","Latvia","Netherlands"]
     rand_country = random.randrange(len(countries)-1)
     subprocess.call (["C:/Program Files (x86)/NordVPN/NordVPN.exe", "-c", "-g", countries[rand_country]])
     print ("VPN Switch to",countries[rand_country],"...")
@@ -316,7 +321,7 @@ whg = "USD"
 index = 0
 vpn_land = "no-vpn"
 writemodus = 1
-index = "mdax"
+index = "eurostoxx-50"
 #index="dax-30"
 #index="tecdax"
 sek = 45        #bei 0 Sekunden => kein VPN
