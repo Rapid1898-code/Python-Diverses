@@ -19,10 +19,6 @@ from openpyxl.styles import Font, PatternFill, Border, Side
 #TODO
 # Marktkapitalisierung pro Tag im Kurs-XLS ergänzen (evt. mit eigenem Programm)
 
-
-
-
-
 # Unternehmen eines bestimmten Index werden eingelesen
 # Output: Dict in der Form Kürzel von Ariva.de + Name des Titels (z.b '/apple-aktie': 'Apple')
 def read_index(index_name):
@@ -123,7 +119,7 @@ def read_prices(stock,start_month, start_year, end_month, end_year,whg):
                 if j[0] == "datum":
                     temp_output.append(datetime.datetime.strptime(j[1],"%d.%m.%y").strftime("%d.%m.%Y"))
                 elif j[0] == "price":
-                    temp_output.append(float(j[1].replace(",",".")))
+                    temp_output.append(float(j[1].replace(".","").replace(",",".")))
                 elif j[0] == "blank": pass
         temp_month = []
         for k_id, k_cont in enumerate(temp_output):
@@ -321,7 +317,8 @@ whg = "USD"
 index = 0
 vpn_land = "no-vpn"
 writemodus = 1
-index = "eurostoxx-50"
+#index = "s-p_500-index/kursliste"
+index = "nasdaq-100-index/kursliste"
 #index="dax-30"
 #index="tecdax"
 sek = 45        #bei 0 Sekunden => kein VPN
@@ -349,7 +346,7 @@ for stock in stocks_dic:
 
     # Check ob Aktie bereits im XLS enthalten ist - wenn ja wird nächte Aktie verarbeitet
     if index == 0: check = check_xls(stocks_dic.get(stock), "Stock_Prices.xlsx")
-    else: check = check_xls(stocks_dic.get(stock), index + "_Stock_Prices_" + whg + ".xlsx")
+    else: check = check_xls(stocks_dic.get(stock), index.replace ("/", "_").replace ("kursliste", "") + "_Stock_Prices_" + whg + ".xlsx")
     if check == True: continue
     if sek !=0:
         vpn_land = vpn_switch (sek)
@@ -358,7 +355,7 @@ for stock in stocks_dic:
         print ("Verarbeitung:", stock, "without VPN... Aktienkurse lesen...")
     output =  read_prices(stock,start_month, start_year, end_month, end_year, whg)
     if index == 0: save_xls(stocks_dic.get(stock), output, "Stock_Prices.xlsx")
-    else: save_xls(stocks_dic.get(stock), output, index + "_Stock_Prices_" + whg + ".xlsx")
+    else: save_xls(stocks_dic.get(stock), output, index.replace ("/", "_").replace ("kursliste", "") + "_Stock_Prices_" + whg + ".xlsx")
 
     stop_stock = timeit.default_timer ()
     laufzeit = round((stop_stock-start_stock)/60,2)

@@ -17,10 +17,12 @@ df["sum_cases"] = df["sum_deaths"] = df["inh_case"] = df["inh_death"] = 0
 countries_df = df.groupby("land").sum().sort_values(by="cases",ascending=False).head(25)
 countries = []
 for index,row in countries_df.iterrows(): countries.append(index)
-countries = ["Austria"]
+countries = ["Austria","Germany","Switzerland"]
 
 # Hauptverarbeitung
+df_final = pd.DataFrame()
 for country in countries:
+    print(country)
     df_temp = df[df["land"].isin([country])]
     for i,i_cont in df_temp.iterrows():
         sum_cases = sum_deaths = 0
@@ -30,13 +32,19 @@ for country in countries:
                 sum_deaths += j_cont[2]
         df_temp._set_value(i,"sum_cases",sum_cases)
         df_temp._set_value(i,"sum_deaths",sum_deaths)
+
         if sum_cases != 0: df_temp._set_value (i,"inh_case", i_cont[4] / sum_cases)
         else: df_temp._set_value (i,"inh_case",1,0)
         if sum_deaths != 0: df_temp._set_value (i,"inh_death", i_cont[4] / sum_deaths)
         else: df_temp._set_value (i,"inh_death",1,0)
 
-print (df_temp)
+    df_temp = df_temp[["date","land","sum_cases"]]
+    df_temp = df_temp.pivot(index="land", columns="date", values="sum_cases")
 
+    df_final = df_final.append(df_temp, ignore_index=False)
+
+df_final = df_final.sort_index(axis=1, ascending=True)
+print(df_final)
 
 
 
