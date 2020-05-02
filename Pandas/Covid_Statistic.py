@@ -1,5 +1,5 @@
 import pandas as pd
-df = pd.read_excel ("C:\TEMP\COVID-19-geographic-disbtribution-worldwide (1).xlsx")
+df = pd.read_excel ("C:\TEMP\COVID-19-geographic-disbtribution-worldwide (2).xlsx")
 pd.set_option ("display.max_columns", 100)
 pd.set_option ("display.max_rows", 100)
 
@@ -14,10 +14,10 @@ df = df[["date","cases","deaths","land","einwohner"]]
 df["sum_cases"] = df["sum_deaths"] = df["inh_case"] = df["inh_death"] = 0
 
 # read 25 top countries with most covid-cases and store in list
-countries_df = df.groupby("land").sum().sort_values(by="cases",ascending=False).head(25)
+countries_df = df.groupby("land").sum().sort_values(by="cases",ascending=False).head(50)
 countries = []
 for index,row in countries_df.iterrows(): countries.append(index)
-countries = ["Austria","Germany","Switzerland"]
+#countries = ["Austria","Germany","Switzerland"]
 #countries = ["Austria"]
 
 # Hauptverarbeitung
