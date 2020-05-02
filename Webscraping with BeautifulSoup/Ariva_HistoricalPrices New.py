@@ -317,8 +317,9 @@ whg = "USD"
 index = 0
 vpn_land = "no-vpn"
 writemodus = 1
-#index = "s-p_500-index/kursliste"
-index = "nasdaq-100-index/kursliste"
+index = "s-p_500-index/kursliste"
+index = "s-p_500-index/kursliste"
+#index = "nasdaq-100-index/kursliste"
 #index="dax-30"
 #index="tecdax"
 sek = 45        #bei 0 Sekunden => kein VPN
