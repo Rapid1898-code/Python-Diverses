@@ -8,20 +8,35 @@ df.rename(columns={"countriesAndTerritories":"land","continentExp":"continent",
                    "dateRep":"date","popData2018":"einwohner"}, inplace=True)
 
 # Einschränkung auf die zu verwendenden Spalten
-df = df[["date","cases","deaths","land","einwohner"]]
+df = df[["date","cases","deaths","land","einwohner","continent"]]
+
+# read xx top countries with most covid-cases and store in list
+anz_countries = 50
+if anz_countries == 0: countries_df = df.groupby("land").sum().sort_values(by="cases",ascending=False)
+else: countries_df = df.groupby("land").sum().sort_values(by="cases",ascending=False).head(50)
+countries = []
+for index,row in countries_df.iterrows(): countries.append(index)
+#countries = ["Austria","Germany","Switzerland"]
+countries = ["Austria"]
+
+# read continents and store in list
+continents = df["continent"].unique()
 
 # Neue Spalten anlagen
 df["sum_cases"] = df["sum_deaths"] = df["inh_case"] = df["inh_death"] = 0
 
-# read 25 top countries with most covid-cases and store in list
-countries_df = df.groupby("land").sum().sort_values(by="cases",ascending=False).head(50)
-countries = []
-for index,row in countries_df.iterrows(): countries.append(index)
-#countries = ["Austria","Germany","Switzerland"]
-#countries = ["Austria"]
-
 # Hauptverarbeitung
 df_final_cases = df_final_deaths = df_final_inh_case =  df_final_inh_death = pd.DataFrame()
+
+for continent in continents:
+    print(continent)
+    df_temp = df[df["continent"].isin([continent])]
+    for i,i_cont in df_temp.iterrows():
+        sum_cases = sum_deaths = 0
+
+
+
+
 for country in countries:
     print(country)
     df_temp = df[df["land"].isin([country])]
