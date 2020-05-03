@@ -176,7 +176,7 @@ def save_xls(stock, content, filename):
     pd.DataFrame(content).to_excel (writer, sheet_name=stock, header=False, index=False)
     if writemodus == 0: writemodus = 1
 
-    # Automatische Anpassung der Spalten nach best fit
+    # Automatische Anpassung der Spalten nach best fitt
     column_widths = []
     ws = writer.sheets[stock]
     # Ermittlung des längsten Wertes pro Spalte
