@@ -32,11 +32,19 @@ def read_index(index_name):
         for row  in table.find_all("td"):
             if row.get("class") == ["ellipsis", "nobr", "new", "padding-right-5"]:
                 index_stocks[row.find("a")["href"][1:]] = row.text.strip().capitalize()
+
+        print("PageNr: ",page_nr)
+        print ("Temp Stock: ",temp_stocks)
+        print ("Index  Stock:",index_stocks)
+
         #Dict sortieren nach Value
         index_stocks = {k: v for k, v in sorted(index_stocks.items(), key=lambda item: item[1])}
         if temp_stocks == index_stocks: break
         page_nr += 1
-        temp_stocks = index_stocks
+        temp_stocks = dict(index_stocks)
+
+    print(index_stocks)
+
     return(index_stocks)
 
 # VPN-Switch bei NordVPN mit x Sekunden Verzögerung
@@ -317,7 +325,7 @@ whg = "USD"
 index = 0
 vpn_land = "no-vpn"
 writemodus = 1
-index = "s-p_500-index/kursliste"
+
 index = "s-p_500-index/kursliste"
 #index = "nasdaq-100-index/kursliste"
 #index="dax-30"
@@ -340,6 +348,7 @@ vpn_performance = []
 abbruch = False
 # für jeden Aktientitel aus der Liste Ermittlung einer Zeile mit den Datümern und eine Zeile mit Schlusskursen
 start_readstocks = timeit.default_timer()
+
 for stock in stocks_dic:
     if abbruch == True: break
 

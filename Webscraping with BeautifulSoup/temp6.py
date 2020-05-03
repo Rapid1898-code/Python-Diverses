@@ -1,3 +1,37 @@
-l = [['27.04.2020', 261.05], ['24.04.2020', 258.15], ['23.04.2020', 258.8], ['22.04.2020', 252.6], ['21.04.2020', 246.0], ['20.04.2020', 258.25], ['17.04.2020', 257.95], ['16.04.2020', 264.7], ['15.04.2020', 259.95], ['14.04.2020', 259.8], ['09.04.2020', 243.25], ['08.04.2020', 244.1], ['07.04.2020', 244.0], ['06.04.2020', 234.55], ['03.04.2020', 224.75], ['02.04.2020', 222.9], ['01.04.2020', 225.2], ['27.04.2020', 282.56], ['24.04.2020', 282.83], ['23.04.2020', 275.03], ['22.04.2020', 275.98], ['21.04.2020', 268.76], ['20.04.2020', 277.05], ['17.04.2020', 282.71], ['16.04.2020', 286.42], ['15.04.2020', 284.35], ['14.04.2020', 286.97], ['13.04.2020', 273.02], ['09.04.2020', 267.66], ['08.04.2020', 265.96], ['07.04.2020', 259.02], ['06.04.2020', 262.33], ['03.04.2020', 241.26], ['02.04.2020', 244.8], ['01.04.2020', 241.61], ['27.04.2020', 282.77], ['24.04.2020', 282.97], ['23.04.2020', 275.03], ['22.04.2020', 276.1], ['21.04.2020', 268.37], ['20.04.2020', 276.93], ['17.04.2020', 282.8], ['16.04.2020', 286.69], ['15.04.2020', 284.43], ['14.04.2020', 287.05], ['13.04.2020', 273.25], ['09.04.2020', 267.99], ['08.04.2020', 266.07], ['07.04.2020', 259.43], ['06.04.2020', 262.47], ['03.04.2020', 241.41], ['02.04.2020', 244.93], ['01.04.2020', 240.91]]
-l.sort()
-print(l)
+import requests
+from bs4 import BeautifulSoup
+
+def read_index(index_name):
+    page_nr=0
+    index_stocks = {}
+    temp_stocks = {}
+    while True:
+        #page = requests.get ("https://www.ariva.de/"+index_name+"?page="+str(page_nr))
+        page = requests.get ("https://www.ariva.de/" + index_name)
+        soup = BeautifulSoup (page.content, "html.parser")
+        table = soup.find(id="result_table_0")
+        for row in table.find_all("td"):
+            if row.get("class") == ["ellipsis", "nobr", "new", "padding-right-5"]:
+
+                #print(row.prettify())
+                #print("Wert1: ",row.find("a")["href"][1:])
+                #print("Wert2: ",row.text.strip().capitalize())
+
+                index_stocks[row.find("a")["href"][1:]] = row.text.strip().capitalize()
+
+        print("PageNr: ",page_nr)
+        print ("Temp Stock: ",temp_stocks)
+        print ("Index  Stock:",index_stocks)
+        print ("Temp-Index:  ", len (temp_stocks))
+        print ("Len-Index:  ",len(index_stocks))
+
+        #Dict sortieren nach Value
+        index_stocks = {k: v for k, v in sorted(index_stocks.items(), key=lambda item: item[1])}
+        if temp_stocks == index_stocks: break
+        page_nr += 1
+        temp_stocks = dict(index_stocks)
+    return(index_stocks)
+
+index = "s-p_500-index/kursliste"
+stocks_final =  read_index(index)
+print(stocks_final)
