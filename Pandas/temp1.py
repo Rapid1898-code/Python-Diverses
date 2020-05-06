@@ -12,6 +12,7 @@ df.rename(columns={"countriesAndTerritories":"land","continentExp":"continent",
 df = df[["date","cases","deaths","land","einwohner","continent"]]
 
 #  read continent to dir
+# cont_dict = {'Asia': 4468915667.0, 'Europe': 764402254.0, 'Africa': 1268860264.0, 'America': 1005667059.0, 'Oceania': 40152057.0, 'Other': 3000.0}
 cont_list = df["continent"].unique()
 cont_dict = {}
 for i in cont_list: cont_dict[i] = 0
@@ -22,7 +23,7 @@ if anz_countries == 0: countries_df = df.groupby("land").sum().sort_values(by="c
 else: countries_df = df.groupby("land").sum().sort_values(by="cases",ascending=False).head(50)
 countries = []
 for index,row in countries_df.iterrows(): countries.append(index)
-#countries = ["Austria","Germany","Switzerland"]
+countries = ["Austria","Germany","Switzerland"]
 #countries = ["Austria"]
 #countries = ["Eritrea"]
 
@@ -52,7 +53,7 @@ for continent in continents:
         df_temp._set_value(i,"cont_sum_deaths",cont_sum_deaths)
 """
 
-
+country_continent = {}
 for country in countries:
     print(country)
     df_temp = df[df["land"].isin([country])]
@@ -68,7 +69,6 @@ for country in countries:
         df_temp._set_value(i,"sum_cases",sum_cases)
         df_temp._set_value(i,"sum_deaths",sum_deaths)
 
-
         if sum_cases != 0 and math.isnan(sum_cases) == False and math.isnan(i_cont[4]) == False:
             df_temp._set_value (i,"inh_case", i_cont[4] / sum_cases)
         else: df_temp._set_value (i,"inh_case",1,0)
@@ -76,10 +76,8 @@ for country in countries:
             df_temp._set_value (i,"inh_death", i_cont[4] / sum_deaths)
         else: df_temp._set_value (i,"inh_death",1,0)
 
-
-
-
-    df_temp_cases = df_temp[["date","land","sum_cases"]]
+    country_continent[df_temp.iloc[0][3]] = df_temp.iloc[0][5]
+    df_temp_cases = df_temp[["date","land","continent", "sum_cases"]]
     df_temp_cases = df_temp_cases.pivot(index="land", columns="date", values="sum_cases")
     df_final_cases = df_final_cases.append(df_temp_cases, ignore_index=False)
 
@@ -100,7 +98,29 @@ df_final_deaths = df_final_deaths.sort_index(axis=1, ascending=True)
 df_final_inh_case = df_final_inh_case.sort_index(axis=1, ascending=True)
 df_final_inh_death = df_final_inh_death.sort_index(axis=1, ascending=True)
 
+cont_dict = {'Asia': 4468915667.0, 'Europe': 764402254.0, 'Africa': 1268860264.0, 'America': 1005667059.0, 'Oceania': 40152057.0, 'Other': 3000.0}
+#print(df_final_cases)
+print(country_continent)
 print(cont_dict)
+
+cont_df = df_final_cases
+cont_df.drop(cont_df.index[1])
+print(cont_df)
+
+#cont_df.drop(cont_df.index[:])
+#print(cont_df)
+
+
+
+#print(df_final_cases.iloc[0].index.values)
+
+
+
+#for i, i_cont in df_final_cases.iterrows ():
+#    print(i)
+#    #print(i_cont.index[len(i_cont.index)-1])
+#    #print(i_cont.values[len(i_cont.index)-1])
+#    print(i_cont.index.values)
 
 date = str(df_final_cases.columns[len(df_final_cases.columns)-1].date()).replace("-","_")
 
