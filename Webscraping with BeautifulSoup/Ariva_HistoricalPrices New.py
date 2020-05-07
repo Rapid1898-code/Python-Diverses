@@ -21,7 +21,8 @@ from openpyxl.styles import Font, PatternFill, Border, Side
 
 # Unternehmen eines bestimmten Index werden eingelesen
 # Output: Dict in der Form Kürzel von Ariva.de + Name des Titels (z.b '/apple-aktie': 'Apple')
-def read_index(index_name):
+def read_index(index_name, char):
+    print("Reading Index",index_name,"starting with Character:",char,"...")
     page_nr=0
     index_stocks = {}
     temp_stocks = {}
@@ -31,12 +32,14 @@ def read_index(index_name):
         table  = soup.find(id="result_table_0")
         for row  in table.find_all("td"):
             if row.get("class") == ["ellipsis", "nobr", "new", "padding-right-5"]:
-                index_stocks[row.find("a")["href"][1:]] = row.text.strip().capitalize()
+                if row.text.strip().capitalize()[0] >= char:
+                    index_stocks[row.find("a")["href"][1:]] = row.text.strip().capitalize()
         #Dict sortieren nach Value
         index_stocks = {k: v for k, v in sorted(index_stocks.items(), key=lambda item: item[1])}
         if temp_stocks == index_stocks: break
         page_nr += 1
         temp_stocks = dict(index_stocks)
+    print("Finished Reading Index",len(index_stocks), "are read...")
     return(index_stocks)
 
 # VPN-Switch bei NordVPN mit x Sekunden Verzögerung
@@ -315,6 +318,7 @@ stocks_dic = {'apple-aktie': 'Apple'}
 #Input - sek: Anzahl der Sekunden der Verzögerung bei VPN-Switch
 whg = "USD"
 index = 0
+char_index = "E"
 vpn_land = "no-vpn"
 writemodus = 1
 
@@ -330,7 +334,7 @@ end_month = 0
 
 start_gesamt = timeit.default_timer()
 if index != 0:
-    stocks_dic = read_index(index)
+    stocks_dic = read_index(index,char_index.upper())
 if end_year == 0:
     end_year = datetime.datetime.now().year
     end_month = datetime.datetime.now().month

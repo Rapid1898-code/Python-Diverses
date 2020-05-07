@@ -1,8 +1,10 @@
-l = [1,2,3,4,5,6]
-t2 = l[1:]
-t2.reverse()
-l = l[0:1]+t2
-print(l)
+char = "0"
+l = ["Apfel","Birne","Zwetschke","Kartoffel","Ende"]
+l_end = []
+
+for i in l:
+    if i[0].upper() >= char: l_end.append(i)
+print(l_end)
 
 
 
