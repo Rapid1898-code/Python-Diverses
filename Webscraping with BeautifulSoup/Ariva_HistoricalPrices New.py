@@ -16,9 +16,6 @@ from openpyxl import load_workbook
 from openpyxl.utils import get_column_letter
 from openpyxl.styles import Font, PatternFill, Border, Side
 
-#TODO
-# Marktkapitalisierung pro Tag im Kurs-XLS ergänzen (evt. mit eigenem Programm)
-
 # Unternehmen eines bestimmten Index werden eingelesen
 # Output: Dict in der Form Kürzel von Ariva.de + Name des Titels (z.b '/apple-aktie': 'Apple')
 def read_index(index_name, char):
@@ -88,7 +85,7 @@ def stock_prices_month (stock,month,whg,boerse_id):
             if col_id == 0:     # 1.Spalte Datum
                 yield "datum", col_content.text.strip()
             elif col_id == 4:   # 5.Spalte Schlusskurs
-                yield "price", col_content.text.strip()
+                yield "price", round(col_content.text.strip(),2)
 
 # Monatsultimo ermitteln für Zeitraum
 # Input z.B. (3, 2015, datetime.now().month, datetime.now().year) bei Aufruf

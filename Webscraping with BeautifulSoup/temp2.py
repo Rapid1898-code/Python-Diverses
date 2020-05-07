@@ -1,44 +1,27 @@
-import xlrd
-import datetime
-import csv
-from datetime import datetime
-from itertools import zip_longest
+from openpyxl import load_workbook
+import pandas as pd
 
-# Ausgabe der Liste als CSV-File
-def csv_write(result, filename):
-    while True:
-        try:
-            with open (filename,"w",newline="") as fp:
-                a = csv.writer(fp,delimiter=",")
-                a.writerows(result)
-                break
-        except:
-            input ("Datei kann nicht geöffent werden - bitte schließen und <Enter> drücken!")
-    fp.close()
-
-workbook = xlrd.open_workbook ("DAX Price2.xlsx")
-sheet = workbook.sheet_by_index (0)
-liste = []
-for row in range (sheet.nrows):
-    zeile=[]
-    for col in range(sheet.ncols):
-        if sheet.cell(row,col).ctype == 3:
-            zeile.append(datetime(*xlrd.xldate_as_tuple(sheet.cell(row,col).value,0)).strftime("%d.%m.%Y"))
-        else:
-            zeile.append(sheet.cell(row,col).value)
-    liste.append(zeile)
-#print(liste)
-
-result = [list(filter(None,i)) for i in zip_longest(*liste)]
-print(result)
-csv_write(result, "testout.csv")
+# read XLSX
+workbook = load_workbook("TEST.xlsx")
+sheet = workbook["SHEET_A"]
 
 
+# change to list
+l=[]
+for row in sheet:
+    temp_row = []
+    for cell in row:
+        temp_row.append(cell.value)
+    l.append(temp_row)
 
+# manipulate list
+l[1][1] = 1
 
-
-
-
-
-
-
+# write back to XLSX
+writer = pd.ExcelWriter ("TEST.xlsx", engine='openpyxl')
+workbook.remove(sheet)
+writer.book = workbook
+pd.DataFrame (l).to_excel (writer, sheet_name="SHEET_A", header=False, index=False)
+writer.book._sheets.sort(key=lambda x: x.title)
+writer.save()
+writer.close()
