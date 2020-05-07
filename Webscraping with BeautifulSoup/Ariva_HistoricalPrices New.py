@@ -32,7 +32,7 @@ def read_index(index_name, char):
         table  = soup.find(id="result_table_0")
         for row  in table.find_all("td"):
             if row.get("class") == ["ellipsis", "nobr", "new", "padding-right-5"]:
-                if row.text.strip().capitalize()[0] >= char:
+                if row.text.strip().capitalize()[0:2].upper() >= char:
                     index_stocks[row.find("a")["href"][1:]] = row.text.strip().capitalize()
         #Dict sortieren nach Value
         index_stocks = {k: v for k, v in sorted(index_stocks.items(), key=lambda item: item[1])}
@@ -169,7 +169,7 @@ def save_xls(stock, content, filename):
         writemodus = 0
     if writemodus == 0:
         writer = pd.ExcelWriter(filename, engine = 'openpyxl', options={'strings_to_numbers': True})
-    elif writemodus == 1:
+    else:
         book = load_workbook (filename)
         if stock in book.sheetnames:
             print ("Aktie: ",stock," bereits im XLS: ",filename," enthalten - Aktie wird übersprungen")
@@ -318,7 +318,7 @@ stocks_dic = {'apple-aktie': 'Apple'}
 #Input - sek: Anzahl der Sekunden der Verzögerung bei VPN-Switch
 whg = "USD"
 index = 0
-char_index = "E"
+char_index = "EE"
 vpn_land = "no-vpn"
 writemodus = 1
 
