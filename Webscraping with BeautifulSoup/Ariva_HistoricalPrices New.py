@@ -315,7 +315,7 @@ stocks_dic = {'apple-aktie': 'Apple'}
 #Input - sek: Anzahl der Sekunden der Verzögerung bei VPN-Switch
 whg = "USD"
 index = 0
-char_index = "HD"
+char_index = "IQ"
 vpn_land = "no-vpn"
 writemodus = 1
 

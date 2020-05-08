@@ -2,7 +2,7 @@ import xlrd
 from datetime import datetime
 from openpyxl import load_workbook
 from openpyxl.utils import get_column_letter
-from openpyxl.styles import Font, PatternFill, Border, Side
+from openpyxl.styles import NamedStyle, Font, PatternFill, Border, Side
 import pandas as pd
 
 # read input-excel-sheets
@@ -90,13 +90,11 @@ for sh_price in wb_price:
         cell.font = bold
         cell.fill = bg_yellow
         cell.border = frame_all
-
     for row in ws["1:3"]:
         for cell in row:
             cell.font = bold
             cell.fill = bg_green
             cell.border = frame_all
-
 
     freeze = ws["B2"]
     ws.freeze_panes = freeze

@@ -617,8 +617,8 @@ def read_stamm(stock):
     return (output)
 
 
-stocks_dic = {'apple-aktie': 'Apple'}
-# stocks_dic = {'apple-aktie': 'Apple', 'infineon-aktie': 'Infineon'}
+#stocks_dic = {'apple-aktie': 'Apple'}
+stocks_dic = {'apple-aktie': 'Apple', 'infineon-aktie': 'Infineon'}
 # stocks_dic = {'continental-aktie': 'Continental', 'apple-aktie': 'Apple'}
 # stocks_dic = {'zimmer_holdings-aktie': 'Zimmer Holdings', 'zebra_technologies-aktie': 'Zebra Technologies'}
 # stocks_dic = {'alaska_air_group-aktie': 'Alaska','alliance_data_systems-aktie': 'Alliance'}
