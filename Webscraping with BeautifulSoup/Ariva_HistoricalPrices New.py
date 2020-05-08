@@ -85,7 +85,7 @@ def stock_prices_month (stock,month,whg,boerse_id):
             if col_id == 0:     # 1.Spalte Datum
                 yield "datum", col_content.text.strip()
             elif col_id == 4:   # 5.Spalte Schlusskurs
-                yield "price", round(col_content.text.strip(),2)
+                yield "price", col_content.text.strip()
 
 # Monatsultimo ermitteln für Zeitraum
 # Input z.B. (3, 2015, datetime.now().month, datetime.now().year) bei Aufruf
@@ -315,7 +315,7 @@ stocks_dic = {'apple-aktie': 'Apple'}
 #Input - sek: Anzahl der Sekunden der Verzögerung bei VPN-Switch
 whg = "USD"
 index = 0
-char_index = "EE"
+char_index = "HD"
 vpn_land = "no-vpn"
 writemodus = 1
 
