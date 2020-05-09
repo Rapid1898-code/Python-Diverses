@@ -5,12 +5,6 @@ from openpyxl.utils import get_column_letter
 from openpyxl.styles import NamedStyle, Font, PatternFill, Border, Side
 import pandas as pd
 
-# read input-excel-sheets
-fn_price = "Test_Prices.xlsx"
-fn_data = "Test_Data.xlsx"
-wb_price = load_workbook(fn_price)
-wb_data = load_workbook(fn_data)
-
 # calculate growth-value for specific value
 # start_col => specifies the columns in which the calculation starts
 # anzahl_hist => specifies the years for which the mean is build
@@ -18,10 +12,18 @@ wb_data = load_workbook(fn_data)
 def calc_growth(start_col,anzahl_hist, row):
     growth_sum = 0
     growth_anz = 0
-    for i in range(0,anzahl_hist):
-        growth_sum = growth_sum + round((row[start_col +i] - row[start_col +i +1]) / row[start_col +i +1] * 100, 2)
-        growth_anz += 1
-    return (round(growth_sum / anzahl_hist, 2))
+    if start_col + anzahl_hist < len(row):
+        for i in range(0,anzahl_hist):
+            growth_sum = growth_sum + round((row[start_col +i] - row[start_col +i +1]) / row[start_col +i +1] * 100, 2)
+            growth_anz += 1
+        return (round(growth_sum / anzahl_hist, 2))
+    else: return False
+
+# read input-excel-sheets
+fn_price = "Test_Prices.xlsx"
+fn_data = "Test_Data.xlsx"
+wb_price = load_workbook(fn_price)
+wb_data = load_workbook(fn_data)
 
 for sh_price in wb_price:
     for sh_data in wb_data:
@@ -55,6 +57,7 @@ for sh_price in wb_price:
         if "Buchwert je Aktie" == data_list[i][0]: row_totalequity_sh = data_list[i]
         if "Cashflow je Aktie" == data_list[i][0]: row_opcashflow_sh = data_list[i]
         if "Dividende je Aktie" == data_list[i][0]: row_dividend_sh = data_list[i]
+        if "Gesamtertrag" == data_list[i][0]: row_totalincome = data_list[i]
 
     # calculate marketcap per day with daily price and yearly outstanding shares
     tmp_year = 0
@@ -69,13 +72,38 @@ for sh_price in wb_price:
                     break
         price_list[i][1] = round (price_list[i][1], 2)
         price_list[i][2] = round(price_list[i][1] * row_shares[idx] / 1000,2)
-        price_list[i][3] = round (price_list[i][1] / row_netincome_sh[idx], 2)
-        price_list[i][4] = round (price_list[i][1] / row_revenue_sh[idx], 2)
-        price_list[i][5] = round (price_list[i][1] / row_totalequity_sh[idx], 2)
-        price_list[i][6] = round (price_list[i][1] / row_opcashflow_sh[idx], 2)
-        price_list[i][7] = round (row_dividend_sh[idx] / price_list[i][1], 2)
-        price_list[i][8] = round (1 / price_list[i][3], 2)
-        price_list[i][9] = price_list[i][3] / calc_growth (idx,5,row_netincome_sh)
+
+        if len(price_list[i]) <= 3:
+            price_list[i].append(round (price_list[i][1] / row_netincome_sh[idx], 2))
+            if row_revenue_sh != 0:
+                price_list[i].append(round (price_list[i][1] / row_revenue_sh[idx], 2))
+            else:
+                price_list[i].append(round (price_list[i][1] * row_shares[idx] / row_totalincome[idx], 2))
+            price_list[i].append(round (price_list[i][1] / row_totalequity_sh[idx], 2))
+            price_list[i].append(round (price_list[i][1] / row_opcashflow_sh[idx], 2))
+            price_list[i].append(round (row_dividend_sh[idx] / price_list[i][1] * 100, 2))
+            price_list[i].append(round (1 / price_list[i][3] * 100, 2))
+            tmp_calc = calc_growth (idx, 5, row_netincome_sh)
+            if tmp_calc != False:
+                price_list[i].append(round(price_list[i][3] / tmp_calc,2))
+            else:
+                price_list[i].append("")
+        else:
+            price_list[i][3] = round (price_list[i][1] / row_netincome_sh[idx], 2)
+            if row_revenue_sh != 0:
+                price_list[i][4] = round (price_list[i][1] / row_revenue_sh[idx], 2)
+            else:
+                price_list[i][4] = round (price_list[i][1] * row_shares[idx] / row_totalincome[idx], 2)
+            price_list[i][5] = round (price_list[i][1] / row_totalequity_sh[idx], 2)
+            price_list[i][6] = round (price_list[i][1] / row_opcashflow_sh[idx], 2)
+            price_list[i][7] = round (row_dividend_sh[idx] / price_list[i][1] * 100, 2)
+            price_list[i][8] = round (1 / price_list[i][3] * 100, 2)
+            tmp_calc = calc_growth (idx,5,row_netincome_sh)
+            if tmp_calc != False:
+                price_list[i][9] = round(price_list[i][3] / tmp_calc,2)
+            else:
+                price_list[i][9] = ""
+
 
     # Überschrift ergänzen
     if price_list[1][0] == "Date" and price_list[2][0] == "Datum": del price_list[1:3]
@@ -122,7 +150,7 @@ for sh_price in wb_price:
             cell.fill = bg_green
             cell.border = frame_all
 
-    freeze = ws["B2"]
+    freeze = ws["B4"]
     ws.freeze_panes = freeze
 
 while True:
