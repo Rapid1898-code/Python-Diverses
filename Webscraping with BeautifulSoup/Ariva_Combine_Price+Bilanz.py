@@ -55,8 +55,8 @@ for sh_price in wb_price:
 
     # Überschrift ergänzen
     if price_list[1][0] == "Date" and price_list[2][0] == "Datum": del price_list[1:3]
-    price_list.insert(1,["Date","Price","MarketCap in B"])
-    price_list.insert(2,["Datum","Kurs","MarktKap in Md"])
+    price_list.insert(1,["Date","Price","MarketCap in B","PE (price/earnings)","PS (price/sales)", "PB (price/book value", "PC (price/cashflow"])
+    price_list.insert(2,["Datum","Kurs","MarktKap in Md","KGV (Kurs/Gewinn)", "KUV (Kurs/Umsatz)", "KBV (Kurs/Buchwert)", "KCV (Kurs/Cashflow)"])
     price_list[0][0] = ""
 
     #  save XLSX

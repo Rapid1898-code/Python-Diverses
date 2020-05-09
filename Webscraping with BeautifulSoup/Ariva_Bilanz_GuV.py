@@ -354,7 +354,7 @@ def read_bilanz(stock):
                 'Bruttoergebnis je Mitarbeiter in EUR': 'Gross Profit per employee',
                 'KGV (Kurs/Gewinn)': 'PE (price/earnings)',
                 'KUV (Kurs/Umsatz)': 'PS (price/sales)', 'KBV (Kurs/Buchwert)': 'PB (price/book value)',
-                'KCV (Kurs/Cashflow)': 'PC (prce/cashflow)', 'Dividendenrendite in %': 'Dividend Yield in %',
+                'KCV (Kurs/Cashflow)': 'PC (price/cashflow)', 'Dividendenrendite in %': 'Dividend Yield in %',
                 'Gewinnrendite in %': 'Return on profit in %', 'Eigenkapitalrendite in %': 'Return on Equity in %',
                 'Umsatzrendite in %': 'Return on sales in %',
                 'Gesamtkapitalrendite in %': 'Total Return on Investment in %',
