@@ -11,6 +11,18 @@ fn_data = "Test_Data.xlsx"
 wb_price = load_workbook(fn_price)
 wb_data = load_workbook(fn_data)
 
+# calculate growth-value for specific value
+# start_col => specifies the columns in which the calculation starts
+# anzahl_hist => specifies the years for which the mean is build
+# row => specifies the row in which the growth should calculated
+def calc_growth(start_col,anzahl_hist, row):
+    growth_sum = 0
+    growth_anz = 0
+    for i in range(0,anzahl_hist):
+        growth_sum = growth_sum + round((row[start_col +i] - row[start_col +i +1]) / row[start_col +i +1] * 100, 2)
+        growth_anz += 1
+    return (round(growth_sum / anzahl_hist, 2))
+
 for sh_price in wb_price:
     for sh_data in wb_data:
         if sh_price.title.upper() == sh_data.title.upper():  break
@@ -34,29 +46,43 @@ for sh_price in wb_price:
         data_list.append(zeile)
 
     # find necessary rows
-    row_title = row_shares = 0
+    row_title = row_shares = row_netincome_sh = row_revenue_sh = row_totalequity_sh = row_opcashflow_sh = row_dividend_sh = 0
     for i in range(len(data_list)-1):
         if "Bilanz in Mio." in data_list[i][0]: row_title = data_list[i]
         if "Aktien im Umlauf"  in data_list[i][0]: row_shares= data_list[i]
+        if "Ergebnis je Aktie (unverwässert)" == data_list[i][0]: row_netincome_sh = data_list[i]
+        if "Umsatz je Aktie" == data_list[i][0]: row_revenue_sh = data_list[i]
+        if "Buchwert je Aktie" == data_list[i][0]: row_totalequity_sh = data_list[i]
+        if "Cashflow je Aktie" == data_list[i][0]: row_opcashflow_sh = data_list[i]
+        if "Dividende je Aktie" == data_list[i][0]: row_dividend_sh = data_list[i]
 
     # calculate marketcap per day with daily price and yearly outstanding shares
-    tmp_year=0
-    tmp_shares=0
+    tmp_year = 0
+    idx = 0
     for i in range (1,len(price_list)):
         if price_list[i][0] == "Datum" or price_list[i][0] == "Date": continue
         if datetime.strptime(price_list[i][0],"%d.%m.%Y") != tmp_year:
             for j in range(2,len(row_title)):
                 if datetime.strptime(price_list[i][0],"%d.%m.%Y").year-1 == int(row_title[j]):
-                    tmp_year = int(row_title[j])
-                    tmp_shares = row_shares[j]
+                    tmp_year = int (row_title[j])
+                    idx = j
                     break
-        price_list[i][2] = round(price_list[i][1] * tmp_shares / 1000,2)
-        price_list[i][1] = round(price_list[i][1],2)
+        price_list[i][1] = round (price_list[i][1], 2)
+        price_list[i][2] = round(price_list[i][1] * row_shares[idx] / 1000,2)
+        price_list[i][3] = round (price_list[i][1] / row_netincome_sh[idx], 2)
+        price_list[i][4] = round (price_list[i][1] / row_revenue_sh[idx], 2)
+        price_list[i][5] = round (price_list[i][1] / row_totalequity_sh[idx], 2)
+        price_list[i][6] = round (price_list[i][1] / row_opcashflow_sh[idx], 2)
+        price_list[i][7] = round (row_dividend_sh[idx] / price_list[i][1], 2)
+        price_list[i][8] = round (1 / price_list[i][3], 2)
+        price_list[i][9] = price_list[i][3] / calc_growth (idx,5,row_netincome_sh)
 
     # Überschrift ergänzen
     if price_list[1][0] == "Date" and price_list[2][0] == "Datum": del price_list[1:3]
-    price_list.insert(1,["Date","Price","MarketCap in B","PE (price/earnings)","PS (price/sales)", "PB (price/book value", "PC (price/cashflow"])
-    price_list.insert(2,["Datum","Kurs","MarktKap in Md","KGV (Kurs/Gewinn)", "KUV (Kurs/Umsatz)", "KBV (Kurs/Buchwert)", "KCV (Kurs/Cashflow)"])
+    price_list.insert(1,["Date","Price","MarketCap in B","PE (price/earnings)","PS (price/sales)", "PB (price/book value",
+                         "PC (price/cashflow", "Dividend Yield", "Initial Yield", "PEG Ratio"])
+    price_list.insert(2,["Datum","Kurs","MarktKap in Md","KGV (Kurs/Gewinn)", "KUV (Kurs/Umsatz)", "KBV (Kurs/Buchwert)",
+                         "KCV (Kurs/Cashflow)", "Dividendenrendite", "Initial Yield", "KGW Kurs/Gewinn/Wachstum"])
     price_list[0][0] = ""
 
     #  save XLSX
