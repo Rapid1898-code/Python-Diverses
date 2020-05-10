@@ -217,6 +217,21 @@ def read_index(index_name):
     return (index_stocks)
 
 
+# calculate growth-value for specific value
+# start_col => specifies the columns in which the calculation starts
+# anzahl_hist => specifies the years for which the mean is build
+# row => specifies the row in which the growth should calculated
+def calc_growth(start_col,anzahl_hist, row):
+    growth_sum = 0
+    growth_anz = 0
+    if start_col + anzahl_hist < len(row):
+        for i in range(0,anzahl_hist):
+            growth_sum = growth_sum + round((row[start_col +i] - row[start_col +i +1]) / row[start_col +i +1] * 100, 2)
+            growth_anz += 1
+        return (round(growth_sum / anzahl_hist, 2))
+    else: return False
+
+
 # Kennzahlen für das Unternehmen lt. Parameter lesen
 # Input Stock: Aktienkennung lt. Ariva.de z.b. /apple-aktie oder /wirecard-aktie
 def read_bilanz(stock):
@@ -388,8 +403,8 @@ def read_bilanz(stock):
 
     # Kennzahlen ergänzen
     revenue_row = grossprofit_row = netincome_row = equity_row = ebit_row = totalassets_row = shorttermdebt_row = 0
-    currentassets_row = noncurrentassets_row = currentliabilities_row = 0
-    row1 = row2 = row3 = row4 = row5 = row6 = row7 = row8 = row9 = row10 = []
+    currentassets_row = noncurrentassets_row = currentliabilities_row = cashflow_sh_row = shares_row = 0
+    row1 = row2 = row3 = row4 = row5 = row6 = row7 = row8 = row9 = row10 = row11 = row12 = row13 = row14 = row15 = []
 
     for i_idx, i_cont in enumerate (output_gesamt):
         if i_cont[1] == "Revenue": revenue_row = i_idx
@@ -402,6 +417,8 @@ def read_bilanz(stock):
         if i_cont[1] == "Current Assets": currentassets_row = i_idx
         if i_cont[1] == "Fixed Assets": noncurrentassets_row = i_idx
         if i_cont[1] == "Short-Term Debt": currentliabilities_row = i_idx
+        if i_cont[1] == "PC (price/cashflow)": cashflow_sh_row = i_idx
+        if i_cont[1] == "Million shares outstanding": shares_row = i_idx
 
     if revenue_row != 0 and grossprofit_row != 0: row1 = ["Bruttoergebnis Marge in %", "Gross Profit Marge in %"]
     if currentassets_row != 0 and totalassets_row != 0: row2 = ["Kurzfristige Vermögensquote in %",
@@ -418,6 +435,12 @@ def read_bilanz(stock):
                                                               "Equity to Fixed Assets in %"]
     if currentassets_row != 0 and currentliabilities_row != 0: row10 = ["Liquidität Dritten Grades",
                                                                         "Current Ratio in %"]
+    if cashflow_sh_row != 0 and shares_row != 0: row11 = ["Operativer Cashflow", "Operating Cashflow in M"]
+    if shares_row != 0: row12 = ["Aktienrückkauf", "Share Buyback in M"]
+    if revenue_row != 0 :
+        row13 = ["Umsatzwachstum 3J in %", "Revenue Growth 3Y in %"]
+        row14 = ["Umsatzwachstum 5J in %", "Revenue Growth 5Y in %"]
+        row15 = ["Umsatzwachstum 10J in %", "Revenue Growth 10Y in %"]
 
     for i in range (2, len (output_gesamt[len (output_gesamt) - 1]) - 1):
         if row1 != []: row1.append (round (output_gesamt[grossprofit_row][i] / output_gesamt[revenue_row][i] * 100, 2))
@@ -436,8 +459,27 @@ def read_bilanz(stock):
             round (output_gesamt[equity_row][i] / output_gesamt[noncurrentassets_row][i] * 100, 2))
         if row10 != []: row10.append (
             round (output_gesamt[currentassets_row][i] / output_gesamt[currentliabilities_row][i] * 100, 2))
+        if row11 != []: row11.append (output_gesamt[cashflow_sh_row][i] * output_gesamt[shares_row][i])
+        if row12 != []:
+            if i < len(output_gesamt[30]) and isinstance(output_gesamt[shares_row][i+1],float) and isinstance (output_gesamt[shares_row][i + 1], float):
+                row12.append (output_gesamt[shares_row][i+1] - output_gesamt[shares_row][i])
+            else:
+                row12.append("-")
+        if row13 != []:
+            for j in [3,5,10]:
+                tmp_calc = calc_growth (i,j,output_gesamt[revenue_row])
+                if j == 3:
+                    if tmp_calc != False: row13.append (tmp_calc)
+                    else: row13.append ("-")
+                if j == 5:
+                    if tmp_calc != False: row14.append (tmp_calc)
+                    else: row14.append ("-")
+                if j == 10:
+                    if tmp_calc != False: row15.append (tmp_calc)
+                    else: row15.append ("-")
 
-    for i in [row1, row2, row3, row4, row5, row6, row7, row8, row9, row10]:
+
+    for i in [row1, row2, row3, row4, row5, row6, row7, row8, row9, row10, row11, row12, row13, row14, row15]:
         output_gesamt.insert(len(output_gesamt)-1, i)
 
     return output_gesamt

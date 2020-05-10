@@ -1,11 +1,6 @@
-char = "0"
-l = ["Apfel","Birne","Zwetschke","Kartoffel","Ende"]
-l_end = []
-
-for i in l:
-    if i[0].upper() >= char: l_end.append(i)
-print(l_end)
-
+f1 = 13.56
+f2 = 12.4
+print(f1-f2)
 
 
 
