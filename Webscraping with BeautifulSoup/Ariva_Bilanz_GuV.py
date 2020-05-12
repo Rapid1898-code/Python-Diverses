@@ -216,10 +216,6 @@ def read_index(index_name, char="00"):
         page_nr += 1
         temp_stocks = dict(index_stocks)
     print("Finished Reading Index",len(index_stocks), "are read...")
-
-    print(index_stocks)
-    print(len(index_stocks))
-
     return(index_stocks)
 
 
@@ -799,15 +795,19 @@ writemodus = 1
 index="s-p_500-index/kursliste"
 # index="nasdaq-100-index/kursliste"
 
-sek = 20
-# vpn_land = vpn_switch (sek)
+sek = 45        #bei 0 Sekunden => kein VPN
+entry = 30      #Wechsel der VPN-Verbindung bei allen 20 Einträgen
 
 start_readstocks = timeit.default_timer ()
 if index != 0:
     stocks_dic = read_index (index)
 
-for stock in stocks_dic:
-    print ("Verarbeitung:", stock, "with VPN:", vpn_land)
+for i, stock in enumerate(stocks_dic):
+    if sek != 0:
+        if i%30 == 0: vpn_land = vpn_switch (sek)
+        print ("Verarbeitung:", stock, "with VPN:", vpn_land)
+    else:
+        print ("Verarbeitung:", stock, "without VPN... Aktienkurse lesen...")
     if index == 0:
         check = check_xls (stocks_dic.get (stock), "Stock_Data.xlsx")
     else:
@@ -826,8 +826,20 @@ for stock in stocks_dic:
         save_xls (stocks_dic.get (stock), output,
                   index.replace ("/", "_").replace ("kursliste", "") + "_Stock_Data.xlsx")
     if writemodus == 0: writemodus = 1
+
+# Worksheets sortieren im XLSX
+if index == 0: name_xlsx = "Stock_Data.xlsx"
+else: name_xlsx = index.replace ("/", "_").replace ("kursliste", "") + "_Stock_Data.xlsx"
+wb =  load_workbook(name_xlsx)
+wb._sheets.sort(key=lambda x: x.title)
+while True:
+    try:
+        wb.save (name_xlsx)
+        wb.close ()
+        break
+    except Exception as e:
+        print ("Error: ", e)
+        input ("Datei kann nicht geöffnet werden - bitte schließen und <Enter> drücken!")
+
 stop_readstocks = timeit.default_timer ()
-
-
-
 print ("Verarbeitung beendet - Gesamtlaufzeit: ", round ((stop_readstocks - start_readstocks) / 60, 2), "min")

@@ -5,8 +5,6 @@ import pandas as pd
 
 name_xlsx = "s-p_500-index__Stock_Data.xlsx"
 wb =  load_workbook(name_xlsx)
-#writer = pd.ExcelWriter (wb, engine='openpyxl', options={'strings_to_numbers': True})
-#pd.DataFrame (name_xlsx).to_excel (writer, sheet_name=sh_price.title.upper(), header=False, index=False)
 wb._sheets.sort(key=lambda x: x.title)
 
 while True:
