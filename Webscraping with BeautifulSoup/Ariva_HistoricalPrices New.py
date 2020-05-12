@@ -18,7 +18,7 @@ from openpyxl.styles import Font, PatternFill, Border, Side
 
 # Unternehmen eines bestimmten Index werden eingelesen
 # Output: Dict in der Form Kürzel von Ariva.de + Name des Titels (z.b '/apple-aktie': 'Apple')
-def read_index(index_name, char):
+def read_index(index_name, char="00"):
     print("Reading Index",index_name,"starting with Character:",char,"...")
     page_nr=0
     index_stocks = {}
@@ -37,6 +37,10 @@ def read_index(index_name, char):
         page_nr += 1
         temp_stocks = dict(index_stocks)
     print("Finished Reading Index",len(index_stocks), "are read...")
+
+    print(index_stocks)
+    print(len(index_stocks))
+
     return(index_stocks)
 
 # VPN-Switch bei NordVPN mit x Sekunden Verzögerung
@@ -315,7 +319,7 @@ stocks_dic = {'apple-aktie': 'Apple'}
 #Input - sek: Anzahl der Sekunden der Verzögerung bei VPN-Switch
 whg = "USD"
 index = 0
-char_index = "PR"
+char_index = "00"
 vpn_land = "no-vpn"
 writemodus = 1
 

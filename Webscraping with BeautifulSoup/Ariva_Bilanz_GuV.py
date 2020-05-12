@@ -11,6 +11,7 @@ import time
 import re
 import sys
 import timeit
+from googletrans import Translator
 
 
 # Ausgabe der Liste als CSV-File inkl. Prüfung ob Datei geöffnet ist
@@ -149,9 +150,15 @@ def save_xls(stock, content, filename):
     ws["G3"].font = bold
     ws["G3"].fill = bg_yellow
     ws["G3"].border = frame_all
+    ws["H3"].font = bold
+    ws["H3"].fill = bg_yellow
+    ws["H3"].border = frame_all
     ws["J3"].font = bold
     ws["J3"].fill = bg_yellow
     ws["J3"].border = frame_all
+    ws["K3"].font = bold
+    ws["K3"].fill = bg_yellow
+    ws["K3"].border = frame_all
     for cell in ws["1:1"]:
         cell.font = bold
         cell.fill = bg_green
@@ -190,31 +197,30 @@ def vpn_switch(sek):
 
 # Unternehmen eines bestimmten Index werden eingelesen
 # Output: Dict in der Form Kürzel von Ariva.de + Name des Titels (z.b '/apple-aktie': 'Apple')
-def read_index(index_name):
-    page_nr = 0
+def read_index(index_name, char="00"):
+    print("Reading Index",index_name,"starting with Character:",char,"...")
+    page_nr=0
     index_stocks = {}
     temp_stocks = {}
     while True:
-        try:
-            page = requests.get ("https://www.ariva.de/" + index_name + "?page=" + str (page_nr))
-        except requests.ConnectionError:
-            print ("No Connection - Wait für Reconnection...")
-            for i in range (60, 0, -1):
-                sys.stdout.write (str (i) + ' ')
-                sys.stdout.flush ()
-                time.sleep (1)
-            page = requests.get ("https://www.ariva.de/" + index_name + "?page=" + str (page_nr))
+        page = requests.get ("https://www.ariva.de/"+index_name+"?page="+str(page_nr))
         soup = BeautifulSoup (page.content, "html.parser")
-        table = soup.find (id="result_table_0")
-        for row in table.find_all ("td"):
-            if row.get ("class") == ["ellipsis", "nobr", "new", "padding-right-5"]:
-                index_stocks[row.find ("a")["href"][1:]] = row.text.strip ().capitalize ()
-        # Dict sortieren nach Value
-        index_stocks = {k: v for k, v in sorted (index_stocks.items (), key=lambda item: item[1])}
+        table  = soup.find(id="result_table_0")
+        for row  in table.find_all("td"):
+            if row.get("class") == ["ellipsis", "nobr", "new", "padding-right-5"]:
+                if row.text.strip().capitalize()[0:2].upper() >= char:
+                    index_stocks[row.find("a")["href"][1:]] = row.text.strip().capitalize()
+        #Dict sortieren nach Value
+        index_stocks = {k: v for k, v in sorted(index_stocks.items(), key=lambda item: item[1])}
         if temp_stocks == index_stocks: break
         page_nr += 1
-        temp_stocks = index_stocks
-    return (index_stocks)
+        temp_stocks = dict(index_stocks)
+    print("Finished Reading Index",len(index_stocks), "are read...")
+
+    print(index_stocks)
+    print(len(index_stocks))
+
+    return(index_stocks)
 
 
 # calculate growth-value for specific value
@@ -226,7 +232,10 @@ def calc_growth(start_col,anzahl_hist, row):
     growth_anz = 0
     if start_col + anzahl_hist < len(row):
         for i in range(0,anzahl_hist):
-            growth_sum = growth_sum + round((row[start_col +i] - row[start_col +i +1]) / row[start_col +i +1] * 100, 2)
+            if row[start_col+i] not in [""," ","-"] and row[start_col+i+1] not in [""," ","-"]:
+                growth_sum = growth_sum + round((row[start_col +i] - row[start_col +i +1]) / row[start_col +i +1] * 100, 2)
+            else:
+                return False
             growth_anz += 1
         return (round(growth_sum / anzahl_hist, 2))
     else: return False
@@ -405,7 +414,7 @@ def read_bilanz(stock):
     revenue_row = grossprofit_row = netincome_row = equity_row = ebit_row = totalassets_row = shorttermdebt_row = 0
     currentassets_row = noncurrentassets_row = currentliabilities_row = cashflow_sh_row = shares_row = 0
     rows = []
-    row_add = 16
+    row_add = 29
     for i in range (100): rows.append ([])
 
     for i_idx, i_cont in enumerate (output_gesamt):
@@ -421,6 +430,8 @@ def read_bilanz(stock):
         if i_cont[1] == "Short-Term Debt": currentliabilities_row = i_idx
         if i_cont[1] == "PC (price/cashflow)": cashflow_sh_row = i_idx
         if i_cont[1] == "Million shares outstanding": shares_row = i_idx
+        if i_cont[1] == "PE (price/earnings)": earnings_sh_row = i_idx
+        if i_cont[1] == "EBIT Earning Before Interest & Tax": ebit_row = i_idx
 
     if revenue_row != 0 and grossprofit_row != 0: rows[0] = ["Bruttoergebnis Marge in %", "Gross Profit Marge in %"]
     if currentassets_row != 0 and totalassets_row != 0: rows[1] = ["Kurzfristige Vermögensquote in %", "Current Assets Ratio in %"]
@@ -439,22 +450,71 @@ def read_bilanz(stock):
         rows[13] = ["Umsatzwachstum 3J in %", "Revenue Growth 3Y in %"]
         rows[14] = ["Umsatzwachstum 5J in %", "Revenue Growth 5Y in %"]
         rows[15] = ["Umsatzwachstum 10J in %", "Revenue Growth 10Y in %"]
+    if netincome_row != 0 :
+        rows[16] = ["Gewinnwachstum 1J in %", "Earnings Growth 1Y in %"]
+        rows[17] = ["Gewinnwachstum 3J in %", "Earnings Growth 3Y in %"]
+        rows[18] = ["Gewinnwachstum 5J in %", "Earnings Growth 5Y in %"]
+        rows[19] = ["Gewinnwachstum 10J in %", "Earnings Growth 10Y in %"]
+    if earnings_sh_row !=0 and netincome_row != 0: rows[20] = ["PEG Ratio", "KGW Kurs/Gewinn/Wachstum"]
+    if ebit_row != 0 :
+        rows[21] = ["EBIT-Wachstum 1J in %", "EBIT Growth 1Y in %"]
+        rows[22] = ["EBIT-Wachstum 3J in %", "EBIT Growth 3Y in %"]
+        rows[23] = ["EBIT-Wachstum 5J in %", "EBIT Growth 5Y in %"]
+        rows[24] = ["EBIT-Wachstum 10J in %", "EBIT Growth 10Y in %"]
+    if cashflow_sh_row != 0:
+        rows[25] = ["Op.Cashflow Wachstum 1J in %", "Op.Cashflow Wachstum 1Y in %"]
+        rows[26] = ["Op.Cashflow Wachstum 3J in %", "Op.Cashflow Wachstum 3Y in %"]
+        rows[27] = ["Op.Cashflow Wachstum 5J in %", "Op.Cashflow Wachstum 5Y in %"]
+        rows[28] = ["Op.Cashflow Wachstum 10J in %", "Op.Cashflow Wachstum 10Y in %"]
 
     for i in range (2, len (output_gesamt[len (output_gesamt) - 1]) - 1):
         for j in  range (row_add):
-            if j == 0 and rows[j] != []: rows[j].append (round (output_gesamt[grossprofit_row][i] / output_gesamt[revenue_row][i] * 100, 2))
-            if j == 1 and rows[j] != []: rows[j].append (round (output_gesamt[currentassets_row][i] / output_gesamt[totalassets_row][i] * 100, 2))
-            if j == 2 and rows[j] != []: rows[j].append (round (output_gesamt[netincome_row][i] / output_gesamt[revenue_row][i] * 100, 2))
-            if j == 3 and rows[j] != []: rows[j].append (round (output_gesamt[ebit_row][i] / output_gesamt[revenue_row][i] * 100, 2))
-            if j == 4 and rows[j] != []: rows[j].append (round (output_gesamt[revenue_row][i] / output_gesamt[totalassets_row][i] * 100, 2))
-            if j == 5 and rows[j] != []: rows[j].append (round (output_gesamt[noncurrentassets_row][i] / output_gesamt[totalassets_row][i] * 100, 2))
-            if j == 6 and rows[j] != []: rows[j].append (round (output_gesamt[netincome_row][i] / output_gesamt[totalassets_row][i] * 100, 2))
-            if j == 7 and rows[j] != []: rows[j].append (round (output_gesamt[ebit_row][i] / (output_gesamt[totalassets_row][i] - output_gesamt[shorttermdebt_row][i]) * 100, 2))
-            if j == 8 and rows[j] != []: rows[j].append (round (output_gesamt[equity_row][i] / output_gesamt[noncurrentassets_row][i] * 100, 2))
-            if j == 9 and rows[j] != []: rows[j].append (round (output_gesamt[currentassets_row][i] / output_gesamt[currentliabilities_row][i] * 100, 2))
-            if j == 10 and rows[j] != []: rows[j].append (output_gesamt[cashflow_sh_row][i] * output_gesamt[shares_row][i])
+            if j == 0 and rows[j] != []:
+                if output_gesamt[grossprofit_row][i] not in [""," ","-"] and output_gesamt[revenue_row][i] not in [""," ","-"]:
+                    rows[j].append (round (output_gesamt[grossprofit_row][i] / output_gesamt[revenue_row][i] * 100, 2))
+                else: rows[j].append("-")
+            if j == 1 and rows[j] != []:
+                if output_gesamt[currentassets_row][i] not in [""," ","-"] and output_gesamt[totalassets_row][i] not in [""," ","-"]:
+                    rows[j].append (round (output_gesamt[currentassets_row][i] / output_gesamt[totalassets_row][i] * 100, 2))
+                else: rows[j].append("-")
+            if j == 2 and rows[j] != []:
+                if output_gesamt[netincome_row][i] not in [""," ","-"] and output_gesamt[revenue_row][i] not in [""," ","-"]:
+                    rows[j].append (round (output_gesamt[netincome_row][i] / output_gesamt[revenue_row][i] * 100, 2))
+                else: rows[j].append("-")
+            if j == 3 and rows[j] != []:
+                if output_gesamt[ebit_row][i] not in [""," ","-"] and output_gesamt[revenue_row][i] not in [""," ","-"]:
+                    rows[j].append (round (output_gesamt[ebit_row][i] / output_gesamt[revenue_row][i] * 100, 2))
+                else: rows[j].append ("-")
+            if j == 4 and rows[j] != []:
+                if output_gesamt[revenue_row][i] not in [""," ","-"] and output_gesamt[totalassets_row][i] not in [""," ","-"]:
+                    rows[j].append (round (output_gesamt[revenue_row][i] / output_gesamt[totalassets_row][i] * 100, 2))
+                else: rows[j].append ("-")
+            if j == 5 and rows[j] != []:
+                if output_gesamt[noncurrentassets_row][i] not in [""," ","-"] and output_gesamt[totalassets_row][i] not in [""," ","-"]:
+                    rows[j].append (round (output_gesamt[noncurrentassets_row][i] / output_gesamt[totalassets_row][i] * 100, 2))
+                else: rows[j].append ("-")
+            if j == 6 and rows[j] != []:
+                if output_gesamt[netincome_row][i] not in [""," ","-"] and output_gesamt[totalassets_row][i] not in [""," ","-"]:
+                    rows[j].append (round (output_gesamt[netincome_row][i] / output_gesamt[totalassets_row][i] * 100, 2))
+                else: rows[j].append ("-")
+            if j == 7 and rows[j] != []:
+                if output_gesamt[ebit_row][i] not in [""," ","-"] and output_gesamt[totalassets_row][i] not in [""," ","-"]:
+                    rows[j].append (round (output_gesamt[ebit_row][i] / (output_gesamt[totalassets_row][i] - output_gesamt[shorttermdebt_row][i]) * 100, 2))
+                else: rows[j].append ("-")
+            if j == 8 and rows[j] != []:
+                if output_gesamt[equity_row][i] not in [""," ","-"] and output_gesamt[noncurrentassets_row][i] not in [""," ","-"]:
+                    rows[j].append (round (output_gesamt[equity_row][i] / output_gesamt[noncurrentassets_row][i] * 100, 2))
+                else: rows[j].append ("-")
+            if j == 9 and rows[j] != []:
+                if output_gesamt[currentassets_row][i] not in [""," ","-"] and output_gesamt[currentliabilities_row][i] not in [""," ","-"]:
+                    rows[j].append (round (output_gesamt[currentassets_row][i] / output_gesamt[currentliabilities_row][i] * 100, 2))
+                else: rows[j].append ("-")
+            if j == 10 and rows[j] != []:
+                if output_gesamt[cashflow_sh_row][i] not in [""," ","-"] and output_gesamt[shares_row][i] not in [""," ","-"]:
+                    rows[j].append (output_gesamt[cashflow_sh_row][i] * output_gesamt[shares_row][i])
+                else: rows[j].append ("-")
             if j == 11 and rows[j] != []:
-                if i < len(output_gesamt[30]) and isinstance(output_gesamt[shares_row][i+1],float) and isinstance (output_gesamt[shares_row][i + 1], float):
+                if i < len(output_gesamt[30]) and isinstance(output_gesamt[shares_row][i],float) and isinstance (output_gesamt[shares_row][i + 1], float):
                     rows[j].append (output_gesamt[shares_row][i+1] - output_gesamt[shares_row][i])
                 else:
                     rows[j].append("-")
@@ -473,7 +533,59 @@ def read_bilanz(stock):
                     if k == 10:
                         if tmp_calc != False: rows[j+3].append (tmp_calc)
                         else: rows[j+3].append ("-")
-            if j in [13,14,15]: continue
+            if j == 16 and rows[j] != []:
+                for k in [1,3,5,10]:
+                    tmp_calc = calc_growth (i,k,output_gesamt[netincome_row])
+                    if k == 1:
+                        if tmp_calc != False: rows[j].append (tmp_calc)
+                        else: rows[j].append ("-")
+                    if k == 3:
+                        if tmp_calc != False: rows[j+1].append (tmp_calc)
+                        else: rows[j+1].append ("-")
+                    if k == 5:
+                        if tmp_calc != False:
+                            rows[j+2].append (tmp_calc)
+                            if output_gesamt[earnings_sh_row][i] not in ["","-"," "]:
+                                rows[j+4].append (round(output_gesamt[earnings_sh_row][i] / tmp_calc,2))
+                            else:
+                                rows[j + 4].append ("-")
+                        else:
+                            rows[j+2].append ("-")
+                            rows[j+4].append ("-")
+                    if k == 10:
+                        if tmp_calc != False: rows[j+3].append (tmp_calc)
+                        else: rows[j+3].append ("-")
+            if j == 21 and rows[j] != []:
+                for k in [1,3,5,10]:
+                    tmp_calc = calc_growth (i,k,output_gesamt[ebit_row])
+                    if k == 1:
+                        if tmp_calc != False: rows[j].append (tmp_calc)
+                        else: rows[j].append ("-")
+                    if k == 3:
+                        if tmp_calc != False: rows[j+1].append (tmp_calc)
+                        else: rows[j+1].append ("-")
+                    if k == 5:
+                        if tmp_calc != False: rows[j+2].append (tmp_calc)
+                        else: rows[j+2].append ("-")
+                    if k == 10:
+                        if tmp_calc != False: rows[j+3].append (tmp_calc)
+                        else: rows[j+3].append ("-")
+            if j == 25 and rows[j] != []:
+                for k in [1,3,5,10]:
+                    tmp_calc = calc_growth (i,k,output_gesamt[cashflow_sh_row])
+                    if k == 1:
+                        if tmp_calc != False: rows[j].append (tmp_calc)
+                        else: rows[j].append ("-")
+                    if k == 3:
+                        if tmp_calc != False: rows[j+1].append (tmp_calc)
+                        else: rows[j+1].append ("-")
+                    if k == 5:
+                        if tmp_calc != False: rows[j+2].append (tmp_calc)
+                        else: rows[j+2].append ("-")
+                    if k == 10:
+                        if tmp_calc != False: rows[j+3].append (tmp_calc)
+                        else: rows[j+3].append ("-")
+            if j in [13,14,15,17,18,19,20,22,23,24,26,27,28]: continue
 
     for i in range (row_add):
         output_gesamt.insert(len(output_gesamt)-1, rows[i])
@@ -485,6 +597,7 @@ def read_bilanz(stock):
 # Input Stock: Aktienkennung lt. Ariva.de z.b. /apple-aktie oder /wirecard-aktie
 def read_stamm(stock):
     output = []
+    translator = Translator()
 
     # Stammdaten auslesen
     link = "https://www.ariva.de/" + stock + "/bilanz-guv?page=" + "0" + "#stammdaten"
@@ -504,6 +617,8 @@ def read_stamm(stock):
     for i in table:
         for j in i.find_all ("tr"):
             row = []
+            break_jn = False
+            translate_jn = False
             for k in j.find_all ("td"):
                 if k.text.strip () == "":
                     row.append ("-")
@@ -519,10 +634,14 @@ def read_stamm(stock):
                     row.append ("Währung / Currency")
                 elif k.text.strip () == "Branche":
                     row.append ("Branche / Industry")
+                    translate_jn = True
                 elif k.text.strip () == "Aktientyp":
-                    row.append ("Aktientyp / Share Type")
+                    break_jn = True
+                    break
+                    #row.append ("Aktientyp / Share Type")
                 elif k.text.strip () == "Sektor":
                     row.append ("Sektor / Sector")
+                    translate_jn = True
                 elif k.text.strip () == "Gattung":
                     row.append ("Typ / Genre")
                 elif k.text.strip () == "Adresse":
@@ -530,8 +649,12 @@ def read_stamm(stock):
                 elif k.text.strip () == "Profil":
                     row.append ("Beschreibung / Profile")
                 else:
-                    row.append (k.text.strip ())
-            output.append (row)
+                    if translate_jn == True:
+                        row.append(translator.translate (k.text.strip (), src="de", dest="en").text.title())
+                        translate_jn = False
+                    else:
+                        row.append(k.text.strip ())
+            if break_jn == False: output.append (row)
 
     # Kontakte auslesen
     output[0].extend (["KONTAKT / CONTACT", "", ""])
@@ -551,7 +674,7 @@ def read_stamm(stock):
                     continue
                 if k.text.strip () == "Adresse":
                     next_one_adress = True
-                    next_one_adress_row = ["Adresse"]
+                    next_one_adress_row = ["Adresse / Address"]
                     nr -= 1
                     continue
                 if k.text.strip () == "":
@@ -581,7 +704,7 @@ def read_stamm(stock):
     # Termine - Überschrift auslesen
     for i in table:
         cont = i.find ("h3", class_="arhead undef").text.strip ().upper ()
-        output[0].extend ([cont, "", ""])
+        output[0].extend ([cont.replace ("TERMINE","TERMINE / EVENTS"), "", ""])
     # Termine Inhalt auslesen
     for i in table:
         for j in i.find_all ("tr"):
@@ -591,12 +714,12 @@ def read_stamm(stock):
                 if re.match (pattern, k.text.strip ()):
                     output[nr].append (k.text.strip () + cont[-4:])
                 else:
-                    output[nr].append (k.text.strip ())
+                    output[nr].append (translator.translate (k.text.strip(), src="de", dest="en").text.title())
             output[nr].append ("")
             nr += 1
 
     # Aktionäre
-    output[0].extend (["AKTIONÄRE", ""])
+    output[0].extend (["AKTIONÄRE / SHAREHOLDERS", ""])
     table = soup.find_all ("div", class_="aktStruktur abstand new")
     nr = 1
     for i in table:
@@ -620,7 +743,8 @@ def read_stamm(stock):
         for j in i.find_all ("tr"):
             row = []
             for k in j.find_all ("td"):
-                row.append (k.text.strip ())
+                if k.text.strip () == "Aufsichtsrat": row.append ("Aufsichtsrat / Board")
+                else: row.append (k.text.strip ())
             output.append (row)
 
     # Profil
@@ -631,7 +755,8 @@ def read_stamm(stock):
             txt = txt + i.text.strip ()
         else:
             txt = txt + " " + i.text.strip ()
-    output.append (["Profil", txt])
+    output.append (["Beschreibung", txt])
+    output.append (["Profile", translator.translate (txt, src="de", dest="en").text])
 
     # Aktien Kennzeichnungen lesen und als Titel einfügen
     link = "https://www.ariva.de/" + stock
@@ -666,12 +791,12 @@ stocks_dic = {'apple-aktie': 'Apple', 'infineon-aktie': 'Infineon'}
 # Input - sek: Anzahl der Sekunden der Verzögerung bei VPN-Switch
 index = 0
 vpn_land = "no-vpn"
-writemodus = 0
+writemodus = 1
 # index="dax-30"
 # index="tecdax"
 # index="sdax"
 # index="eurostoxx-50"
-# index="s-p_500-index/kursliste"
+index="s-p_500-index/kursliste"
 # index="nasdaq-100-index/kursliste"
 
 sek = 20
@@ -680,6 +805,7 @@ sek = 20
 start_readstocks = timeit.default_timer ()
 if index != 0:
     stocks_dic = read_index (index)
+
 for stock in stocks_dic:
     print ("Verarbeitung:", stock, "with VPN:", vpn_land)
     if index == 0:
@@ -701,4 +827,7 @@ for stock in stocks_dic:
                   index.replace ("/", "_").replace ("kursliste", "") + "_Stock_Data.xlsx")
     if writemodus == 0: writemodus = 1
 stop_readstocks = timeit.default_timer ()
+
+
+
 print ("Verarbeitung beendet - Gesamtlaufzeit: ", round ((stop_readstocks - start_readstocks) / 60, 2), "min")
