@@ -404,7 +404,9 @@ def read_bilanz(stock):
     # Kennzahlen ergänzen
     revenue_row = grossprofit_row = netincome_row = equity_row = ebit_row = totalassets_row = shorttermdebt_row = 0
     currentassets_row = noncurrentassets_row = currentliabilities_row = cashflow_sh_row = shares_row = 0
-    row1 = row2 = row3 = row4 = row5 = row6 = row7 = row8 = row9 = row10 = row11 = row12 = row13 = row14 = row15 = []
+    rows = []
+    row_add = 16
+    for i in range (100): rows.append ([])
 
     for i_idx, i_cont in enumerate (output_gesamt):
         if i_cont[1] == "Revenue": revenue_row = i_idx
@@ -420,67 +422,61 @@ def read_bilanz(stock):
         if i_cont[1] == "PC (price/cashflow)": cashflow_sh_row = i_idx
         if i_cont[1] == "Million shares outstanding": shares_row = i_idx
 
-    if revenue_row != 0 and grossprofit_row != 0: row1 = ["Bruttoergebnis Marge in %", "Gross Profit Marge in %"]
-    if currentassets_row != 0 and totalassets_row != 0: row2 = ["Kurzfristige Vermögensquote in %",
-                                                                "Current Assets Ratio in %"]
-    if netincome_row != 0 and revenue_row != 0: row3 = ["Nettogewinn Marge in %", "Net Profit Marge in %"]
-    if ebit_row != 0 and revenue_row != 0: row4 = ["Operative Ergebnis Marge in %", "EBIT Marge in %"]
-    if revenue_row != 0 and totalassets_row != 0: row5 = ["Vermögensumsschlag in %", "Asset Turnover in %"]
-    if noncurrentassets_row != 0 and totalassets_row != 0: row6 = ["Langfristige Vermögensquote in %",
-                                                                   "Non-Current Assets Ratio in %"]
-    if netincome_row != 0 and totalassets_row != 0: row7 = ["Gesamtkapitalrentabilität", "ROA Return on Assets in %"]
-    if ebit_row != 0 and totalassets_row != 0: row8 = ["Ertrag des eingesetzten Kapitals",
-                                                       "ROCE Return on Cap. Empl. in %"]
-    if equity_row != 0 and noncurrentassets_row != 0: row9 = ["Eigenkapital zu Anlagevermögen",
-                                                              "Equity to Fixed Assets in %"]
-    if currentassets_row != 0 and currentliabilities_row != 0: row10 = ["Liquidität Dritten Grades",
-                                                                        "Current Ratio in %"]
-    if cashflow_sh_row != 0 and shares_row != 0: row11 = ["Operativer Cashflow", "Operating Cashflow in M"]
-    if shares_row != 0: row12 = ["Aktienrückkauf", "Share Buyback in M"]
+    if revenue_row != 0 and grossprofit_row != 0: rows[0] = ["Bruttoergebnis Marge in %", "Gross Profit Marge in %"]
+    if currentassets_row != 0 and totalassets_row != 0: rows[1] = ["Kurzfristige Vermögensquote in %", "Current Assets Ratio in %"]
+    if netincome_row != 0 and revenue_row != 0: rows[2] = ["Nettogewinn Marge in %", "Net Profit Marge in %"]
+    if ebit_row != 0 and revenue_row != 0: rows[3] = ["Operative Ergebnis Marge in %", "EBIT Marge in %"]
+    if revenue_row != 0 and totalassets_row != 0: rows[4] = ["Vermögensumsschlag in %", "Asset Turnover in %"]
+    if noncurrentassets_row != 0 and totalassets_row != 0: rows[5] = ["Langfristige Vermögensquote in %","Non-Current Assets Ratio in %"]
+    if netincome_row != 0 and totalassets_row != 0: rows[6] = ["Gesamtkapitalrentabilität", "ROA Return on Assets in %"]
+    if ebit_row != 0 and totalassets_row != 0: rows[7] = ["Ertrag des eingesetzten Kapitals","ROCE Return on Cap. Empl. in %"]
+    if equity_row != 0 and noncurrentassets_row != 0: rows[8] = ["Eigenkapital zu Anlagevermögen","Equity to Fixed Assets in %"]
+    if currentassets_row != 0 and currentliabilities_row != 0: rows[9] = ["Liquidität Dritten Grades","Current Ratio in %"]
+    if cashflow_sh_row != 0 and shares_row != 0: rows[10] = ["Operativer Cashflow", "Operating Cashflow in M"]
+    if shares_row != 0: rows[11] = ["Aktienrückkauf", "Share Buyback in M"]
     if revenue_row != 0 :
-        row13 = ["Umsatzwachstum 3J in %", "Revenue Growth 3Y in %"]
-        row14 = ["Umsatzwachstum 5J in %", "Revenue Growth 5Y in %"]
-        row15 = ["Umsatzwachstum 10J in %", "Revenue Growth 10Y in %"]
+        rows[12] = ["Umsatzwachstum 1J in %", "Revenue Growth 1Y in %"]
+        rows[13] = ["Umsatzwachstum 3J in %", "Revenue Growth 3Y in %"]
+        rows[14] = ["Umsatzwachstum 5J in %", "Revenue Growth 5Y in %"]
+        rows[15] = ["Umsatzwachstum 10J in %", "Revenue Growth 10Y in %"]
 
     for i in range (2, len (output_gesamt[len (output_gesamt) - 1]) - 1):
-        if row1 != []: row1.append (round (output_gesamt[grossprofit_row][i] / output_gesamt[revenue_row][i] * 100, 2))
-        if row2 != []: row2.append (
-            round (output_gesamt[currentassets_row][i] / output_gesamt[totalassets_row][i] * 100, 2))
-        if row3 != []: row3.append (round (output_gesamt[netincome_row][i] / output_gesamt[revenue_row][i] * 100, 2))
-        if row4 != []: row4.append (round (output_gesamt[ebit_row][i] / output_gesamt[revenue_row][i] * 100, 2))
-        if row5 != []: row5.append (round (output_gesamt[revenue_row][i] / output_gesamt[totalassets_row][i] * 100, 2))
-        if row6 != []: row6.append (
-            round (output_gesamt[noncurrentassets_row][i] / output_gesamt[totalassets_row][i] * 100, 2))
-        if row7 != []: row7.append (
-            round (output_gesamt[netincome_row][i] / output_gesamt[totalassets_row][i] * 100, 2))
-        if row8 != []: row8.append (round (output_gesamt[ebit_row][i] / (
-                    output_gesamt[totalassets_row][i] - output_gesamt[shorttermdebt_row][i]) * 100, 2))
-        if row9 != []: row9.append (
-            round (output_gesamt[equity_row][i] / output_gesamt[noncurrentassets_row][i] * 100, 2))
-        if row10 != []: row10.append (
-            round (output_gesamt[currentassets_row][i] / output_gesamt[currentliabilities_row][i] * 100, 2))
-        if row11 != []: row11.append (output_gesamt[cashflow_sh_row][i] * output_gesamt[shares_row][i])
-        if row12 != []:
-            if i < len(output_gesamt[30]) and isinstance(output_gesamt[shares_row][i+1],float) and isinstance (output_gesamt[shares_row][i + 1], float):
-                row12.append (output_gesamt[shares_row][i+1] - output_gesamt[shares_row][i])
-            else:
-                row12.append("-")
-        if row13 != []:
-            for j in [3,5,10]:
-                tmp_calc = calc_growth (i,j,output_gesamt[revenue_row])
-                if j == 3:
-                    if tmp_calc != False: row13.append (tmp_calc)
-                    else: row13.append ("-")
-                if j == 5:
-                    if tmp_calc != False: row14.append (tmp_calc)
-                    else: row14.append ("-")
-                if j == 10:
-                    if tmp_calc != False: row15.append (tmp_calc)
-                    else: row15.append ("-")
+        for j in  range (row_add):
+            if j == 0 and rows[j] != []: rows[j].append (round (output_gesamt[grossprofit_row][i] / output_gesamt[revenue_row][i] * 100, 2))
+            if j == 1 and rows[j] != []: rows[j].append (round (output_gesamt[currentassets_row][i] / output_gesamt[totalassets_row][i] * 100, 2))
+            if j == 2 and rows[j] != []: rows[j].append (round (output_gesamt[netincome_row][i] / output_gesamt[revenue_row][i] * 100, 2))
+            if j == 3 and rows[j] != []: rows[j].append (round (output_gesamt[ebit_row][i] / output_gesamt[revenue_row][i] * 100, 2))
+            if j == 4 and rows[j] != []: rows[j].append (round (output_gesamt[revenue_row][i] / output_gesamt[totalassets_row][i] * 100, 2))
+            if j == 5 and rows[j] != []: rows[j].append (round (output_gesamt[noncurrentassets_row][i] / output_gesamt[totalassets_row][i] * 100, 2))
+            if j == 6 and rows[j] != []: rows[j].append (round (output_gesamt[netincome_row][i] / output_gesamt[totalassets_row][i] * 100, 2))
+            if j == 7 and rows[j] != []: rows[j].append (round (output_gesamt[ebit_row][i] / (output_gesamt[totalassets_row][i] - output_gesamt[shorttermdebt_row][i]) * 100, 2))
+            if j == 8 and rows[j] != []: rows[j].append (round (output_gesamt[equity_row][i] / output_gesamt[noncurrentassets_row][i] * 100, 2))
+            if j == 9 and rows[j] != []: rows[j].append (round (output_gesamt[currentassets_row][i] / output_gesamt[currentliabilities_row][i] * 100, 2))
+            if j == 10 and rows[j] != []: rows[j].append (output_gesamt[cashflow_sh_row][i] * output_gesamt[shares_row][i])
+            if j == 11 and rows[j] != []:
+                if i < len(output_gesamt[30]) and isinstance(output_gesamt[shares_row][i+1],float) and isinstance (output_gesamt[shares_row][i + 1], float):
+                    rows[j].append (output_gesamt[shares_row][i+1] - output_gesamt[shares_row][i])
+                else:
+                    rows[j].append("-")
+            if j == 12 and rows[j] != []:
+                for k in [1,3,5,10]:
+                    tmp_calc = calc_growth (i,k,output_gesamt[revenue_row])
+                    if k == 1:
+                        if tmp_calc != False: rows[j].append (tmp_calc)
+                        else: rows[j].append ("-")
+                    if k == 3:
+                        if tmp_calc != False: rows[j+1].append (tmp_calc)
+                        else: rows[j+1].append ("-")
+                    if k == 5:
+                        if tmp_calc != False: rows[j+2].append (tmp_calc)
+                        else: rows[j+2].append ("-")
+                    if k == 10:
+                        if tmp_calc != False: rows[j+3].append (tmp_calc)
+                        else: rows[j+3].append ("-")
+            if j in [13,14,15]: continue
 
-
-    for i in [row1, row2, row3, row4, row5, row6, row7, row8, row9, row10, row11, row12, row13, row14, row15]:
-        output_gesamt.insert(len(output_gesamt)-1, i)
+    for i in range (row_add):
+        output_gesamt.insert(len(output_gesamt)-1, rows[i])
 
     return output_gesamt
 
