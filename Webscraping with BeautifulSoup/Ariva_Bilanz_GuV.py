@@ -494,12 +494,12 @@ def read_bilanz(stock):
                     rows[j].append (round (output_gesamt[netincome_row][i] / output_gesamt[totalassets_row][i] * 100, 2))
                 else: rows[j].append ("-")
             if j == 7 and rows[j] != []:
-                if output_gesamt[ebit_row][i] not in [""," ","-"] and output_gesamt[totalassets_row][i] not in [""," ","-"]:
-                    rows[j].append (round (output_gesamt[ebit_row][i] / (output_gesamt[totalassets_row][i] - output_gesamt[shorttermdebt_row][i]) * 100, 2))
+                if output_gesamt[ebit_row][i] not in [""," ","-"] and output_gesamt[totalassets_row][i] not in [""," ","-"] and output_gesamt[shorttermdebt_row][i]:
+                        rows[j].append (round (output_gesamt[ebit_row][i] / (output_gesamt[totalassets_row][i] - output_gesamt[shorttermdebt_row][i]) * 100, 2))
                 else: rows[j].append ("-")
             if j == 8 and rows[j] != []:
                 if output_gesamt[equity_row][i] not in [""," ","-"] and output_gesamt[noncurrentassets_row][i] not in [""," ","-"]:
-                    rows[j].append (round (output_gesamt[equity_row][i] / output_gesamt[noncurrentassets_row][i] * 100, 2))
+                        rows[j].append (round (output_gesamt[equity_row][i] / output_gesamt[noncurrentassets_row][i] * 100, 2))
                 else: rows[j].append ("-")
             if j == 9 and rows[j] != []:
                 if output_gesamt[currentassets_row][i] not in [""," ","-"] and output_gesamt[currentliabilities_row][i] not in [""," ","-"]:
@@ -786,6 +786,7 @@ stocks_dic = {'apple-aktie': 'Apple', 'infineon-aktie': 'Infineon'}
 # Input - Angabe welcher Index gelesen werden soll (z.B. DAX-30) - bei Angabe von 0 wird individuell lt. stocks_dic eingelesen
 # Input - sek: Anzahl der Sekunden der Verzögerung bei VPN-Switch
 index = 0
+char_index = "FA"
 vpn_land = "no-vpn"
 writemodus = 1
 # index="dax-30"
@@ -800,8 +801,7 @@ entry = 30      #Wechsel der VPN-Verbindung bei allen 20 Einträgen
 
 start_readstocks = timeit.default_timer ()
 if index != 0:
-    stocks_dic = read_index (index)
-
+    stocks_dic = read_index(index,char_index.upper())
 for i, stock in enumerate(stocks_dic):
     if sek != 0:
         if i%30 == 0: vpn_land = vpn_switch (sek)
