@@ -53,6 +53,7 @@ def check_xls(stock, filename):
 # Input append: 1=>anhängen von neuen Worksheets, 0=>überschreiben des XLS
 def save_xls(stock, content, filename):
     global writemodus
+    stock.replace("'","")
     # check ob append ausgewählt - aber wenn file nicht vorhanden - dann Wechsel über Überschreibmodus 0
 
     try:
@@ -786,7 +787,7 @@ stocks_dic = {'apple-aktie': 'Apple', 'infineon-aktie': 'Infineon'}
 # Input - Angabe welcher Index gelesen werden soll (z.B. DAX-30) - bei Angabe von 0 wird individuell lt. stocks_dic eingelesen
 # Input - sek: Anzahl der Sekunden der Verzögerung bei VPN-Switch
 index = 0
-char_index = "FA"
+char_index = "ZZ"
 vpn_land = "no-vpn"
 writemodus = 1
 # index="dax-30"
@@ -832,6 +833,48 @@ if index == 0: name_xlsx = "Stock_Data.xlsx"
 else: name_xlsx = index.replace ("/", "_").replace ("kursliste", "") + "_Stock_Data.xlsx"
 wb =  load_workbook(name_xlsx)
 wb._sheets.sort(key=lambda x: x.title)
+
+# Index bilden
+if "INDEX" in wb.sheetnames: del wb["INDEX"]
+wb.create_sheet("INDEX",0)
+ws_idx = wb["INDEX"]
+link_idx =  name_xlsx + "#" + "INDEX" + "!A1"
+ws_idx["A1"] = "INDEX"
+
+column_width = 0
+for i, ws in enumerate(wb):
+    if ws.title == "INDEX": continue
+    if len(ws.title) > column_width: column_width = len(ws.title)
+    link = name_xlsx + '#"' + ws.title + '"!A1'
+    ws_idx.cell (row=i+2, column=1).value = '=HYPERLINK("{}", "{}")'.format (link, ws.title)
+    wb[ws.title].cell (row=1, column=6).value = '=HYPERLINK("{}", "{}")'.format (link_idx, "Back to INDEX")
+
+#Formatierung
+bold = Font (bold=True)
+bg_yellow = PatternFill (fill_type="solid", start_color='fbfce1', end_color='fbfce1')
+bg_grey = PatternFill (fill_type="solid", start_color='babab6', end_color='babab6')
+bg_green = PatternFill (fill_type="solid", start_color='c7ffcd', end_color='fffbc7')
+frame_all = Border (left=Side (style='thin'), right=Side (style='thin'), top=Side (style='thin'),
+                    bottom=Side (style='thin'))
+frame_upanddown = Border (top=Side (style='thin'), bottom=Side (style='thin'))
+size14 = Font (bold=True, size="14")
+
+for cell in ws_idx["A:A"]:
+    cell.font = bold
+    cell.fill = bg_yellow
+    cell.border = frame_all
+for cell in ws_idx["2:2"]:
+    cell.fill = bg_grey
+    cell.border = frame_upanddown
+for cell in ws_idx["1:1"]:
+    cell.font = bold
+    cell.fill = bg_green
+    cell.border = frame_all
+ws_idx["A1"].font = size14
+freeze = ws_idx["C2"]
+ws_idx.freeze_panes = freeze
+ws_idx.column_dimensions["A"].width = column_width+5
+
 while True:
     try:
         wb.save (name_xlsx)
