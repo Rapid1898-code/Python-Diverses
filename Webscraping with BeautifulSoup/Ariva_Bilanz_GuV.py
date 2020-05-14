@@ -1,3 +1,4 @@
+# Lib-Import
 import requests
 import csv
 from bs4 import BeautifulSoup
@@ -50,7 +51,6 @@ def check_xls(stock, filename):
 # Input stock: Name der Aktie
 # Input content: Inhalt in Listenform
 # Input filenmae: Name des XLSX-File
-# Input append: 1=>anhängen von neuen Worksheets, 0=>überschreiben des XLS
 def save_xls(stock, content, filename):
     global writemodus
     stock.replace("'","")
@@ -178,6 +178,77 @@ def save_xls(stock, content, filename):
             input ("Datei kann nicht geöffnet werden - bitte schließen und <Enter> drücken!")
 
 
+# Worksheets sortieren in XLSX
+def sort_xlsx(filename):
+    wb = load_workbook (filename)
+    wb._sheets.sort (key=lambda x: x.title)
+
+    while True:
+        try:
+            wb.save (filename)
+            wb.close ()
+            break
+        except Exception as e:
+            print ("Error: ", e)
+            input ("Datei kann nicht geöffnet werden - bitte schließen und <Enter> drücken!")
+
+
+# Make Index Worksheet in XLSX
+def index_xlsx(filename):
+    wb = load_workbook (filename)
+
+    # Index bilden
+    if "INDEX" in wb.sheetnames: del wb["INDEX"]
+    wb.create_sheet ("INDEX", 0)
+    ws_idx = wb["INDEX"]
+    link_idx = name_xlsx + "#" + "INDEX" + "!A1"
+    ws_idx["A1"] = "INDEX"
+
+    column_width = 0
+    for i, ws in enumerate (wb):
+        if ws.title == "INDEX": continue
+        if len (ws.title) > column_width: column_width = len (ws.title)
+        link = name_xlsx + "#'" + ws.title + "'!A1"
+        ws_idx.cell (row=i + 2, column=1).value = '=HYPERLINK("{}", "{}")'.format (link, ws.title)
+        wb[ws.title].cell (row=1, column=6).value = '=HYPERLINK("{}", "{}")'.format (link_idx, "Back to INDEX")
+
+    # Formatierung
+    bold = Font (bold=True)
+    bg_yellow = PatternFill (fill_type="solid", start_color='fbfce1', end_color='fbfce1')
+    bg_grey = PatternFill (fill_type="solid", start_color='babab6', end_color='babab6')
+    bg_green = PatternFill (fill_type="solid", start_color='c7ffcd', end_color='fffbc7')
+    frame_all = Border (left=Side (style='thin'), right=Side (style='thin'), top=Side (style='thin'),
+                        bottom=Side (style='thin'))
+    frame_upanddown = Border (top=Side (style='thin'), bottom=Side (style='thin'))
+    size14 = Font (bold=True, size="14")
+
+    for cell in ws_idx["A:A"]:
+        cell.font = bold
+        cell.fill = bg_yellow
+        cell.border = frame_all
+    for cell in ws_idx["2:2"]:
+        cell.fill = bg_grey
+        cell.border = frame_upanddown
+    for cell in ws_idx["1:1"]:
+        cell.font = bold
+        cell.fill = bg_green
+        cell.border = frame_all
+    ws_idx["A1"].font = size14
+    freeze = ws_idx["C2"]
+    ws_idx.freeze_panes = freeze
+    ws_idx.column_dimensions["A"].width = column_width + 5
+    ws.cell(row=1, column=1)
+
+    while True:
+        try:
+            wb.save (name_xlsx)
+            wb.close ()
+            break
+        except Exception as e:
+            print ("Error: ", e)
+            input ("Datei kann nicht geöffnet werden - bitte schließen und <Enter> drücken!")
+
+
 # VPN-Switch bei NordVPN mit x Sekunden Verzögerung
 # Output: Rückgabe des zufällig gewählten Landes
 def vpn_switch(sek):
@@ -197,6 +268,8 @@ def vpn_switch(sek):
 
 
 # Unternehmen eines bestimmten Index werden eingelesen
+# Input: INDEX_NAME: Name des Index der gelesen werden soll
+# Input: CHAR: Ab welchen 2 Buchstaben die Titel aus dem Index gelesen werden soll - Standardwert ist "00" wenn nichts angegeben wird
 # Output: Dict in der Form Kürzel von Ariva.de + Name des Titels (z.b '/apple-aktie': 'Apple')
 def read_index(index_name, char="00"):
     print("Reading Index",index_name,"starting with Character:",char,"...")
@@ -778,23 +851,27 @@ def read_stamm(stock):
 
 
 #stocks_dic = {'apple-aktie': 'Apple'}
-stocks_dic = {'apple-aktie': 'Apple', 'infineon-aktie': 'Infineon'}
+#stocks_dic = {'apple-aktie': 'Apple', 'infineon-aktie': 'Infineon'}
 # stocks_dic = {'continental-aktie': 'Continental', 'apple-aktie': 'Apple'}
 # stocks_dic = {'zimmer_holdings-aktie': 'Zimmer Holdings', 'zebra_technologies-aktie': 'Zebra Technologies'}
 # stocks_dic = {'alaska_air_group-aktie': 'Alaska','alliance_data_systems-aktie': 'Alliance'}
+stocks_dic = {'asml_holding_ny____eo-09-aktie': 'Asml holding ny', 'baidu_adr-aktie': 'Baidu adr', 'biomarin_pharmaceutical-aktie': 'Biomarin pharmaceutical', 'check_point_software-aktie': 'Check point software', 'costar_group-aktie': 'Costar group', 'dexcom-aktie': 'Dexcom', 'fox_corporation-aktie': 'Fox corporation', 'jd-com-aktie': 'Jd.com', 'liberty_global_a-aktie': 'Liberty global a', 'liberty_global_c-aktie': 'Liberty global c', 'lululemon_athletica-aktie': 'Lululemon athletica', 'mercadolibre_inc-aktie': 'Mercadolibre, inc.', 'netease_adr-aktie': 'Netease adr', 'nxp_semiconductors-aktie': 'Nxp semiconductors', 'seattle_genetics-aktie': 'Seattle genetics', 'sirius_xm_holdings-aktie': 'Sirius xm holdings', 'splunk-aktie': 'Splunk', 'tesla-aktie': 'Tesla', 'trip-com_group_ltd_sp_adr-aktie': 'Trip.com group ltd sp adr', 'workday-aktie': 'Workday', 'zoom_video_communications-aktie': 'Zoom video communications'}
 
-# Input-Parameter
-# Input - Angabe welcher Index gelesen werden soll (z.B. DAX-30) - bei Angabe von 0 wird individuell lt. stocks_dic eingelesen
-# Input - sek: Anzahl der Sekunden der Verzögerung bei VPN-Switch
+#Input-Parameter
+#Input - INDEX: Angabe welcher Index gelesen werden soll (z.B. DAX-30) - bei Angabe von 0 wird individuell lt. stocks_dic eingelesen
+#Input - CHAR_INDEX: ab welchen 2 Buchstaben die Verarbeitung erfolgen soll - bei Angabe von "00" wird alles gelesen
+#Input - SEK: Anzahl der Sekunden der Verzögerung bei VPN-Switch - bei Angabe von 0 erfolgt kein VPN-Wechsel
+#Input - ENTRY: Wechsel der VPN-Verbindung bei allen x Einträgen (notwendig für googletrans weil sonst Block nach einer gewissen Anzahl erfolgt)
+#Input - WRITEMODUS: bei 0 wird das XLSX überschrieben - bei 1 werden weitere Worksheets angehängt
 index = 0
-char_index = "ZZ"
+char_index = "00"
 vpn_land = "no-vpn"
-writemodus = 1
+writemodus = 0
 # index="dax-30"
 # index="tecdax"
 # index="sdax"
 # index="eurostoxx-50"
-index="s-p_500-index/kursliste"
+#index="s-p_500-index/kursliste"
 # index="nasdaq-100-index/kursliste"
 
 sek = 45        #bei 0 Sekunden => kein VPN
@@ -828,61 +905,10 @@ for i, stock in enumerate(stocks_dic):
                   index.replace ("/", "_").replace ("kursliste", "") + "_Stock_Data.xlsx")
     if writemodus == 0: writemodus = 1
 
-# Worksheets sortieren im XLSX
 if index == 0: name_xlsx = "Stock_Data.xlsx"
 else: name_xlsx = index.replace ("/", "_").replace ("kursliste", "") + "_Stock_Data.xlsx"
-wb =  load_workbook(name_xlsx)
-wb._sheets.sort(key=lambda x: x.title)
-
-# Index bilden
-if "INDEX" in wb.sheetnames: del wb["INDEX"]
-wb.create_sheet("INDEX",0)
-ws_idx = wb["INDEX"]
-link_idx =  name_xlsx + "#" + "INDEX" + "!A1"
-ws_idx["A1"] = "INDEX"
-
-column_width = 0
-for i, ws in enumerate(wb):
-    if ws.title == "INDEX": continue
-    if len(ws.title) > column_width: column_width = len(ws.title)
-    link = name_xlsx + '#"' + ws.title + '"!A1'
-    ws_idx.cell (row=i+2, column=1).value = '=HYPERLINK("{}", "{}")'.format (link, ws.title)
-    wb[ws.title].cell (row=1, column=6).value = '=HYPERLINK("{}", "{}")'.format (link_idx, "Back to INDEX")
-
-#Formatierung
-bold = Font (bold=True)
-bg_yellow = PatternFill (fill_type="solid", start_color='fbfce1', end_color='fbfce1')
-bg_grey = PatternFill (fill_type="solid", start_color='babab6', end_color='babab6')
-bg_green = PatternFill (fill_type="solid", start_color='c7ffcd', end_color='fffbc7')
-frame_all = Border (left=Side (style='thin'), right=Side (style='thin'), top=Side (style='thin'),
-                    bottom=Side (style='thin'))
-frame_upanddown = Border (top=Side (style='thin'), bottom=Side (style='thin'))
-size14 = Font (bold=True, size="14")
-
-for cell in ws_idx["A:A"]:
-    cell.font = bold
-    cell.fill = bg_yellow
-    cell.border = frame_all
-for cell in ws_idx["2:2"]:
-    cell.fill = bg_grey
-    cell.border = frame_upanddown
-for cell in ws_idx["1:1"]:
-    cell.font = bold
-    cell.fill = bg_green
-    cell.border = frame_all
-ws_idx["A1"].font = size14
-freeze = ws_idx["C2"]
-ws_idx.freeze_panes = freeze
-ws_idx.column_dimensions["A"].width = column_width+5
-
-while True:
-    try:
-        wb.save (name_xlsx)
-        wb.close ()
-        break
-    except Exception as e:
-        print ("Error: ", e)
-        input ("Datei kann nicht geöffnet werden - bitte schließen und <Enter> drücken!")
+sort_xlsx(name_xlsx)
+index_xlsx(name_xlsx)
 
 stop_readstocks = timeit.default_timer ()
 print ("Verarbeitung beendet - Gesamtlaufzeit: ", round ((stop_readstocks - start_readstocks) / 60, 2), "min")
