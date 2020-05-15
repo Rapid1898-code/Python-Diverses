@@ -864,14 +864,14 @@ stocks_dic = {'asml_holding_ny____eo-09-aktie': 'Asml holding ny', 'baidu_adr-ak
 #Input - ENTRY: Wechsel der VPN-Verbindung bei allen x Einträgen (notwendig für googletrans weil sonst Block nach einer gewissen Anzahl erfolgt)
 #Input - WRITEMODUS: bei 0 wird das XLSX überschrieben - bei 1 werden weitere Worksheets angehängt
 index = 0
-char_index = "00"
+char_index = "ZZ"
 vpn_land = "no-vpn"
-writemodus = 0
+writemodus = 1
 # index="dax-30"
 # index="tecdax"
 # index="sdax"
 # index="eurostoxx-50"
-#index="s-p_500-index/kursliste"
+index="s-p_500-index/kursliste"
 # index="nasdaq-100-index/kursliste"
 
 sek = 45        #bei 0 Sekunden => kein VPN

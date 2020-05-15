@@ -100,7 +100,9 @@ def month_year_iter( start_month, start_year, end_month, end_year ):
 # Historische Kurse eines Aktientitels lesen mit Angabe von Zeitraum
 def read_prices(stock,start_month, start_year, end_month, end_year,whg):
     global abbruch
+    # output title row (date, stockname, whg)
     output = [["Datum",stock.upper().replace("-"," ").replace("AKTIE","").replace("_"," "),"in "+whg]]
+    # actual year
     year = datetime.datetime.now().year
     if year <= end_year: print(stock + " " + str(year))
     for i in month_year_iter(start_month, start_year, end_month, end_year):
@@ -129,6 +131,9 @@ def read_prices(stock,start_month, start_year, end_month, end_year,whg):
         for k in range(0, len(temp_month),2): temp_month2.append([temp_month[k],temp_month[k+1]])
         temp_month2.sort(reverse=True)
         for k in temp_month2: output.append(k)
+
+    print(output)
+
     return  output
 
 # Erstellung einer Datums-Liste vom aktuellstem bis zum  ältesten Datum im Format jjjj-mm-dd
@@ -377,9 +382,9 @@ stocks_dic = {'/apple-aktie': 'Apple', '/infineon-aktie': 'Infineon', '/volkswag
  , '/hannover_rück-aktie': 'Hannover Rück', '/tui-aktie': 'TUI', '/mlp-aktie': 'MLP'}
 """
 
-#stocks_dic = {'apple-aktie': 'Apple'}
+stocks_dic = {'apple-aktie': 'Apple'}
 #stocks_dic = {'entergy-aktie': 'Entergy'}
-stocks_dic = {'asml_holding_ny____eo-09-aktie': 'Asml holding ny', 'baidu_adr-aktie': 'Baidu adr', 'biomarin_pharmaceutical-aktie': 'Biomarin pharmaceutical', 'check_point_software-aktie': 'Check point software', 'costar_group-aktie': 'Costar group', 'dexcom-aktie': 'Dexcom', 'fox_corporation-aktie': 'Fox corporation', 'jd-com-aktie': 'Jd.com', 'liberty_global_a-aktie': 'Liberty global a', 'liberty_global_c-aktie': 'Liberty global c', 'lululemon_athletica-aktie': 'Lululemon athletica', 'mercadolibre_inc-aktie': 'Mercadolibre, inc.', 'netease_adr-aktie': 'Netease adr', 'nxp_semiconductors-aktie': 'Nxp semiconductors', 'seattle_genetics-aktie': 'Seattle genetics', 'sirius_xm_holdings-aktie': 'Sirius xm holdings', 'splunk-aktie': 'Splunk', 'tesla-aktie': 'Tesla', 'trip-com_group_ltd_sp_adr-aktie': 'Trip.com group ltd sp adr', 'workday-aktie': 'Workday', 'zoom_video_communications-aktie': 'Zoom video communications'}
+#stocks_dic = {'asml_holding_ny____eo-09-aktie': 'Asml holding ny', 'baidu_adr-aktie': 'Baidu adr', 'biomarin_pharmaceutical-aktie': 'Biomarin pharmaceutical', 'check_point_software-aktie': 'Check point software', 'costar_group-aktie': 'Costar group', 'dexcom-aktie': 'Dexcom', 'fox_corporation-aktie': 'Fox corporation', 'jd-com-aktie': 'Jd.com', 'liberty_global_a-aktie': 'Liberty global a', 'liberty_global_c-aktie': 'Liberty global c', 'lululemon_athletica-aktie': 'Lululemon athletica', 'mercadolibre_inc-aktie': 'Mercadolibre, inc.', 'netease_adr-aktie': 'Netease adr', 'nxp_semiconductors-aktie': 'Nxp semiconductors', 'seattle_genetics-aktie': 'Seattle genetics', 'sirius_xm_holdings-aktie': 'Sirius xm holdings', 'splunk-aktie': 'Splunk', 'tesla-aktie': 'Tesla', 'trip-com_group_ltd_sp_adr-aktie': 'Trip.com group ltd sp adr', 'workday-aktie': 'Workday', 'zoom_video_communications-aktie': 'Zoom video communications'}
 
 #Input-Parameter
 #Input - WHG: Angabe für welche Währung die Kursermittlung erfolgen soll (USD / EUR)
@@ -395,13 +400,13 @@ char_index = "ZZ"
 vpn_land = "no-vpn"
 writemodus = 1
 
-index = "s-p_500-index/kursliste"
+##index = "s-p_500-index/kursliste"
 #index = "nasdaq-100-index/kursliste"
 #index="dax-30"
 #index="tecdax"
-sek = 45        #bei 0 Sekunden => kein VPN
-start_year = 1989
-start_month = 1
+sek = 0        #bei 0 Sekunden => kein VPN
+start_year = 2019
+start_month = 6
 end_year = 0
 end_month = 0
 
@@ -443,9 +448,12 @@ for stock in stocks_dic:
 
 if index == 0: name_xlsx = "Stock_Prices.xlsx"
 else: name_xlsx = index.replace ("/", "_").replace ("kursliste", "") + "_Stock_Prices_" + whg + ".xlsx"
+print("Sortierung des XLSX...")
 sort_xlsx(name_xlsx)
-
+print("DONE")
+print("Indexerstellung im XLSX...")
 index_xlsx(name_xlsx)
+print("DONE")
 
 stop_readstocks = timeit.default_timer()
 stop_gesamt = timeit.default_timer()
