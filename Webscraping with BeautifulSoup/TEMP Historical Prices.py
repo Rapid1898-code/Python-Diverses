@@ -104,6 +104,7 @@ def read_prices(stock, stock_name, start_month, start_year, end_month, end_year,
     output = [["Datum",stock.upper().replace("-"," ").replace("AKTIE","").replace("_"," "),"in "+whg]]
     # bestehende Informationen lesen und letztes Datum in Zelle A4 speichern
     uptodate = "01.01.1990"
+    dates_exist = []
     if writemodus == 1:
         try:
             book = load_workbook (filename)
@@ -114,6 +115,7 @@ def read_prices(stock, stock_name, start_month, start_year, end_month, end_year,
             ws = book[stock_name]
             if ws["A4"].value != None: uptodate = ws["A4"].value
             for row in ws.rows:
+                if row[0].value[0].isdigit(): dates_exist.append(row[0].value)
                 row_output = []
                 for cell in row: row_output.append(cell.value)
                 output.append(row_output)
@@ -131,17 +133,21 @@ def read_prices(stock, stock_name, start_month, start_year, end_month, end_year,
             if year <= end_year: print(stock + " " + str(year))
         temp_output = []
         #Monatliche Verarbeitung für verschiedene Börsen
+        date_exist = False
         for boerse_id in [6,21,40]:
             for j in stock_prices_month(stock,str(i),whg,boerse_id):
                 if j[0] =="abbruch":
                     abbruch = True
                     break
                 if j[0] == "datum":
-                    temp_output.append(datetime.datetime.strptime(j[1],"%d.%m.%y").strftime("%d.%m.%Y"))
+                    if datetime.datetime.strptime(j[1],"%d.%m.%y").strftime("%d.%m.%Y") not in dates_exist:
+                        temp_output.append(datetime.datetime.strptime(j[1],"%d.%m.%y").strftime("%d.%m.%Y"))
+                    else: date_exist = True
                 elif j[0] == "price":
-                    temp_output.append(float(j[1].replace(".","").replace(",",".")))
+                    if date_exist == False:
+                        temp_output.append(float(j[1].replace(".","").replace(",",".")))
+                    else: date_exist = True
                 elif j[0] == "blank": pass
-
         temp_month = []
         #Monatsverarbeitung Duplikate eliminieren
         for k_id, k_cont in enumerate(temp_output):
@@ -153,10 +159,6 @@ def read_prices(stock, stock_name, start_month, start_year, end_month, end_year,
         for k in range(0, len(temp_month),2): temp_month2.append([temp_month[k],temp_month[k+1]])
         temp_month2.sort(reverse=True)
         for k in temp_month2: output.append(k)
-    output.sort(reverse=True)
-
-    print(output)
-
     return output
 
 # Erstellung einer Datums-Liste vom aktuellstem bis zum  ältesten Datum im Format jjjj-mm-dd
@@ -430,7 +432,7 @@ writemodus = 1
 #index="tecdax"
 sek = 0        #bei 0 Sekunden => kein VPN
 start_year = 2019
-start_month = 6
+start_month = 11
 end_year = 0
 end_month = 0
 
