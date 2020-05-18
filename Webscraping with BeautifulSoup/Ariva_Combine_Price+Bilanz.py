@@ -23,16 +23,20 @@ def calc_growth(start_col,anzahl_hist, row):
         return (round(growth_sum / anzahl_hist, 2))
     else: return False
 
+
 # read input-excel-sheets
-fn_price = "s-p_500-index__Stock_Prices_USD.xlsx"
-fn_data = "s-p_500-index__Stock_Data.xlsx"
+#fn_price = "s-p_500-index__Stock_Prices_USD.xlsx"
+#fn_data = "s-p_500-index__Stock_Data.xlsx"
 #fn_price = "Stock_PricesNAS.xlsx"
 #fn_data = "Stock_DataNAS.xlsx"
+fn_price = "Stock_Prices.xlsx"
+fn_data = "Stock_Data.xlsx"
 
 wb_price = load_workbook(fn_price)
 wb_data = load_workbook(fn_data)
 
 for sh_price in wb_price:
+    if sh_price.title == "INDEX": continue
     print("Verarbeitung von"  ,sh_price.title)
     for sh_data in wb_data:
         if sh_price.title.upper() == sh_data.title.upper():  break
@@ -56,7 +60,7 @@ for sh_price in wb_price:
             else: zeile.append(cell.value)
         data_list.append(zeile)
 
-    # find necessary rows
+    # find necessary rows in data-xlsx
     row_title = row_shares = row_netincome_sh = row_revenue_sh = row_totalequity_sh = row_opcashflow_sh = row_dividend_sh = row_totalincome = 0
     for i in range(len(data_list)-1):
         if "Bilanz in Mio." in data_list[i][0]: row_title = data_list[i]
@@ -73,18 +77,13 @@ for sh_price in wb_price:
     idx = 0
     for i in range (1,len(price_list)):
         if price_list[i][0] == "Datum" or price_list[i][0] == "Date": continue
-
-        try:
-            if datetime.strptime(price_list[i][0],"%d.%m.%Y") != tmp_year:
-                for j in range(2,len(row_title)):
-                    if row_title[j] == "": continue
-                    if datetime.strptime(price_list[i][0],"%d.%m.%Y").year-1 == int(row_title[j]):
-                        tmp_year = int (row_title[j])
-                        idx = j
-                        break
-        except:
-            print(price_list[i][0])
-            print(type(price_list[i][0]))
+        if datetime.strptime(price_list[i][0],"%d.%m.%Y") != tmp_year:
+            for j in range(2,len(row_title)):
+                if row_title[j] == "": continue
+                if datetime.strptime(price_list[i][0],"%d.%m.%Y").year-1 == int(row_title[j]):
+                    tmp_year = int (row_title[j])
+                    idx = j
+                    break
 
         price_list[i][1] = round (price_list[i][1], 2)
         if idx == 0: continue
@@ -94,61 +93,60 @@ for sh_price in wb_price:
             price_list[i][2] = "-"
         if len(price_list[i]) <= 3:
             if price_list[i][1] not in [""," ","-"] and row_netincome_sh[idx] not in [""," ","-"]:
-                price_list[i].append(round (price_list[i][1] / row_netincome_sh[idx], 2))
-            else: price_list[i].append(" ")
+                price_list[i][3] = round (price_list[i][1] / row_netincome_sh[idx], 2)
+            else: price_list[i][3] = "-"
             if row_revenue_sh != 0:
                 if price_list[i][1] not in ["", " ", "-"] and row_revenue_sh[idx] not in ["", " ", "-"]:
-                    price_list[i].append(round (price_list[i][1] / row_revenue_sh[idx], 2))
-                else: price_list[i].append ("-")
+                    price_list[i][4] = round (price_list[i][1] / row_revenue_sh[idx], 2)
+                else: price_list[i][4] = "-"
             else:
                 if price_list[i][1] not in ["", " ", "-"] and row_shares[idx] not in ["", " ", "-"] and row_totalincome[idx] not in ["", " ", "-"]:
-                    price_list[i].append(round (price_list[i][1] * row_shares[idx] / row_totalincome[idx], 2))
-                else: price_list[i].append ("-")
+                    price_list[i][4] = round (price_list[i][1] * row_shares[idx] / row_totalincome[idx], 2)
+                else: price_list[i][4] = "-"
             if price_list[i][1] not in [""," ","-"] and row_totalequity_sh[idx] not in [""," ","-"]:
-                price_list[i].append(round (price_list[i][1] / row_totalequity_sh[idx], 2))
-            else: price_list[i].append("-")
+                price_list[i][5] = round (price_list[i][1] / row_totalequity_sh[idx], 2)
+            else: price_list[i][5] = "-"
             if price_list[i][1] not in [""," ","-"] and row_opcashflow_sh[idx] not in [""," ","-"]:
-                price_list[i].append(round (price_list[i][1] / row_opcashflow_sh[idx], 2))
-            else: price_list[i].append ("-")
+                price_list[i][6] = round (price_list[i][1] / row_opcashflow_sh[idx], 2)
+            else: price_list[i][6] = "-"
             if price_list[i][1] not in ["", " ", "-"] and row_dividend_sh[idx] not in ["", " ", "-"]:
-                price_list[i].append(round (row_dividend_sh[idx] / price_list[i][1] * 100, 2))
-            else: price_list[i].append ("-")
+                price_list[i][7] = round (row_dividend_sh[idx] / price_list[i][1] * 100, 2)
+            else: price_list[i][7] = "-"
             if price_list[i][3] not in [0,""," ","-"]:
-                price_list[i].append(round (1 / price_list[i][3] * 100, 2))
-            else: price_list[i].append("-")
+                price_list[i][8] = round (1 / price_list[i][3] * 100, 2)
+            else: price_list[i][8] = "-"
             tmp_calc = calc_growth (idx, 5, row_netincome_sh)
             if tmp_calc != False:
-                price_list[i].append(round(price_list[i][3] / tmp_calc,2))
+                price_list[i][9] = round(price_list[i][3] / tmp_calc,2)
             else:
-                price_list[i].append("")
+                price_list[i][9] = "-"
         else:
             price_list[i][3] = round (price_list[i][1] / row_netincome_sh[idx], 2)
-
             if row_revenue_sh != 0:
                 if price_list[i][1] not in ["", " ", "-"] and row_revenue_sh[idx] not in ["", " ", "-"]:
-                    price_list[4].append(round (price_list[i][1] / row_revenue_sh[idx], 2))
-                else: price_list[4].append ("-")
+                    price_list[i][4] =  round (price_list[i][1] / row_revenue_sh[idx], 2)
+                else: price_list[i][4] = "-"
             else:
                 if price_list[i][1] not in ["", " ", "-"] and row_shares[idx] not in ["", " ", "-"] and row_totalincome[idx] not in ["", " ", "-"]:
-                    price_list[4].append(round (price_list[i][1] * row_shares[idx] / row_totalincome[idx], 2))
-                else: price_list[4].append ("-")
+                    price_list[i][4] = round (price_list[i][1] * row_shares[idx] / row_totalincome[idx], 2)
+                else: price_list[i][4] = "-"
             if price_list[i][1] not in [""," ","-"] and row_totalequity_sh[idx] not in [""," ","-"]:
-                price_list[5].append(round (price_list[i][1] / row_totalequity_sh[idx], 2))
-            else: price_list[5].append("-")
+                price_list[i][5] = round (price_list[i][1] / row_totalequity_sh[idx], 2)
+            else: price_list[i][5] = "-"
             if price_list[i][1] not in [""," ","-"] and row_opcashflow_sh[idx] not in [""," ","-"]:
-                price_list[6].append(round (price_list[i][1] / row_opcashflow_sh[idx], 2))
-            else: price_list[6].append ("-")
+                price_list[i][6] = round (price_list[i][1] / row_opcashflow_sh[idx], 2)
+            else: price_list[i][6] = "-"
             if price_list[i][1] not in ["", " ", "-"] and row_dividend_sh[idx] not in ["", " ", "-"]:
-                price_list[7].append(round (row_dividend_sh[idx] / price_list[i][1] * 100, 2))
-            else: price_list[7].append ("-")
+                price_list[i][7] = round (row_dividend_sh[idx] / price_list[i][1] * 100, 2)
+            else: price_list[i][7] = "-"
             if price_list[i][3] not in [0,""," ","-"]:
-                price_list[8].append(round (1 / price_list[i][3] * 100, 2))
-            else: price_list[8].append("-")
+                price_list[i][8] = round (1 / price_list[i][3] * 100, 2)
+            else: price_list[i][8] = "-"
             tmp_calc = calc_growth (idx,5,row_netincome_sh)
             if tmp_calc != False:
                 price_list[i][9] = round(price_list[i][3] / tmp_calc,2)
             else:
-                price_list[i][9] = ""
+                price_list[i][9] = "-"
 
 
     # Überschrift ergänzen
@@ -164,7 +162,6 @@ for sh_price in wb_price:
     wb_price.remove(sh_price)
     writer.book = wb_price
     pd.DataFrame (price_list).to_excel (writer, sheet_name=sh_price.title.upper(), header=False, index=False)
-    writer.book._sheets.sort(key=lambda x: x.title)
 
     # Formatierung XLSX
     column_widths = []
