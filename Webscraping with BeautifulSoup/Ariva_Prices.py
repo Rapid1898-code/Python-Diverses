@@ -441,17 +441,17 @@ stocks_dic = {'apple-aktie': 'Apple','entergy-aktie': 'Entergy','bmw-aktie': 'BM
 
 whg = "EUR"
 index = 0
-char_index = "KR"
+char_index = "ZZ"
 vpn_land = "no-vpn"
 writemodus = 1
 
 ##index = "s-p_500-index/kursliste"
 #index = "nasdaq-100-index/kursliste"
-#index="dax-30"
+index="dax-30"
 #index="tecdax"
 #index="mdax"
-index="sdax"
-sek = 45        #bei 0 Sekunden => kein VPN
+#index="sdax"
+sek = 0        #bei 0 Sekunden => kein VPN
 start_year = 1989
 start_month = 1
 end_year = 0

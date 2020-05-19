@@ -29,8 +29,8 @@ def calc_growth(start_col,anzahl_hist, row):
 #fn_data = "s-p_500-index__Stock_Data.xlsx"
 #fn_price = "Stock_PricesNAS.xlsx"
 #fn_data = "Stock_DataNAS.xlsx"
-fn_price = "Stock_Prices.xlsx"
-fn_data = "Stock_Data.xlsx"
+fn_price = "dax-30_Stock_Prices_EUR.xlsx"
+fn_data = "dax-30_Stock_Data_EUR.xlsx"
 
 wb_price = load_workbook(fn_price)
 wb_data = load_workbook(fn_data)
@@ -121,7 +121,9 @@ for sh_price in wb_price:
             else:
                 price_list[i][9] = "-"
         else:
-            price_list[i][3] = round (price_list[i][1] / row_netincome_sh[idx], 2)
+            if price_list[i][1] not in ["", " ", "-"] and row_netincome_sh[idx] not in ["", " ", "-"]:
+                price_list[i][3] = round (price_list[i][1] / row_netincome_sh[idx], 2)
+            else: price_list[i][3] = "-"
             if row_revenue_sh != 0:
                 if price_list[i][1] not in ["", " ", "-"] and row_revenue_sh[idx] not in ["", " ", "-"]:
                     price_list[i][4] =  round (price_list[i][1] / row_revenue_sh[idx], 2)
