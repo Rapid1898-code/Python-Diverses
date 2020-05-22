@@ -40,11 +40,18 @@ end_erg.append(erg)
 for i in range(len(tmp_list)):
     if i%2 == 1: end_erg.append(tmp_list[i])
 
-#tmp_list.insert(0,erg)
-#for i in range (len(tmp_list)):
-#    if i == 0 or i%2 == 1:
-#        for j in range(1, len(tmp_list[i])):
-#            tmp_list[i][j] = datetime.strftime (tmp_list[i][j], "%d.%m.%Y")
+# reduce daily to monthly marketcap per share
+mon = ""
+del_mon = []
+for i in range (1,len(end_erg[0])-1):
+    if mon != end_erg[0][i][3:5]:
+        mon = end_erg[0][i][3:5]
+    else:
+        del_mon.append(i)
+del_mon.reverse()
+for i in del_mon:
+    for j in range(len(end_erg)):
+        del end_erg[j][i]
 
 # Schreiben der Liste in ein XLSX
 writer = pd.ExcelWriter ("Ariva_MarketCap.xlsx", engine='openpyxl', options={'strings_to_numbers': True})
