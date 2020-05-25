@@ -63,9 +63,13 @@ def vpn_switch(sek):
 # Output: wenn IP-Seitensperre erfolgt ist (Kein Zugriff auf HTML-Seite im Text): Ausgabe/Yield von Schlüsselwort "abbruch" + Textinhalt
 def stock_prices_month (stock,month,whg,boerse_id):
     # read table with monatlichen Kursen
-    # Börse-ID: 6 => Xetra, 21 => NYSE, 40 => Nasdaq
+    # Börse-ID für US-Aktien: 6 => Xetra, 21 => NYSE, 40 => Nasdaq
+    # Börse-ID für Euro-Aktien: 6 => Xetra, 0 => Düsseldorf, 5 => Stuttgart
     url = "https://www.ariva.de/" + stock + "/historische_kurse?boerse_id=" + str(boerse_id) + "&month=" + month + \
           "&currency=" + whg + "&clean_split=1&clean_split=0&clean_payout=0&clean_bezug=1&clean_bezug=0"
+    # https: // www.ariva.de / unilever - aktie / historische_kurse?go = 1 & boerse_id = 2 & month = 2019 - 01 - 31 & currency = & clean_split = 1 & clean_bezug = 1
+    # https: // www.ariva.de / unilever - aktie / historische_kurse?go = 1 & boerse_id = 2 & month = 2015 - 09 - 30 & currency = & clean_split = 1 & clean_bezug = 1
+
     page = requests.get (url)
     soup = BeautifulSoup (page.content, "html.parser")
     # Check ob Zugriff auf die IP-Adresse gesperrt ist
@@ -104,6 +108,10 @@ def read_prices(stock, stock_name, start_month, start_year, end_month, end_year,
     output = [["Datum",stock.upper().replace("-"," ").replace("AKTIE","").replace("_"," "),"in "+whg]]
     # bestehende Informationen lesen und letztes Datum in Zelle A4 speichern
     uptodate = "01.01.1990"
+    # Börse-ID für US-Aktien: 6 => Xetra, 21 => NYSE, 40 => Nasdaq
+    # Börse-ID für Euro-Aktien: 6 => Xetra, 0 => Düsseldorf, 5 => Stuttgart
+    if whg == "USD": exchange = [6, 21, 40]
+    elif whg == "EUR": exchange = [0, 5, 6]
     stock_name = stock_name.upper()
     dates_exist = []
     if writemodus == 1:
@@ -136,7 +144,7 @@ def read_prices(stock, stock_name, start_month, start_year, end_month, end_year,
         temp_output = []
         #Monatliche Verarbeitung für verschiedene Börsen
         date_exist = False
-        for boerse_id in [6,21,40]:
+        for boerse_id in exchange:
             for j in stock_prices_month(stock,str(i),whg,boerse_id):
                 if j[0] =="abbruch":
                     abbruch = True
@@ -441,17 +449,18 @@ stocks_dic = {'apple-aktie': 'Apple','entergy-aktie': 'Entergy','bmw-aktie': 'BM
 
 whg = "EUR"
 index = 0
-char_index = "ZZ"
+char_index = "00"
 vpn_land = "no-vpn"
 writemodus = 1
 
 ##index = "s-p_500-index/kursliste"
 #index = "nasdaq-100-index/kursliste"
-index="dax-30"
+#index="dax-30"
+index="eurostoxx-50"
 #index="tecdax"
 #index="mdax"
 #index="sdax"
-sek = 0        #bei 0 Sekunden => kein VPN
+sek = 45        #bei 0 Sekunden => kein VPN
 start_year = 1989
 start_month = 1
 end_year = 0

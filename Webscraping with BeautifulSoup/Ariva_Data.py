@@ -781,13 +781,15 @@ def read_stamm(stock):
         for j in i.find_all ("tr"):
             for k in j.find_all ("td"):
                 # Prüfung ob Tag.Monat damit Jahr ergänzt wird
-                pattern = '^[0-9][0-9].[0-9][0-9].$'
-                if re.match (pattern, k.text.strip ()):
-                    output[nr].append (k.text.strip () + cont[-4:])
-                else:
-                    output[nr].append (translator.translate (k.text.strip(), src="de", dest="en").text.title())
-            output[nr].append ("")
-            nr += 1
+                if nr <= 9:
+                    pattern = '^[0-9][0-9].[0-9][0-9].$'
+                    if re.match (pattern, k.text.strip ()):
+                        output[nr].append (k.text.strip () + cont[-4:])
+                    else:
+                        output[nr].append (translator.translate (k.text.strip(), src="de", dest="en").text.title())
+            if nr <= 9:
+                output[nr].append ("")
+                nr += 1
 
     # Aktionäre
     output[0].extend (["AKTIONÄRE / SHAREHOLDERS", ""])
@@ -867,16 +869,16 @@ stocks_dic = {'apple-aktie': 'Apple','entergy-aktie': 'Entergy','bmw-aktie': 'BM
 #Input - WRITEMODUS: bei 0 wird das XLSX überschrieben - bei 1 werden weitere Worksheets angehängt
 whg = "EUR"
 index = 0
-char_index = "ZZ"
+char_index = "IM"
 vpn_land = "no-vpn"
 writemodus = 1
-index="dax-30"
+#index="dax-30"
 #index="tecdax"
 #index="sdax"
 #index="mdax"
-# index="eurostoxx-50"
+index="eurostoxx-50"
 #index="s-p_500-index/kursliste"
-# index="nasdaq-100-index/kursliste"
+#index="nasdaq-100-index/kursliste"
 
 sek = 45        #bei 0 Sekunden => kein VPN
 entry = 30      #Wechsel der VPN-Verbindung bei allen 20 Einträgen
