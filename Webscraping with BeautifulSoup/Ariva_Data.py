@@ -53,6 +53,7 @@ def check_xls(stock, filename):
 # Input filenmae: Name des XLSX-File
 def save_xls(stock, content, filename):
     global writemodus
+    writer = ""
     stock.replace("'","")
     stock = stock.upper()
     # check ob append ausgewählt - aber wenn file nicht vorhanden - dann Wechsel über Überschreibmodus 0
@@ -117,6 +118,7 @@ def save_xls(stock, content, filename):
     size14 = Font (bold=True, size="14")
 
     # Formatierung Excel-Sheet
+    row = ""
     for i, cont in enumerate (content):
         if cont == []: continue  # Leerzeile überspringen...
         if cont[0].find ("Bilanz in ") != -1:
@@ -869,18 +871,19 @@ stocks_dic = {'apple-aktie': 'Apple','entergy-aktie': 'Entergy','bmw-aktie': 'BM
 #Input - WRITEMODUS: bei 0 wird das XLSX überschrieben - bei 1 werden weitere Worksheets angehängt
 whg = "EUR"
 index = 0
-char_index = "IM"
+char_index = "00"
 vpn_land = "no-vpn"
 writemodus = 1
 #index="dax-30"
 #index="tecdax"
 #index="sdax"
 #index="mdax"
-index="eurostoxx-50"
+#index="eurostoxx-50"
+index="cac40"
 #index="s-p_500-index/kursliste"
 #index="nasdaq-100-index/kursliste"
 
-sek = 45        #bei 0 Sekunden => kein VPN
+sek = 0        #bei 0 Sekunden => kein VPN
 entry = 30      #Wechsel der VPN-Verbindung bei allen 20 Einträgen
 
 start_readstocks = timeit.default_timer ()
