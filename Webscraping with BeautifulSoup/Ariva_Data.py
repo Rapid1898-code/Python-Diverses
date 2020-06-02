@@ -879,7 +879,7 @@ writemodus = 1
 #index="sdax"
 #index="mdax"
 #index="eurostoxx-50"
-index="ibex"
+index="ftse_mib-index/kursliste"
 #index="s-p_500-index/kursliste"
 #index="nasdaq-100-index/kursliste"
 

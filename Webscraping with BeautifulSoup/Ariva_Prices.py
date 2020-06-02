@@ -449,14 +449,14 @@ stocks_dic = {'apple-aktie': 'Apple','entergy-aktie': 'Entergy','bmw-aktie': 'BM
 
 whg = "EUR"
 index = 0
-char_index = "RR"
+char_index = "00"
 vpn_land = "no-vpn"
 writemodus = 1
 
 ##index = "s-p_500-index/kursliste"
 #index = "nasdaq-100-index/kursliste"
 #index="dax-30"
-index="ftse_100-index/kursliste"
+index="ftse_mib-index/kursliste"
 #index="tecdax"
 #index="mdax"
 #index="sdax"
