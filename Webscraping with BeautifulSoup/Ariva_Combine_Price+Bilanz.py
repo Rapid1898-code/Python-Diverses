@@ -29,8 +29,8 @@ def calc_growth(start_col,anzahl_hist, row):
 #fn_data = "s-p_500-index__Stock_Data.xlsx"
 #fn_price = "Stock_PricesNAS.xlsx"
 #fn_data = "Stock_DataNAS.xlsx"
-fn_price = "dax-30_Stock_Prices_EUR.xlsx"
-fn_data = "dax-30_Stock_Data_EUR.xlsx"
+fn_price = "eurostoxx-50_Stock_Prices_EUR.xlsx"
+fn_data = "eurostoxx-50_Stock_Data_EUR.xlsx"
 
 wb_price = load_workbook(fn_price)
 wb_data = load_workbook(fn_data)
