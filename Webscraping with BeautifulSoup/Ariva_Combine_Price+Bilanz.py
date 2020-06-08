@@ -29,8 +29,8 @@ def calc_growth(start_col,anzahl_hist, row):
 #fn_data = "s-p_500-index__Stock_Data.xlsx"
 #fn_price = "Stock_PricesNAS.xlsx"
 #fn_data = "Stock_DataNAS.xlsx"
-fn_price = "eurostoxx-50_Stock_Prices_EUR.xlsx"
-fn_data = "eurostoxx-50_Stock_Data_EUR.xlsx"
+fn_price = "EuroStock_Prices_EUR.xlsx"
+fn_data = "EuroStock_Data_EUR.xlsx"
 
 wb_price = load_workbook(fn_price)
 wb_data = load_workbook(fn_data)
@@ -152,7 +152,13 @@ for sh_price in wb_price:
 
 
     # Überschrift ergänzen
-    if price_list[1][0] == "Date" and price_list[2][0] == "Datum": del price_list[1:3]
+
+    try:
+        if price_list[1][0] == "Date" and price_list[2][0] == "Datum": del price_list[1:3]
+    except:
+        print(price_list)
+
+
     price_list.insert(1,["Date","Price","MarketCap in B","PE (price/earnings)","PS (price/sales)", "PB (price/book value",
                          "PC (price/cashflow", "Dividend Yield", "Initial Yield", "PEG Ratio"])
     price_list.insert(2,["Datum","Kurs","MarktKap in Md","KGV (Kurs/Gewinn)", "KUV (Kurs/Umsatz)", "KBV (Kurs/Buchwert)",

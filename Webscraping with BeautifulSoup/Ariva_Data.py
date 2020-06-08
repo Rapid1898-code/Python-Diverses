@@ -200,6 +200,11 @@ def sort_xlsx(filename):
 def index_xlsx(filename):
     wb = load_workbook (filename)
 
+    # Delete double entries
+    for ws in wb:
+        if "(2)" in ws.title or "(3)" in ws.title or "(4)" in ws.title:
+            del wb[ws.title]
+
     # Index bilden
     if "INDEX" in wb.sheetnames: del wb["INDEX"]
     wb.create_sheet ("INDEX", 0)
@@ -865,13 +870,13 @@ stocks_dic = {'apple-aktie': 'Apple','entergy-aktie': 'Entergy','bmw-aktie': 'BM
 
 #Input-Parameter
 #Input - INDEX: Angabe welcher Index gelesen werden soll (z.B. DAX-30) - bei Angabe von 0 wird individuell lt. stocks_dic eingelesen
-#Input - CHAR_INDEX: ab welchen 2 Buchstaben die Verarbeitung erfolgen soll - bei Angabe von "00" wird alles gelesen
+#Input - CHAR_INDEX: ab welchen 2 Buchstaben die Verarbeitung erfolgen soll - bei Angabe von "00" wird alles gelesen - "ZZ" wird nur der Index aktualisiert
 #Input - SEK: Anzahl der Sekunden der Verzögerung bei VPN-Switch - bei Angabe von 0 erfolgt kein VPN-Wechsel
 #Input - ENTRY: Wechsel der VPN-Verbindung bei allen x Einträgen (notwendig für googletrans weil sonst Block nach einer gewissen Anzahl erfolgt)
 #Input - WRITEMODUS: bei 0 wird das XLSX überschrieben - bei 1 werden weitere Worksheets angehängt
 whg = "EUR"
 index = 0
-char_index = "00"
+char_index = "ZZ"
 vpn_land = "no-vpn"
 writemodus = 1
 #index="dax-30"
@@ -879,7 +884,7 @@ writemodus = 1
 #index="sdax"
 #index="mdax"
 #index="eurostoxx-50"
-index="ftse_mib-index/kursliste"
+index="atx"
 #index="s-p_500-index/kursliste"
 #index="nasdaq-100-index/kursliste"
 
