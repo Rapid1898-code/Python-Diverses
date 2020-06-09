@@ -1,6 +1,8 @@
 import requests
 from bs4 import BeautifulSoup
 from openpyxl import load_workbook
+import smtplib
+from email.mime.text import MIMEText
 
 wb = load_workbook("AlertSheet.xlsx")
 ws_db = wb["Dashboard"]
@@ -10,6 +12,7 @@ stocks = []
 for col in ws_at["A"]: stocks.append(col.value)
 
 if ws_db["C3"].value != None and ws_db["C3"].value not in stocks:
+    msg = ""
     symbol = ws_db["C3"].value
     link = "https://finance.yahoo.com/quote/" + symbol
     link2 = link + "/profile?p=" + symbol
@@ -51,22 +54,23 @@ if ws_db["C3"].value != None and ws_db["C3"].value not in stocks:
         if row.get ("class") != None: industry = row.text.strip ()
     description = soup.find ('p', attrs={"data-reactid": "141"}).text.strip ()
 
-    print("\nDASHBOARD")
-    print("Current Volume:", volume)
-    print("Average Volume:", avg_volume)
-    print("Day Low/High:", day_range_from,"/", day_range_to)
-    print("52W Range:", fifty_range_from,"/",fifty_range_to)
-    print("Symbol-Name:",symbol,"-",name)
-    print("Sector:",sector)
-    print("Industry:",industry)
-    print("Current Price (day change %):",price,daychange_perc)
-    print("Company Description:",description)
-    print("MarketCap:",marketcap)
-    print("Prev close:",prevclose)
-    print("# of Employees:",empl)
+    s = smtplib.SMTP ('smtp.gmail.com', 587)  # SMTP-Server and port number from the mail provider (e.g. GMail)
+    print (s.ehlo ())  # Check if OK - Response 250 means connection is ok
+    print (s.starttls ()) # Check if OK
+    print (s.login (ws_db["A15"].value, ws_db["D15"].value)) # Check if OK
 
-
-
+    msg =   "DASHBOARD/nCurrent Volume:"+ volume +\
+            "/nAverage Volume:"+ avg_volume +\
+            "/nDay Low/High:"+ day_range_from,"/",day_range_to +\
+            "/n52W Range:" + fifty_range_from,"/",fifty_range_to +\
+            "/nSymbol-Name:" + symbol,"-",name+\
+            "/nSector:" + sector +\
+            "/nIndustry:" + industry +\
+            "/nCurrent Price (day change %):" + price,daychange_perc +\
+            "/nCompany Description:",description +\
+            "/nMarketCap:" + marketcap +\
+            "/nPrev close:" + prevclose +\
+            "/n# of Employees:",empl
 
 """
 symbol = "AAPL"
