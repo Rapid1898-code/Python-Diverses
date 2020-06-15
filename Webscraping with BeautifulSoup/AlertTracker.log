@@ -1,0 +1,2024 @@
+2020-06-15 07:19:35,072 Filename:C:\Users\Polzi\Documents\GitHub\Python-Diverses\Webscraping with BeautifulSoup\AlertTracker.xlsx
+2020-06-15 07:19:35,083 Release <POINTER(IDispatch) ptr=0x11792327ac8 at 117956a78c8>
+2020-06-15 07:19:35,102 Release <POINTER(IDispatch) ptr=0x11792327c88 at 117956a7848>
+2020-06-15 07:19:35,162 AlertTracker update every 5sec...
+2020-06-15 07:19:35,163 Now: 2020-06-15 07:19:35.163356
+2020-06-15 07:19:35,163 LastCheck StockTwits: 1900-01-01 12:00:00
+2020-06-15 07:19:40,732 POST http://127.0.0.1:56441/session {"capabilities": {"firstMatch": [{}], "alwaysMatch": {"browserName": "chrome", "platformName": "any", "goog:chromeOptions": {"extensions": [], "args": []}}}, "desiredCapabilities": {"browserName": "chrome", "version": "", "platform": "ANY", "goog:chromeOptions": {"extensions": [], "args": []}}}
+2020-06-15 07:19:40,733 Starting new HTTP connection (1): 127.0.0.1:56441
+2020-06-15 07:19:43,312 http://127.0.0.1:56441 "POST /session HTTP/1.1" 200 716
+2020-06-15 07:19:43,313 Finished Request
+2020-06-15 07:19:43,313 POST http://127.0.0.1:56441/session/d53d82ff7b8fdfba33cd16f8f5629c3d/url {"url": "https://stocktwits.com/mrinvestorpro"}
+2020-06-15 07:19:45,385 http://127.0.0.1:56441 "POST /session/d53d82ff7b8fdfba33cd16f8f5629c3d/url HTTP/1.1" 200 14
+2020-06-15 07:19:45,386 Finished Request
+2020-06-15 07:19:48,387 POST http://127.0.0.1:56441/session/d53d82ff7b8fdfba33cd16f8f5629c3d/execute/sync {"script": "return document.body.scrollHeight", "args": []}
+2020-06-15 07:19:50,768 http://127.0.0.1:56441 "POST /session/d53d82ff7b8fdfba33cd16f8f5629c3d/execute/sync HTTP/1.1" 200 14
+2020-06-15 07:19:50,768 Finished Request
+2020-06-15 07:19:50,768 POST http://127.0.0.1:56441/session/d53d82ff7b8fdfba33cd16f8f5629c3d/execute/sync {"script": "window.scrollTo(0, document.body.scrollHeight);", "args": []}
+2020-06-15 07:19:50,772 http://127.0.0.1:56441 "POST /session/d53d82ff7b8fdfba33cd16f8f5629c3d/execute/sync HTTP/1.1" 200 14
+2020-06-15 07:19:50,772 Finished Request
+2020-06-15 07:19:51,273 POST http://127.0.0.1:56441/session/d53d82ff7b8fdfba33cd16f8f5629c3d/execute/sync {"script": "return document.body.scrollHeight", "args": []}
+2020-06-15 07:19:51,280 http://127.0.0.1:56441 "POST /session/d53d82ff7b8fdfba33cd16f8f5629c3d/execute/sync HTTP/1.1" 200 15
+2020-06-15 07:19:51,281 Finished Request
+2020-06-15 07:19:51,281 POST http://127.0.0.1:56441/session/d53d82ff7b8fdfba33cd16f8f5629c3d/execute/sync {"script": "window.scrollTo(0, document.body.scrollHeight);", "args": []}
+2020-06-15 07:19:51,284 http://127.0.0.1:56441 "POST /session/d53d82ff7b8fdfba33cd16f8f5629c3d/execute/sync HTTP/1.1" 200 14
+2020-06-15 07:19:51,284 Finished Request
+2020-06-15 07:19:51,784 POST http://127.0.0.1:56441/session/d53d82ff7b8fdfba33cd16f8f5629c3d/execute/sync {"script": "return document.body.scrollHeight", "args": []}
+2020-06-15 07:19:51,787 http://127.0.0.1:56441 "POST /session/d53d82ff7b8fdfba33cd16f8f5629c3d/execute/sync HTTP/1.1" 200 15
+2020-06-15 07:19:51,787 Finished Request
+2020-06-15 07:19:51,787 POST http://127.0.0.1:56441/session/d53d82ff7b8fdfba33cd16f8f5629c3d/execute/sync {"script": "window.scrollTo(0, document.body.scrollHeight);", "args": []}
+2020-06-15 07:19:51,790 http://127.0.0.1:56441 "POST /session/d53d82ff7b8fdfba33cd16f8f5629c3d/execute/sync HTTP/1.1" 200 14
+2020-06-15 07:19:51,790 Finished Request
+2020-06-15 07:19:52,291 POST http://127.0.0.1:56441/session/d53d82ff7b8fdfba33cd16f8f5629c3d/execute/sync {"script": "return document.body.scrollHeight", "args": []}
+2020-06-15 07:19:52,297 http://127.0.0.1:56441 "POST /session/d53d82ff7b8fdfba33cd16f8f5629c3d/execute/sync HTTP/1.1" 200 15
+2020-06-15 07:19:52,297 Finished Request
+2020-06-15 07:19:52,297 POST http://127.0.0.1:56441/session/d53d82ff7b8fdfba33cd16f8f5629c3d/execute/sync {"script": "window.scrollTo(0, document.body.scrollHeight);", "args": []}
+2020-06-15 07:19:52,300 http://127.0.0.1:56441 "POST /session/d53d82ff7b8fdfba33cd16f8f5629c3d/execute/sync HTTP/1.1" 200 14
+2020-06-15 07:19:52,300 Finished Request
+2020-06-15 07:19:52,801 POST http://127.0.0.1:56441/session/d53d82ff7b8fdfba33cd16f8f5629c3d/execute/sync {"script": "return document.body.scrollHeight", "args": []}
+2020-06-15 07:19:52,804 http://127.0.0.1:56441 "POST /session/d53d82ff7b8fdfba33cd16f8f5629c3d/execute/sync HTTP/1.1" 200 15
+2020-06-15 07:19:52,804 Finished Request
+2020-06-15 07:19:52,804 GET http://127.0.0.1:56441/session/d53d82ff7b8fdfba33cd16f8f5629c3d/source {}
+2020-06-15 07:19:52,881 http://127.0.0.1:56441 "GET /session/d53d82ff7b8fdfba33cd16f8f5629c3d/source HTTP/1.1" 200 858917
+2020-06-15 07:19:52,891 Finished Request
+2020-06-15 07:19:53,149 Stocks from Stocktwits: []
+2020-06-15 07:19:53,209 Saved to disk...
+2020-06-15 07:19:53,244 AlertTracker update every 5sec...
+2020-06-15 07:19:53,244 Now: 2020-06-15 07:19:53.244307
+2020-06-15 07:19:53,245 LastCheck StockTwits: 2020-06-15 07:19:40.197168
+2020-06-15 07:19:58,277 Update A in row 2
+2020-06-15 07:19:58,287 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 07:19:59,272 https://finance.yahoo.com:443 "GET /quote/A HTTP/1.1" 200 None
+2020-06-15 07:19:59,498 Update AAL in row 3
+2020-06-15 07:19:59,501 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 07:20:00,327 https://finance.yahoo.com:443 "GET /quote/AAL HTTP/1.1" 200 None
+2020-06-15 07:20:00,489 Update AAP in row 4
+2020-06-15 07:20:00,490 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 07:20:03,251 https://finance.yahoo.com:443 "GET /quote/AAP HTTP/1.1" 200 None
+2020-06-15 07:20:03,536 Update AAPL in row 5
+2020-06-15 07:20:03,538 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 07:20:04,192 https://finance.yahoo.com:443 "GET /quote/AAPL HTTP/1.1" 200 None
+2020-06-15 07:20:04,406 Update ABBV in row 6
+2020-06-15 07:20:04,407 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 07:20:05,061 https://finance.yahoo.com:443 "GET /quote/ABBV HTTP/1.1" 200 None
+2020-06-15 07:20:05,296 Update ABC in row 7
+2020-06-15 07:20:05,298 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 07:20:06,000 https://finance.yahoo.com:443 "GET /quote/ABC HTTP/1.1" 200 None
+2020-06-15 07:20:06,201 Update ACY in row 8
+2020-06-15 07:20:06,203 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 07:20:06,894 https://finance.yahoo.com:443 "GET /quote/ACY HTTP/1.1" 200 None
+2020-06-15 07:20:07,154 Update ADP in row 9
+2020-06-15 07:20:07,155 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 07:20:07,797 https://finance.yahoo.com:443 "GET /quote/ADP HTTP/1.1" 200 None
+2020-06-15 07:20:08,033 Update AMZN in row 10
+2020-06-15 07:20:08,034 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 07:20:08,811 https://finance.yahoo.com:443 "GET /quote/AMZN HTTP/1.1" 200 None
+2020-06-15 07:20:09,039 Update ATIF in row 11
+2020-06-15 07:20:09,041 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 07:20:09,673 https://finance.yahoo.com:443 "GET /quote/ATIF HTTP/1.1" 200 None
+2020-06-15 07:20:12,038 Update BAS.DE in row 12
+2020-06-15 07:20:12,040 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 07:20:12,794 https://finance.yahoo.com:443 "GET /quote/BAS.DE HTTP/1.1" 200 None
+2020-06-15 07:20:13,016 Update CAT in row 13
+2020-06-15 07:20:13,018 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 07:20:14,389 https://finance.yahoo.com:443 "GET /quote/CAT HTTP/1.1" 200 None
+2020-06-15 07:20:14,647 Update FB in row 14
+2020-06-15 07:20:14,649 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 07:20:15,346 https://finance.yahoo.com:443 "GET /quote/FB HTTP/1.1" 200 None
+2020-06-15 07:20:15,603 Update GOOGL in row 15
+2020-06-15 07:20:15,605 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 07:20:16,152 https://finance.yahoo.com:443 "GET /quote/GOOGL HTTP/1.1" 200 None
+2020-06-15 07:20:16,326 Update IBM in row 16
+2020-06-15 07:20:16,328 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 07:20:16,931 https://finance.yahoo.com:443 "GET /quote/IBM HTTP/1.1" 200 None
+2020-06-15 07:20:17,139 Update MSFT in row 17
+2020-06-15 07:20:17,141 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 07:20:17,785 https://finance.yahoo.com:443 "GET /quote/MSFT HTTP/1.1" 200 None
+2020-06-15 07:20:17,983 Update PYPL in row 18
+2020-06-15 07:20:17,985 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 07:20:18,663 https://finance.yahoo.com:443 "GET /quote/PYPL HTTP/1.1" 200 None
+2020-06-15 07:20:18,924 Update TSLA in row 19
+2020-06-15 07:20:18,926 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 07:20:19,442 https://finance.yahoo.com:443 "GET /quote/TSLA HTTP/1.1" 200 None
+2020-06-15 07:20:19,660 Total Time Stock Update: 26.0sek for19 stocks
+2020-06-15 07:20:19,660 Avg. Time per Stock: 1.39 sek
+2020-06-15 07:20:19,713 Saved to disk...
+2020-06-15 07:20:19,746 AlertTracker update every 5sec...
+2020-06-15 07:20:19,746 Now: 2020-06-15 07:20:19.746329
+2020-06-15 07:20:19,746 LastCheck StockTwits: 2020-06-15 07:19:40.197168
+2020-06-15 07:20:24,776 Update A in row 2
+2020-06-15 07:20:24,779 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 07:20:25,349 https://finance.yahoo.com:443 "GET /quote/A HTTP/1.1" 200 None
+2020-06-15 07:20:25,522 Update AAL in row 3
+2020-06-15 07:20:25,524 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 07:20:26,155 https://finance.yahoo.com:443 "GET /quote/AAL HTTP/1.1" 200 None
+2020-06-15 07:20:26,410 Update AAP in row 4
+2020-06-15 07:20:26,411 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 07:20:27,309 https://finance.yahoo.com:443 "GET /quote/AAP HTTP/1.1" 200 None
+2020-06-15 07:20:27,500 Update AAPL in row 5
+2020-06-15 07:20:27,503 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 07:20:28,216 https://finance.yahoo.com:443 "GET /quote/AAPL HTTP/1.1" 200 None
+2020-06-15 07:20:28,412 Update ABBV in row 6
+2020-06-15 07:20:28,414 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 07:20:29,163 https://finance.yahoo.com:443 "GET /quote/ABBV HTTP/1.1" 200 None
+2020-06-15 07:20:29,329 Update ABC in row 7
+2020-06-15 07:20:29,330 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 07:20:29,827 https://finance.yahoo.com:443 "GET /quote/ABC HTTP/1.1" 200 None
+2020-06-15 07:20:30,087 Update ACY in row 8
+2020-06-15 07:20:30,089 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 07:20:30,699 https://finance.yahoo.com:443 "GET /quote/ACY HTTP/1.1" 200 None
+2020-06-15 07:20:30,902 Update ADP in row 9
+2020-06-15 07:20:30,904 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 07:20:31,619 https://finance.yahoo.com:443 "GET /quote/ADP HTTP/1.1" 200 None
+2020-06-15 07:20:32,008 Update AMZN in row 10
+2020-06-15 07:20:32,009 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 07:20:32,651 https://finance.yahoo.com:443 "GET /quote/AMZN HTTP/1.1" 200 None
+2020-06-15 07:20:32,915 Update ATIF in row 11
+2020-06-15 07:20:32,916 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 07:20:33,518 https://finance.yahoo.com:443 "GET /quote/ATIF HTTP/1.1" 200 None
+2020-06-15 07:20:33,721 Update BAS.DE in row 12
+2020-06-15 07:20:33,722 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 07:20:34,324 https://finance.yahoo.com:443 "GET /quote/BAS.DE HTTP/1.1" 200 None
+2020-06-15 07:20:34,538 Update CAT in row 13
+2020-06-15 07:20:34,540 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 07:20:35,168 https://finance.yahoo.com:443 "GET /quote/CAT HTTP/1.1" 200 None
+2020-06-15 07:20:35,403 Update FB in row 14
+2020-06-15 07:20:35,405 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 07:20:36,032 https://finance.yahoo.com:443 "GET /quote/FB HTTP/1.1" 200 None
+2020-06-15 07:20:36,272 Update GOOGL in row 15
+2020-06-15 07:20:36,273 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 07:20:36,918 https://finance.yahoo.com:443 "GET /quote/GOOGL HTTP/1.1" 200 None
+2020-06-15 06:20:36,780 Update IBM in row 16
+2020-06-15 06:20:36,782 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:20:37,607 https://finance.yahoo.com:443 "GET /quote/IBM HTTP/1.1" 200 None
+2020-06-15 06:20:37,908 Update MSFT in row 17
+2020-06-15 06:20:37,910 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:20:38,405 https://finance.yahoo.com:443 "GET /quote/MSFT HTTP/1.1" 200 None
+2020-06-15 06:20:38,626 Update PYPL in row 18
+2020-06-15 06:20:38,627 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:20:39,245 https://finance.yahoo.com:443 "GET /quote/PYPL HTTP/1.1" 200 None
+2020-06-15 06:20:39,508 Update TSLA in row 19
+2020-06-15 06:20:39,510 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:20:40,104 https://finance.yahoo.com:443 "GET /quote/TSLA HTTP/1.1" 200 None
+2020-06-15 06:20:40,320 Total Time Stock Update: 21.0sek for19 stocks
+2020-06-15 06:20:40,321 Avg. Time per Stock: 1.11 sek
+2020-06-15 06:20:40,373 Saved to disk...
+2020-06-15 06:20:40,406 AlertTracker update every 5sec...
+2020-06-15 06:20:40,406 Now: 2020-06-15 06:20:40.406757
+2020-06-15 06:20:40,406 LastCheck StockTwits: 2020-06-15 07:19:40.197168
+2020-06-15 06:20:45,432 Update A in row 2
+2020-06-15 06:20:45,436 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:20:46,081 https://finance.yahoo.com:443 "GET /quote/A HTTP/1.1" 200 None
+2020-06-15 06:20:46,317 Update AAL in row 3
+2020-06-15 06:20:46,319 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:20:47,194 https://finance.yahoo.com:443 "GET /quote/AAL HTTP/1.1" 200 None
+2020-06-15 06:20:47,420 Update AAP in row 4
+2020-06-15 06:20:47,422 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:20:48,066 https://finance.yahoo.com:443 "GET /quote/AAP HTTP/1.1" 200 None
+2020-06-15 06:20:48,402 Update AAPL in row 5
+2020-06-15 06:20:48,404 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:20:49,447 https://finance.yahoo.com:443 "GET /quote/AAPL HTTP/1.1" 200 None
+2020-06-15 06:20:49,680 Update ABBV in row 6
+2020-06-15 06:20:49,681 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:20:50,337 https://finance.yahoo.com:443 "GET /quote/ABBV HTTP/1.1" 200 None
+2020-06-15 06:20:50,595 Update ABC in row 7
+2020-06-15 06:20:50,596 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:20:51,251 https://finance.yahoo.com:443 "GET /quote/ABC HTTP/1.1" 200 None
+2020-06-15 06:20:51,504 Update ACY in row 8
+2020-06-15 06:20:51,506 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:20:52,201 https://finance.yahoo.com:443 "GET /quote/ACY HTTP/1.1" 200 None
+2020-06-15 06:20:52,379 Update ADP in row 9
+2020-06-15 06:20:52,380 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:20:53,005 https://finance.yahoo.com:443 "GET /quote/ADP HTTP/1.1" 200 None
+2020-06-15 06:20:53,245 Update AMZN in row 10
+2020-06-15 06:20:53,247 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:20:54,014 https://finance.yahoo.com:443 "GET /quote/AMZN HTTP/1.1" 200 None
+2020-06-15 06:20:54,256 Update ATIF in row 11
+2020-06-15 06:20:54,258 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:20:54,978 https://finance.yahoo.com:443 "GET /quote/ATIF HTTP/1.1" 200 None
+2020-06-15 06:20:55,195 Update BAS.DE in row 12
+2020-06-15 06:20:55,197 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:20:55,767 https://finance.yahoo.com:443 "GET /quote/BAS.DE HTTP/1.1" 200 None
+2020-06-15 06:20:56,017 Update CAT in row 13
+2020-06-15 06:20:56,019 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:20:56,606 https://finance.yahoo.com:443 "GET /quote/CAT HTTP/1.1" 200 None
+2020-06-15 06:20:56,816 Update FB in row 14
+2020-06-15 06:20:56,818 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:20:57,358 https://finance.yahoo.com:443 "GET /quote/FB HTTP/1.1" 200 None
+2020-06-15 06:20:57,575 Update GOOGL in row 15
+2020-06-15 06:20:57,576 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:20:58,284 https://finance.yahoo.com:443 "GET /quote/GOOGL HTTP/1.1" 200 None
+2020-06-15 06:20:58,771 Update IBM in row 16
+2020-06-15 06:20:58,773 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:20:59,538 https://finance.yahoo.com:443 "GET /quote/IBM HTTP/1.1" 200 None
+2020-06-15 06:20:59,782 Update MSFT in row 17
+2020-06-15 06:20:59,784 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:21:00,261 https://finance.yahoo.com:443 "GET /quote/MSFT HTTP/1.1" 200 None
+2020-06-15 06:21:00,504 Update PYPL in row 18
+2020-06-15 06:21:00,506 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:21:01,033 https://finance.yahoo.com:443 "GET /quote/PYPL HTTP/1.1" 200 None
+2020-06-15 06:21:01,341 Update TSLA in row 19
+2020-06-15 06:21:01,343 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:21:01,950 https://finance.yahoo.com:443 "GET /quote/TSLA HTTP/1.1" 200 None
+2020-06-15 06:21:02,200 Total Time Stock Update: 22.0sek for19 stocks
+2020-06-15 06:21:02,201 Avg. Time per Stock: 1.15 sek
+2020-06-15 06:21:02,257 Saved to disk...
+2020-06-15 06:21:02,290 AlertTracker update every 5sec...
+2020-06-15 06:21:02,291 Now: 2020-06-15 06:21:02.291975
+2020-06-15 06:21:02,291 LastCheck StockTwits: 2020-06-15 07:19:40.197168
+2020-06-15 06:21:07,319 Update A in row 2
+2020-06-15 06:21:07,325 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:21:08,140 https://finance.yahoo.com:443 "GET /quote/A HTTP/1.1" 200 None
+2020-06-15 06:21:08,408 Update AAL in row 3
+2020-06-15 06:21:08,410 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:21:09,152 https://finance.yahoo.com:443 "GET /quote/AAL HTTP/1.1" 200 None
+2020-06-15 06:21:09,406 Update AAP in row 4
+2020-06-15 06:21:09,408 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:21:10,137 https://finance.yahoo.com:443 "GET /quote/AAP HTTP/1.1" 200 None
+2020-06-15 06:21:10,395 Update AAPL in row 5
+2020-06-15 06:21:10,397 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:21:11,124 https://finance.yahoo.com:443 "GET /quote/AAPL HTTP/1.1" 200 None
+2020-06-15 06:21:11,360 Update ABBV in row 6
+2020-06-15 06:21:11,361 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:21:12,068 https://finance.yahoo.com:443 "GET /quote/ABBV HTTP/1.1" 200 None
+2020-06-15 06:21:12,318 Update ABC in row 7
+2020-06-15 06:21:12,320 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:21:13,032 https://finance.yahoo.com:443 "GET /quote/ABC HTTP/1.1" 200 None
+2020-06-15 06:21:13,252 Update ACY in row 8
+2020-06-15 06:21:13,253 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:21:13,746 https://finance.yahoo.com:443 "GET /quote/ACY HTTP/1.1" 200 None
+2020-06-15 06:21:13,913 Update ADP in row 9
+2020-06-15 06:21:13,914 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:21:14,627 https://finance.yahoo.com:443 "GET /quote/ADP HTTP/1.1" 200 None
+2020-06-15 06:21:14,843 Update AMZN in row 10
+2020-06-15 06:21:14,845 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:21:15,593 https://finance.yahoo.com:443 "GET /quote/AMZN HTTP/1.1" 200 None
+2020-06-15 06:21:15,803 Update ATIF in row 11
+2020-06-15 06:21:15,805 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:21:16,316 https://finance.yahoo.com:443 "GET /quote/ATIF HTTP/1.1" 200 None
+2020-06-15 06:21:16,596 Update BAS.DE in row 12
+2020-06-15 06:21:16,598 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:21:17,154 https://finance.yahoo.com:443 "GET /quote/BAS.DE HTTP/1.1" 200 None
+2020-06-15 06:21:17,464 Update CAT in row 13
+2020-06-15 06:21:17,466 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:21:18,022 https://finance.yahoo.com:443 "GET /quote/CAT HTTP/1.1" 200 None
+2020-06-15 06:21:18,262 Update FB in row 14
+2020-06-15 06:21:18,263 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:21:18,766 https://finance.yahoo.com:443 "GET /quote/FB HTTP/1.1" 200 None
+2020-06-15 06:21:19,007 Update GOOGL in row 15
+2020-06-15 06:21:19,009 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:21:19,622 https://finance.yahoo.com:443 "GET /quote/GOOGL HTTP/1.1" 200 None
+2020-06-15 06:21:19,813 Update IBM in row 16
+2020-06-15 06:21:19,815 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:21:20,462 https://finance.yahoo.com:443 "GET /quote/IBM HTTP/1.1" 200 None
+2020-06-15 06:21:20,709 Update MSFT in row 17
+2020-06-15 06:21:20,711 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:21:21,460 https://finance.yahoo.com:443 "GET /quote/MSFT HTTP/1.1" 200 None
+2020-06-15 06:21:21,678 Update PYPL in row 18
+2020-06-15 06:21:21,680 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:21:22,269 https://finance.yahoo.com:443 "GET /quote/PYPL HTTP/1.1" 200 None
+2020-06-15 06:21:22,483 Update TSLA in row 19
+2020-06-15 06:21:22,485 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:21:23,122 https://finance.yahoo.com:443 "GET /quote/TSLA HTTP/1.1" 200 None
+2020-06-15 06:21:23,319 Total Time Stock Update: 21.0sek for19 stocks
+2020-06-15 06:21:23,319 Avg. Time per Stock: 1.11 sek
+2020-06-15 06:21:23,375 Saved to disk...
+2020-06-15 06:21:23,407 AlertTracker update every 5sec...
+2020-06-15 06:21:23,407 Now: 2020-06-15 06:21:23.407746
+2020-06-15 06:21:23,407 LastCheck StockTwits: 2020-06-15 07:19:40.197168
+2020-06-15 06:21:28,427 Update A in row 2
+2020-06-15 06:21:28,430 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:21:29,112 https://finance.yahoo.com:443 "GET /quote/A HTTP/1.1" 200 None
+2020-06-15 06:21:29,357 Update AAL in row 3
+2020-06-15 06:21:29,359 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:21:29,937 https://finance.yahoo.com:443 "GET /quote/AAL HTTP/1.1" 200 None
+2020-06-15 06:21:30,191 Update AAP in row 4
+2020-06-15 06:21:30,192 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:21:30,990 https://finance.yahoo.com:443 "GET /quote/AAP HTTP/1.1" 200 None
+2020-06-15 06:21:31,195 Update AAPL in row 5
+2020-06-15 06:21:31,197 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:21:31,724 https://finance.yahoo.com:443 "GET /quote/AAPL HTTP/1.1" 200 None
+2020-06-15 06:21:31,909 Update ABBV in row 6
+2020-06-15 06:21:31,911 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:21:32,507 https://finance.yahoo.com:443 "GET /quote/ABBV HTTP/1.1" 200 None
+2020-06-15 06:21:32,720 Update ABC in row 7
+2020-06-15 06:21:32,722 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:21:33,324 https://finance.yahoo.com:443 "GET /quote/ABC HTTP/1.1" 200 None
+2020-06-15 06:21:33,580 Update ACY in row 8
+2020-06-15 06:21:33,582 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:21:34,339 https://finance.yahoo.com:443 "GET /quote/ACY HTTP/1.1" 200 None
+2020-06-15 06:21:34,572 Update ADP in row 9
+2020-06-15 06:21:34,574 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:21:35,306 https://finance.yahoo.com:443 "GET /quote/ADP HTTP/1.1" 200 None
+2020-06-15 06:21:35,483 Update AMZN in row 10
+2020-06-15 06:21:35,484 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:21:36,086 https://finance.yahoo.com:443 "GET /quote/AMZN HTTP/1.1" 200 None
+2020-06-15 06:21:36,333 Update ATIF in row 11
+2020-06-15 06:21:36,335 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:21:37,038 https://finance.yahoo.com:443 "GET /quote/ATIF HTTP/1.1" 200 None
+2020-06-15 06:21:37,294 Update BAS.DE in row 12
+2020-06-15 06:21:37,295 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:21:37,875 https://finance.yahoo.com:443 "GET /quote/BAS.DE HTTP/1.1" 200 None
+2020-06-15 06:21:38,071 Update CAT in row 13
+2020-06-15 06:21:38,074 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:21:38,832 https://finance.yahoo.com:443 "GET /quote/CAT HTTP/1.1" 200 None
+2020-06-15 06:21:39,059 Update FB in row 14
+2020-06-15 06:21:39,061 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:21:39,821 https://finance.yahoo.com:443 "GET /quote/FB HTTP/1.1" 200 None
+2020-06-15 06:21:40,007 Update GOOGL in row 15
+2020-06-15 06:21:40,009 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:21:40,846 https://finance.yahoo.com:443 "GET /quote/GOOGL HTTP/1.1" 200 None
+2020-06-15 06:21:41,031 Update IBM in row 16
+2020-06-15 06:21:41,033 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:21:41,499 https://finance.yahoo.com:443 "GET /quote/IBM HTTP/1.1" 200 None
+2020-06-15 06:21:41,751 Update MSFT in row 17
+2020-06-15 06:21:41,752 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:21:42,267 https://finance.yahoo.com:443 "GET /quote/MSFT HTTP/1.1" 200 None
+2020-06-15 06:21:42,564 Update PYPL in row 18
+2020-06-15 06:21:42,566 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:21:43,320 https://finance.yahoo.com:443 "GET /quote/PYPL HTTP/1.1" 200 None
+2020-06-15 06:21:43,527 Update TSLA in row 19
+2020-06-15 06:21:43,528 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:21:44,018 https://finance.yahoo.com:443 "GET /quote/TSLA HTTP/1.1" 200 None
+2020-06-15 06:21:44,265 Total Time Stock Update: 21.0sek for19 stocks
+2020-06-15 06:21:44,265 Avg. Time per Stock: 1.1 sek
+2020-06-15 06:21:44,319 Saved to disk...
+2020-06-15 06:21:44,355 AlertTracker update every 5sec...
+2020-06-15 06:21:44,356 Now: 2020-06-15 06:21:44.356217
+2020-06-15 06:21:44,356 LastCheck StockTwits: 2020-06-15 07:19:40.197168
+2020-06-15 06:21:49,390 Update A in row 2
+2020-06-15 06:21:49,393 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:21:50,015 https://finance.yahoo.com:443 "GET /quote/A HTTP/1.1" 200 None
+2020-06-15 06:21:50,267 Update AAL in row 3
+2020-06-15 06:21:50,269 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:21:50,933 https://finance.yahoo.com:443 "GET /quote/AAL HTTP/1.1" 200 None
+2020-06-15 06:21:51,191 Update AAP in row 4
+2020-06-15 06:21:51,193 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:21:51,675 https://finance.yahoo.com:443 "GET /quote/AAP HTTP/1.1" 200 None
+2020-06-15 06:21:51,840 Update AAPL in row 5
+2020-06-15 06:21:51,841 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:21:52,370 https://finance.yahoo.com:443 "GET /quote/AAPL HTTP/1.1" 200 None
+2020-06-15 06:21:52,604 Update ABBV in row 6
+2020-06-15 06:21:52,606 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:21:53,271 https://finance.yahoo.com:443 "GET /quote/ABBV HTTP/1.1" 200 None
+2020-06-15 06:21:53,460 Update ABC in row 7
+2020-06-15 06:21:53,462 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:21:54,247 https://finance.yahoo.com:443 "GET /quote/ABC HTTP/1.1" 200 None
+2020-06-15 06:21:54,468 Update ACY in row 8
+2020-06-15 06:21:54,469 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:21:55,189 https://finance.yahoo.com:443 "GET /quote/ACY HTTP/1.1" 200 None
+2020-06-15 06:21:55,425 Update ADP in row 9
+2020-06-15 06:21:55,427 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:21:56,305 https://finance.yahoo.com:443 "GET /quote/ADP HTTP/1.1" 200 None
+2020-06-15 06:21:56,542 Update AMZN in row 10
+2020-06-15 06:21:56,544 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:21:57,317 https://finance.yahoo.com:443 "GET /quote/AMZN HTTP/1.1" 200 None
+2020-06-15 06:21:57,582 Update ATIF in row 11
+2020-06-15 06:21:57,583 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:21:58,180 https://finance.yahoo.com:443 "GET /quote/ATIF HTTP/1.1" 200 None
+2020-06-15 06:21:58,366 Update BAS.DE in row 12
+2020-06-15 06:21:58,368 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:21:59,397 https://finance.yahoo.com:443 "GET /quote/BAS.DE HTTP/1.1" 200 None
+2020-06-15 06:21:59,648 Update CAT in row 13
+2020-06-15 06:21:59,650 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:22:00,344 https://finance.yahoo.com:443 "GET /quote/CAT HTTP/1.1" 200 None
+2020-06-15 06:22:00,546 Update FB in row 14
+2020-06-15 06:22:00,547 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:22:01,314 https://finance.yahoo.com:443 "GET /quote/FB HTTP/1.1" 200 None
+2020-06-15 06:22:01,517 Update GOOGL in row 15
+2020-06-15 06:22:01,519 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:22:02,100 https://finance.yahoo.com:443 "GET /quote/GOOGL HTTP/1.1" 200 None
+2020-06-15 06:22:02,290 Update IBM in row 16
+2020-06-15 06:22:02,291 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:22:02,918 https://finance.yahoo.com:443 "GET /quote/IBM HTTP/1.1" 200 None
+2020-06-15 06:22:03,110 Update MSFT in row 17
+2020-06-15 06:22:03,111 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:22:03,651 https://finance.yahoo.com:443 "GET /quote/MSFT HTTP/1.1" 200 None
+2020-06-15 06:22:03,860 Update PYPL in row 18
+2020-06-15 06:22:03,863 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:22:04,503 https://finance.yahoo.com:443 "GET /quote/PYPL HTTP/1.1" 200 None
+2020-06-15 06:22:04,728 Update TSLA in row 19
+2020-06-15 06:22:04,730 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:22:05,252 https://finance.yahoo.com:443 "GET /quote/TSLA HTTP/1.1" 200 None
+2020-06-15 06:22:05,452 Total Time Stock Update: 21.0sek for19 stocks
+2020-06-15 06:22:05,452 Avg. Time per Stock: 1.11 sek
+2020-06-15 06:22:05,505 Saved to disk...
+2020-06-15 06:22:05,541 AlertTracker update every 5sec...
+2020-06-15 06:22:05,541 Now: 2020-06-15 06:22:05.541186
+2020-06-15 06:22:05,542 LastCheck StockTwits: 2020-06-15 07:19:40.197168
+2020-06-15 06:22:10,563 Update A in row 2
+2020-06-15 06:22:10,566 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:22:11,186 https://finance.yahoo.com:443 "GET /quote/A HTTP/1.1" 200 None
+2020-06-15 06:22:11,416 Update AAL in row 3
+2020-06-15 06:22:11,418 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:22:12,064 https://finance.yahoo.com:443 "GET /quote/AAL HTTP/1.1" 200 None
+2020-06-15 06:22:12,297 Update AAP in row 4
+2020-06-15 06:22:12,298 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:22:13,007 https://finance.yahoo.com:443 "GET /quote/AAP HTTP/1.1" 200 None
+2020-06-15 06:22:13,243 Update AAPL in row 5
+2020-06-15 06:22:13,245 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:22:13,912 https://finance.yahoo.com:443 "GET /quote/AAPL HTTP/1.1" 200 None
+2020-06-15 06:22:14,090 Update ABBV in row 6
+2020-06-15 06:22:14,091 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:22:14,768 https://finance.yahoo.com:443 "GET /quote/ABBV HTTP/1.1" 200 None
+2020-06-15 06:22:14,998 Update ABC in row 7
+2020-06-15 06:22:14,999 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:22:15,653 https://finance.yahoo.com:443 "GET /quote/ABC HTTP/1.1" 200 None
+2020-06-15 06:22:15,973 Update ACY in row 8
+2020-06-15 06:22:15,975 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:22:16,727 https://finance.yahoo.com:443 "GET /quote/ACY HTTP/1.1" 200 None
+2020-06-15 06:22:16,892 Update ADP in row 9
+2020-06-15 06:22:16,894 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:22:17,508 https://finance.yahoo.com:443 "GET /quote/ADP HTTP/1.1" 200 None
+2020-06-15 06:22:17,689 Update AMZN in row 10
+2020-06-15 06:22:17,691 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:22:18,312 https://finance.yahoo.com:443 "GET /quote/AMZN HTTP/1.1" 200 None
+2020-06-15 06:22:18,595 Update ATIF in row 11
+2020-06-15 06:22:18,597 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:22:19,350 https://finance.yahoo.com:443 "GET /quote/ATIF HTTP/1.1" 200 None
+2020-06-15 06:22:19,609 Update BAS.DE in row 12
+2020-06-15 06:22:19,611 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:22:20,218 https://finance.yahoo.com:443 "GET /quote/BAS.DE HTTP/1.1" 200 None
+2020-06-15 06:22:20,470 Update CAT in row 13
+2020-06-15 06:22:20,472 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:22:21,184 https://finance.yahoo.com:443 "GET /quote/CAT HTTP/1.1" 200 None
+2020-06-15 06:22:21,375 Update FB in row 14
+2020-06-15 06:22:21,376 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:22:22,002 https://finance.yahoo.com:443 "GET /quote/FB HTTP/1.1" 200 None
+2020-06-15 06:22:22,184 Update GOOGL in row 15
+2020-06-15 06:22:22,186 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:22:22,779 https://finance.yahoo.com:443 "GET /quote/GOOGL HTTP/1.1" 200 None
+2020-06-15 06:22:22,975 Update IBM in row 16
+2020-06-15 06:22:22,976 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:22:23,627 https://finance.yahoo.com:443 "GET /quote/IBM HTTP/1.1" 200 None
+2020-06-15 06:22:23,913 Update MSFT in row 17
+2020-06-15 06:22:23,914 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:22:24,424 https://finance.yahoo.com:443 "GET /quote/MSFT HTTP/1.1" 200 None
+2020-06-15 06:22:24,664 Update PYPL in row 18
+2020-06-15 06:22:24,665 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:22:25,306 https://finance.yahoo.com:443 "GET /quote/PYPL HTTP/1.1" 200 None
+2020-06-15 06:22:25,533 Update TSLA in row 19
+2020-06-15 06:22:25,534 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:22:26,347 https://finance.yahoo.com:443 "GET /quote/TSLA HTTP/1.1" 200 None
+2020-06-15 06:22:26,532 Total Time Stock Update: 21.0sek for19 stocks
+2020-06-15 06:22:26,532 Avg. Time per Stock: 1.11 sek
+2020-06-15 06:22:26,583 Saved to disk...
+2020-06-15 06:22:26,619 AlertTracker update every 5sec...
+2020-06-15 06:22:26,619 Now: 2020-06-15 06:22:26.619428
+2020-06-15 06:22:26,619 LastCheck StockTwits: 2020-06-15 07:19:40.197168
+2020-06-15 06:22:31,656 Update A in row 2
+2020-06-15 06:22:31,660 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:22:32,405 https://finance.yahoo.com:443 "GET /quote/A HTTP/1.1" 200 None
+2020-06-15 06:22:32,626 Update AAL in row 3
+2020-06-15 06:22:32,627 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:22:33,234 https://finance.yahoo.com:443 "GET /quote/AAL HTTP/1.1" 200 None
+2020-06-15 06:22:33,459 Update AAP in row 4
+2020-06-15 06:22:33,461 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:22:34,168 https://finance.yahoo.com:443 "GET /quote/AAP HTTP/1.1" 200 None
+2020-06-15 06:22:34,370 Update AAPL in row 5
+2020-06-15 06:22:34,372 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:22:34,991 https://finance.yahoo.com:443 "GET /quote/AAPL HTTP/1.1" 200 None
+2020-06-15 06:22:35,250 Update ABBV in row 6
+2020-06-15 06:22:35,251 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:22:35,876 https://finance.yahoo.com:443 "GET /quote/ABBV HTTP/1.1" 200 None
+2020-06-15 06:22:36,084 Update ABC in row 7
+2020-06-15 06:22:36,085 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:22:36,568 https://finance.yahoo.com:443 "GET /quote/ABC HTTP/1.1" 200 None
+2020-06-15 06:22:36,771 Update ACY in row 8
+2020-06-15 06:22:36,773 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:22:37,572 https://finance.yahoo.com:443 "GET /quote/ACY HTTP/1.1" 200 None
+2020-06-15 06:22:37,793 Update ADP in row 9
+2020-06-15 06:22:37,795 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:22:38,446 https://finance.yahoo.com:443 "GET /quote/ADP HTTP/1.1" 200 None
+2020-06-15 06:22:38,709 Update AMZN in row 10
+2020-06-15 06:22:38,711 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:22:39,194 https://finance.yahoo.com:443 "GET /quote/AMZN HTTP/1.1" 200 None
+2020-06-15 06:22:39,494 Update ATIF in row 11
+2020-06-15 06:22:39,495 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:22:40,202 https://finance.yahoo.com:443 "GET /quote/ATIF HTTP/1.1" 200 None
+2020-06-15 06:22:40,433 Update BAS.DE in row 12
+2020-06-15 06:22:40,434 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:22:41,094 https://finance.yahoo.com:443 "GET /quote/BAS.DE HTTP/1.1" 200 None
+2020-06-15 06:22:41,348 Update CAT in row 13
+2020-06-15 06:22:41,350 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:22:41,963 https://finance.yahoo.com:443 "GET /quote/CAT HTTP/1.1" 200 None
+2020-06-15 06:22:42,168 Update FB in row 14
+2020-06-15 06:22:42,169 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:22:42,658 https://finance.yahoo.com:443 "GET /quote/FB HTTP/1.1" 200 None
+2020-06-15 06:22:42,907 Update GOOGL in row 15
+2020-06-15 06:22:42,909 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:22:43,498 https://finance.yahoo.com:443 "GET /quote/GOOGL HTTP/1.1" 200 None
+2020-06-15 06:22:43,735 Update IBM in row 16
+2020-06-15 06:22:43,737 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:22:44,357 https://finance.yahoo.com:443 "GET /quote/IBM HTTP/1.1" 200 None
+2020-06-15 06:22:44,596 Update MSFT in row 17
+2020-06-15 06:22:44,598 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:22:45,093 https://finance.yahoo.com:443 "GET /quote/MSFT HTTP/1.1" 200 None
+2020-06-15 06:22:45,288 Update PYPL in row 18
+2020-06-15 06:22:45,290 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:22:46,050 https://finance.yahoo.com:443 "GET /quote/PYPL HTTP/1.1" 200 None
+2020-06-15 06:22:46,245 Update TSLA in row 19
+2020-06-15 06:22:46,247 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:22:46,822 https://finance.yahoo.com:443 "GET /quote/TSLA HTTP/1.1" 200 None
+2020-06-15 06:22:47,062 Total Time Stock Update: 20.0sek for19 stocks
+2020-06-15 06:22:47,062 Avg. Time per Stock: 1.08 sek
+2020-06-15 06:22:47,115 Saved to disk...
+2020-06-15 06:22:47,149 AlertTracker update every 5sec...
+2020-06-15 06:22:47,149 Now: 2020-06-15 06:22:47.149061
+2020-06-15 06:22:47,150 LastCheck StockTwits: 2020-06-15 07:19:40.197168
+2020-06-15 06:22:52,181 Update A in row 2
+2020-06-15 06:22:52,184 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:22:52,858 https://finance.yahoo.com:443 "GET /quote/A HTTP/1.1" 200 None
+2020-06-15 06:22:53,053 Update AAL in row 3
+2020-06-15 06:22:53,055 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:22:53,656 https://finance.yahoo.com:443 "GET /quote/AAL HTTP/1.1" 200 None
+2020-06-15 06:22:53,827 Update AAP in row 4
+2020-06-15 06:22:53,829 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:22:54,511 https://finance.yahoo.com:443 "GET /quote/AAP HTTP/1.1" 200 None
+2020-06-15 06:22:54,762 Update AAPL in row 5
+2020-06-15 06:22:54,764 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:22:55,399 https://finance.yahoo.com:443 "GET /quote/AAPL HTTP/1.1" 200 None
+2020-06-15 06:22:55,606 Update ABBV in row 6
+2020-06-15 06:22:55,608 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:22:56,185 https://finance.yahoo.com:443 "GET /quote/ABBV HTTP/1.1" 200 None
+2020-06-15 06:22:56,387 Update ABC in row 7
+2020-06-15 06:22:56,389 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:22:57,003 https://finance.yahoo.com:443 "GET /quote/ABC HTTP/1.1" 200 None
+2020-06-15 06:22:57,266 Update ACY in row 8
+2020-06-15 06:22:57,268 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:22:57,982 https://finance.yahoo.com:443 "GET /quote/ACY HTTP/1.1" 200 None
+2020-06-15 06:22:58,180 Update ADP in row 9
+2020-06-15 06:22:58,181 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:22:58,840 https://finance.yahoo.com:443 "GET /quote/ADP HTTP/1.1" 200 None
+2020-06-15 06:22:59,019 Update AMZN in row 10
+2020-06-15 06:22:59,021 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:22:59,641 https://finance.yahoo.com:443 "GET /quote/AMZN HTTP/1.1" 200 None
+2020-06-15 06:22:59,865 Update ATIF in row 11
+2020-06-15 06:22:59,866 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:23:00,574 https://finance.yahoo.com:443 "GET /quote/ATIF HTTP/1.1" 200 None
+2020-06-15 06:23:00,736 Update BAS.DE in row 12
+2020-06-15 06:23:00,738 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:23:01,313 https://finance.yahoo.com:443 "GET /quote/BAS.DE HTTP/1.1" 200 None
+2020-06-15 06:23:01,504 Update CAT in row 13
+2020-06-15 06:23:01,506 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:23:02,095 https://finance.yahoo.com:443 "GET /quote/CAT HTTP/1.1" 200 None
+2020-06-15 06:23:02,369 Update FB in row 14
+2020-06-15 06:23:02,371 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:23:02,890 https://finance.yahoo.com:443 "GET /quote/FB HTTP/1.1" 200 None
+2020-06-15 06:23:03,123 Update GOOGL in row 15
+2020-06-15 06:23:03,125 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:23:03,684 https://finance.yahoo.com:443 "GET /quote/GOOGL HTTP/1.1" 200 None
+2020-06-15 06:23:03,885 Update IBM in row 16
+2020-06-15 06:23:03,886 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:23:04,456 https://finance.yahoo.com:443 "GET /quote/IBM HTTP/1.1" 200 None
+2020-06-15 06:23:04,630 Update MSFT in row 17
+2020-06-15 06:23:04,631 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:23:05,229 https://finance.yahoo.com:443 "GET /quote/MSFT HTTP/1.1" 200 None
+2020-06-15 06:23:05,475 Update PYPL in row 18
+2020-06-15 06:23:05,476 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:23:06,137 https://finance.yahoo.com:443 "GET /quote/PYPL HTTP/1.1" 200 None
+2020-06-15 06:23:06,338 Update TSLA in row 19
+2020-06-15 06:23:06,340 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:23:06,977 https://finance.yahoo.com:443 "GET /quote/TSLA HTTP/1.1" 200 None
+2020-06-15 06:23:07,165 Total Time Stock Update: 20.0sek for19 stocks
+2020-06-15 06:23:07,165 Avg. Time per Stock: 1.06 sek
+2020-06-15 06:23:07,216 Saved to disk...
+2020-06-15 06:23:07,252 AlertTracker update every 5sec...
+2020-06-15 06:23:07,253 Now: 2020-06-15 06:23:07.252909
+2020-06-15 06:23:07,253 LastCheck StockTwits: 2020-06-15 07:19:40.197168
+2020-06-15 06:23:12,273 Update A in row 2
+2020-06-15 06:23:12,276 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:23:12,995 https://finance.yahoo.com:443 "GET /quote/A HTTP/1.1" 200 None
+2020-06-15 06:23:13,248 Update AAL in row 3
+2020-06-15 06:23:13,250 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:23:13,938 https://finance.yahoo.com:443 "GET /quote/AAL HTTP/1.1" 200 None
+2020-06-15 06:23:14,173 Update AAP in row 4
+2020-06-15 06:23:14,174 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:23:14,907 https://finance.yahoo.com:443 "GET /quote/AAP HTTP/1.1" 200 None
+2020-06-15 06:23:15,096 Update AAPL in row 5
+2020-06-15 06:23:15,098 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:23:15,780 https://finance.yahoo.com:443 "GET /quote/AAPL HTTP/1.1" 200 None
+2020-06-15 06:23:16,002 Update ABBV in row 6
+2020-06-15 06:23:16,004 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:23:16,713 https://finance.yahoo.com:443 "GET /quote/ABBV HTTP/1.1" 200 None
+2020-06-15 06:23:16,888 Update ABC in row 7
+2020-06-15 06:23:16,890 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:23:17,671 https://finance.yahoo.com:443 "GET /quote/ABC HTTP/1.1" 200 None
+2020-06-15 06:23:17,841 Update ACY in row 8
+2020-06-15 06:23:17,843 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:23:18,650 https://finance.yahoo.com:443 "GET /quote/ACY HTTP/1.1" 200 None
+2020-06-15 06:23:18,841 Update ADP in row 9
+2020-06-15 06:23:18,843 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:23:19,562 https://finance.yahoo.com:443 "GET /quote/ADP HTTP/1.1" 200 None
+2020-06-15 06:23:19,736 Update AMZN in row 10
+2020-06-15 06:23:19,738 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:23:20,369 https://finance.yahoo.com:443 "GET /quote/AMZN HTTP/1.1" 200 None
+2020-06-15 06:23:20,544 Update ATIF in row 11
+2020-06-15 06:23:20,547 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:23:21,017 https://finance.yahoo.com:443 "GET /quote/ATIF HTTP/1.1" 200 None
+2020-06-15 06:23:21,228 Update BAS.DE in row 12
+2020-06-15 06:23:21,230 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:23:21,850 https://finance.yahoo.com:443 "GET /quote/BAS.DE HTTP/1.1" 200 None
+2020-06-15 06:23:22,118 Update CAT in row 13
+2020-06-15 06:23:22,120 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:23:22,707 https://finance.yahoo.com:443 "GET /quote/CAT HTTP/1.1" 200 None
+2020-06-15 06:23:22,933 Update FB in row 14
+2020-06-15 06:23:22,935 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:23:23,427 https://finance.yahoo.com:443 "GET /quote/FB HTTP/1.1" 200 None
+2020-06-15 06:23:23,668 Update GOOGL in row 15
+2020-06-15 06:23:23,670 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:23:24,449 https://finance.yahoo.com:443 "GET /quote/GOOGL HTTP/1.1" 200 None
+2020-06-15 06:23:24,694 Update IBM in row 16
+2020-06-15 06:23:24,696 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:23:25,364 https://finance.yahoo.com:443 "GET /quote/IBM HTTP/1.1" 200 None
+2020-06-15 06:23:25,593 Update MSFT in row 17
+2020-06-15 06:23:25,594 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:23:26,233 https://finance.yahoo.com:443 "GET /quote/MSFT HTTP/1.1" 200 None
+2020-06-15 06:23:26,484 Update PYPL in row 18
+2020-06-15 06:23:26,486 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:23:27,209 https://finance.yahoo.com:443 "GET /quote/PYPL HTTP/1.1" 200 None
+2020-06-15 06:23:27,392 Update TSLA in row 19
+2020-06-15 06:23:27,393 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:23:28,001 https://finance.yahoo.com:443 "GET /quote/TSLA HTTP/1.1" 200 None
+2020-06-15 06:23:28,178 Total Time Stock Update: 21.0sek for19 stocks
+2020-06-15 06:23:28,178 Avg. Time per Stock: 1.1 sek
+2020-06-15 06:23:28,230 Saved to disk...
+2020-06-15 06:23:28,265 AlertTracker update every 5sec...
+2020-06-15 06:23:28,265 Now: 2020-06-15 06:23:28.265714
+2020-06-15 06:23:28,265 LastCheck StockTwits: 2020-06-15 07:19:40.197168
+2020-06-15 06:23:33,288 Update A in row 2
+2020-06-15 06:23:33,292 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:23:34,026 https://finance.yahoo.com:443 "GET /quote/A HTTP/1.1" 200 None
+2020-06-15 06:23:34,326 Update AAL in row 3
+2020-06-15 06:23:34,328 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:23:35,029 https://finance.yahoo.com:443 "GET /quote/AAL HTTP/1.1" 200 None
+2020-06-15 06:23:35,320 Update AAP in row 4
+2020-06-15 06:23:35,322 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:23:36,315 https://finance.yahoo.com:443 "GET /quote/AAP HTTP/1.1" 200 None
+2020-06-15 06:23:36,612 Update AAPL in row 5
+2020-06-15 06:23:36,614 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:23:37,196 https://finance.yahoo.com:443 "GET /quote/AAPL HTTP/1.1" 200 None
+2020-06-15 06:23:37,408 Update ABBV in row 6
+2020-06-15 06:23:37,410 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:23:38,138 https://finance.yahoo.com:443 "GET /quote/ABBV HTTP/1.1" 200 None
+2020-06-15 06:23:38,414 Update ABC in row 7
+2020-06-15 06:23:38,415 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:23:39,084 https://finance.yahoo.com:443 "GET /quote/ABC HTTP/1.1" 200 None
+2020-06-15 06:23:39,310 Update ACY in row 8
+2020-06-15 06:23:39,312 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:23:40,220 https://finance.yahoo.com:443 "GET /quote/ACY HTTP/1.1" 200 None
+2020-06-15 06:23:40,473 Update ADP in row 9
+2020-06-15 06:23:40,474 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:23:41,139 https://finance.yahoo.com:443 "GET /quote/ADP HTTP/1.1" 200 None
+2020-06-15 06:23:41,421 Update AMZN in row 10
+2020-06-15 06:23:41,423 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:23:42,034 https://finance.yahoo.com:443 "GET /quote/AMZN HTTP/1.1" 200 None
+2020-06-15 06:23:42,199 Update ATIF in row 11
+2020-06-15 06:23:42,201 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:23:42,822 https://finance.yahoo.com:443 "GET /quote/ATIF HTTP/1.1" 200 None
+2020-06-15 06:23:43,089 Update BAS.DE in row 12
+2020-06-15 06:23:43,091 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:23:43,839 https://finance.yahoo.com:443 "GET /quote/BAS.DE HTTP/1.1" 200 None
+2020-06-15 06:23:44,138 Update CAT in row 13
+2020-06-15 06:23:44,140 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:23:44,647 https://finance.yahoo.com:443 "GET /quote/CAT HTTP/1.1" 200 None
+2020-06-15 06:23:44,856 Update FB in row 14
+2020-06-15 06:23:44,858 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:23:45,365 https://finance.yahoo.com:443 "GET /quote/FB HTTP/1.1" 200 None
+2020-06-15 06:23:45,548 Update GOOGL in row 15
+2020-06-15 06:23:45,550 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:23:46,181 https://finance.yahoo.com:443 "GET /quote/GOOGL HTTP/1.1" 200 None
+2020-06-15 06:23:46,429 Update IBM in row 16
+2020-06-15 06:23:46,431 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:23:47,295 https://finance.yahoo.com:443 "GET /quote/IBM HTTP/1.1" 200 None
+2020-06-15 06:23:47,558 Update MSFT in row 17
+2020-06-15 06:23:47,560 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:23:48,209 https://finance.yahoo.com:443 "GET /quote/MSFT HTTP/1.1" 200 None
+2020-06-15 06:23:48,405 Update PYPL in row 18
+2020-06-15 06:23:48,407 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:23:49,002 https://finance.yahoo.com:443 "GET /quote/PYPL HTTP/1.1" 200 None
+2020-06-15 06:23:49,244 Update TSLA in row 19
+2020-06-15 06:23:49,245 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:23:49,945 https://finance.yahoo.com:443 "GET /quote/TSLA HTTP/1.1" 200 None
+2020-06-15 06:23:50,129 Total Time Stock Update: 22.0sek for19 stocks
+2020-06-15 06:23:50,130 Avg. Time per Stock: 1.15 sek
+2020-06-15 06:23:50,184 Saved to disk...
+2020-06-15 06:23:50,225 AlertTracker update every 5sec...
+2020-06-15 06:23:50,225 Now: 2020-06-15 06:23:50.225351
+2020-06-15 06:23:50,225 LastCheck StockTwits: 2020-06-15 07:19:40.197168
+2020-06-15 06:23:55,235 Update A in row 2
+2020-06-15 06:23:55,238 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:23:55,907 https://finance.yahoo.com:443 "GET /quote/A HTTP/1.1" 200 None
+2020-06-15 06:23:56,133 Update AAL in row 3
+2020-06-15 06:23:56,135 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:23:56,824 https://finance.yahoo.com:443 "GET /quote/AAL HTTP/1.1" 200 None
+2020-06-15 06:23:57,036 Update AAP in row 4
+2020-06-15 06:23:57,039 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:23:57,725 https://finance.yahoo.com:443 "GET /quote/AAP HTTP/1.1" 200 None
+2020-06-15 06:23:58,143 Update AAPL in row 5
+2020-06-15 06:23:58,145 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:23:58,680 https://finance.yahoo.com:443 "GET /quote/AAPL HTTP/1.1" 200 None
+2020-06-15 06:23:58,848 Update ABBV in row 6
+2020-06-15 06:23:58,850 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:23:59,545 https://finance.yahoo.com:443 "GET /quote/ABBV HTTP/1.1" 200 None
+2020-06-15 06:23:59,778 Update ABC in row 7
+2020-06-15 06:23:59,780 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:24:00,488 https://finance.yahoo.com:443 "GET /quote/ABC HTTP/1.1" 200 None
+2020-06-15 06:24:00,689 Update ACY in row 8
+2020-06-15 06:24:00,691 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:24:01,305 https://finance.yahoo.com:443 "GET /quote/ACY HTTP/1.1" 200 None
+2020-06-15 06:24:01,548 Update ADP in row 9
+2020-06-15 06:24:01,550 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:24:02,189 https://finance.yahoo.com:443 "GET /quote/ADP HTTP/1.1" 200 None
+2020-06-15 06:24:02,366 Update AMZN in row 10
+2020-06-15 06:24:02,368 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:24:02,913 https://finance.yahoo.com:443 "GET /quote/AMZN HTTP/1.1" 200 None
+2020-06-15 06:24:03,111 Update ATIF in row 11
+2020-06-15 06:24:03,113 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:24:03,746 https://finance.yahoo.com:443 "GET /quote/ATIF HTTP/1.1" 200 None
+2020-06-15 06:24:04,001 Update BAS.DE in row 12
+2020-06-15 06:24:04,003 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:24:04,736 https://finance.yahoo.com:443 "GET /quote/BAS.DE HTTP/1.1" 200 None
+2020-06-15 06:24:04,902 Update CAT in row 13
+2020-06-15 06:24:04,904 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:24:05,664 https://finance.yahoo.com:443 "GET /quote/CAT HTTP/1.1" 200 None
+2020-06-15 06:24:05,824 Update FB in row 14
+2020-06-15 06:24:05,826 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:24:06,396 https://finance.yahoo.com:443 "GET /quote/FB HTTP/1.1" 200 None
+2020-06-15 06:24:06,567 Update GOOGL in row 15
+2020-06-15 06:24:06,569 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:24:07,175 https://finance.yahoo.com:443 "GET /quote/GOOGL HTTP/1.1" 200 None
+2020-06-15 06:24:07,362 Update IBM in row 16
+2020-06-15 06:24:07,364 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:24:08,068 https://finance.yahoo.com:443 "GET /quote/IBM HTTP/1.1" 200 None
+2020-06-15 06:24:08,263 Update MSFT in row 17
+2020-06-15 06:24:08,265 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:24:08,795 https://finance.yahoo.com:443 "GET /quote/MSFT HTTP/1.1" 200 None
+2020-06-15 06:24:08,982 Update PYPL in row 18
+2020-06-15 06:24:08,984 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:24:09,678 https://finance.yahoo.com:443 "GET /quote/PYPL HTTP/1.1" 200 None
+2020-06-15 06:24:09,884 Update TSLA in row 19
+2020-06-15 06:24:09,886 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:24:10,588 https://finance.yahoo.com:443 "GET /quote/TSLA HTTP/1.1" 200 None
+2020-06-15 06:24:10,789 Total Time Stock Update: 21.0sek for19 stocks
+2020-06-15 06:24:10,789 Avg. Time per Stock: 1.08 sek
+2020-06-15 06:24:10,847 Saved to disk...
+2020-06-15 06:24:10,884 AlertTracker update every 5sec...
+2020-06-15 06:24:10,884 Now: 2020-06-15 06:24:10.884970
+2020-06-15 06:24:10,884 LastCheck StockTwits: 2020-06-15 07:19:40.197168
+2020-06-15 06:24:15,915 Update A in row 2
+2020-06-15 06:24:15,918 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:24:16,655 https://finance.yahoo.com:443 "GET /quote/A HTTP/1.1" 200 None
+2020-06-15 06:24:16,828 Update AAL in row 3
+2020-06-15 06:24:16,830 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:24:17,475 https://finance.yahoo.com:443 "GET /quote/AAL HTTP/1.1" 200 None
+2020-06-15 06:24:17,675 Update AAP in row 4
+2020-06-15 06:24:17,677 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:24:18,291 https://finance.yahoo.com:443 "GET /quote/AAP HTTP/1.1" 200 None
+2020-06-15 06:24:18,485 Update AAPL in row 5
+2020-06-15 06:24:18,486 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:24:19,071 https://finance.yahoo.com:443 "GET /quote/AAPL HTTP/1.1" 200 None
+2020-06-15 06:24:19,260 Update ABBV in row 6
+2020-06-15 06:24:19,262 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:24:19,869 https://finance.yahoo.com:443 "GET /quote/ABBV HTTP/1.1" 200 None
+2020-06-15 06:24:20,173 Update ABC in row 7
+2020-06-15 06:24:20,175 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:24:20,758 https://finance.yahoo.com:443 "GET /quote/ABC HTTP/1.1" 200 None
+2020-06-15 06:24:21,006 Update ACY in row 8
+2020-06-15 06:24:21,008 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:24:21,530 https://finance.yahoo.com:443 "GET /quote/ACY HTTP/1.1" 200 None
+2020-06-15 06:24:21,799 Update ADP in row 9
+2020-06-15 06:24:21,800 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:24:22,383 https://finance.yahoo.com:443 "GET /quote/ADP HTTP/1.1" 200 None
+2020-06-15 06:24:22,644 Update AMZN in row 10
+2020-06-15 06:24:22,646 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:24:23,326 https://finance.yahoo.com:443 "GET /quote/AMZN HTTP/1.1" 200 None
+2020-06-15 06:24:23,578 Update ATIF in row 11
+2020-06-15 06:24:23,579 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:24:24,186 https://finance.yahoo.com:443 "GET /quote/ATIF HTTP/1.1" 200 None
+2020-06-15 06:24:24,388 Update BAS.DE in row 12
+2020-06-15 06:24:24,390 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:24:25,070 https://finance.yahoo.com:443 "GET /quote/BAS.DE HTTP/1.1" 200 None
+2020-06-15 06:24:25,252 Update CAT in row 13
+2020-06-15 06:24:25,254 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:24:25,892 https://finance.yahoo.com:443 "GET /quote/CAT HTTP/1.1" 200 None
+2020-06-15 06:24:26,209 Update FB in row 14
+2020-06-15 06:24:26,211 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:24:26,886 https://finance.yahoo.com:443 "GET /quote/FB HTTP/1.1" 200 None
+2020-06-15 06:24:27,117 Update GOOGL in row 15
+2020-06-15 06:24:27,118 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:24:27,881 https://finance.yahoo.com:443 "GET /quote/GOOGL HTTP/1.1" 200 None
+2020-06-15 06:24:28,084 Update IBM in row 16
+2020-06-15 06:24:28,086 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:24:28,698 https://finance.yahoo.com:443 "GET /quote/IBM HTTP/1.1" 200 None
+2020-06-15 06:24:28,899 Update MSFT in row 17
+2020-06-15 06:24:28,900 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:24:29,421 https://finance.yahoo.com:443 "GET /quote/MSFT HTTP/1.1" 200 None
+2020-06-15 06:24:29,664 Update PYPL in row 18
+2020-06-15 06:24:29,666 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:24:30,363 https://finance.yahoo.com:443 "GET /quote/PYPL HTTP/1.1" 200 None
+2020-06-15 06:24:30,764 Update TSLA in row 19
+2020-06-15 06:24:30,766 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:24:31,495 https://finance.yahoo.com:443 "GET /quote/TSLA HTTP/1.1" 200 None
+2020-06-15 06:24:31,747 Total Time Stock Update: 21.0sek for19 stocks
+2020-06-15 06:24:31,747 Avg. Time per Stock: 1.1 sek
+2020-06-15 06:24:31,799 Saved to disk...
+2020-06-15 06:24:31,833 AlertTracker update every 5sec...
+2020-06-15 06:24:31,833 Now: 2020-06-15 06:24:31.833927
+2020-06-15 06:24:31,834 LastCheck StockTwits: 2020-06-15 07:19:40.197168
+2020-06-15 06:24:36,846 Update A in row 2
+2020-06-15 06:24:36,847 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:24:37,526 https://finance.yahoo.com:443 "GET /quote/A HTTP/1.1" 200 None
+2020-06-15 06:24:37,726 Update AAL in row 3
+2020-06-15 06:24:37,728 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:24:38,425 https://finance.yahoo.com:443 "GET /quote/AAL HTTP/1.1" 200 None
+2020-06-15 06:24:38,647 Update AAP in row 4
+2020-06-15 06:24:38,648 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:24:39,236 https://finance.yahoo.com:443 "GET /quote/AAP HTTP/1.1" 200 None
+2020-06-15 06:24:39,495 Update AAPL in row 5
+2020-06-15 06:24:39,497 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:24:40,018 https://finance.yahoo.com:443 "GET /quote/AAPL HTTP/1.1" 200 None
+2020-06-15 06:24:40,219 Update ABBV in row 6
+2020-06-15 06:24:40,220 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:24:40,827 https://finance.yahoo.com:443 "GET /quote/ABBV HTTP/1.1" 200 None
+2020-06-15 06:24:41,029 Update ABC in row 7
+2020-06-15 06:24:41,031 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:24:41,638 https://finance.yahoo.com:443 "GET /quote/ABC HTTP/1.1" 200 None
+2020-06-15 06:24:41,818 Update ACY in row 8
+2020-06-15 06:24:41,820 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:24:42,549 https://finance.yahoo.com:443 "GET /quote/ACY HTTP/1.1" 200 None
+2020-06-15 06:24:42,790 Update ADP in row 9
+2020-06-15 06:24:42,792 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:24:43,433 https://finance.yahoo.com:443 "GET /quote/ADP HTTP/1.1" 200 None
+2020-06-15 06:24:43,675 Update AMZN in row 10
+2020-06-15 06:24:43,677 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:24:44,399 https://finance.yahoo.com:443 "GET /quote/AMZN HTTP/1.1" 200 None
+2020-06-15 06:24:44,638 Update ATIF in row 11
+2020-06-15 06:24:44,639 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:24:45,223 https://finance.yahoo.com:443 "GET /quote/ATIF HTTP/1.1" 200 None
+2020-06-15 06:24:45,412 Update BAS.DE in row 12
+2020-06-15 06:24:45,414 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:24:46,012 https://finance.yahoo.com:443 "GET /quote/BAS.DE HTTP/1.1" 200 None
+2020-06-15 06:24:46,210 Update CAT in row 13
+2020-06-15 06:24:46,211 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:24:46,821 https://finance.yahoo.com:443 "GET /quote/CAT HTTP/1.1" 200 None
+2020-06-15 06:24:47,071 Update FB in row 14
+2020-06-15 06:24:47,073 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:24:47,571 https://finance.yahoo.com:443 "GET /quote/FB HTTP/1.1" 200 None
+2020-06-15 06:24:47,818 Update GOOGL in row 15
+2020-06-15 06:24:47,820 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:24:48,543 https://finance.yahoo.com:443 "GET /quote/GOOGL HTTP/1.1" 200 None
+2020-06-15 06:24:48,797 Update IBM in row 16
+2020-06-15 06:24:48,798 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:24:49,319 https://finance.yahoo.com:443 "GET /quote/IBM HTTP/1.1" 200 None
+2020-06-15 06:24:49,504 Update MSFT in row 17
+2020-06-15 06:24:49,506 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:24:50,016 https://finance.yahoo.com:443 "GET /quote/MSFT HTTP/1.1" 200 None
+2020-06-15 06:24:50,225 Update PYPL in row 18
+2020-06-15 06:24:50,226 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:24:50,833 https://finance.yahoo.com:443 "GET /quote/PYPL HTTP/1.1" 200 None
+2020-06-15 06:24:51,123 Update TSLA in row 19
+2020-06-15 06:24:51,125 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:24:51,629 https://finance.yahoo.com:443 "GET /quote/TSLA HTTP/1.1" 200 None
+2020-06-15 06:24:51,821 Total Time Stock Update: 20.0sek for19 stocks
+2020-06-15 06:24:51,821 Avg. Time per Stock: 1.05 sek
+2020-06-15 06:24:51,873 Saved to disk...
+2020-06-15 06:24:51,909 AlertTracker update every 5sec...
+2020-06-15 06:24:51,909 Now: 2020-06-15 06:24:51.909116
+2020-06-15 06:24:51,909 LastCheck StockTwits: 2020-06-15 07:19:40.197168
+2020-06-15 06:24:56,940 Update A in row 2
+2020-06-15 06:24:56,946 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:24:57,937 https://finance.yahoo.com:443 "GET /quote/A HTTP/1.1" 200 None
+2020-06-15 06:24:58,116 Update AAL in row 3
+2020-06-15 06:24:58,118 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:24:58,695 https://finance.yahoo.com:443 "GET /quote/AAL HTTP/1.1" 200 None
+2020-06-15 06:24:58,993 Update AAP in row 4
+2020-06-15 06:24:58,995 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:24:59,606 https://finance.yahoo.com:443 "GET /quote/AAP HTTP/1.1" 200 None
+2020-06-15 06:24:59,824 Update AAPL in row 5
+2020-06-15 06:24:59,825 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:25:00,478 https://finance.yahoo.com:443 "GET /quote/AAPL HTTP/1.1" 200 None
+2020-06-15 06:25:00,741 Update ABBV in row 6
+2020-06-15 06:25:00,742 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:25:01,734 https://finance.yahoo.com:443 "GET /quote/ABBV HTTP/1.1" 200 None
+2020-06-15 06:25:01,915 Update ABC in row 7
+2020-06-15 06:25:01,917 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:25:02,530 https://finance.yahoo.com:443 "GET /quote/ABC HTTP/1.1" 200 None
+2020-06-15 06:25:02,711 Update ACY in row 8
+2020-06-15 06:25:02,713 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:25:03,438 https://finance.yahoo.com:443 "GET /quote/ACY HTTP/1.1" 200 None
+2020-06-15 06:25:03,641 Update ADP in row 9
+2020-06-15 06:25:03,643 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:25:04,266 https://finance.yahoo.com:443 "GET /quote/ADP HTTP/1.1" 200 None
+2020-06-15 06:25:04,489 Update AMZN in row 10
+2020-06-15 06:25:04,490 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:25:05,116 https://finance.yahoo.com:443 "GET /quote/AMZN HTTP/1.1" 200 None
+2020-06-15 06:25:05,322 Update ATIF in row 11
+2020-06-15 06:25:05,323 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:25:05,946 https://finance.yahoo.com:443 "GET /quote/ATIF HTTP/1.1" 200 None
+2020-06-15 06:25:06,134 Update BAS.DE in row 12
+2020-06-15 06:25:06,136 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:25:06,740 https://finance.yahoo.com:443 "GET /quote/BAS.DE HTTP/1.1" 200 None
+2020-06-15 06:25:06,942 Update CAT in row 13
+2020-06-15 06:25:06,943 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:25:07,747 https://finance.yahoo.com:443 "GET /quote/CAT HTTP/1.1" 200 None
+2020-06-15 06:25:08,178 Update FB in row 14
+2020-06-15 06:25:08,179 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:25:09,629 https://finance.yahoo.com:443 "GET /quote/FB HTTP/1.1" 200 None
+2020-06-15 06:25:09,897 Update GOOGL in row 15
+2020-06-15 06:25:09,899 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:25:10,649 https://finance.yahoo.com:443 "GET /quote/GOOGL HTTP/1.1" 200 None
+2020-06-15 06:25:10,891 Update IBM in row 16
+2020-06-15 06:25:10,892 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:25:11,719 https://finance.yahoo.com:443 "GET /quote/IBM HTTP/1.1" 200 None
+2020-06-15 06:25:11,947 Update MSFT in row 17
+2020-06-15 06:25:11,949 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:25:12,486 https://finance.yahoo.com:443 "GET /quote/MSFT HTTP/1.1" 200 None
+2020-06-15 06:25:12,690 Update PYPL in row 18
+2020-06-15 06:25:12,692 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:25:13,267 https://finance.yahoo.com:443 "GET /quote/PYPL HTTP/1.1" 200 None
+2020-06-15 06:25:13,485 Update TSLA in row 19
+2020-06-15 06:25:13,487 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:25:14,030 https://finance.yahoo.com:443 "GET /quote/TSLA HTTP/1.1" 200 None
+2020-06-15 06:25:14,331 Total Time Stock Update: 22.0sek for19 stocks
+2020-06-15 06:25:14,331 Avg. Time per Stock: 1.18 sek
+2020-06-15 06:25:14,384 Saved to disk...
+2020-06-15 06:25:14,417 AlertTracker update every 5sec...
+2020-06-15 06:25:14,417 Now: 2020-06-15 06:25:14.417425
+2020-06-15 06:25:14,417 LastCheck StockTwits: 2020-06-15 07:19:40.197168
+2020-06-15 06:25:19,447 Update A in row 2
+2020-06-15 06:25:19,452 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:25:20,064 https://finance.yahoo.com:443 "GET /quote/A HTTP/1.1" 200 None
+2020-06-15 06:25:20,294 Update AAL in row 3
+2020-06-15 06:25:20,296 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:25:21,086 https://finance.yahoo.com:443 "GET /quote/AAL HTTP/1.1" 200 None
+2020-06-15 06:25:21,407 Update AAP in row 4
+2020-06-15 06:25:21,408 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:25:22,031 https://finance.yahoo.com:443 "GET /quote/AAP HTTP/1.1" 200 None
+2020-06-15 06:25:22,268 Update AAPL in row 5
+2020-06-15 06:25:22,270 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:25:22,779 https://finance.yahoo.com:443 "GET /quote/AAPL HTTP/1.1" 200 None
+2020-06-15 06:25:22,975 Update ABBV in row 6
+2020-06-15 06:25:22,976 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:25:23,701 https://finance.yahoo.com:443 "GET /quote/ABBV HTTP/1.1" 200 None
+2020-06-15 06:25:23,900 Update ABC in row 7
+2020-06-15 06:25:23,901 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:25:24,409 https://finance.yahoo.com:443 "GET /quote/ABC HTTP/1.1" 200 None
+2020-06-15 06:25:24,569 Update ACY in row 8
+2020-06-15 06:25:24,571 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:25:25,109 https://finance.yahoo.com:443 "GET /quote/ACY HTTP/1.1" 200 None
+2020-06-15 06:25:25,436 Update ADP in row 9
+2020-06-15 06:25:25,438 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:25:25,936 https://finance.yahoo.com:443 "GET /quote/ADP HTTP/1.1" 200 None
+2020-06-15 06:25:26,143 Update AMZN in row 10
+2020-06-15 06:25:26,145 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:25:26,881 https://finance.yahoo.com:443 "GET /quote/AMZN HTTP/1.1" 200 None
+2020-06-15 06:25:27,143 Update ATIF in row 11
+2020-06-15 06:25:27,145 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:25:27,796 https://finance.yahoo.com:443 "GET /quote/ATIF HTTP/1.1" 200 None
+2020-06-15 06:25:27,996 Update BAS.DE in row 12
+2020-06-15 06:25:27,998 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:25:28,730 https://finance.yahoo.com:443 "GET /quote/BAS.DE HTTP/1.1" 200 None
+2020-06-15 06:25:28,930 Update CAT in row 13
+2020-06-15 06:25:28,931 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:25:29,557 https://finance.yahoo.com:443 "GET /quote/CAT HTTP/1.1" 200 None
+2020-06-15 06:25:29,749 Update FB in row 14
+2020-06-15 06:25:29,751 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:25:30,392 https://finance.yahoo.com:443 "GET /quote/FB HTTP/1.1" 200 None
+2020-06-15 06:25:30,622 Update GOOGL in row 15
+2020-06-15 06:25:30,623 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:25:31,214 https://finance.yahoo.com:443 "GET /quote/GOOGL HTTP/1.1" 200 None
+2020-06-15 06:25:31,450 Update IBM in row 16
+2020-06-15 06:25:31,452 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:25:32,051 https://finance.yahoo.com:443 "GET /quote/IBM HTTP/1.1" 200 None
+2020-06-15 06:25:32,274 Update MSFT in row 17
+2020-06-15 06:25:32,275 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:25:32,943 https://finance.yahoo.com:443 "GET /quote/MSFT HTTP/1.1" 200 None
+2020-06-15 06:25:33,200 Update PYPL in row 18
+2020-06-15 06:25:33,201 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:25:33,962 https://finance.yahoo.com:443 "GET /quote/PYPL HTTP/1.1" 200 None
+2020-06-15 06:25:34,216 Update TSLA in row 19
+2020-06-15 06:25:34,218 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:25:34,863 https://finance.yahoo.com:443 "GET /quote/TSLA HTTP/1.1" 200 None
+2020-06-15 06:25:35,123 Total Time Stock Update: 21.0sek for19 stocks
+2020-06-15 06:25:35,124 Avg. Time per Stock: 1.09 sek
+2020-06-15 06:25:35,175 Saved to disk...
+2020-06-15 06:25:35,211 AlertTracker update every 5sec...
+2020-06-15 06:25:35,211 Now: 2020-06-15 06:25:35.211210
+2020-06-15 06:25:35,211 LastCheck StockTwits: 2020-06-15 07:19:40.197168
+2020-06-15 06:25:40,241 Update A in row 2
+2020-06-15 06:25:40,243 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:25:41,131 https://finance.yahoo.com:443 "GET /quote/A HTTP/1.1" 200 None
+2020-06-15 06:25:41,355 Update AAL in row 3
+2020-06-15 06:25:41,357 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:25:42,078 https://finance.yahoo.com:443 "GET /quote/AAL HTTP/1.1" 200 None
+2020-06-15 06:25:42,323 Update AAP in row 4
+2020-06-15 06:25:42,325 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:25:42,927 https://finance.yahoo.com:443 "GET /quote/AAP HTTP/1.1" 200 None
+2020-06-15 06:25:43,180 Update AAPL in row 5
+2020-06-15 06:25:43,182 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:25:43,793 https://finance.yahoo.com:443 "GET /quote/AAPL HTTP/1.1" 200 None
+2020-06-15 06:25:43,997 Update ABBV in row 6
+2020-06-15 06:25:43,999 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:25:44,719 https://finance.yahoo.com:443 "GET /quote/ABBV HTTP/1.1" 200 None
+2020-06-15 06:25:44,966 Update ABC in row 7
+2020-06-15 06:25:44,968 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:25:45,709 https://finance.yahoo.com:443 "GET /quote/ABC HTTP/1.1" 200 None
+2020-06-15 06:25:45,909 Update ACY in row 8
+2020-06-15 06:25:45,911 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:25:46,559 https://finance.yahoo.com:443 "GET /quote/ACY HTTP/1.1" 200 None
+2020-06-15 06:25:46,811 Update ADP in row 9
+2020-06-15 06:25:46,812 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:25:47,412 https://finance.yahoo.com:443 "GET /quote/ADP HTTP/1.1" 200 None
+2020-06-15 06:25:47,620 Update AMZN in row 10
+2020-06-15 06:25:47,622 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:25:48,247 https://finance.yahoo.com:443 "GET /quote/AMZN HTTP/1.1" 200 None
+2020-06-15 06:25:48,449 Update ATIF in row 11
+2020-06-15 06:25:48,450 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:25:49,138 https://finance.yahoo.com:443 "GET /quote/ATIF HTTP/1.1" 200 None
+2020-06-15 06:25:49,339 Update BAS.DE in row 12
+2020-06-15 06:25:49,341 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:25:49,985 https://finance.yahoo.com:443 "GET /quote/BAS.DE HTTP/1.1" 200 None
+2020-06-15 06:25:50,173 Update CAT in row 13
+2020-06-15 06:25:50,175 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:25:50,822 https://finance.yahoo.com:443 "GET /quote/CAT HTTP/1.1" 200 None
+2020-06-15 06:25:51,031 Update FB in row 14
+2020-06-15 06:25:51,033 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:25:51,644 https://finance.yahoo.com:443 "GET /quote/FB HTTP/1.1" 200 None
+2020-06-15 06:25:51,830 Update GOOGL in row 15
+2020-06-15 06:25:51,832 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:25:52,497 https://finance.yahoo.com:443 "GET /quote/GOOGL HTTP/1.1" 200 None
+2020-06-15 06:25:52,755 Update IBM in row 16
+2020-06-15 06:25:52,757 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:25:53,460 https://finance.yahoo.com:443 "GET /quote/IBM HTTP/1.1" 200 None
+2020-06-15 06:25:53,721 Update MSFT in row 17
+2020-06-15 06:25:53,723 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:25:54,218 https://finance.yahoo.com:443 "GET /quote/MSFT HTTP/1.1" 200 None
+2020-06-15 06:25:54,473 Update PYPL in row 18
+2020-06-15 06:25:54,475 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:25:54,957 https://finance.yahoo.com:443 "GET /quote/PYPL HTTP/1.1" 200 None
+2020-06-15 06:25:55,239 Update TSLA in row 19
+2020-06-15 06:25:55,241 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:25:55,799 https://finance.yahoo.com:443 "GET /quote/TSLA HTTP/1.1" 200 None
+2020-06-15 06:25:55,996 Total Time Stock Update: 21.0sek for19 stocks
+2020-06-15 06:25:55,996 Avg. Time per Stock: 1.1 sek
+2020-06-15 06:25:56,049 Saved to disk...
+2020-06-15 06:25:56,082 AlertTracker update every 5sec...
+2020-06-15 06:25:56,082 Now: 2020-06-15 06:25:56.082209
+2020-06-15 06:25:56,082 LastCheck StockTwits: 2020-06-15 07:19:40.197168
+2020-06-15 06:26:01,094 Update A in row 2
+2020-06-15 06:26:01,096 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:26:01,911 https://finance.yahoo.com:443 "GET /quote/A HTTP/1.1" 200 None
+2020-06-15 06:26:02,175 Update AAL in row 3
+2020-06-15 06:26:02,176 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:26:02,844 https://finance.yahoo.com:443 "GET /quote/AAL HTTP/1.1" 200 None
+2020-06-15 06:26:03,082 Update AAP in row 4
+2020-06-15 06:26:03,084 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:26:03,762 https://finance.yahoo.com:443 "GET /quote/AAP HTTP/1.1" 200 None
+2020-06-15 06:26:03,969 Update AAPL in row 5
+2020-06-15 06:26:03,971 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:26:04,472 https://finance.yahoo.com:443 "GET /quote/AAPL HTTP/1.1" 200 None
+2020-06-15 06:26:04,770 Update ABBV in row 6
+2020-06-15 06:26:04,772 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:26:05,540 https://finance.yahoo.com:443 "GET /quote/ABBV HTTP/1.1" 200 None
+2020-06-15 06:26:05,805 Update ABC in row 7
+2020-06-15 06:26:05,806 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:26:06,425 https://finance.yahoo.com:443 "GET /quote/ABC HTTP/1.1" 200 None
+2020-06-15 06:26:06,605 Update ACY in row 8
+2020-06-15 06:26:06,607 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:26:07,871 https://finance.yahoo.com:443 "GET /quote/ACY HTTP/1.1" 200 None
+2020-06-15 06:26:08,053 Update ADP in row 9
+2020-06-15 06:26:08,055 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:26:08,696 https://finance.yahoo.com:443 "GET /quote/ADP HTTP/1.1" 200 None
+2020-06-15 06:26:08,878 Update AMZN in row 10
+2020-06-15 06:26:08,879 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:26:09,530 https://finance.yahoo.com:443 "GET /quote/AMZN HTTP/1.1" 200 None
+2020-06-15 06:26:09,746 Update ATIF in row 11
+2020-06-15 06:26:09,748 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:26:10,450 https://finance.yahoo.com:443 "GET /quote/ATIF HTTP/1.1" 200 None
+2020-06-15 06:26:10,671 Update BAS.DE in row 12
+2020-06-15 06:26:10,673 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:26:11,280 https://finance.yahoo.com:443 "GET /quote/BAS.DE HTTP/1.1" 200 None
+2020-06-15 06:26:11,472 Update CAT in row 13
+2020-06-15 06:26:11,474 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:26:12,114 https://finance.yahoo.com:443 "GET /quote/CAT HTTP/1.1" 200 None
+2020-06-15 06:26:12,319 Update FB in row 14
+2020-06-15 06:26:12,321 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:26:13,164 https://finance.yahoo.com:443 "GET /quote/FB HTTP/1.1" 200 None
+2020-06-15 06:26:13,351 Update GOOGL in row 15
+2020-06-15 06:26:13,353 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:26:14,164 https://finance.yahoo.com:443 "GET /quote/GOOGL HTTP/1.1" 200 None
+2020-06-15 06:26:14,447 Update IBM in row 16
+2020-06-15 06:26:14,448 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:26:14,942 https://finance.yahoo.com:443 "GET /quote/IBM HTTP/1.1" 200 None
+2020-06-15 06:26:15,138 Update MSFT in row 17
+2020-06-15 06:26:15,139 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:26:16,053 https://finance.yahoo.com:443 "GET /quote/MSFT HTTP/1.1" 200 None
+2020-06-15 06:26:16,257 Update PYPL in row 18
+2020-06-15 06:26:16,259 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:26:16,897 https://finance.yahoo.com:443 "GET /quote/PYPL HTTP/1.1" 200 None
+2020-06-15 06:26:17,056 Update TSLA in row 19
+2020-06-15 06:26:17,058 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:26:17,760 https://finance.yahoo.com:443 "GET /quote/TSLA HTTP/1.1" 200 None
+2020-06-15 06:26:18,031 Total Time Stock Update: 22.0sek for19 stocks
+2020-06-15 06:26:18,031 Avg. Time per Stock: 1.16 sek
+2020-06-15 06:26:18,082 Saved to disk...
+2020-06-15 06:26:18,117 AlertTracker update every 5sec...
+2020-06-15 06:26:18,118 Now: 2020-06-15 06:26:18.118685
+2020-06-15 06:26:18,118 LastCheck StockTwits: 2020-06-15 07:19:40.197168
+2020-06-15 06:26:23,149 Update A in row 2
+2020-06-15 06:26:23,155 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:26:23,853 https://finance.yahoo.com:443 "GET /quote/A HTTP/1.1" 200 None
+2020-06-15 06:26:24,076 Update AAL in row 3
+2020-06-15 06:26:24,077 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:26:24,715 https://finance.yahoo.com:443 "GET /quote/AAL HTTP/1.1" 200 None
+2020-06-15 06:26:24,975 Update AAP in row 4
+2020-06-15 06:26:24,977 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:26:25,767 https://finance.yahoo.com:443 "GET /quote/AAP HTTP/1.1" 200 None
+2020-06-15 06:26:25,972 Update AAPL in row 5
+2020-06-15 06:26:25,973 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:26:26,562 https://finance.yahoo.com:443 "GET /quote/AAPL HTTP/1.1" 200 None
+2020-06-15 06:26:26,778 Update ABBV in row 6
+2020-06-15 06:26:26,779 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:26:27,358 https://finance.yahoo.com:443 "GET /quote/ABBV HTTP/1.1" 200 None
+2020-06-15 06:26:27,560 Update ABC in row 7
+2020-06-15 06:26:27,561 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:26:28,471 https://finance.yahoo.com:443 "GET /quote/ABC HTTP/1.1" 200 None
+2020-06-15 06:26:28,663 Update ACY in row 8
+2020-06-15 06:26:28,665 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:26:29,169 https://finance.yahoo.com:443 "GET /quote/ACY HTTP/1.1" 200 None
+2020-06-15 06:26:29,352 Update ADP in row 9
+2020-06-15 06:26:29,353 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:26:29,976 https://finance.yahoo.com:443 "GET /quote/ADP HTTP/1.1" 200 None
+2020-06-15 06:26:30,278 Update AMZN in row 10
+2020-06-15 06:26:30,279 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:26:30,904 https://finance.yahoo.com:443 "GET /quote/AMZN HTTP/1.1" 200 None
+2020-06-15 06:26:31,099 Update ATIF in row 11
+2020-06-15 06:26:31,101 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:26:31,778 https://finance.yahoo.com:443 "GET /quote/ATIF HTTP/1.1" 200 None
+2020-06-15 06:26:32,023 Update BAS.DE in row 12
+2020-06-15 06:26:32,025 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:26:32,644 https://finance.yahoo.com:443 "GET /quote/BAS.DE HTTP/1.1" 200 None
+2020-06-15 06:26:32,896 Update CAT in row 13
+2020-06-15 06:26:32,898 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:26:33,653 https://finance.yahoo.com:443 "GET /quote/CAT HTTP/1.1" 200 None
+2020-06-15 06:26:33,899 Update FB in row 14
+2020-06-15 06:26:33,901 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:26:34,493 https://finance.yahoo.com:443 "GET /quote/FB HTTP/1.1" 200 None
+2020-06-15 06:26:34,758 Update GOOGL in row 15
+2020-06-15 06:26:34,760 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:26:35,780 https://finance.yahoo.com:443 "GET /quote/GOOGL HTTP/1.1" 200 None
+2020-06-15 06:26:36,020 Update IBM in row 16
+2020-06-15 06:26:36,022 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:26:36,601 https://finance.yahoo.com:443 "GET /quote/IBM HTTP/1.1" 200 None
+2020-06-15 06:26:36,808 Update MSFT in row 17
+2020-06-15 06:26:36,810 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:26:37,403 https://finance.yahoo.com:443 "GET /quote/MSFT HTTP/1.1" 200 None
+2020-06-15 06:26:37,591 Update PYPL in row 18
+2020-06-15 06:26:37,593 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:26:38,436 https://finance.yahoo.com:443 "GET /quote/PYPL HTTP/1.1" 200 None
+2020-06-15 06:26:38,710 Update TSLA in row 19
+2020-06-15 06:26:38,712 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:26:39,260 https://finance.yahoo.com:443 "GET /quote/TSLA HTTP/1.1" 200 None
+2020-06-15 06:26:39,538 Total Time Stock Update: 21.0sek for19 stocks
+2020-06-15 06:26:39,538 Avg. Time per Stock: 1.13 sek
+2020-06-15 06:26:39,595 Saved to disk...
+2020-06-15 06:26:39,630 AlertTracker update every 5sec...
+2020-06-15 06:26:39,631 Now: 2020-06-15 06:26:39.631986
+2020-06-15 06:26:39,631 LastCheck StockTwits: 2020-06-15 07:19:40.197168
+2020-06-15 06:26:44,656 Update A in row 2
+2020-06-15 06:26:44,658 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:26:45,289 https://finance.yahoo.com:443 "GET /quote/A HTTP/1.1" 200 None
+2020-06-15 06:26:45,554 Update AAL in row 3
+2020-06-15 06:26:45,556 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:26:46,196 https://finance.yahoo.com:443 "GET /quote/AAL HTTP/1.1" 200 None
+2020-06-15 06:26:46,403 Update AAP in row 4
+2020-06-15 06:26:46,404 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:26:47,085 https://finance.yahoo.com:443 "GET /quote/AAP HTTP/1.1" 200 None
+2020-06-15 06:26:47,390 Update AAPL in row 5
+2020-06-15 06:26:47,392 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:26:47,895 https://finance.yahoo.com:443 "GET /quote/AAPL HTTP/1.1" 200 None
+2020-06-15 06:26:48,087 Update ABBV in row 6
+2020-06-15 06:26:48,088 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:26:48,896 https://finance.yahoo.com:443 "GET /quote/ABBV HTTP/1.1" 200 None
+2020-06-15 06:26:49,095 Update ABC in row 7
+2020-06-15 06:26:49,096 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:26:49,883 https://finance.yahoo.com:443 "GET /quote/ABC HTTP/1.1" 200 None
+2020-06-15 06:26:50,166 Update ACY in row 8
+2020-06-15 06:26:50,168 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:26:50,729 https://finance.yahoo.com:443 "GET /quote/ACY HTTP/1.1" 200 None
+2020-06-15 06:26:50,932 Update ADP in row 9
+2020-06-15 06:26:50,933 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:26:51,581 https://finance.yahoo.com:443 "GET /quote/ADP HTTP/1.1" 200 None
+2020-06-15 06:26:51,805 Update AMZN in row 10
+2020-06-15 06:26:51,807 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:26:52,429 https://finance.yahoo.com:443 "GET /quote/AMZN HTTP/1.1" 200 None
+2020-06-15 06:26:52,681 Update ATIF in row 11
+2020-06-15 06:26:52,683 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:26:53,286 https://finance.yahoo.com:443 "GET /quote/ATIF HTTP/1.1" 200 None
+2020-06-15 06:26:53,510 Update BAS.DE in row 12
+2020-06-15 06:26:53,512 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:26:54,431 https://finance.yahoo.com:443 "GET /quote/BAS.DE HTTP/1.1" 200 None
+2020-06-15 06:26:54,684 Update CAT in row 13
+2020-06-15 06:26:54,686 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:26:55,367 https://finance.yahoo.com:443 "GET /quote/CAT HTTP/1.1" 200 None
+2020-06-15 06:26:55,629 Update FB in row 14
+2020-06-15 06:26:55,631 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:26:56,259 https://finance.yahoo.com:443 "GET /quote/FB HTTP/1.1" 200 None
+2020-06-15 06:26:56,512 Update GOOGL in row 15
+2020-06-15 06:26:56,514 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:26:57,160 https://finance.yahoo.com:443 "GET /quote/GOOGL HTTP/1.1" 200 None
+2020-06-15 06:26:57,414 Update IBM in row 16
+2020-06-15 06:26:57,416 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:26:58,099 https://finance.yahoo.com:443 "GET /quote/IBM HTTP/1.1" 200 None
+2020-06-15 06:26:58,352 Update MSFT in row 17
+2020-06-15 06:26:58,353 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:26:58,998 https://finance.yahoo.com:443 "GET /quote/MSFT HTTP/1.1" 200 None
+2020-06-15 06:26:59,195 Update PYPL in row 18
+2020-06-15 06:26:59,196 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:27:00,026 https://finance.yahoo.com:443 "GET /quote/PYPL HTTP/1.1" 200 None
+2020-06-15 06:27:00,232 Update TSLA in row 19
+2020-06-15 06:27:00,234 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:27:00,745 https://finance.yahoo.com:443 "GET /quote/TSLA HTTP/1.1" 200 None
+2020-06-15 06:27:00,948 Total Time Stock Update: 21.0sek for19 stocks
+2020-06-15 06:27:00,948 Avg. Time per Stock: 1.12 sek
+2020-06-15 06:27:00,998 Saved to disk...
+2020-06-15 06:27:01,031 AlertTracker update every 5sec...
+2020-06-15 06:27:01,031 Now: 2020-06-15 06:27:01.031255
+2020-06-15 06:27:01,032 LastCheck StockTwits: 2020-06-15 07:19:40.197168
+2020-06-15 06:27:06,062 Update A in row 2
+2020-06-15 06:27:06,070 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:27:06,638 https://finance.yahoo.com:443 "GET /quote/A HTTP/1.1" 200 None
+2020-06-15 06:27:06,798 Update AAL in row 3
+2020-06-15 06:27:06,800 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:27:07,366 https://finance.yahoo.com:443 "GET /quote/AAL HTTP/1.1" 200 None
+2020-06-15 06:27:07,600 Update AAP in row 4
+2020-06-15 06:27:07,602 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:27:08,446 https://finance.yahoo.com:443 "GET /quote/AAP HTTP/1.1" 200 None
+2020-06-15 06:27:08,629 Update AAPL in row 5
+2020-06-15 06:27:08,630 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:27:09,303 https://finance.yahoo.com:443 "GET /quote/AAPL HTTP/1.1" 200 None
+2020-06-15 06:27:09,486 Update ABBV in row 6
+2020-06-15 06:27:09,488 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:27:10,159 https://finance.yahoo.com:443 "GET /quote/ABBV HTTP/1.1" 200 None
+2020-06-15 06:27:10,393 Update ABC in row 7
+2020-06-15 06:27:10,395 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:27:10,989 https://finance.yahoo.com:443 "GET /quote/ABC HTTP/1.1" 200 None
+2020-06-15 06:27:11,181 Update ACY in row 8
+2020-06-15 06:27:11,183 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:27:12,014 https://finance.yahoo.com:443 "GET /quote/ACY HTTP/1.1" 200 None
+2020-06-15 06:27:12,204 Update ADP in row 9
+2020-06-15 06:27:12,206 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:27:12,806 https://finance.yahoo.com:443 "GET /quote/ADP HTTP/1.1" 200 None
+2020-06-15 06:27:13,011 Update AMZN in row 10
+2020-06-15 06:27:13,013 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:27:13,625 https://finance.yahoo.com:443 "GET /quote/AMZN HTTP/1.1" 200 None
+2020-06-15 06:27:13,977 Update ATIF in row 11
+2020-06-15 06:27:13,978 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:27:14,567 https://finance.yahoo.com:443 "GET /quote/ATIF HTTP/1.1" 200 None
+2020-06-15 06:27:14,825 Update BAS.DE in row 12
+2020-06-15 06:27:14,827 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:27:15,531 https://finance.yahoo.com:443 "GET /quote/BAS.DE HTTP/1.1" 200 None
+2020-06-15 06:27:15,731 Update CAT in row 13
+2020-06-15 06:27:15,733 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:27:16,343 https://finance.yahoo.com:443 "GET /quote/CAT HTTP/1.1" 200 None
+2020-06-15 06:27:16,573 Update FB in row 14
+2020-06-15 06:27:16,575 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:27:17,050 https://finance.yahoo.com:443 "GET /quote/FB HTTP/1.1" 200 None
+2020-06-15 06:27:17,334 Update GOOGL in row 15
+2020-06-15 06:27:17,336 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:27:18,032 https://finance.yahoo.com:443 "GET /quote/GOOGL HTTP/1.1" 200 None
+2020-06-15 06:27:18,288 Update IBM in row 16
+2020-06-15 06:27:18,290 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:27:18,945 https://finance.yahoo.com:443 "GET /quote/IBM HTTP/1.1" 200 None
+2020-06-15 06:27:19,187 Update MSFT in row 17
+2020-06-15 06:27:19,189 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:27:19,693 https://finance.yahoo.com:443 "GET /quote/MSFT HTTP/1.1" 200 None
+2020-06-15 06:27:19,863 Update PYPL in row 18
+2020-06-15 06:27:19,865 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:27:20,567 https://finance.yahoo.com:443 "GET /quote/PYPL HTTP/1.1" 200 None
+2020-06-15 06:27:20,794 Update TSLA in row 19
+2020-06-15 06:27:20,796 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:27:21,416 https://finance.yahoo.com:443 "GET /quote/TSLA HTTP/1.1" 200 None
+2020-06-15 06:27:21,587 Total Time Stock Update: 21.0sek for19 stocks
+2020-06-15 06:27:21,587 Avg. Time per Stock: 1.08 sek
+2020-06-15 06:27:21,639 Saved to disk...
+2020-06-15 06:27:21,675 AlertTracker update every 5sec...
+2020-06-15 06:27:21,675 Now: 2020-06-15 06:27:21.675076
+2020-06-15 06:27:21,675 LastCheck StockTwits: 2020-06-15 07:19:40.197168
+2020-06-15 06:27:26,690 Update A in row 2
+2020-06-15 06:27:26,693 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:27:27,338 https://finance.yahoo.com:443 "GET /quote/A HTTP/1.1" 200 None
+2020-06-15 06:27:27,553 Update AAL in row 3
+2020-06-15 06:27:27,555 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:27:28,442 https://finance.yahoo.com:443 "GET /quote/AAL HTTP/1.1" 200 None
+2020-06-15 06:27:28,644 Update AAP in row 4
+2020-06-15 06:27:28,646 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:27:29,436 https://finance.yahoo.com:443 "GET /quote/AAP HTTP/1.1" 200 None
+2020-06-15 06:27:29,628 Update AAPL in row 5
+2020-06-15 06:27:29,630 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:27:30,423 https://finance.yahoo.com:443 "GET /quote/AAPL HTTP/1.1" 200 None
+2020-06-15 06:27:30,678 Update ABBV in row 6
+2020-06-15 06:27:30,680 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:27:31,261 https://finance.yahoo.com:443 "GET /quote/ABBV HTTP/1.1" 200 None
+2020-06-15 06:27:31,458 Update ABC in row 7
+2020-06-15 06:27:31,460 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:27:32,326 https://finance.yahoo.com:443 "GET /quote/ABC HTTP/1.1" 200 None
+2020-06-15 06:27:32,563 Update ACY in row 8
+2020-06-15 06:27:32,565 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:27:33,348 https://finance.yahoo.com:443 "GET /quote/ACY HTTP/1.1" 200 None
+2020-06-15 06:27:33,589 Update ADP in row 9
+2020-06-15 06:27:33,591 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:27:34,257 https://finance.yahoo.com:443 "GET /quote/ADP HTTP/1.1" 200 None
+2020-06-15 06:27:34,511 Update AMZN in row 10
+2020-06-15 06:27:34,513 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:27:35,115 https://finance.yahoo.com:443 "GET /quote/AMZN HTTP/1.1" 200 None
+2020-06-15 06:27:35,361 Update ATIF in row 11
+2020-06-15 06:27:35,362 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:27:36,076 https://finance.yahoo.com:443 "GET /quote/ATIF HTTP/1.1" 200 None
+2020-06-15 06:27:36,251 Update BAS.DE in row 12
+2020-06-15 06:27:36,253 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:27:36,714 https://finance.yahoo.com:443 "GET /quote/BAS.DE HTTP/1.1" 200 None
+2020-06-15 06:27:36,887 Update CAT in row 13
+2020-06-15 06:27:36,889 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:27:37,732 https://finance.yahoo.com:443 "GET /quote/CAT HTTP/1.1" 200 None
+2020-06-15 06:27:37,988 Update FB in row 14
+2020-06-15 06:27:37,989 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:27:38,589 https://finance.yahoo.com:443 "GET /quote/FB HTTP/1.1" 200 None
+2020-06-15 06:27:38,793 Update GOOGL in row 15
+2020-06-15 06:27:38,795 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:27:39,409 https://finance.yahoo.com:443 "GET /quote/GOOGL HTTP/1.1" 200 None
+2020-06-15 06:27:39,652 Update IBM in row 16
+2020-06-15 06:27:39,653 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:27:40,317 https://finance.yahoo.com:443 "GET /quote/IBM HTTP/1.1" 200 None
+2020-06-15 06:27:40,519 Update MSFT in row 17
+2020-06-15 06:27:40,521 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:27:41,054 https://finance.yahoo.com:443 "GET /quote/MSFT HTTP/1.1" 200 None
+2020-06-15 06:27:41,305 Update PYPL in row 18
+2020-06-15 06:27:41,307 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:27:42,055 https://finance.yahoo.com:443 "GET /quote/PYPL HTTP/1.1" 200 None
+2020-06-15 06:27:42,262 Update TSLA in row 19
+2020-06-15 06:27:42,264 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:27:42,738 https://finance.yahoo.com:443 "GET /quote/TSLA HTTP/1.1" 200 None
+2020-06-15 06:27:43,002 Total Time Stock Update: 21.0sek for19 stocks
+2020-06-15 06:27:43,002 Avg. Time per Stock: 1.12 sek
+2020-06-15 06:27:43,055 Saved to disk...
+2020-06-15 06:27:43,087 AlertTracker update every 5sec...
+2020-06-15 06:27:43,088 Now: 2020-06-15 06:27:43.088520
+2020-06-15 06:27:43,088 LastCheck StockTwits: 2020-06-15 07:19:40.197168
+2020-06-15 06:27:48,123 Update A in row 2
+2020-06-15 06:27:48,129 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:27:48,800 https://finance.yahoo.com:443 "GET /quote/A HTTP/1.1" 200 None
+2020-06-15 06:27:49,033 Update AAL in row 3
+2020-06-15 06:27:49,035 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:27:49,568 https://finance.yahoo.com:443 "GET /quote/AAL HTTP/1.1" 200 None
+2020-06-15 06:27:49,761 Update AAP in row 4
+2020-06-15 06:27:49,763 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:27:50,372 https://finance.yahoo.com:443 "GET /quote/AAP HTTP/1.1" 200 None
+2020-06-15 06:27:50,623 Update AAPL in row 5
+2020-06-15 06:27:50,625 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:27:51,140 https://finance.yahoo.com:443 "GET /quote/AAPL HTTP/1.1" 200 None
+2020-06-15 06:27:51,344 Update ABBV in row 6
+2020-06-15 06:27:51,346 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:27:51,940 https://finance.yahoo.com:443 "GET /quote/ABBV HTTP/1.1" 200 None
+2020-06-15 06:27:52,136 Update ABC in row 7
+2020-06-15 06:27:52,138 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:27:52,757 https://finance.yahoo.com:443 "GET /quote/ABC HTTP/1.1" 200 None
+2020-06-15 06:27:52,987 Update ACY in row 8
+2020-06-15 06:27:52,989 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:27:53,864 https://finance.yahoo.com:443 "GET /quote/ACY HTTP/1.1" 200 None
+2020-06-15 06:27:54,110 Update ADP in row 9
+2020-06-15 06:27:54,111 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:27:54,847 https://finance.yahoo.com:443 "GET /quote/ADP HTTP/1.1" 200 None
+2020-06-15 06:27:55,097 Update AMZN in row 10
+2020-06-15 06:27:55,099 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:27:55,599 https://finance.yahoo.com:443 "GET /quote/AMZN HTTP/1.1" 200 None
+2020-06-15 06:27:55,767 Update ATIF in row 11
+2020-06-15 06:27:55,769 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:27:56,348 https://finance.yahoo.com:443 "GET /quote/ATIF HTTP/1.1" 200 None
+2020-06-15 06:27:56,559 Update BAS.DE in row 12
+2020-06-15 06:27:56,561 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:27:57,111 https://finance.yahoo.com:443 "GET /quote/BAS.DE HTTP/1.1" 200 None
+2020-06-15 06:27:57,292 Update CAT in row 13
+2020-06-15 06:27:57,294 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:27:58,018 https://finance.yahoo.com:443 "GET /quote/CAT HTTP/1.1" 200 None
+2020-06-15 06:27:58,335 Update FB in row 14
+2020-06-15 06:27:58,337 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:27:58,921 https://finance.yahoo.com:443 "GET /quote/FB HTTP/1.1" 200 None
+2020-06-15 06:27:59,125 Update GOOGL in row 15
+2020-06-15 06:27:59,126 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:27:59,706 https://finance.yahoo.com:443 "GET /quote/GOOGL HTTP/1.1" 200 None
+2020-06-15 06:27:59,951 Update IBM in row 16
+2020-06-15 06:27:59,953 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:28:00,456 https://finance.yahoo.com:443 "GET /quote/IBM HTTP/1.1" 200 None
+2020-06-15 06:28:00,689 Update MSFT in row 17
+2020-06-15 06:28:00,690 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:28:01,248 https://finance.yahoo.com:443 "GET /quote/MSFT HTTP/1.1" 200 None
+2020-06-15 06:28:01,457 Update PYPL in row 18
+2020-06-15 06:28:01,458 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:28:02,106 https://finance.yahoo.com:443 "GET /quote/PYPL HTTP/1.1" 200 None
+2020-06-15 06:28:02,301 Update TSLA in row 19
+2020-06-15 06:28:02,303 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:28:03,119 https://finance.yahoo.com:443 "GET /quote/TSLA HTTP/1.1" 200 None
+2020-06-15 06:28:03,323 Total Time Stock Update: 20.0sek for19 stocks
+2020-06-15 06:28:03,324 Avg. Time per Stock: 1.07 sek
+2020-06-15 06:28:03,376 Saved to disk...
+2020-06-15 06:28:03,411 AlertTracker update every 5sec...
+2020-06-15 06:28:03,411 Now: 2020-06-15 06:28:03.411956
+2020-06-15 06:28:03,411 LastCheck StockTwits: 2020-06-15 07:19:40.197168
+2020-06-15 06:28:08,442 Update A in row 2
+2020-06-15 06:28:08,444 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:28:09,105 https://finance.yahoo.com:443 "GET /quote/A HTTP/1.1" 200 None
+2020-06-15 06:28:09,353 Update AAL in row 3
+2020-06-15 06:28:09,355 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:28:09,949 https://finance.yahoo.com:443 "GET /quote/AAL HTTP/1.1" 200 None
+2020-06-15 06:28:10,194 Update AAP in row 4
+2020-06-15 06:28:10,196 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:28:10,901 https://finance.yahoo.com:443 "GET /quote/AAP HTTP/1.1" 200 None
+2020-06-15 06:28:11,152 Update AAPL in row 5
+2020-06-15 06:28:11,154 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:28:11,893 https://finance.yahoo.com:443 "GET /quote/AAPL HTTP/1.1" 200 None
+2020-06-15 06:28:12,090 Update ABBV in row 6
+2020-06-15 06:28:12,092 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:28:12,679 https://finance.yahoo.com:443 "GET /quote/ABBV HTTP/1.1" 200 None
+2020-06-15 06:28:12,867 Update ABC in row 7
+2020-06-15 06:28:12,869 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:28:13,579 https://finance.yahoo.com:443 "GET /quote/ABC HTTP/1.1" 200 None
+2020-06-15 06:28:13,746 Update ACY in row 8
+2020-06-15 06:28:13,747 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:28:14,308 https://finance.yahoo.com:443 "GET /quote/ACY HTTP/1.1" 200 None
+2020-06-15 06:28:14,564 Update ADP in row 9
+2020-06-15 06:28:14,566 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:28:15,177 https://finance.yahoo.com:443 "GET /quote/ADP HTTP/1.1" 200 None
+2020-06-15 06:28:15,382 Update AMZN in row 10
+2020-06-15 06:28:15,384 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:28:16,202 https://finance.yahoo.com:443 "GET /quote/AMZN HTTP/1.1" 200 None
+2020-06-15 06:28:16,458 Update ATIF in row 11
+2020-06-15 06:28:16,460 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:28:17,045 https://finance.yahoo.com:443 "GET /quote/ATIF HTTP/1.1" 200 None
+2020-06-15 06:28:17,235 Update BAS.DE in row 12
+2020-06-15 06:28:17,237 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:28:17,822 https://finance.yahoo.com:443 "GET /quote/BAS.DE HTTP/1.1" 200 None
+2020-06-15 06:28:18,045 Update CAT in row 13
+2020-06-15 06:28:18,046 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:28:18,536 https://finance.yahoo.com:443 "GET /quote/CAT HTTP/1.1" 200 None
+2020-06-15 06:28:18,764 Update FB in row 14
+2020-06-15 06:28:18,766 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:28:19,371 https://finance.yahoo.com:443 "GET /quote/FB HTTP/1.1" 200 None
+2020-06-15 06:28:19,582 Update GOOGL in row 15
+2020-06-15 06:28:19,584 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:28:20,067 https://finance.yahoo.com:443 "GET /quote/GOOGL HTTP/1.1" 200 None
+2020-06-15 06:28:20,305 Update IBM in row 16
+2020-06-15 06:28:20,307 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:28:20,869 https://finance.yahoo.com:443 "GET /quote/IBM HTTP/1.1" 200 None
+2020-06-15 06:28:21,078 Update MSFT in row 17
+2020-06-15 06:28:21,080 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:28:21,680 https://finance.yahoo.com:443 "GET /quote/MSFT HTTP/1.1" 200 None
+2020-06-15 06:28:21,917 Update PYPL in row 18
+2020-06-15 06:28:21,919 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:28:22,604 https://finance.yahoo.com:443 "GET /quote/PYPL HTTP/1.1" 200 None
+2020-06-15 06:28:22,772 Update TSLA in row 19
+2020-06-15 06:28:22,774 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:28:23,271 https://finance.yahoo.com:443 "GET /quote/TSLA HTTP/1.1" 200 None
+2020-06-15 06:28:23,476 Total Time Stock Update: 20.0sek for19 stocks
+2020-06-15 06:28:23,476 Avg. Time per Stock: 1.06 sek
+2020-06-15 06:28:23,527 Saved to disk...
+2020-06-15 06:28:23,564 AlertTracker update every 5sec...
+2020-06-15 06:28:23,565 Now: 2020-06-15 06:28:23.565067
+2020-06-15 06:28:23,565 LastCheck StockTwits: 2020-06-15 07:19:40.197168
+2020-06-15 06:28:28,595 Update A in row 2
+2020-06-15 06:28:28,600 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:28:29,484 https://finance.yahoo.com:443 "GET /quote/A HTTP/1.1" 200 None
+2020-06-15 06:28:29,770 Update AAL in row 3
+2020-06-15 06:28:29,772 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:28:30,472 https://finance.yahoo.com:443 "GET /quote/AAL HTTP/1.1" 200 None
+2020-06-15 06:28:30,740 Update AAP in row 4
+2020-06-15 06:28:30,741 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:28:31,358 https://finance.yahoo.com:443 "GET /quote/AAP HTTP/1.1" 200 None
+2020-06-15 06:28:31,581 Update AAPL in row 5
+2020-06-15 06:28:31,583 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:28:32,082 https://finance.yahoo.com:443 "GET /quote/AAPL HTTP/1.1" 200 None
+2020-06-15 06:28:32,250 Update ABBV in row 6
+2020-06-15 06:28:32,252 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:28:33,065 https://finance.yahoo.com:443 "GET /quote/ABBV HTTP/1.1" 200 None
+2020-06-15 06:28:33,317 Update ABC in row 7
+2020-06-15 06:28:33,318 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:28:34,163 https://finance.yahoo.com:443 "GET /quote/ABC HTTP/1.1" 200 None
+2020-06-15 06:28:34,379 Update ACY in row 8
+2020-06-15 06:28:34,380 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:28:35,142 https://finance.yahoo.com:443 "GET /quote/ACY HTTP/1.1" 200 None
+2020-06-15 06:28:35,383 Update ADP in row 9
+2020-06-15 06:28:35,385 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:28:36,123 https://finance.yahoo.com:443 "GET /quote/ADP HTTP/1.1" 200 None
+2020-06-15 06:28:36,317 Update AMZN in row 10
+2020-06-15 06:28:36,318 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:28:36,916 https://finance.yahoo.com:443 "GET /quote/AMZN HTTP/1.1" 200 None
+2020-06-15 06:28:37,095 Update ATIF in row 11
+2020-06-15 06:28:37,096 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:28:37,667 https://finance.yahoo.com:443 "GET /quote/ATIF HTTP/1.1" 200 None
+2020-06-15 06:28:37,867 Update BAS.DE in row 12
+2020-06-15 06:28:37,868 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:28:38,378 https://finance.yahoo.com:443 "GET /quote/BAS.DE HTTP/1.1" 200 None
+2020-06-15 06:28:38,603 Update CAT in row 13
+2020-06-15 06:28:38,605 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:28:39,187 https://finance.yahoo.com:443 "GET /quote/CAT HTTP/1.1" 200 None
+2020-06-15 06:28:39,439 Update FB in row 14
+2020-06-15 06:28:39,440 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:28:39,956 https://finance.yahoo.com:443 "GET /quote/FB HTTP/1.1" 200 None
+2020-06-15 06:28:40,244 Update GOOGL in row 15
+2020-06-15 06:28:40,246 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:28:40,958 https://finance.yahoo.com:443 "GET /quote/GOOGL HTTP/1.1" 200 None
+2020-06-15 06:28:41,151 Update IBM in row 16
+2020-06-15 06:28:41,153 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:28:41,667 https://finance.yahoo.com:443 "GET /quote/IBM HTTP/1.1" 200 None
+2020-06-15 06:28:41,887 Update MSFT in row 17
+2020-06-15 06:28:41,889 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:28:42,568 https://finance.yahoo.com:443 "GET /quote/MSFT HTTP/1.1" 200 None
+2020-06-15 06:28:42,774 Update PYPL in row 18
+2020-06-15 06:28:42,775 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:28:43,499 https://finance.yahoo.com:443 "GET /quote/PYPL HTTP/1.1" 200 None
+2020-06-15 06:28:43,733 Update TSLA in row 19
+2020-06-15 06:28:43,735 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:28:44,426 https://finance.yahoo.com:443 "GET /quote/TSLA HTTP/1.1" 200 None
+2020-06-15 06:28:44,636 Total Time Stock Update: 21.0sek for19 stocks
+2020-06-15 06:28:44,636 Avg. Time per Stock: 1.11 sek
+2020-06-15 06:28:44,689 Saved to disk...
+2020-06-15 06:28:44,724 AlertTracker update every 5sec...
+2020-06-15 06:28:44,724 Now: 2020-06-15 06:28:44.724238
+2020-06-15 06:28:44,724 LastCheck StockTwits: 2020-06-15 07:19:40.197168
+2020-06-15 06:28:49,739 Update A in row 2
+2020-06-15 06:28:49,742 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:28:50,405 https://finance.yahoo.com:443 "GET /quote/A HTTP/1.1" 200 None
+2020-06-15 06:28:50,594 Update AAL in row 3
+2020-06-15 06:28:50,595 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:28:51,173 https://finance.yahoo.com:443 "GET /quote/AAL HTTP/1.1" 200 None
+2020-06-15 06:28:51,389 Update AAP in row 4
+2020-06-15 06:28:51,391 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:28:52,150 https://finance.yahoo.com:443 "GET /quote/AAP HTTP/1.1" 200 None
+2020-06-15 06:28:52,338 Update AAPL in row 5
+2020-06-15 06:28:52,340 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:28:52,868 https://finance.yahoo.com:443 "GET /quote/AAPL HTTP/1.1" 200 None
+2020-06-15 06:28:53,058 Update ABBV in row 6
+2020-06-15 06:28:53,059 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:28:53,557 https://finance.yahoo.com:443 "GET /quote/ABBV HTTP/1.1" 200 None
+2020-06-15 06:28:53,748 Update ABC in row 7
+2020-06-15 06:28:53,751 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:28:54,463 https://finance.yahoo.com:443 "GET /quote/ABC HTTP/1.1" 200 None
+2020-06-15 06:28:54,632 Update ACY in row 8
+2020-06-15 06:28:54,634 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:28:55,460 https://finance.yahoo.com:443 "GET /quote/ACY HTTP/1.1" 200 None
+2020-06-15 06:28:55,727 Update ADP in row 9
+2020-06-15 06:28:55,729 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:28:56,440 https://finance.yahoo.com:443 "GET /quote/ADP HTTP/1.1" 200 None
+2020-06-15 06:28:56,653 Update AMZN in row 10
+2020-06-15 06:28:56,655 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:28:57,440 https://finance.yahoo.com:443 "GET /quote/AMZN HTTP/1.1" 200 None
+2020-06-15 06:28:57,645 Update ATIF in row 11
+2020-06-15 06:28:57,647 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:28:58,424 https://finance.yahoo.com:443 "GET /quote/ATIF HTTP/1.1" 200 None
+2020-06-15 06:28:58,965 Update BAS.DE in row 12
+2020-06-15 06:28:58,967 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:28:59,764 https://finance.yahoo.com:443 "GET /quote/BAS.DE HTTP/1.1" 200 None
+2020-06-15 06:29:00,047 Update CAT in row 13
+2020-06-15 06:29:00,049 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:29:00,627 https://finance.yahoo.com:443 "GET /quote/CAT HTTP/1.1" 200 None
+2020-06-15 06:29:00,789 Update FB in row 14
+2020-06-15 06:29:00,790 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:29:01,660 https://finance.yahoo.com:443 "GET /quote/FB HTTP/1.1" 200 None
+2020-06-15 06:29:01,828 Update GOOGL in row 15
+2020-06-15 06:29:01,830 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:29:02,654 https://finance.yahoo.com:443 "GET /quote/GOOGL HTTP/1.1" 200 None
+2020-06-15 06:29:02,832 Update IBM in row 16
+2020-06-15 06:29:02,833 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:29:03,342 https://finance.yahoo.com:443 "GET /quote/IBM HTTP/1.1" 200 None
+2020-06-15 06:29:03,530 Update MSFT in row 17
+2020-06-15 06:29:03,532 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:29:04,066 https://finance.yahoo.com:443 "GET /quote/MSFT HTTP/1.1" 200 None
+2020-06-15 06:29:04,374 Update PYPL in row 18
+2020-06-15 06:29:04,375 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:29:04,954 https://finance.yahoo.com:443 "GET /quote/PYPL HTTP/1.1" 200 None
+2020-06-15 06:29:05,198 Update TSLA in row 19
+2020-06-15 06:29:05,200 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:29:05,885 https://finance.yahoo.com:443 "GET /quote/TSLA HTTP/1.1" 200 None
+2020-06-15 06:29:06,080 Total Time Stock Update: 21.0sek for19 stocks
+2020-06-15 06:29:06,080 Avg. Time per Stock: 1.13 sek
+2020-06-15 06:29:06,131 Saved to disk...
+2020-06-15 06:29:06,164 AlertTracker update every 5sec...
+2020-06-15 06:29:06,164 Now: 2020-06-15 06:29:06.164769
+2020-06-15 06:29:06,164 LastCheck StockTwits: 2020-06-15 07:19:40.197168
+2020-06-15 06:29:11,196 Update A in row 2
+2020-06-15 06:29:11,201 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:29:11,743 https://finance.yahoo.com:443 "GET /quote/A HTTP/1.1" 200 None
+2020-06-15 06:29:11,953 Update AAL in row 3
+2020-06-15 06:29:11,955 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:29:12,884 https://finance.yahoo.com:443 "GET /quote/AAL HTTP/1.1" 200 None
+2020-06-15 06:29:13,081 Update AAP in row 4
+2020-06-15 06:29:13,083 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:29:13,735 https://finance.yahoo.com:443 "GET /quote/AAP HTTP/1.1" 200 None
+2020-06-15 06:29:13,925 Update AAPL in row 5
+2020-06-15 06:29:13,926 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:29:14,449 https://finance.yahoo.com:443 "GET /quote/AAPL HTTP/1.1" 200 None
+2020-06-15 06:29:14,687 Update ABBV in row 6
+2020-06-15 06:29:14,688 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:29:15,407 https://finance.yahoo.com:443 "GET /quote/ABBV HTTP/1.1" 200 None
+2020-06-15 06:29:15,596 Update ABC in row 7
+2020-06-15 06:29:15,598 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:29:16,280 https://finance.yahoo.com:443 "GET /quote/ABC HTTP/1.1" 200 None
+2020-06-15 06:29:16,520 Update ACY in row 8
+2020-06-15 06:29:16,522 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:29:17,143 https://finance.yahoo.com:443 "GET /quote/ACY HTTP/1.1" 200 None
+2020-06-15 06:29:17,351 Update ADP in row 9
+2020-06-15 06:29:17,352 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:29:17,961 https://finance.yahoo.com:443 "GET /quote/ADP HTTP/1.1" 200 None
+2020-06-15 06:29:18,165 Update AMZN in row 10
+2020-06-15 06:29:18,167 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:29:18,636 https://finance.yahoo.com:443 "GET /quote/AMZN HTTP/1.1" 200 None
+2020-06-15 06:29:18,847 Update ATIF in row 11
+2020-06-15 06:29:18,848 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:29:19,461 https://finance.yahoo.com:443 "GET /quote/ATIF HTTP/1.1" 200 None
+2020-06-15 06:29:19,660 Update BAS.DE in row 12
+2020-06-15 06:29:19,661 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:29:20,190 https://finance.yahoo.com:443 "GET /quote/BAS.DE HTTP/1.1" 200 None
+2020-06-15 06:29:20,478 Update CAT in row 13
+2020-06-15 06:29:20,479 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:29:21,094 https://finance.yahoo.com:443 "GET /quote/CAT HTTP/1.1" 200 None
+2020-06-15 06:29:21,323 Update FB in row 14
+2020-06-15 06:29:21,324 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:29:21,997 https://finance.yahoo.com:443 "GET /quote/FB HTTP/1.1" 200 None
+2020-06-15 06:29:22,210 Update GOOGL in row 15
+2020-06-15 06:29:22,212 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:29:22,824 https://finance.yahoo.com:443 "GET /quote/GOOGL HTTP/1.1" 200 None
+2020-06-15 06:29:23,059 Update IBM in row 16
+2020-06-15 06:29:23,060 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:29:23,739 https://finance.yahoo.com:443 "GET /quote/IBM HTTP/1.1" 200 None
+2020-06-15 06:29:24,136 Update MSFT in row 17
+2020-06-15 06:29:24,137 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:29:24,639 https://finance.yahoo.com:443 "GET /quote/MSFT HTTP/1.1" 200 None
+2020-06-15 06:29:24,800 Update PYPL in row 18
+2020-06-15 06:29:24,802 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:29:25,587 https://finance.yahoo.com:443 "GET /quote/PYPL HTTP/1.1" 200 None
+2020-06-15 06:29:25,806 Update TSLA in row 19
+2020-06-15 06:29:25,808 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:29:26,304 https://finance.yahoo.com:443 "GET /quote/TSLA HTTP/1.1" 200 None
+2020-06-15 06:29:26,506 Total Time Stock Update: 20.0sek for19 stocks
+2020-06-15 06:29:26,506 Avg. Time per Stock: 1.07 sek
+2020-06-15 06:29:26,558 Saved to disk...
+2020-06-15 06:29:26,593 AlertTracker update every 5sec...
+2020-06-15 06:29:26,593 Now: 2020-06-15 06:29:26.593696
+2020-06-15 06:29:26,593 LastCheck StockTwits: 2020-06-15 07:19:40.197168
+2020-06-15 06:29:31,624 Update A in row 2
+2020-06-15 06:29:31,629 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:29:32,337 https://finance.yahoo.com:443 "GET /quote/A HTTP/1.1" 200 None
+2020-06-15 06:29:32,539 Update AAL in row 3
+2020-06-15 06:29:32,540 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:29:33,445 https://finance.yahoo.com:443 "GET /quote/AAL HTTP/1.1" 200 None
+2020-06-15 06:29:33,656 Update AAP in row 4
+2020-06-15 06:29:33,657 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:29:34,475 https://finance.yahoo.com:443 "GET /quote/AAP HTTP/1.1" 200 None
+2020-06-15 06:29:34,662 Update AAPL in row 5
+2020-06-15 06:29:34,664 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:29:35,175 https://finance.yahoo.com:443 "GET /quote/AAPL HTTP/1.1" 200 None
+2020-06-15 06:29:35,359 Update ABBV in row 6
+2020-06-15 06:29:35,360 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:29:36,305 https://finance.yahoo.com:443 "GET /quote/ABBV HTTP/1.1" 200 None
+2020-06-15 06:29:36,501 Update ABC in row 7
+2020-06-15 06:29:36,502 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:29:37,208 https://finance.yahoo.com:443 "GET /quote/ABC HTTP/1.1" 200 None
+2020-06-15 06:29:37,389 Update ACY in row 8
+2020-06-15 06:29:37,391 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:29:38,089 https://finance.yahoo.com:443 "GET /quote/ACY HTTP/1.1" 200 None
+2020-06-15 06:29:38,330 Update ADP in row 9
+2020-06-15 06:29:38,332 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:29:39,071 https://finance.yahoo.com:443 "GET /quote/ADP HTTP/1.1" 200 None
+2020-06-15 06:29:39,265 Update AMZN in row 10
+2020-06-15 06:29:39,267 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:29:39,890 https://finance.yahoo.com:443 "GET /quote/AMZN HTTP/1.1" 200 None
+2020-06-15 06:29:40,092 Update ATIF in row 11
+2020-06-15 06:29:40,093 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:29:40,785 https://finance.yahoo.com:443 "GET /quote/ATIF HTTP/1.1" 200 None
+2020-06-15 06:29:41,026 Update BAS.DE in row 12
+2020-06-15 06:29:41,027 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:29:41,656 https://finance.yahoo.com:443 "GET /quote/BAS.DE HTTP/1.1" 200 None
+2020-06-15 06:29:41,845 Update CAT in row 13
+2020-06-15 06:29:41,846 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:29:42,526 https://finance.yahoo.com:443 "GET /quote/CAT HTTP/1.1" 200 None
+2020-06-15 06:29:42,769 Update FB in row 14
+2020-06-15 06:29:42,770 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:29:43,554 https://finance.yahoo.com:443 "GET /quote/FB HTTP/1.1" 200 None
+2020-06-15 06:29:43,795 Update GOOGL in row 15
+2020-06-15 06:29:43,796 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:29:44,426 https://finance.yahoo.com:443 "GET /quote/GOOGL HTTP/1.1" 200 None
+2020-06-15 06:29:44,607 Update IBM in row 16
+2020-06-15 06:29:44,609 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:29:45,161 https://finance.yahoo.com:443 "GET /quote/IBM HTTP/1.1" 200 None
+2020-06-15 06:29:45,363 Update MSFT in row 17
+2020-06-15 06:29:45,365 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:29:46,088 https://finance.yahoo.com:443 "GET /quote/MSFT HTTP/1.1" 200 None
+2020-06-15 06:29:46,382 Update PYPL in row 18
+2020-06-15 06:29:46,384 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:29:47,002 https://finance.yahoo.com:443 "GET /quote/PYPL HTTP/1.1" 200 None
+2020-06-15 06:29:47,207 Update TSLA in row 19
+2020-06-15 06:29:47,208 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:29:47,793 https://finance.yahoo.com:443 "GET /quote/TSLA HTTP/1.1" 200 None
+2020-06-15 06:29:48,071 Total Time Stock Update: 22.0sek for19 stocks
+2020-06-15 06:29:48,071 Avg. Time per Stock: 1.13 sek
+2020-06-15 06:29:48,130 Saved to disk...
+2020-06-15 06:29:48,163 AlertTracker update every 5sec...
+2020-06-15 06:29:48,163 Now: 2020-06-15 06:29:48.163645
+2020-06-15 06:29:48,163 LastCheck StockTwits: 2020-06-15 07:19:40.197168
+2020-06-15 06:29:53,194 Update A in row 2
+2020-06-15 06:29:53,200 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:29:53,904 https://finance.yahoo.com:443 "GET /quote/A HTTP/1.1" 200 None
+2020-06-15 06:29:54,135 Update AAL in row 3
+2020-06-15 06:29:54,136 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:29:54,805 https://finance.yahoo.com:443 "GET /quote/AAL HTTP/1.1" 200 None
+2020-06-15 06:29:55,255 Update AAP in row 4
+2020-06-15 06:29:55,257 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:29:55,959 https://finance.yahoo.com:443 "GET /quote/AAP HTTP/1.1" 200 None
+2020-06-15 06:29:56,147 Update AAPL in row 5
+2020-06-15 06:29:56,149 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:29:56,874 https://finance.yahoo.com:443 "GET /quote/AAPL HTTP/1.1" 200 None
+2020-06-15 06:29:57,105 Update ABBV in row 6
+2020-06-15 06:29:57,106 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:29:57,720 https://finance.yahoo.com:443 "GET /quote/ABBV HTTP/1.1" 200 None
+2020-06-15 06:29:57,914 Update ABC in row 7
+2020-06-15 06:29:57,916 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:29:58,517 https://finance.yahoo.com:443 "GET /quote/ABC HTTP/1.1" 200 None
+2020-06-15 06:29:58,703 Update ACY in row 8
+2020-06-15 06:29:58,705 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:29:59,430 https://finance.yahoo.com:443 "GET /quote/ACY HTTP/1.1" 200 None
+2020-06-15 06:29:59,621 Update ADP in row 9
+2020-06-15 06:29:59,622 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:30:00,232 https://finance.yahoo.com:443 "GET /quote/ADP HTTP/1.1" 200 None
+2020-06-15 06:30:00,503 Update AMZN in row 10
+2020-06-15 06:30:00,505 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:30:01,126 https://finance.yahoo.com:443 "GET /quote/AMZN HTTP/1.1" 200 None
+2020-06-15 06:30:01,317 Update ATIF in row 11
+2020-06-15 06:30:01,318 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:30:01,946 https://finance.yahoo.com:443 "GET /quote/ATIF HTTP/1.1" 200 None
+2020-06-15 06:30:02,204 Update BAS.DE in row 12
+2020-06-15 06:30:02,206 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:30:02,859 https://finance.yahoo.com:443 "GET /quote/BAS.DE HTTP/1.1" 200 None
+2020-06-15 06:30:03,075 Update CAT in row 13
+2020-06-15 06:30:03,077 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:30:03,702 https://finance.yahoo.com:443 "GET /quote/CAT HTTP/1.1" 200 None
+2020-06-15 06:30:04,011 Update FB in row 14
+2020-06-15 06:30:04,013 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:30:04,521 https://finance.yahoo.com:443 "GET /quote/FB HTTP/1.1" 200 None
+2020-06-15 06:30:04,703 Update GOOGL in row 15
+2020-06-15 06:30:04,705 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:30:05,352 https://finance.yahoo.com:443 "GET /quote/GOOGL HTTP/1.1" 200 None
+2020-06-15 06:30:05,565 Update IBM in row 16
+2020-06-15 06:30:05,567 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:30:06,068 https://finance.yahoo.com:443 "GET /quote/IBM HTTP/1.1" 200 None
+2020-06-15 06:30:06,263 Update MSFT in row 17
+2020-06-15 06:30:06,264 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:30:06,881 https://finance.yahoo.com:443 "GET /quote/MSFT HTTP/1.1" 200 None
+2020-06-15 06:30:07,135 Update PYPL in row 18
+2020-06-15 06:30:07,137 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:30:07,961 https://finance.yahoo.com:443 "GET /quote/PYPL HTTP/1.1" 200 None
+2020-06-15 06:30:08,173 Update TSLA in row 19
+2020-06-15 06:30:08,175 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:30:08,779 https://finance.yahoo.com:443 "GET /quote/TSLA HTTP/1.1" 200 None
+2020-06-15 06:30:09,054 Total Time Stock Update: 21.0sek for19 stocks
+2020-06-15 06:30:09,054 Avg. Time per Stock: 1.1 sek
+2020-06-15 06:30:09,105 Saved to disk...
+2020-06-15 06:30:09,142 AlertTracker update every 5sec...
+2020-06-15 06:30:09,142 Now: 2020-06-15 06:30:09.142455
+2020-06-15 06:30:09,143 LastCheck StockTwits: 2020-06-15 07:19:40.197168
+2020-06-15 06:30:14,172 Update A in row 2
+2020-06-15 06:30:14,175 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:30:14,911 https://finance.yahoo.com:443 "GET /quote/A HTTP/1.1" 200 None
+2020-06-15 06:30:15,103 Update AAL in row 3
+2020-06-15 06:30:15,105 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:30:15,607 https://finance.yahoo.com:443 "GET /quote/AAL HTTP/1.1" 200 None
+2020-06-15 06:30:15,772 Update AAP in row 4
+2020-06-15 06:30:15,774 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:30:16,351 https://finance.yahoo.com:443 "GET /quote/AAP HTTP/1.1" 200 None
+2020-06-15 06:30:16,544 Update AAPL in row 5
+2020-06-15 06:30:16,546 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:30:17,057 https://finance.yahoo.com:443 "GET /quote/AAPL HTTP/1.1" 200 None
+2020-06-15 06:30:17,337 Update ABBV in row 6
+2020-06-15 06:30:17,339 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:30:17,970 https://finance.yahoo.com:443 "GET /quote/ABBV HTTP/1.1" 200 None
+2020-06-15 06:30:18,192 Update ABC in row 7
+2020-06-15 06:30:18,195 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:30:18,872 https://finance.yahoo.com:443 "GET /quote/ABC HTTP/1.1" 200 None
+2020-06-15 06:30:19,046 Update ACY in row 8
+2020-06-15 06:30:19,048 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:30:19,862 https://finance.yahoo.com:443 "GET /quote/ACY HTTP/1.1" 200 None
+2020-06-15 06:30:20,083 Update ADP in row 9
+2020-06-15 06:30:20,085 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:30:20,684 https://finance.yahoo.com:443 "GET /quote/ADP HTTP/1.1" 200 None
+2020-06-15 06:30:20,855 Update AMZN in row 10
+2020-06-15 06:30:20,857 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:30:21,501 https://finance.yahoo.com:443 "GET /quote/AMZN HTTP/1.1" 200 None
+2020-06-15 06:30:21,717 Update ATIF in row 11
+2020-06-15 06:30:21,719 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:30:22,367 https://finance.yahoo.com:443 "GET /quote/ATIF HTTP/1.1" 200 None
+2020-06-15 06:30:22,568 Update BAS.DE in row 12
+2020-06-15 06:30:22,570 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:30:23,272 https://finance.yahoo.com:443 "GET /quote/BAS.DE HTTP/1.1" 200 None
+2020-06-15 06:30:23,469 Update CAT in row 13
+2020-06-15 06:30:23,471 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:30:24,097 https://finance.yahoo.com:443 "GET /quote/CAT HTTP/1.1" 200 None
+2020-06-15 06:30:24,327 Update FB in row 14
+2020-06-15 06:30:24,329 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:30:24,868 https://finance.yahoo.com:443 "GET /quote/FB HTTP/1.1" 200 None
+2020-06-15 06:30:25,221 Update GOOGL in row 15
+2020-06-15 06:30:25,223 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:30:25,859 https://finance.yahoo.com:443 "GET /quote/GOOGL HTTP/1.1" 200 None
+2020-06-15 06:30:26,088 Update IBM in row 16
+2020-06-15 06:30:26,089 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:30:26,729 https://finance.yahoo.com:443 "GET /quote/IBM HTTP/1.1" 200 None
+2020-06-15 06:30:26,896 Update MSFT in row 17
+2020-06-15 06:30:26,898 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:30:27,771 https://finance.yahoo.com:443 "GET /quote/MSFT HTTP/1.1" 200 None
+2020-06-15 06:30:28,020 Update PYPL in row 18
+2020-06-15 06:30:28,022 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:30:28,574 https://finance.yahoo.com:443 "GET /quote/PYPL HTTP/1.1" 200 None
+2020-06-15 06:30:28,801 Update TSLA in row 19
+2020-06-15 06:30:28,803 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:30:29,380 https://finance.yahoo.com:443 "GET /quote/TSLA HTTP/1.1" 200 None
+2020-06-15 06:30:29,712 Total Time Stock Update: 21.0sek for19 stocks
+2020-06-15 06:30:29,712 Avg. Time per Stock: 1.08 sek
+2020-06-15 06:30:29,765 Saved to disk...
+2020-06-15 06:30:29,796 AlertTracker update every 5sec...
+2020-06-15 06:30:29,796 Now: 2020-06-15 06:30:29.796586
+2020-06-15 06:30:29,796 LastCheck StockTwits: 2020-06-15 07:19:40.197168
+2020-06-15 06:30:34,820 Update A in row 2
+2020-06-15 06:30:34,825 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:30:35,493 https://finance.yahoo.com:443 "GET /quote/A HTTP/1.1" 200 None
+2020-06-15 06:30:35,747 Update AAL in row 3
+2020-06-15 06:30:35,749 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:30:36,324 https://finance.yahoo.com:443 "GET /quote/AAL HTTP/1.1" 200 None
+2020-06-15 06:30:36,582 Update AAP in row 4
+2020-06-15 06:30:36,584 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:30:37,191 https://finance.yahoo.com:443 "GET /quote/AAP HTTP/1.1" 200 None
+2020-06-15 06:30:37,406 Update AAPL in row 5
+2020-06-15 06:30:37,408 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:30:37,959 https://finance.yahoo.com:443 "GET /quote/AAPL HTTP/1.1" 200 None
+2020-06-15 06:30:38,210 Update ABBV in row 6
+2020-06-15 06:30:38,212 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:30:38,714 https://finance.yahoo.com:443 "GET /quote/ABBV HTTP/1.1" 200 None
+2020-06-15 06:30:38,955 Update ABC in row 7
+2020-06-15 06:30:38,957 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:30:39,548 https://finance.yahoo.com:443 "GET /quote/ABC HTTP/1.1" 200 None
+2020-06-15 06:30:39,739 Update ACY in row 8
+2020-06-15 06:30:39,740 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:30:40,338 https://finance.yahoo.com:443 "GET /quote/ACY HTTP/1.1" 200 None
+2020-06-15 06:30:40,584 Update ADP in row 9
+2020-06-15 06:30:40,586 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:30:41,142 https://finance.yahoo.com:443 "GET /quote/ADP HTTP/1.1" 200 None
+2020-06-15 06:30:41,329 Update AMZN in row 10
+2020-06-15 06:30:41,331 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:30:42,005 https://finance.yahoo.com:443 "GET /quote/AMZN HTTP/1.1" 200 None
+2020-06-15 06:30:42,207 Update ATIF in row 11
+2020-06-15 06:30:42,209 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:30:42,986 https://finance.yahoo.com:443 "GET /quote/ATIF HTTP/1.1" 200 None
+2020-06-15 06:30:43,161 Update BAS.DE in row 12
+2020-06-15 06:30:43,163 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:30:43,865 https://finance.yahoo.com:443 "GET /quote/BAS.DE HTTP/1.1" 200 None
+2020-06-15 06:30:44,054 Update CAT in row 13
+2020-06-15 06:30:44,056 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:30:44,759 https://finance.yahoo.com:443 "GET /quote/CAT HTTP/1.1" 200 None
+2020-06-15 06:30:44,956 Update FB in row 14
+2020-06-15 06:30:44,957 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:30:45,487 https://finance.yahoo.com:443 "GET /quote/FB HTTP/1.1" 200 None
+2020-06-15 06:30:45,746 Update GOOGL in row 15
+2020-06-15 06:30:45,747 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:30:46,392 https://finance.yahoo.com:443 "GET /quote/GOOGL HTTP/1.1" 200 None
+2020-06-15 06:30:46,607 Update IBM in row 16
+2020-06-15 06:30:46,608 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:30:47,310 https://finance.yahoo.com:443 "GET /quote/IBM HTTP/1.1" 200 None
+2020-06-15 06:30:47,527 Update MSFT in row 17
+2020-06-15 06:30:47,528 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:30:48,200 https://finance.yahoo.com:443 "GET /quote/MSFT HTTP/1.1" 200 None
+2020-06-15 06:30:48,445 Update PYPL in row 18
+2020-06-15 06:30:48,447 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:30:49,447 https://finance.yahoo.com:443 "GET /quote/PYPL HTTP/1.1" 200 None
+2020-06-15 06:30:49,715 Update TSLA in row 19
+2020-06-15 06:30:49,717 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:30:50,224 https://finance.yahoo.com:443 "GET /quote/TSLA HTTP/1.1" 200 None
+2020-06-15 06:30:50,479 Total Time Stock Update: 21.0sek for19 stocks
+2020-06-15 06:30:50,479 Avg. Time per Stock: 1.09 sek
+2020-06-15 06:30:50,532 Saved to disk...
+2020-06-15 06:30:50,563 AlertTracker update every 5sec...
+2020-06-15 06:30:50,563 Now: 2020-06-15 06:30:50.563904
+2020-06-15 06:30:50,563 LastCheck StockTwits: 2020-06-15 07:19:40.197168
+2020-06-15 06:30:55,594 Update A in row 2
+2020-06-15 06:30:55,600 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:30:56,240 https://finance.yahoo.com:443 "GET /quote/A HTTP/1.1" 200 None
+2020-06-15 06:30:56,442 Update AAL in row 3
+2020-06-15 06:30:56,444 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:30:57,068 https://finance.yahoo.com:443 "GET /quote/AAL HTTP/1.1" 200 None
+2020-06-15 06:30:57,256 Update AAP in row 4
+2020-06-15 06:30:57,258 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:30:57,845 https://finance.yahoo.com:443 "GET /quote/AAP HTTP/1.1" 200 None
+2020-06-15 06:30:58,033 Update AAPL in row 5
+2020-06-15 06:30:58,035 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:30:58,581 https://finance.yahoo.com:443 "GET /quote/AAPL HTTP/1.1" 200 None
+2020-06-15 06:30:58,784 Update ABBV in row 6
+2020-06-15 06:30:58,785 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:30:59,419 https://finance.yahoo.com:443 "GET /quote/ABBV HTTP/1.1" 200 None
+2020-06-15 06:30:59,602 Update ABC in row 7
+2020-06-15 06:30:59,604 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:31:00,300 https://finance.yahoo.com:443 "GET /quote/ABC HTTP/1.1" 200 None
+2020-06-15 06:31:00,529 Update ACY in row 8
+2020-06-15 06:31:00,530 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:31:01,344 https://finance.yahoo.com:443 "GET /quote/ACY HTTP/1.1" 200 None
+2020-06-15 06:31:01,583 Update ADP in row 9
+2020-06-15 06:31:01,585 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:31:02,323 https://finance.yahoo.com:443 "GET /quote/ADP HTTP/1.1" 200 None
+2020-06-15 06:31:02,536 Update AMZN in row 10
+2020-06-15 06:31:02,538 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:31:03,156 https://finance.yahoo.com:443 "GET /quote/AMZN HTTP/1.1" 200 None
+2020-06-15 06:31:03,440 Update ATIF in row 11
+2020-06-15 06:31:03,441 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:31:04,062 https://finance.yahoo.com:443 "GET /quote/ATIF HTTP/1.1" 200 None
+2020-06-15 06:31:04,279 Update BAS.DE in row 12
+2020-06-15 06:31:04,282 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:31:05,104 https://finance.yahoo.com:443 "GET /quote/BAS.DE HTTP/1.1" 200 None
+2020-06-15 06:31:05,362 Update CAT in row 13
+2020-06-15 06:31:05,363 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:31:05,987 https://finance.yahoo.com:443 "GET /quote/CAT HTTP/1.1" 200 None
+2020-06-15 06:31:06,174 Update FB in row 14
+2020-06-15 06:31:06,175 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:31:06,800 https://finance.yahoo.com:443 "GET /quote/FB HTTP/1.1" 200 None
+2020-06-15 06:31:07,007 Update GOOGL in row 15
+2020-06-15 06:31:07,008 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:31:07,939 https://finance.yahoo.com:443 "GET /quote/GOOGL HTTP/1.1" 200 None
+2020-06-15 06:31:08,134 Update IBM in row 16
+2020-06-15 06:31:08,136 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:31:08,750 https://finance.yahoo.com:443 "GET /quote/IBM HTTP/1.1" 200 None
+2020-06-15 06:31:08,957 Update MSFT in row 17
+2020-06-15 06:31:08,958 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:31:09,763 https://finance.yahoo.com:443 "GET /quote/MSFT HTTP/1.1" 200 None
+2020-06-15 06:31:09,954 Update PYPL in row 18
+2020-06-15 06:31:09,956 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:31:10,542 https://finance.yahoo.com:443 "GET /quote/PYPL HTTP/1.1" 200 None
+2020-06-15 06:31:10,740 Update TSLA in row 19
+2020-06-15 06:31:10,741 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:31:11,335 https://finance.yahoo.com:443 "GET /quote/TSLA HTTP/1.1" 200 None
+2020-06-15 06:31:11,576 Total Time Stock Update: 21.0sek for19 stocks
+2020-06-15 06:31:11,576 Avg. Time per Stock: 1.11 sek
+2020-06-15 06:31:11,627 Saved to disk...
+2020-06-15 06:31:11,661 AlertTracker update every 5sec...
+2020-06-15 06:31:11,662 Now: 2020-06-15 06:31:11.662608
+2020-06-15 06:31:11,662 LastCheck StockTwits: 2020-06-15 07:19:40.197168
+2020-06-15 06:31:16,680 Update A in row 2
+2020-06-15 06:31:16,684 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:31:17,323 https://finance.yahoo.com:443 "GET /quote/A HTTP/1.1" 200 None
+2020-06-15 06:31:17,489 Update AAL in row 3
+2020-06-15 06:31:17,491 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:31:18,118 https://finance.yahoo.com:443 "GET /quote/AAL HTTP/1.1" 200 None
+2020-06-15 06:31:18,301 Update AAP in row 4
+2020-06-15 06:31:18,302 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:31:19,096 https://finance.yahoo.com:443 "GET /quote/AAP HTTP/1.1" 200 None
+2020-06-15 06:31:19,369 Update AAPL in row 5
+2020-06-15 06:31:19,370 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:31:19,854 https://finance.yahoo.com:443 "GET /quote/AAPL HTTP/1.1" 200 None
+2020-06-15 06:31:20,073 Update ABBV in row 6
+2020-06-15 06:31:20,075 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:31:20,840 https://finance.yahoo.com:443 "GET /quote/ABBV HTTP/1.1" 200 None
+2020-06-15 06:31:21,045 Update ABC in row 7
+2020-06-15 06:31:21,046 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:31:21,701 https://finance.yahoo.com:443 "GET /quote/ABC HTTP/1.1" 200 None
+2020-06-15 06:31:21,911 Update ACY in row 8
+2020-06-15 06:31:21,913 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:31:22,598 https://finance.yahoo.com:443 "GET /quote/ACY HTTP/1.1" 200 None
+2020-06-15 06:31:22,782 Update ADP in row 9
+2020-06-15 06:31:22,783 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:31:23,405 https://finance.yahoo.com:443 "GET /quote/ADP HTTP/1.1" 200 None
+2020-06-15 06:31:23,650 Update AMZN in row 10
+2020-06-15 06:31:23,652 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:31:24,391 https://finance.yahoo.com:443 "GET /quote/AMZN HTTP/1.1" 200 None
+2020-06-15 06:31:24,620 Update ATIF in row 11
+2020-06-15 06:31:24,621 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:31:25,522 https://finance.yahoo.com:443 "GET /quote/ATIF HTTP/1.1" 200 None
+2020-06-15 06:31:25,693 Update BAS.DE in row 12
+2020-06-15 06:31:25,695 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:31:26,326 https://finance.yahoo.com:443 "GET /quote/BAS.DE HTTP/1.1" 200 None
+2020-06-15 06:31:26,584 Update CAT in row 13
+2020-06-15 06:31:26,586 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:31:27,304 https://finance.yahoo.com:443 "GET /quote/CAT HTTP/1.1" 200 None
+2020-06-15 06:31:27,498 Update FB in row 14
+2020-06-15 06:31:27,500 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:31:28,065 https://finance.yahoo.com:443 "GET /quote/FB HTTP/1.1" 200 None
+2020-06-15 06:31:28,261 Update GOOGL in row 15
+2020-06-15 06:31:28,264 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:31:29,188 https://finance.yahoo.com:443 "GET /quote/GOOGL HTTP/1.1" 200 None
+2020-06-15 06:31:29,489 Update IBM in row 16
+2020-06-15 06:31:29,491 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:31:30,223 https://finance.yahoo.com:443 "GET /quote/IBM HTTP/1.1" 200 None
+2020-06-15 06:31:30,421 Update MSFT in row 17
+2020-06-15 06:31:30,423 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:31:31,054 https://finance.yahoo.com:443 "GET /quote/MSFT HTTP/1.1" 200 None
+2020-06-15 06:31:31,286 Update PYPL in row 18
+2020-06-15 06:31:31,288 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:31:31,886 https://finance.yahoo.com:443 "GET /quote/PYPL HTTP/1.1" 200 None
+2020-06-15 06:31:32,130 Update TSLA in row 19
+2020-06-15 06:31:32,131 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-15 06:31:35,156 https://finance.yahoo.com:443 "GET /quote/TSLA HTTP/1.1" 503 None
+2020-06-15 06:31:35,180 Calling CoUnititialize()
+2020-06-15 06:31:35,180 CoUnititialize() done.

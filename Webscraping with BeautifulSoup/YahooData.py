@@ -9,6 +9,7 @@ import time
 import timeit
 import sys
 import os
+import logging
 
 # Sortierung excel sheet with xlwings
 def xl_col_sort(sheet,col_num):
@@ -133,7 +134,8 @@ def read_yahoo_finance(symbol,from_where):
         description = table.find ("p").text.strip ()
 
     # Send Mail
-    headline_txt = "From " + from_where + " for AlertTracker: " + symbol + "-" + name
+    if from_where == "DASHBOARD": headline_txt = "From DASHBOARD for AlertTracker: " + symbol + "-" + name
+    elif from_where == "STOCKTWITS": headline_txt = "Buy Alert from Breezy Alerts - " + symbol + "-" + name
     msg_txt = from_where + "\n" \
               "\nCurrent Volume: " + volume + \
               "\nAverage Volume: " + avg_volume + \
@@ -154,34 +156,34 @@ def read_yahoo_finance(symbol,from_where):
     idx = str (idx + 2)
     ws_at["A" + idx].value = symbol
     ws_at["B" + idx].value = name
-    ws_at["C" + idx].value = datetime.now ().strftime ("%Y-%m-%d %H:%M:%S")
-    ws_at["D" + idx].value = sector
-    ws_at["E" + idx].value = price
+    ws_at["C" + idx].value = datetime.now ().strftime ("%Y-%m-%d %H:%M")
+    ws_at["D" + idx].value = datetime.now ().strftime ("%Y-%m-%d %H:%M")
+    ws_at["E" + idx].value = sector
     ws_at["F" + idx].value = price
-    ws_at["G" + idx].value = 0
+    ws_at["G" + idx].value = price
     ws_at["H" + idx].value = 0
-    ws_at["I" + idx].value = marketcap
-    ws_at["J" + idx].value = pe_ratio
-    ws_at["K" + idx].value = eps_ratio
-    ws_at["L" + idx].value = fifty_range_from
-    ws_at["M" + idx].value = fifty_range_to
-    ws_at["N" + idx].value = 0
+    ws_at["I" + idx].value = 0
+    ws_at["J" + idx].value = marketcap
+    ws_at["K" + idx].value = pe_ratio
+    ws_at["L" + idx].value = eps_ratio
+    ws_at["M" + idx].value = fifty_range_from
+    ws_at["N" + idx].value = fifty_range_to
     ws_at["O" + idx].value = 0
+    ws_at["P" + idx].value = 0
 
 
+logging.basicConfig(filename="AlertTracker.log", format='%(asctime)s %(message)s', filemode='w')     #Create and configure logger
+logger = logging.getLogger ()       # Creating an object
+logger.setLevel (logging.DEBUG)     # Setting the threshold of logger to DEBUG
 db = "Dashboard.xlsx"
 at = "AlertTracker.xlsx"
 path = os.getcwd()
 fn = path + "\\" + at
-print(fn)
+logger.info("Filename:" + fn)
 stocktwits_last = datetime(1900,1,1,12,0,0)
 
 wb = xw.Book (db)
 wb2 = xw.Book (at)
-# ws_at = wb2.sheets["AlertTracker"]
-# ws_at["A1"].value = "###"
-# xl_col_sort(ws_at,1)
-# ws_at["A1"].value = "Symbol"
 
 erg_stocks = []
 while True:
@@ -197,9 +199,12 @@ while True:
     sek = int(ws_db["A22"].value)
     # Wait for X seconds with countdown
     print("AlertTracker update every ",sek,"sec...")
+    logger.info("AlertTracker update every " + str(sek) + "sec...")
     now = datetime.now()
     print("Now: ",now)
+    logger.info ("Now: " + str(now))
     print("LastCheck StockTwits ",stocktwits_last)
+    logger.info ("LastCheck StockTwits: " + str(stocktwits_last))
     wait_countdown(sek)
 
     # Check if manual entry in dashboerad in C3
@@ -207,18 +212,21 @@ while True:
         symbol = ws_db["C3"].value
         read_yahoo_finance(symbol,"DASHBOARD")
         print ("Added", symbol, "into AlertTracker from DASHBOARD")
+        logger.info ("Added " + symbol + " into AlertTracker from DASHBOARD")
 
     # Working on the alerts from stocktwits
     elif erg_stocks != []:
         read_yahoo_finance (erg_stocks[0], "STOCKTWITS")
         print ("Added", erg_stocks[0], "into AlertTracker from STOCKTWITS")
+        logger.info ("Added " + erg_stocks[0] + " into AlertTracker from STOCKTWITS")
         erg_stocks.pop(0)
 
     # Check if some alerts on stocktwits
-    elif (now - stocktwits_last).total_seconds()/60 > int(ws_db["D22"].value):
+    elif (now - stocktwits_last).total_seconds()/60 > int(ws_db["D22"].value) and ws_db["A18"].value != None and ws_db["D18"].value != None:
         stocktwits_last = datetime.now()
         erg_cont, erg_stocks = read_stocktwits(ws_db["A18"].value,ws_db["D18"].value,4)
         print("Stocks from Stocktwits: ",erg_stocks)
+        logger.info ("Stocks from Stocktwits: " + str(erg_stocks))
 
     # Update alertracker
     else:
@@ -226,10 +234,11 @@ while True:
             idx = str(i + 2)
             if ws_at["A"+idx].value == None: break
             print("Update",cont,"in row", idx)
+            logger.info ("Update " + cont + " in row " + idx)
             link = "https://finance.yahoo.com/quote/" + cont
             page = requests.get (link)
             soup = BeautifulSoup (page.content, "html.parser")
-            ws_at["C" + idx].value = datetime.now ().strftime ("%Y-%m-%d %H:%M:%S")
+            ws_at["D" + idx].value = datetime.now ().strftime ("%Y-%m-%d %H:%M")
             table = soup.find ('div', id="quote-header-info")
             price = soup.find ('span', attrs={"data-reactid": "14"}).text.strip ()
             marketcap = soup.find ('td', attrs={"data-test": "MARKET_CAP-value"}).text.strip ()
@@ -241,21 +250,24 @@ while True:
             fifty_range_from, fifty_range_to = f_r_temp[0].strip (), f_r_temp[1].strip ()
             daychange_tmp = soup.find ('span', attrs={"data-reactid": "16"}).text.strip ().split ("(")
             daychange_perc = float(daychange_tmp[1].strip ().replace (")","").replace("+","").replace("-","").replace("%",""))
-            ws_at["E" + idx].value = price
-            ws_at["G" + idx].value = ws_at["E" + idx].value - ws_at["F" + idx].value
-            ws_at["H" + idx].value = round((ws_at["E" + idx].value - ws_at["F" + idx].value) / ws_at["F" + idx].value * 100,2)
-            ws_at["I" + idx].value = marketcap
-            ws_at["J" + idx].value = pe_ratio
-            ws_at["K" + idx].value = eps_ratio
-            ws_at["L" + idx].value = fifty_range_from
-            ws_at["M" + idx].value = fifty_range_to
-            if ws_at["H" + idx].value < ws_at["N" + idx].value: ws_at["N" + idx].value = ws_at["H" + idx].value
-            if ws_at["H" + idx].value > ws_at["O" + idx].value: ws_at["O" + idx].value = ws_at["H" + idx].value
+            ws_at["F" + idx].value = price
+            ws_at["H" + idx].value = ws_at["F" + idx].value - ws_at["G" + idx].value
+            ws_at["I" + idx].value = round((ws_at["F" + idx].value - ws_at["G" + idx].value) / ws_at["G" + idx].value * 100,2)
+            ws_at["J" + idx].value = marketcap
+            ws_at["K" + idx].value = pe_ratio
+            ws_at["L" + idx].value = eps_ratio
+            ws_at["M" + idx].value = fifty_range_from
+            ws_at["N" + idx].value = fifty_range_to
+            if ws_at["I" + idx].value < ws_at["O" + idx].value: ws_at["O" + idx].value = ws_at["I" + idx].value
+            if ws_at["I" + idx].value > ws_at["P" + idx].value: ws_at["P" + idx].value = ws_at["I" + idx].value
         stop_updatestocks = timeit.default_timer ()
         print ("Total Time Stock Update: ", round ((stop_updatestocks - start_updatestocks), 0), "sek for", int(idx)-1, "stocks")
         print ("Avg. Time per Stock: ", round((stop_updatestocks - start_updatestocks) / (int(idx)-1), 2), "sek")
+        logger.info ("Total Time Stock Update: "+ str(round ((stop_updatestocks - start_updatestocks), 0)) + "sek for" + str(int(idx)-1) + " stocks")
+        logger.info ("Avg. Time per Stock: "+ str(round((stop_updatestocks - start_updatestocks) / (int(idx)-1), 2)) + " sek")
     wb2.save(fn)
     print("Saved to disk...")
+    logger.info ("Saved to disk...")
     # except Exception as e:
     #     print ("Error", e, "waiting for 30 sek...")
     #     wait_countdown (30)
