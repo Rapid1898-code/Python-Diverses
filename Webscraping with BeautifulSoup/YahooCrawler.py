@@ -129,8 +129,17 @@ def read_yahoo_statistics(stock):
     erg["short_of_float"] = is_na (soup.find ('td', attrs={"data-reactid": "211"}).text.strip ())
     erg["short_of_shares_outstanding"] = is_na (soup.find ('td', attrs={"data-reactid": "218"}).text.strip ())
     erg["shares_short"] = is_na (soup.find ('td', attrs={"data-reactid": "225"}).text.strip ())
-    erg["dividend"] = is_na (soup.find ('td', attrs={"data-reactid": "239"}).text.strip ())
-    erg["dividend_yield"] = is_na (soup.find ('td', attrs={"data-reactid": "246"}).text.strip ())
+    erg["forw_dividend"] = is_na (soup.find ('td', attrs={"data-reactid": "239"}).text.strip ())
+    erg["forw_div_yield"] = is_na (soup.find ('td', attrs={"data-reactid": "246"}).text.strip ())
+    erg["trailing_dividend"] = is_na (soup.find ('td', attrs={"data-reactid": "253"}).text.strip ())
+    erg["trailing_div_yield"] = is_na (soup.find ('td', attrs={"data-reactid": "260"}).text.strip ())
+    erg["5y_avg_div_yield"] = is_na (soup.find ('td', attrs={"data-reactid": "267"}).text.strip ())
+    erg["payout_ratio"] = is_na (soup.find ('td', attrs={"data-reactid": "274"}).text.strip ())
+    erg["dividend_date"] = is_na (soup.find ('td', attrs={"data-reactid": "281"}).text.strip ())
+    erg["ex_dividend_date"] = is_na (soup.find ('td', attrs={"data-reactid": "290"}).text.strip ())
+    erg["last_split_factor"] = is_na (soup.find ('td', attrs={"data-reactid": "295"}).text.strip ())
+    erg["last_split_date"] = is_na (soup.find ('td', attrs={"data-reactid": "302"}).text.strip ())
+
 
     return (erg)
 
