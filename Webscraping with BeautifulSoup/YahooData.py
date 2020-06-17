@@ -271,6 +271,7 @@ if __name__ == '__main__':
             logger.info ("Saved to disk...")
         except Exception as e:
              print ("Error", e, "waiting for 30 sek...")
+             logger.info ("Error" + e + "waiting for 30 sek...")
              wait_countdown (30)
 
 
