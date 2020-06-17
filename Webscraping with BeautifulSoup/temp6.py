@@ -1,2 +1,7 @@
-from datetime import datetime
-print(datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
+def check(txt):
+    exec(txt)
+    eval(txt)
+
+
+#print("Hallo!")
+check("print('Hallo!')")
