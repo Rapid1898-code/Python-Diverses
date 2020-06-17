@@ -1,5 +1,8 @@
 import requests
 from bs4 import BeautifulSoup
+from selenium import webdriver
+import time
+import os
 
 def is_na(value):
     if "N/A" in value: return "N/A"
@@ -85,7 +88,7 @@ def read_yahoo_profile(stock):
     return(erg)
 
 def read_yahoo_statistics(stock):
-# Read profile stock data from yahoo
+# Read statistics stock data from yahoo
     erg = {}
     link = "https://finance.yahoo.com/quote/" + stock + "/key-statistics?p=" + stock
     page = requests.get (link)
@@ -143,14 +146,139 @@ def read_yahoo_statistics(stock):
 
     return (erg)
 
-stock = "AAPL"
-erg = read_yahoo_summary(stock)
-erg2 = read_yahoo_profile(stock)
-erg3 = read_yahoo_statistics(stock)
+def read_yahoo_statistics_valuation(stock):
+# Read statistics valuation stock data from yahoo
+    erg = {}
+    link = "https://finance.yahoo.com/quote/" + stock + "/key-statistics?p=" + stock
+    driver = webdriver.Chrome(os.getcwd() + '/chromedriver')       # Use chromedriver.exe to read website
+    driver.get(link)                                               # Read link
+    time.sleep(2)                                                  # Wait till the full site is loaded
+    driver.find_element_by_name("agree").click()
+    time.sleep(2)
+    soup = BeautifulSoup(driver.page_source, 'html.parser')        # Read page with html.parser
+    time.sleep (2)
+    driver.quit ()
+    tmp = soup.find('div', attrs={"data-reactid": "51"})
 
-print(erg,"\n")
-print(erg2,"\n")
-print(erg3,"\n")
+    row = [stock]
+    for i in ["64","69","71","73","75","77"]:
+        row.append(soup.find('span', attrs={"data-reactid": i}).text.strip())
+    erg["title"]=row
+
+    row = [soup.find('span', attrs={"data-reactid": "81"}).text.strip()]
+    for i in ["86","87","88","89","90","91"]:
+        row.append (soup.find ('td', attrs={"data-reactid": i}).text.strip ())
+    erg["marketcap"]=row
+
+    row = [soup.find ('span', attrs={"data-reactid": "94"}).text.strip ()]
+    for i in ["99","100","101","102","103","104"]:
+        row.append (soup.find ('td', attrs={"data-reactid": i}).text.strip ())
+    erg["enterprise_value"] = row
+
+    row = [soup.find ('span', attrs={"data-reactid": "107"}).text.strip ()]
+    for i in range(112,118,1):
+        row.append (soup.find ('td', attrs={"data-reactid": i}).text.strip ())
+    erg["enterprise_value"] = row
+
+    row = [soup.find ('span', attrs={"data-reactid": "120"}).text.strip ()]
+    for i in range (125, 131, 1):
+        row.append (soup.find ('td', attrs={"data-reactid": i}).text.strip ())
+    erg["forward_pe"] = row
+
+    row = [soup.find ('span', attrs={"data-reactid": "133"}).text.strip ()]
+    for i in range (138, 144, 1):
+        row.append (soup.find ('td', attrs={"data-reactid": i}).text.strip ())
+    erg["peg_ratio_expected"] = row
+
+    row = [soup.find ('span', attrs={"data-reactid": "146"}).text.strip ()]
+    for i in range (151, 157, 1):
+        row.append (soup.find ('td', attrs={"data-reactid": i}).text.strip ())
+    erg["price_sales"] = row
+
+    row = [soup.find ('span', attrs={"data-reactid": "159"}).text.strip ()]
+    for i in range (164, 170, 1):
+        row.append (soup.find ('td', attrs={"data-reactid": i}).text.strip ())
+    erg["price_book"] = row
+
+    row = [soup.find ('span', attrs={"data-reactid": "172"}).text.strip ()]
+    for i in range (177, 183, 1):
+        row.append (soup.find ('td', attrs={"data-reactid": i}).text.strip ())
+    erg["ev_revenue"] = row
+
+    row = [soup.find ('span', attrs={"data-reactid": "185"}).text.strip ()]
+    for i in range (190, 196, 1):
+        row.append (soup.find ('td', attrs={"data-reactid": i}).text.strip ())
+    erg["ev_ebidta"] = row
+
+    return (erg)
+
+def read_yahoo_income_statement(stock):
+# Read income statement stock data from yahoo
+    erg = {}
+    link = "https://finance.yahoo.com/quote/" + stock + "/financials?p=" + stock
+    driver = webdriver.Chrome(os.getcwd() + '/chromedriver')       # Use chromedriver.exe to read website
+    driver.get(link)                                               # Read link
+    time.sleep(2)                                                  # Wait till the full site is loaded
+    driver.find_element_by_name("agree").click()
+    time.sleep(2)
+    soup = BeautifulSoup(driver.page_source, 'html.parser')        # Read page with html.parser
+    time.sleep (2)
+    driver.quit ()
+    div_id = soup.find(id="Col1-1-Financials-Proxy")
+
+    tmp_list = []
+    for row in div_id.find_all("span"): tmp_list.append(row.text.strip())
+    while tmp_list[0] != "Breakdown": tmp_list.pop(0)
+    idx = 0
+    while idx<len(tmp_list):
+        tmp_list[idx] = tmp_list[idx].lower().replace(" ","_")
+        check_missing = True
+        tmp_row = tmp_list[idx+1:idx+6]
+        diff_tmp = 0
+        while True:
+            if tmp_row == []: break
+            if tmp_row[0] == "ttm": break
+            shift=False
+            for tr_idx,tr_cont in enumerate(tmp_row):
+                if tr_cont[0].isalpha():
+                    tmp_row.insert(0,"-")
+                    tmp_row.pop()
+                    diff_tmp += 1
+                    shift=True
+            if shift == False: break
+        erg[tmp_list[idx]] = tmp_row
+        idx = idx + 6 - diff_tmp
+
+    del_list = []
+    # format alle float-content of the dict
+    for key,val in erg.items():
+        if val == []: del_list.append(key)
+        for val_i, val_cont in enumerate(val):
+            if val_cont.replace(",","").replace("-","").isdigit():
+                val[val_i] = float(val_cont.replace(",",""))
+        erg[key] = val
+    # delete entries with empty content
+    for i in del_list: del erg[i]
+
+    return (erg)
+
+
+
+
+
+
+stock = "AAPL"
+#erg = read_yahoo_summary(stock)
+#erg2 = read_yahoo_profile(stock)
+#erg3 = read_yahoo_statistics(stock)
+#erg4 = read_yahoo_statistics_valuation(stock)
+erg5 = read_yahoo_income_statement(stock)
+
+#print(erg,"\n")
+#print(erg2,"\n")
+#print(erg3,"\n")
+#print(erg4,"\n")
+print(erg5,"\n")
 
 # for key, val in erg.items():
 #     print(key,":",val)
@@ -158,3 +286,5 @@ print(erg3,"\n")
 # for key, val in erg2.items():
 #     print(key,":",val)
 #     print(type(val))
+#for key,val in erg5.items():
+#    print(key,val)

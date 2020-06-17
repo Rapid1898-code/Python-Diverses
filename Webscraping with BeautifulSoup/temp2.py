@@ -1,10 +1,14 @@
-from datetime import datetime
-now = datetime.now()
-d = datetime(2020,3,5,19,27,23)
-print(now)
-print(d)
-diff = now-d
-print(diff.days)
-print(diff.seconds)
-print(diff.total_seconds()/60)
+s = ["200","abc","300","400","500"]
 
+diff_temp = 0
+while True:
+    shift=False
+    for i,cont in enumerate(s):
+        if cont[0].isalpha ():
+            s.insert(0,"-")
+            s.pop()
+            diff_temp += 1
+            shift=True
+    if shift == False: break
+print(s)
+print (diff_temp)
