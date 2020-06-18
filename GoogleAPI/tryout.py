@@ -15,20 +15,21 @@ row = sheet.row_values(3)  # Get a specific row
 pprint(row)
 
 col = sheet.col_values(3)  # Get a specific column
-pprint(col)
+print("Col: ",col)
 
 cell = sheet.cell(1,2).value  # Get the value of a specific cell
 pprint(cell)
 
 sheet.update_cell(2,2, "CHANGED")  # Update one cell
 
-numRows = sheet.row_count  # Get the number of rows in the sheet
-print(numRows)
-print(len(data))
+sheet.update_cell(3,3,"UPDATE")
 
+numRows = sheet.row_count  # Get the number of rows in the sheet
 # sheet.delete_rows(4)
 
 insertRow = [10, "NEW","NEW"]
 #sheet.append_row(insertRow)
 sheet.insert_row(insertRow,2)
-
+sheet.sort((1, 'asc'), (2, 'des'), range='A2:G20')
+print(sheet.cell (2, 3).value)
+print(len(sheet.get_all_records()))

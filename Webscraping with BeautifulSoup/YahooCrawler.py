@@ -262,23 +262,132 @@ def read_yahoo_income_statement(stock):
 
     return (erg)
 
+def read_yahoo_balance_sheet(stock):
+# Read balance_sheet stock data from yahoo
+# Overview over the different informations (??? are not displayed on the html-page)
+####################################################################################
+# Breakdown => Breakdown ['9/29/2019', '9/29/2018', '9/29/2017', '9/29/2016']
+# (Total) Assets        => Total Assets ['338,516,000', '365,725,000', '375,319,000', '321,686,000']
+#   => = Total liabilities and stockholderes equity
+# Total Current Assets / Current Assets    => Current Assets ['162,819,000', '131,339,000', '128,645,000', '106,869,000']
+# Total Cash / Cash     => Cash, Cash Equivalents & Short Term Investments ['100,557,000', '66,301,000', '74,181,000', '67,155,000']
+# Cash And Cash Equivalents     => Cash And Cash Equivalents ['48,844,000', '25,913,000', '20,289,000', '20,484,000']
+# ???               => Cash ['12,204,000', '11,575,000', '7,982,000', '8,601,000']
+# ???               => Cash Equivalents ['36,640,000', '14,338,000', '12,307,000', '11,883,000']
+# Other Short Term Investments      => Other Short Term Investments ['51,713,000', '40,388,000', '53,892,000', '46,671,000']
+# ???               => Receivables ['45,804,000', '48,995,000', '35,673,000', '29,299,000']
+# Net receivable    => Accounts receivable ['22,926,000', '23,186,000', '17,874,000', '15,754,000']
+# ???               => Gross Accounts Receivable ['-', '-', '17,932,000', '15,807,000']
+# ???               => Allowance For Doubtful Accounts Receivable ['-', '-', '-58,000', '-53,000']
+# ???               => Other Receivables ['22,878,000', '25,809,000', '17,799,000', '13,545,000']
+# Inventory         => Inventory ['4,106,000', '3,956,000', '4,855,000', '2,132,000']
+# Other Current Assets      => Other Current Assets ['12,352,000', '12,087,000', '13,936,000', '8,283,000']
+# (Total) Non-current assets        => Total non-current assets ['175,697,000', '234,386,000', '246,674,000', '214,817,000']
+# (Net) Property, plant, equipment        => Net PPE ['37,378,000', '41,304,000', '33,783,000', '27,010,000']
+# Gross Property, plant, equipment          => Gross PPE ['95,957,000', '90,403,000', '75,076,000', '61,245,000']
+# ???               => Properties ['0', '0', '0', '0']
+# ???               => Land And Improvements ['17,085,000', '16,216,000', '13,587,000', '10,185,000']
+# ???               => Machinery Furniture Equipment ['69,797,000', '65,982,000', '54,210,000', '44,543,000']
+# ???               => Leases ['9,075,000', '8,205,000', '7,279,000', '6,517,000']
+# Accumulated Depreciation      => Accumulated Depreciation ['-58,579,000', '-49,099,000', '-41,293,000', '-34,235,000']
+# ???               => Goodwill And Other Intangible Assets ['-', '-', '8,015,000', '8,620,000']
+# Goodwill          => Goodwill ['-', '-', '5,717,000', '5,414,000']
+# Intabgible Assets         => Other Intangible Assets ['-', '-', '2,298,000', '3,206,000']
+# Equity and other investments      => Investments And Advances ['105,341,000', '170,799,000', '194,714,000', '170,430,000']
+# Equity and other investments      => Investment in Financial Assets ['105,341,000', '170,799,000', '194,714,000', '170,430,000']
+# Equity and other investments      => Available for Sale Securities ['105,341,000', '170,799,000', '194,714,000', '170,430,000']
+# Other long-term assets        => Other Non Current Assets ['32,978,000', '22,283,000', '10,162,000', '8,757,000']
+# (Total) Liabilities           => Total Liabilities Net Minority Interest ['248,028,000', '258,578,000', '241,272,000', '193,437,000']
+# (Total) Current Liabilities      => Current Liabilities ['105,718,000', '116,866,000', '100,814,000', '79,006,000']
+# ???               => Payables And Accrued Expenses ['46,236,000', '55,888,000', '74,793,000', '59,321,000']
+# ???               => Payables ['46,236,000', '55,888,000', '49,049,000', '37,294,000']
+# Accounts Payable          => Accounts Payable ['46,236,000', '55,888,000', '49,049,000', '37,294,000']
+# Accrued Liabilities           => Current Accrued Expenses ['-', '-', '25,744,000', '22,027,000']
+# ???               => Current Debt And Capital Lease Obligation ['16,240,000', '20,748,000', '18,473,000', '11,605,000']
+# Current Debt          => Current Debt ['16,240,000', '20,748,000', '18,473,000', '11,605,000']
+# ???               => Commercial Paper ['5,980,000', '11,964,000', '11,977,000', '8,105,000']
+# ???               => Other Current Borrowings ['10,260,000', '8,784,000', '6,496,000', '3,500,000']
+# Deffered revenues             => Current Deferred Liabilities ['5,522,000', '7,543,000', '7,548,000', '8,080,000']
+# Deffered revenues             => Current Deferred Revenue ['5,522,000', '7,543,000', '7,548,000', '8,080,000']
+# Other Current Liabilities         => Other Current Liabilities ['37,720,000', '32,687,000', '-', '-']
+# ???           => Long Term Debt And Capital Lease Obligation ['91,807,000', '93,735,000', '97,207,000', '75,427,000']
+# Long Term Debt            => Long Term Debt ['91,807,000', '93,735,000', '97,207,000', '75,427,000']
+# ???           => Non Current Deferred Liabilities ['-', '3,223,000', '34,340,000', '28,949,000']
+# Deferred Tabex Liabilities        => Non Current Deferred Taxes Liabilities ['-', '426,000', '31,504,000', '26,019,000']
+# Deferred revenues         => Non Current Deferred Revenue ['-', '2,797,000', '2,836,000', '2,930,000']
+# ???           => Tradeand Other Payables Non Current ['29,545,000', '33,589,000', '-', '-']
+# Other Non Current Liabilities         => Other Non Current Liabilities ['20,958,000', '11,165,000', '8,911,000', '10,055,000']
+# ???           => Total Equity Gross Minority Interest ['90,488,000', '107,147,000', '134,047,000', '128,249,000']
+# (Total) Stockholder Equity        => Stockholders' Equity ['90,488,000', '107,147,000', '134,047,000', '128,249,000']
+# ???           => Capital Stock ['45,174,000', '40,201,000', '35,867,000', '31,251,000']
+# Common Stock      => Common Stock ['45,174,000', '40,201,000', '35,867,000', '31,251,000']
+# Retained Earnings         => Retained Earnings ['45,898,000', '70,400,000', '98,330,000', '96,364,000']
+# Gains Losses Not Affecting Retained Earnings ['-584,000', '-3,454,000', '-150,000', '634,000']
+# ???           => Total Capitalization ['182,295,000', '200,882,000', '231,254,000', '203,676,000']
+# ???           => Common Stock Equity ['90,488,000', '107,147,000', '134,047,000', '128,249,000']
+# ???           => Net Tangible Assets ['90,488,000', '107,147,000', '126,032,000', '119,629,000']
+# ???           => Working Capital ['57,101,000', '14,473,000', '27,831,000', '27,863,000']
+# ???           => Invested Capital ['198,535,000', '221,630,000', '249,727,000', '215,281,000']
+# ???           => Tangible Book Value ['90,488,000', '107,147,000', '126,032,000', '119,629,000']
+# ???           => Total Debt ['108,047,000', '114,483,000', '115,680,000', '87,032,000']
+# ???           => Net Debt ['59,203,000', '88,570,000', '95,391,000', '66,548,000']
+# ???           => Share Issued ['4,443,236', '4,754,986', '5,126,201', '5,336,166']
+# ???           => Ordinary Shares Number ['4,443,236', '4,754,986', '5,126,201', '5,336,166']
 
+    erg = {}
+    link = "https://finance.yahoo.com/quote/" + stock + "/balance-sheet?p=" + stock
+    driver = webdriver.Chrome (os.getcwd () + '/chromedriver')
+    driver.get (link)
+    time.sleep (2)
+    driver.find_element_by_name ("agree").click ()
+    time.sleep (2)
+    driver.find_element_by_xpath ('//*[@id="Col1-1-Financials-Proxy"]/section/div[2]/button/div/span').click ()
+    time.sleep (2)
+    soup = BeautifulSoup (driver.page_source, 'html.parser')
+    time.sleep (2)
+    driver.quit ()
+    table = soup.find (id="Col1-1-Financials-Proxy")
 
+    list_div = []
+    for e in table.find_all (["div"]): list_div.append (e.text.strip ())
+    while list_div[0] != "Breakdown": list_div.pop (0)
+    for i in range (len (list_div) - 1, 0, -1):
+        if list_div[i].replace (",", "").replace ("-", "").isdigit () or list_div[i] == "-": continue
+        elif i == len (list_div) - 1: del list_div[i]
+        elif len (list_div[i]) == 0: del list_div[i]
+        elif len (list_div[i]) > 50: del list_div[i]
+        elif i == 0: break
+        elif list_div[i] == list_div[i - 1]: del list_div[i]
+        elif list_div[i + 1] in list_div[i]: del list_div[i]
+    idx = 0
+    while idx < len (list_div):
+        if list_div[idx].replace (",", "").replace ("-", "").isdigit () == False and list_div[idx] != "-":
+            idx += 5
+        else:
+            while list_div[idx].replace (",", "").replace ("-", "").isdigit () == True or list_div[idx] == "-":
+                del list_div[idx]
+    idx = 0
+    while idx < len (list_div):
+        erg[list_div[idx]] = list_div[idx + 1:idx + 5]
+        idx += 5
 
-
+    return (erg)
 
 stock = "AAPL"
+#stock = "AMZN"
 #erg = read_yahoo_summary(stock)
 #erg2 = read_yahoo_profile(stock)
 #erg3 = read_yahoo_statistics(stock)
 #erg4 = read_yahoo_statistics_valuation(stock)
-erg5 = read_yahoo_income_statement(stock)
+#erg5 = read_yahoo_income_statement(stock)
+erg6 = read_yahoo_balance_sheet(stock)
 
 #print(erg,"\n")
 #print(erg2,"\n")
 #print(erg3,"\n")
 #print(erg4,"\n")
-print(erg5,"\n")
+#print(erg5,"\n")
+#print(erg6,"\n")
 
 # for key, val in erg.items():
 #     print(key,":",val)
@@ -286,5 +395,5 @@ print(erg5,"\n")
 # for key, val in erg2.items():
 #     print(key,":",val)
 #     print(type(val))
-#for key,val in erg5.items():
-#    print(key,val)
+for key,val in erg6.items():
+    print(key,val)
