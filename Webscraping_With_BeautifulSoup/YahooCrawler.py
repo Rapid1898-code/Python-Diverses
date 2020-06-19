@@ -3,6 +3,7 @@ from bs4 import BeautifulSoup
 from selenium import webdriver
 import time
 import os
+from selenium.webdriver.chrome.options import Options
 
 def is_na(value):
     if "N/A" in value: return "N/A"
@@ -10,6 +11,11 @@ def is_na(value):
 
 def read_yahoo_summary(stock):
     # Read summary stock data from yahoo
+
+    # options = Options ()
+    # options.add_argument('--headless')
+    #driver = webdriver.Chrome (os.getcwd () + '/chromedriver', options=options)
+
     erg = {}
     link = "https://finance.yahoo.com/quote/" + stock
     page = requests.get (link)
@@ -89,127 +95,100 @@ def read_yahoo_profile(stock):
 
 def read_yahoo_statistics(stock):
 # Read statistics stock data from yahoo
-    erg = {}
+# Statistics Single Data
+# Beta (5Y Monthly) 1.17
+# 52-Week Change 3 76.11%
+# S&P500 52-Week Change 3 5.17%
+# 52 Week High 3 356.56
+# 52 Week Low 3 192.58
+# 50-Day Moving Average 3 322.20
+# 200-Day Moving Average 3 295.49
+# Avg Vol (3 month) 3 40.28M
+# Avg Vol (10 day) 3 42.12M
+# Shares Outstanding 5 4.33B
+# Float 4.33B
+# % Held by Insiders 1 0.07%
+# % Held by Institutions 1 62.12%
+# Shares Short (May 28, 2020) 4 34.19M
+# Short Ratio (May 28, 2020) 4 0.96
+# Short % of Float (May 28, 2020) 4 0.79%
+# Short % of Shares Outstanding (May 28, 2020) 4 0.79%
+# Shares Short (prior month Apr 29, 2020) 4 30.12M
+# Forward Annual Dividend Rate 4 3.28
+# Forward Annual Dividend Yield 4 0.93%
+# Trailing Annual Dividend Rate 3 3.08
+# Trailing Annual Dividend Yield 3 0.88%
+# 5 Year Average Dividend Yield 4 1.58
+# Payout Ratio 4 24.08%
+# Dividend Date 3 May 13, 2020
+# Ex-Dividend Date 4 May 07, 2020
+# Last Split Factor 2 7:1
+# Last Split Date 3 Jun 08, 2014
+# Fiscal Year Ends Sep 27, 2019
+# Most Recent Quarter (mrq) Mar 27, 2020
+# Profit Margin 21.35%
+# Operating Margin (ttm) 24.48%
+# Return on Assets (ttm) 12.38%
+# Return on Equity (ttm) 62.09%
+# Revenue (ttm) 267.98B
+# Revenue Per Share (ttm) 60.10
+# Quarterly Revenue Growth (yoy) 0.50%
+# Gross Profit (ttm) 98.39B
+# EBITDA 77.31B
+# Net Income Avi to Common (ttm) 57.22B
+# Diluted EPS (ttm) 12.73
+# Quarterly Earnings Growth (yoy) -2.70%
+# Total Cash (mrq) 94.05B
+# Total Cash Per Share (mrq) 21.7
+# Total Debt (mrq) 118.76B
+# Total Debt/Equity (mrq) 151.43
+# Current Ratio (mrq) 1.50
+# Book Value Per Share (mrq) 18.14
+# Operating Cash Flow (ttm) 75.37B
+# Levered Free Cash Flow (ttm) 45.04B
+# Data for statistics valuation data
+# ['As of Date: 6/15/2020Current', '3/31/2020', '12/31/2019', '9/30/2019', '6/30/2019', '3/31/2019']
+# Market Cap (intraday) 5 ['1.47T', '1.10T', '1.29T', '995.15B', '910.64B', '895.67B']
+# Enterprise Value 3 ['1.48T', '1.10T', '1.30T', '1.01T', '943.18B', '923.97B']
+# Trailing P/E ['26.49', '20.02', '24.70', '19.01', '16.58', '15.57']
+# Forward P/E 1 ['22.57', '19.65', '22.17', '17.27', '15.97', '16.58']
+# PEG Ratio (5 yr expected) 1 ['1.88', '1.58', '2.03', '2.04', '1.45', '1.82']
+# Price/Sales (ttm) ['5.68', '4.34', '5.25', '4.09', '3.68', '3.56']
+# Price/Book (mrq) ['18.72', '12.28', '14.23', '10.32', '8.47', '7.42']
+# Enterprise Value/Revenue 3 ['5.54', '18.88', '14.11', '15.76', '17.53', '15.93']
+# Enterprise Value/EBITDA 6 ['18.09', '66.00', '43.87', '50.16', '60.04', '51.78']
+    erg_stat = {}
+    erg_val = {}
     link = "https://finance.yahoo.com/quote/" + stock + "/key-statistics?p=" + stock
-    page = requests.get (link)
-    soup = BeautifulSoup (page.content, "html.parser")
-    erg["symbol"] = stock
-    erg["fiscal_year_ends"] = is_na(soup.find('td', attrs={'data-reactid': '320'}).text.strip())
-    erg["recent_quarter"] = is_na(soup.find('td', attrs={"data-reactid": "327"}).text.strip())
-    erg["profit_margin"] = is_na(soup.find('td', attrs={"data-reactid": "341"}).text.strip())
-    erg["operating_margin"] = is_na(soup.find('td', attrs={"data-reactid": "348"}).text.strip())
-    erg["ROA"] = is_na(soup.find('td', attrs={"data-reactid": "362"}).text.strip())
-    erg["ROE"] = is_na(soup.find('td', attrs={"data-reactid": "369"}).text.strip())
-    erg["revenue"] = is_na(soup.find('td', attrs={"data-reactid": "383"}).text.strip())
-    erg["revenue_per_share"] = is_na(soup.find('td', attrs={"data-reactid": "390"}).text.strip())
-    erg["quart_rev_growth"] = is_na(soup.find('td', attrs={"data-reactid": "397"}).text.strip())
-    erg["gross_profit"] = is_na(soup.find ('td', attrs={"data-reactid": "404"}).text.strip ())
-    erg["EBITDA"] = is_na(soup.find ('td', attrs={"data-reactid": "411"}).text.strip ())
-    erg["netincome"] = is_na(soup.find ('td', attrs={"data-reactid": "418"}).text.strip ())
-    erg["dil_eps"] = is_na(soup.find ('td', attrs={"data-reactid": "425"}).text.strip ())#
-    erg["quart_earnings_growth"] = is_na(soup.find ('td', attrs={"data-reactid": "432"}).text.strip ())
-    erg["total_cash"] = is_na(soup.find ('td', attrs={"data-reactid": "448"}).text.strip ())
-    erg["total_cash_per_share"] = is_na(soup.find ('td', attrs={"data-reactid": "453"}).text.strip ())
-    erg["total_debt"] = is_na(soup.find ('td', attrs={"data-reactid": "460"}).text.strip ())
-    erg["total_debt_equity"] = is_na(soup.find ('td', attrs={"data-reactid": "467"}).text.strip ())
-    erg["current_ratio"] = is_na (soup.find ('td', attrs={"data-reactid": "474"}).text.strip ())
-    erg["book_value_per_share"] = is_na (soup.find ('td', attrs={"data-reactid": "481"}).text.strip ())
-    erg["oper_cashflow"] = is_na (soup.find ('td', attrs={"data-reactid": "495"}).text.strip ())
-    erg["free_cashflow"] = is_na (soup.find ('td', attrs={"data-reactid": "502"}).text.strip ())
-    erg["52w_change"] = is_na (soup.find ('td', attrs={"data-reactid": "106"}).text.strip ())
-    erg["52w_change"] = is_na (soup.find ('td', attrs={"data-reactid": "106"}).text.strip ())
-    erg["50d_ma"] = is_na (soup.find ('td', attrs={"data-reactid": "134"}).text.strip ())
-    erg["200d_ma"] = is_na (soup.find ('td', attrs={"data-reactid": "141"}).text.strip ())
-    erg["avg_vol_3m"] = is_na (soup.find ('td', attrs={"data-reactid": "155"}).text.strip ())
-    erg["avg_vol_10d"] = is_na (soup.find ('td', attrs={"data-reactid": "162"}).text.strip ())
-    erg["shares_outstanding"] = is_na (soup.find ('td', attrs={"data-reactid": "169"}).text.strip ())
-    erg["float"] = is_na (soup.find ('td', attrs={"data-reactid": "176"}).text.strip ())
-    erg["held_insiders"] = is_na (soup.find ('td', attrs={"data-reactid": "183"}).text.strip ())
-    erg["held_institutions"] = is_na (soup.find ('td', attrs={"data-reactid": "190"}).text.strip ())
-    erg["shares_short"] = is_na (soup.find ('td', attrs={"data-reactid": "197"}).text.strip ())
-    erg["short_rato"] = is_na (soup.find ('td', attrs={"data-reactid": "204"}).text.strip ())
-    erg["short_of_float"] = is_na (soup.find ('td', attrs={"data-reactid": "211"}).text.strip ())
-    erg["short_of_shares_outstanding"] = is_na (soup.find ('td', attrs={"data-reactid": "218"}).text.strip ())
-    erg["shares_short"] = is_na (soup.find ('td', attrs={"data-reactid": "225"}).text.strip ())
-    erg["forw_dividend"] = is_na (soup.find ('td', attrs={"data-reactid": "239"}).text.strip ())
-    erg["forw_div_yield"] = is_na (soup.find ('td', attrs={"data-reactid": "246"}).text.strip ())
-    erg["trailing_dividend"] = is_na (soup.find ('td', attrs={"data-reactid": "253"}).text.strip ())
-    erg["trailing_div_yield"] = is_na (soup.find ('td', attrs={"data-reactid": "260"}).text.strip ())
-    erg["5y_avg_div_yield"] = is_na (soup.find ('td', attrs={"data-reactid": "267"}).text.strip ())
-    erg["payout_ratio"] = is_na (soup.find ('td', attrs={"data-reactid": "274"}).text.strip ())
-    erg["dividend_date"] = is_na (soup.find ('td', attrs={"data-reactid": "281"}).text.strip ())
-    erg["ex_dividend_date"] = is_na (soup.find ('td', attrs={"data-reactid": "290"}).text.strip ())
-    erg["last_split_factor"] = is_na (soup.find ('td', attrs={"data-reactid": "295"}).text.strip ())
-    erg["last_split_date"] = is_na (soup.find ('td', attrs={"data-reactid": "302"}).text.strip ())
-
-
-    return (erg)
-
-def read_yahoo_statistics_valuation(stock):
-# Read statistics valuation stock data from yahoo
-    erg = {}
-    link = "https://finance.yahoo.com/quote/" + stock + "/key-statistics?p=" + stock
-    driver = webdriver.Chrome(os.getcwd() + '/chromedriver')       # Use chromedriver.exe to read website
-    driver.get(link)                                               # Read link
-    time.sleep(2)                                                  # Wait till the full site is loaded
-    driver.find_element_by_name("agree").click()
-    time.sleep(2)
-    soup = BeautifulSoup(driver.page_source, 'html.parser')        # Read page with html.parser
+    driver = webdriver.Chrome (os.getcwd () + '/chromedriver')
+    driver.get (link)
+    time.sleep (2)
+    driver.find_element_by_name ("agree").click ()
+    time.sleep (2)
+    soup = BeautifulSoup (driver.page_source, 'html.parser')
     time.sleep (2)
     driver.quit ()
-    tmp = soup.find('div', attrs={"data-reactid": "51"})
 
-    row = [stock]
-    for i in ["64","69","71","73","75","77"]:
-        row.append(soup.find('span', attrs={"data-reactid": i}).text.strip())
-    erg["title"]=row
+    erg_stat = {}
+    erg_val = {}
+    tmp_list = []
+    table  = soup.find(id="Col1-0-KeyStatistics-Proxy")
+    for e in table.find_all(["th","td"]): tmp_list.append(e.text.strip())
+    for idx,cont in enumerate(tmp_list):
+        if "Beta" in cont:
+            tmp_list_stat = list(tmp_list[idx:])
+            tmp_list_val =  list(tmp_list[:idx])
+    for i in range(0,len(tmp_list_stat),2):
+        if tmp_list_stat[i][-1] in ["1","2","3","4","5","6"]: tmp_list_stat[i] = tmp_list_stat[i][:len(tmp_list_stat[i])-2]
+        erg_stat[tmp_list_stat[i]] = is_na(tmp_list_stat[i+1])
+    for i in range(0,len(tmp_list_val),7):
+        if tmp_list_val[i] != "":
+            if tmp_list_val[i][-1] in ["1","2","3","4","5","6"]:
+                tmp_list_val[i] = tmp_list_val[i][:len(tmp_list_val[i])-2]
+        else: tmp_list_val[i] = "Header"
+        erg_val[tmp_list_val[i]] = tmp_list_val[i+1:i+7]
 
-    row = [soup.find('span', attrs={"data-reactid": "81"}).text.strip()]
-    for i in ["86","87","88","89","90","91"]:
-        row.append (soup.find ('td', attrs={"data-reactid": i}).text.strip ())
-    erg["marketcap"]=row
-
-    row = [soup.find ('span', attrs={"data-reactid": "94"}).text.strip ()]
-    for i in ["99","100","101","102","103","104"]:
-        row.append (soup.find ('td', attrs={"data-reactid": i}).text.strip ())
-    erg["enterprise_value"] = row
-
-    row = [soup.find ('span', attrs={"data-reactid": "107"}).text.strip ()]
-    for i in range(112,118,1):
-        row.append (soup.find ('td', attrs={"data-reactid": i}).text.strip ())
-    erg["enterprise_value"] = row
-
-    row = [soup.find ('span', attrs={"data-reactid": "120"}).text.strip ()]
-    for i in range (125, 131, 1):
-        row.append (soup.find ('td', attrs={"data-reactid": i}).text.strip ())
-    erg["forward_pe"] = row
-
-    row = [soup.find ('span', attrs={"data-reactid": "133"}).text.strip ()]
-    for i in range (138, 144, 1):
-        row.append (soup.find ('td', attrs={"data-reactid": i}).text.strip ())
-    erg["peg_ratio_expected"] = row
-
-    row = [soup.find ('span', attrs={"data-reactid": "146"}).text.strip ()]
-    for i in range (151, 157, 1):
-        row.append (soup.find ('td', attrs={"data-reactid": i}).text.strip ())
-    erg["price_sales"] = row
-
-    row = [soup.find ('span', attrs={"data-reactid": "159"}).text.strip ()]
-    for i in range (164, 170, 1):
-        row.append (soup.find ('td', attrs={"data-reactid": i}).text.strip ())
-    erg["price_book"] = row
-
-    row = [soup.find ('span', attrs={"data-reactid": "172"}).text.strip ()]
-    for i in range (177, 183, 1):
-        row.append (soup.find ('td', attrs={"data-reactid": i}).text.strip ())
-    erg["ev_revenue"] = row
-
-    row = [soup.find ('span', attrs={"data-reactid": "185"}).text.strip ()]
-    for i in range (190, 196, 1):
-        row.append (soup.find ('td', attrs={"data-reactid": i}).text.strip ())
-    erg["ev_ebidta"] = row
-
-    return (erg)
+    return (erg_stat,erg_val)
 
 def read_yahoo_income_statement(stock):
 # Read income statement stock data from yahoo
@@ -377,14 +356,15 @@ def read_yahoo_balance_sheet(stock):
     soup = BeautifulSoup (driver.page_source, 'html.parser')
     time.sleep (2)
     driver.quit ()
-    table = soup.find (id="Col1-1-Financials-Proxy")
 
     table = soup.find (id="quote-header-info")
     erg["Header"] = [stock, "in thousands", table.find (["span"]).text.strip ()]
+    table = soup.find (id="Col1-1-Financials-Proxy")
 
     list_div = []
     for e in table.find_all (["div"]): list_div.append (e.text.strip ())
-    while list_div[0] != "Breakdown": list_div.pop (0)
+    print(list_div)
+    while list_div[0] != "Breakdown": list_div.pop(0)
     for i in range (len (list_div) - 1, 0, -1):
         if list_div[i].replace (",", "").replace ("-", "").isdigit () or list_div[i] == "-": continue
         elif i == len (list_div) - 1: del list_div[i]
@@ -549,28 +529,33 @@ def read_yahoo_analysis(stock):
     driver.find_element_by_name ("agree").click ()
     time.sleep (2)
     soup = BeautifulSoup (driver.page_source, 'html.parser')
-    time.sleep (2)
+    time.sleep (3)
     driver.quit ()
 
-    table  = soup.find(id="YDC-Col1")
+    table = soup.find(id="YDC-Col1")
     erg = {}
     list_table = []
     for e in table.find_all (["th", "td"]): list_table.append (e.text.strip ())
     for i in range (0, len (list_table), 5): erg[list_table[i]] = list_table[i + 1:i + 5]
 
+    tmp_list = []
+    table = soup.find (id="mrt-node-Col2-4-QuoteModule")
+    for i in table.find_all (["div"]):
+        if len(i.text.strip()) == 1: tmp_list.append(i.text.strip())
+    erg["Recommendation Rating"] = [tmp_list[0],"1 Strong Buy to 5 Sell"]
+
     return (erg)
 
 #stock = "CAT"
-stock = "AMZN"
-#stock = "AAPL"
+#stock = "AMZN"
+stock = "AAPL"
 #erg = read_yahoo_summary(stock)
 #erg2 = read_yahoo_profile(stock)
-erg3 = read_yahoo_statistics(stock)
-#erg4 = read_yahoo_statistics_valuation(stock)
+#erg3, erg4 = read_yahoo_statistics(stock)
 #erg5 = read_yahoo_income_statement(stock)
 #erg6 = read_yahoo_balance_sheet(stock)
 #erg7 = read_yahoo_cashflow(stock)
-#erg8 = read_yahoo_analysis(stock)
+erg8 = read_yahoo_analysis(stock)
 
 #print(erg,"\n")
 #print(erg2,"\n")
@@ -587,5 +572,5 @@ erg3 = read_yahoo_statistics(stock)
 # for key, val in erg2.items():
 #     print(key,":",val)
 #     print(type(val))
-for key,val in erg3.items():
+for key,val in erg8.items():
     print(key,val)

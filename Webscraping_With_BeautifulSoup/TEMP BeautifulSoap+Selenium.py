@@ -3,27 +3,70 @@ import time
 import os
 from selenium import webdriver
 from bs4 import BeautifulSoup
+from selenium.webdriver.chrome.options import Options
 
+def is_na(value):
+    if "N/A" in value: return "N/A"
+    else: return value
+
+#stock = "AAPL"
+#link = "https://finance.yahoo.com/quote/" + stock + "/key-statistics?p=" + stock
+#link = "https://finance.yahoo.com/quote/" + stock + "/balance-sheet?p=" + stock
 #link = "https://finance.yahoo.com/quote/AAPL/cash-flow?p=AAPL"
 link = "https://finance.yahoo.com/quote/AAPL/analysis?p=AAPL"
 #link = "https://finance.yahoo.com/quote/CAT/analysis?p=CAT"
 #link = "https://finance.yahoo.com/quote/MSFT/analysis?p=MSFT"
-driver = webdriver.Chrome(os.getcwd() + '/chromedriver')
+#options = Options()
+#options.add_argument('--headless')
+#driver = webdriver.Chrome(os.getcwd() + '/chromedriver', options=options)
+driver = webdriver.Chrome (os.getcwd () + '/chromedriver')
 driver.get(link)
-time.sleep(2)
+time.sleep(3)
 driver.find_element_by_name("agree").click()
-time.sleep (2)
+time.sleep (3)
 soup = BeautifulSoup(driver.page_source, 'html.parser')
-time.sleep (2)
+time.sleep (3)
 driver.quit ()
 
 tmp_list = []
-table  = soup.find(id="mrt-node-Col2-4-QuoteModule")
-for e in table.find_all(["div"]): tmp_list.append(e.text.strip())
-for i in range (len(tmp_list)-1,0,-1):
-    if len(tmp_list[i]) != 1: del tmp_list[i]
-print(tmp_list)
+#table  = soup.find(id="YDC-Col2")
+table = soup.find("div", class_="Pos(r) T(5px) Miw(100px) Fz(s) Fw(500) D(ib) C($primaryColor)Ta(c) Translate3d($half3dTranslate)")
+#table = soup.find (id="mrt-node-Col2-4-QuoteModule")
+for i in table.find_all(["div"]): print(i.text.strip())
 
+#for e in table.find_all(["span"]): print(e.text.strip())
+#for e in table.find_all(["div"]): tmp_list.append(e.text.strip())
+#for i in range (len(tmp_list)-1,0,-1):
+#    if len(tmp_list[i]) != 1: del tmp_list[i]
+
+
+"""
+list_div = []
+table = soup.find(id="Col1-1-Financials-Proxy")
+for e in table.find_all (["div"]): print(e.text.strip())
+"""
+
+"""
+erg_stat = {}
+erg_val = {}
+tmp_list = []
+table  = soup.find(id="Col1-0-KeyStatistics-Proxy")
+for e in table.find_all(["th","td"]): tmp_list.append(e.text.strip())
+for idx,cont in enumerate(tmp_list):
+    if "Beta" in cont:
+        tmp_list_stat = list(tmp_list[idx:])
+        tmp_list_val =  list(tmp_list[:idx])
+for i in range(0,len(tmp_list_stat),2): erg_stat[tmp_list_stat[i]] = is_na(tmp_list_stat[i+1])
+for i in range(0,len(tmp_list_val),7): erg_val[tmp_list_val[i]] = tmp_list_val[i+1:i+7]
+"""
+
+#for key,val in erg_stat.items():
+#    print(key,val)
+#print(len(erg_stat))
+
+#for key,val in erg_val.items():
+#    print(key,val)
+#print(len(erg_val))
 
 """
 table  = soup.find(id="YDC-Col1")
