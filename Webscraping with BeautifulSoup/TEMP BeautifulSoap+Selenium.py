@@ -18,7 +18,9 @@ soup = BeautifulSoup(driver.page_source, 'html.parser')
 time.sleep (2)
 driver.quit ()
 table  = soup.find(id="Col1-1-Financials-Proxy")
+for e in table.find_all(["span"]): print(e.text.strip())
 
+"""
 erg = {}
 list_div = []
 for e in table.find_all(["div"]): list_div.append(e.text.strip())
@@ -51,7 +53,7 @@ print(len(erg))
 #while idx < len(list_span)L
 #    key = list_span[idx]
 #    list_div.index()
-
+"""
 
 
 """
