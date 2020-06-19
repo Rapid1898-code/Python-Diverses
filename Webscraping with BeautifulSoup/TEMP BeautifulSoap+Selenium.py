@@ -4,6 +4,7 @@ import os
 from selenium import webdriver
 from bs4 import BeautifulSoup
 
+#link = "https://finance.yahoo.com/quote/AAPL/cash-flow?p=AAPL"
 link = "https://finance.yahoo.com/quote/AAPL/analysis?p=AAPL"
 #link = "https://finance.yahoo.com/quote/CAT/analysis?p=CAT"
 #link = "https://finance.yahoo.com/quote/MSFT/analysis?p=MSFT"
@@ -16,6 +17,15 @@ soup = BeautifulSoup(driver.page_source, 'html.parser')
 time.sleep (2)
 driver.quit ()
 
+tmp_list = []
+table  = soup.find(id="mrt-node-Col2-4-QuoteModule")
+for e in table.find_all(["div"]): tmp_list.append(e.text.strip())
+for i in range (len(tmp_list)-1,0,-1):
+    if len(tmp_list[i]) != 1: del tmp_list[i]
+print(tmp_list)
+
+
+"""
 table  = soup.find(id="YDC-Col1")
 erg = {}
 list_table = []
@@ -25,6 +35,7 @@ for i in range(0,len(list_table),5): erg[list_table[i]] = list_table[i+1:i+5]
 for key,val in erg.items():
     print(key,val)
 print(len(erg))
+"""
 
 """
 erg = {}

@@ -265,6 +265,9 @@ def read_yahoo_income_statement(stock):
     driver.quit ()
     div_id = soup.find(id="Col1-1-Financials-Proxy")
 
+    table = soup.find (id="quote-header-info")
+    erg["Header"] = [stock, "in thousands", table.find (["span"]).text.strip ()]
+
     list_div = []
     for e in div_id.find_all (["div"]): list_div.append (e.text.strip ())
     while list_div[0] != "Breakdown": list_div.pop (0)
@@ -377,6 +380,9 @@ def read_yahoo_balance_sheet(stock):
     driver.quit ()
     table = soup.find (id="Col1-1-Financials-Proxy")
 
+    table = soup.find (id="quote-header-info")
+    erg["Header"] = [stock, "in thousands", table.find (["span"]).text.strip ()]
+
     list_div = []
     for e in table.find_all (["div"]): list_div.append (e.text.strip ())
     while list_div[0] != "Breakdown": list_div.pop (0)
@@ -473,6 +479,9 @@ def read_yahoo_cashflow(stock):
     time.sleep (2)
     driver.quit ()
     div_id = soup.find(id="Col1-1-Financials-Proxy")
+
+    table  = soup.find(id="quote-header-info")
+    erg["Header"] = [stock,"in thousands",table.find(["span"]).text.strip()]
 
     list_div = []
     for e in div_id.find_all (["div"]): list_div.append (e.text.strip ())
