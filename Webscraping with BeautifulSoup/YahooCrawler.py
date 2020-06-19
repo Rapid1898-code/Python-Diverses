@@ -214,51 +214,79 @@ def read_yahoo_statistics_valuation(stock):
 
 def read_yahoo_income_statement(stock):
 # Read income statement stock data from yahoo
+# Breakdown ['ttm', '9/29/2019', '9/29/2018', '9/29/2017', '9/29/2016']
+# Total Revenue ['267,981,000', '260,174,000', '265,595,000', '229,234,000', '215,639,000']
+# Operating Revenue ['267,981,000', '260,174,000', '265,595,000', '229,234,000', '215,639,000']
+# Cost of Revenue ['165,854,000', '161,782,000', '163,756,000', '141,048,000', '131,376,000']
+# Gross Profit ['102,127,000', '98,392,000', '101,839,000', '88,186,000', '84,263,000']
+# Operating Expense ['36,536,000', '34,462,000', '30,941,000', '26,842,000', '24,239,000']
+# Selling General and Administrative ['19,153,000', '18,245,000', '16,705,000', '15,261,000', '14,194,000']
+# Research & Development ['17,383,000', '16,217,000', '14,236,000', '11,581,000', '10,045,000']
+# Operating Income ['65,591,000', '63,930,000', '70,898,000', '61,344,000', '60,024,000']
+# Net Non Operating Interest Income Expense ['1,172,000', '1,385,000', '2,446,000', '2,878,000', '2,543,000']
+# Interest Income Non Operating ['4,390,000', '4,961,000', '5,686,000', '5,201,000', '3,999,000']
+# Interest Expense Non Operating ['3,218,000', '3,576,000', '3,240,000', '2,323,000', '1,456,000']
+# Other Income Expense ['328,000', '422,000', '-441,000', '-133,000', '-1,195,000']
+# Other Non Operating Income Expenses ['328,000', '422,000', '-441,000', '-133,000', '-1,195,000']
+# Pretax Income ['67,091,000', '65,737,000', '72,903,000', '64,089,000', '61,372,000']
+# Tax Provision ['9,876,000', '10,481,000', '13,372,000', '15,738,000', '15,685,000']
+# Net Income Common Stockholders ['57,215,000', '55,256,000', '59,531,000', '48,351,000', '45,687,000']
+# Net Income ['57,215,000', '55,256,000', '59,531,000', '48,351,000', '45,687,000']
+# Net Income Including Non-Controlling Interests ['57,215,000', '55,256,000', '59,531,000', '48,351,000', '45,687,000']
+# Net Income Continuous Operations ['57,215,000', '55,256,000', '59,531,000', '48,351,000', '45,687,000']
+# Diluted NI Available to Com Stockholders ['57,215,000', '55,256,000', '59,531,000', '48,351,000', '45,687,000']
+# Basic EPS ['-', '0.012', '0.0093', '0.0084', 'Diluted EPS']
+# 0.0119 ['0.0092', '0.0083', 'Basic Average Shares', '-', '4,617,834']
+# Diluted Average Shares ['-', '4,648,913', '5,000,109', '5,251,692', '5,500,281']
+# Total Operating Income as Reported ['65,591,000', '63,930,000', '70,898,000', '61,344,000', '60,024,000']
+# Total Expenses ['202,390,000', '196,244,000', '194,697,000', '167,890,000', '155,615,000']
+# Normalized Income ['57,215,000', '55,256,000', '59,531,000', '48,351,000', '45,687,000']
+# Interest Income ['4,390,000', '4,961,000', '5,686,000', '5,201,000', '3,999,000']
+# Interest Expense ['3,218,000', '3,576,000', '3,240,000', '2,323,000', '1,456,000']
+# Net Interest Income ['1,172,000', '1,385,000', '2,446,000', '2,878,000', '2,543,000']
+# EBIT ['70,309,000', '69,313,000', '76,143,000', '66,412,000', '62,828,000']
+# EBITDA ['82,023,000', '-', '-', '-', '-']
+# Reconciled Cost of Revenue ['165,854,000', '161,782,000', '163,756,000', '141,048,000', '131,376,000']
+# Reconciled Depreciation ['11,714,000', '12,547,000', '10,903,000', '10,157,000', '10,505,000']
+# Normalized EBITDA ['82,023,000', '81,860,000', '87,046,000', '76,569,000', '73,333,000']
+# Tax Rate for Calcs ['0', '0', '0', '0', '0']
+# Tax Effect of Unusual Items ['0', '0', '0', '0', '0']
     erg = {}
     link = "https://finance.yahoo.com/quote/" + stock + "/financials?p=" + stock
     driver = webdriver.Chrome(os.getcwd() + '/chromedriver')       # Use chromedriver.exe to read website
     driver.get(link)                                               # Read link
     time.sleep(2)                                                  # Wait till the full site is loaded
     driver.find_element_by_name("agree").click()
+    time.sleep (2)
+    driver.find_element_by_xpath ('//*[@id="Col1-1-Financials-Proxy"]/section/div[2]/button/div/span').click ()
     time.sleep(2)
     soup = BeautifulSoup(driver.page_source, 'html.parser')        # Read page with html.parser
     time.sleep (2)
     driver.quit ()
     div_id = soup.find(id="Col1-1-Financials-Proxy")
 
-    tmp_list = []
-    for row in div_id.find_all("span"): tmp_list.append(row.text.strip())
-    while tmp_list[0] != "Breakdown": tmp_list.pop(0)
+    list_div = []
+    for e in div_id.find_all (["div"]): list_div.append (e.text.strip ())
+    while list_div[0] != "Breakdown": list_div.pop (0)
+    for i in range (len (list_div) - 1, 0, -1):
+        if list_div[i].replace (",", "").replace ("-", "").isdigit () or list_div[i] == "-": continue
+        elif i == len (list_div) - 1: del list_div[i]
+        elif len (list_div[i]) == 0: del list_div[i]
+        elif len (list_div[i]) > 50: del list_div[i]
+        elif i == 0: break
+        elif list_div[i] == list_div[i - 1]: del list_div[i]
+        elif list_div[i + 1] in list_div[i]: del list_div[i]
     idx = 0
-    while idx<len(tmp_list):
-        tmp_list[idx] = tmp_list[idx].lower().replace(" ","_")
-        check_missing = True
-        tmp_row = tmp_list[idx+1:idx+6]
-        diff_tmp = 0
-        while True:
-            if tmp_row == []: break
-            if tmp_row[0] == "ttm": break
-            shift=False
-            for tr_idx,tr_cont in enumerate(tmp_row):
-                if tr_cont[0].isalpha():
-                    tmp_row.insert(0,"-")
-                    tmp_row.pop()
-                    diff_tmp += 1
-                    shift=True
-            if shift == False: break
-        erg[tmp_list[idx]] = tmp_row
-        idx = idx + 6 - diff_tmp
-
-    del_list = []
-    # format alle float-content of the dict
-    for key,val in erg.items():
-        if val == []: del_list.append(key)
-        for val_i, val_cont in enumerate(val):
-            if val_cont.replace(",","").replace("-","").isdigit():
-                val[val_i] = float(val_cont.replace(",",""))
-        erg[key] = val
-    # delete entries with empty content
-    for i in del_list: del erg[i]
+    while idx < len (list_div):
+        if list_div[idx].replace (",", "").replace ("-", "").isdigit () == False and list_div[idx] != "-":
+            idx += 6
+        else:
+            while list_div[idx].replace (",", "").replace ("-", "").isdigit () == True or list_div[idx] == "-":
+                del list_div[idx]
+    idx = 0
+    while idx < len (list_div):
+        erg[list_div[idx]] = list_div[idx + 1:idx + 6]
+        idx += 6
 
     return (erg)
 
@@ -374,6 +402,103 @@ def read_yahoo_balance_sheet(stock):
 
     return (erg)
 
+def read_yahoo_cashflow(stock):
+# Read cashflow stock data from yahoo
+# Breakdown ['ttm', '9/29/2019', '9/29/2018', '9/29/2017', '9/29/2016']
+# Operating Cash Flow ['75,373,000', '69,391,000', '77,434,000', '63,598,000', '65,824,000']
+# Cash Flow from Continuing Operating Activities ['75,373,000', '69,391,000', '77,434,000', '63,598,000', '65,824,000']
+# Net Income from Continuing Operations ['57,215,000', '55,256,000', '59,531,000', '48,351,000', '45,687,000']
+# Depreciation Amortization Depletion ['11,714,000', '12,547,000', '10,903,000', '10,157,000', '10,505,000']
+# Depreciation & amortization ['11,714,000', '12,547,000', '10,903,000', '10,157,000', '10,505,000']
+# Deferred Tax ['-867,000', '-340,000', '-32,590,000', '5,966,000', '4,938,000']
+# Deferred Income Tax ['-867,000', '-340,000', '-32,590,000', '5,966,000', '4,938,000']
+# Stock based compensation ['6,402,000', '6,068,000', '5,340,000', '4,840,000', '4,210,000']
+# Other non-cash items ['-696,000', '-652,000', '-444,000', '-166,000', '-']
+# Change in working capital ['1,605,000', '-3,488,000', '34,694,000', '-5,550,000', '484,000']
+# Change in Receivables ['-4,327,000', '3,176,000', '-13,332,000', '-6,347,000', '1,044,000']
+# Changes in Account Receivables ['-565,000', '245,000', '-5,322,000', '-2,093,000', '1,095,000']
+# Change in Inventory ['1,416,000', '-289,000', '828,000', '-2,723,000', '217,000']
+# Change in Payables And Accrued Expense ['4,581,000', '-1,923,000', '9,175,000', '9,618,000', '1,791,000']
+# Change in Payable ['4,581,000', '-1,923,000', '9,175,000', '9,618,000', '1,791,000']
+# Change in Account Payable ['4,581,000', '-1,923,000', '9,175,000', '9,618,000', '1,791,000']
+# Change in Other Current Assets ['-7,276,000', '873,000', '-423,000', '-5,318,000', '1,090,000']
+# Change in Other Current Liabilities ['6,073,000', '-4,700,000', '38,490,000', '-154,000', '-2,104,000']
+# Change in Other Working Capital ['1,138,000', '-625,000', '-44,000', '-626,000', '-1,554,000']
+# Investing Cash Flow ['22,049,000', '45,896,000', '16,066,000', '-46,446,000', '-45,977,000']
+# Cash Flow from Continuing Investing Activities ['22,049,000', '45,896,000', '16,066,000', '-46,446,000', '-45,977,000']
+# Net PPE Purchase And Sale ['-8,737,000', '-10,495,000', '-13,313,000', '-12,451,000', '-12,734,000']
+# Purchase of PPE ['-8,737,000', '-10,495,000', '-13,313,000', '-12,451,000', '-12,734,000']
+# Net Intangibles Purchase And Sale ['-', '-', '-', '-344,000', '-814,000']
+# Purchase of Intangibles ['-', '-', '-', '-344,000', '-814,000']
+# Net Business Purchase And Sale ['-1,467,000', '-624,000', '-721,000', '-329,000', '-297,000']
+# Purchase of Business ['-1,467,000', '-624,000', '-721,000', '-329,000', '-297,000']
+# Net Investment Purchase And Sale ['33,787,000', '58,093,000', '30,845,000', '-33,542,000', '-32,022,000']
+# Purchase of Investment ['-92,922,000', '-40,631,000', '-73,227,000', '-159,881,000', '-143,816,000']
+# Sale of Investment ['126,709,000', '98,724,000', '104,072,000', '126,339,000', '111,794,000']
+# Net Other Investing Changes ['-1,534,000', '-1,078,000', '-745,000', '220,000', '-110,000']
+# Financing Cash Flow ['-94,190,000', '-90,976,000', '-87,876,000', '-17,347,000', '-20,483,000']
+# Cash Flow from Continuing Financing Activities ['-94,190,000', '-90,976,000', '-87,876,000', '-17,347,000', '-20,483,000']
+# Net Issuance Payments of Debt ['-4,249,000', '-7,819,000', '432,000', '29,014,000', '22,057,000']
+# Net Long Term Debt Issuance ['-2,382,000', '-1,842,000', '469,000', '25,162,000', '22,454,000']
+# Long Term Debt Issuance ['9,173,000', '6,963,000', '6,969,000', '28,662,000', '24,954,000']
+# Long Term Debt Payments ['-11,555,000', '-8,805,000', '-6,500,000', '-3,500,000', '-2,500,000']
+# Net Short Term Debt Issuance ['-1,867,000', '-5,977,000', '-37,000', '3,852,000', '-397,000']
+# Net Common Stock Issuance ['-72,858,000', '-66,116,000', '-72,069,000', '-32,345,000', '-29,227,000']
+# Common Stock Issuance ['821,000', '781,000', '669,000', '555,000', '495,000']
+# Common Stock Payments ['-73,679,000', '-66,897,000', '-72,738,000', '-32,900,000', '-29,722,000']
+# Cash Dividends Paid ['-14,022,000', '-14,119,000', '-13,712,000', '-12,769,000', '-12,150,000']
+# Common Stock Dividend Paid ['-14,022,000', '-14,119,000', '-13,712,000', '-12,769,000', '-12,150,000']
+# Net Other Financing Charges ['-3,061,000', '-2,922,000', '-2,527,000', '-1,247,000', '-1,163,000']
+# End Cash Position ['43,049,000', '50,224,000', '25,913,000', '20,289,000', '20,484,000']
+# Changes in Cash ['3,232,000', '24,311,000', '5,624,000', '-195,000', '-636,000']
+# Beginning Cash Position ['39,817,000', '25,913,000', '20,289,000', '20,484,000', '21,120,000']
+# Income Tax Paid Supplemental Data ['13,271,000', '15,263,000', '10,417,000', '11,591,000', '10,444,000']
+# Interest Paid Supplemental Data ['3,350,000', '3,423,000', '3,022,000', '2,092,000', '1,316,000']
+# Capital Expenditure ['-8,737,000', '-10,495,000', '-13,313,000', '-12,795,000', '-13,548,000']
+# Issuance of Capital Stock ['821,000', '781,000', '669,000', '555,000', '495,000']
+# Issuance of Debt ['13,247,000', '6,963,000', '6,969,000', '28,662,000', '24,954,000']
+# Repayment of Debt ['-11,555,000', '-8,805,000', '-6,500,000', '-3,500,000', '-2,500,000']
+# Repurchase of Capital Stock ['-73,679,000', '-66,897,000', '-72,738,000', '-32,900,000', '-29,722,000']
+# Free Cash Flow ['66,636,000', '58,896,000', '64,121,000', '50,803,000', '52,276,000']
+    erg = {}
+    link = "https://finance.yahoo.com/quote/" + stock + "/cash-flow?p=" + stock
+    driver = webdriver.Chrome(os.getcwd() + '/chromedriver')       # Use chromedriver.exe to read website
+    driver.get(link)                                               # Read link
+    time.sleep(2)                                                  # Wait till the full site is loaded
+    driver.find_element_by_name("agree").click()
+    time.sleep (2)
+    driver.find_element_by_xpath ('//*[@id="Col1-1-Financials-Proxy"]/section/div[2]/button/div/span').click ()
+    time.sleep(2)
+    soup = BeautifulSoup(driver.page_source, 'html.parser')        # Read page with html.parser
+    time.sleep (2)
+    driver.quit ()
+    div_id = soup.find(id="Col1-1-Financials-Proxy")
+
+    list_div = []
+    for e in div_id.find_all (["div"]): list_div.append (e.text.strip ())
+    while list_div[0] != "Breakdown": list_div.pop (0)
+    for i in range (len (list_div) - 1, 0, -1):
+        if list_div[i].replace (",", "").replace ("-", "").isdigit () or list_div[i] == "-": continue
+        elif i == len (list_div) - 1: del list_div[i]
+        elif len (list_div[i]) == 0: del list_div[i]
+        elif len (list_div[i]) > 50: del list_div[i]
+        elif i == 0: break
+        elif list_div[i] == list_div[i - 1]: del list_div[i]
+        elif list_div[i + 1] in list_div[i]: del list_div[i]
+    idx = 0
+    while idx < len (list_div):
+        if list_div[idx].replace (",", "").replace ("-", "").isdigit () == False and list_div[idx] != "-":
+            idx += 6
+        else:
+            while list_div[idx].replace (",", "").replace ("-", "").isdigit () == True or list_div[idx] == "-":
+                del list_div[idx]
+    idx = 0
+    while idx < len (list_div):
+        erg[list_div[idx]] = list_div[idx + 1:idx + 6]
+        idx += 6
+
+    return (erg)
+
 def read_yahoo_analysis(stock):
 # Read analysis stock data from yahoo
 # Earnings Estimate ['Current Qtr. (Jun 2020)', 'Next Qtr. (Sep 2020)', 'Current Year (2020)', 'Next Year (2021)']
@@ -435,7 +560,8 @@ stock = "AAPL"
 #erg4 = read_yahoo_statistics_valuation(stock)
 #erg5 = read_yahoo_income_statement(stock)
 #erg6 = read_yahoo_balance_sheet(stock)
-erg8 = read_yahoo_analysis(stock)
+erg7 = read_yahoo_cashflow(stock)
+#erg8 = read_yahoo_analysis(stock)
 
 #print(erg,"\n")
 #print(erg2,"\n")
@@ -452,5 +578,5 @@ erg8 = read_yahoo_analysis(stock)
 # for key, val in erg2.items():
 #     print(key,":",val)
 #     print(type(val))
-for key,val in erg8.items():
+for key,val in erg7.items():
     print(key,val)
