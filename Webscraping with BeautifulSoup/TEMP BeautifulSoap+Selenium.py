@@ -15,8 +15,8 @@ time.sleep (2)
 soup = BeautifulSoup(driver.page_source, 'html.parser')
 time.sleep (2)
 driver.quit ()
-table  = soup.find(id="YDC-Col1")
 
+table  = soup.find(id="YDC-Col1")
 erg = {}
 list_table = []
 for e in table.find_all(["th","td"]): list_table.append(e.text.strip())

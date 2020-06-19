@@ -376,6 +376,38 @@ def read_yahoo_balance_sheet(stock):
 
 def read_yahoo_analysis(stock):
 # Read analysis stock data from yahoo
+# Earnings Estimate ['Current Qtr. (Jun 2020)', 'Next Qtr. (Sep 2020)', 'Current Year (2020)', 'Next Year (2021)']
+# No. of Analysts ['28', '28', '35', '34']
+# Avg. Estimate ['51.52B', '62.07B', '263.67B', '296.08B']
+# Low Estimate ['42.8B', '50.47B', '252.81B', '261.66B']
+# High Estimate ['55.84B', '73.55B', '279.52B', '326.68B']
+# Year Ago EPS ['2.18', '3.03', '11.89', '12.39']
+# Revenue Estimate ['Current Qtr. (Jun 2020)', 'Next Qtr. (Sep 2020)', 'Current Year (2020)', 'Next Year (2021)']
+# Year Ago Sales ['53.81B', '64.04B', '260.17B', '263.67B']
+# Sales Growth (year/est) ['-4.30%', '-3.10%', '1.30%', '12.30%']
+# Earnings History ['6/29/2019', '9/29/2019', '12/30/2019', '3/30/2020']
+# EPS Est. ['2.1', '2.84', '4.55', '2.26']
+# EPS Actual ['2.18', '3.03', '4.99', '2.55']
+# Difference ['0.08', '0.19', '0.44', '0.29']
+# Surprise % ['3.80%', '6.70%', '9.70%', '12.80%']
+# EPS Trend ['Current Qtr. (Jun 2020)', 'Next Qtr. (Sep 2020)', 'Current Year (2020)', 'Next Year (2021)']
+# Current Estimate ['2', '2.82', '12.39', '14.86']
+# 7 Days Ago ['1.99', '2.81', '12.38', '14.86']
+# 30 Days Ago ['2', '2.8', '12.32', '14.73']
+# 60 Days Ago ['2.06', '2.95', '12.4', '14.85']
+# 90 Days Ago ['2.37', '3.23', '13.15', '15.45']
+# EPS Revisions ['Current Qtr. (Jun 2020)', 'Next Qtr. (Sep 2020)', 'Current Year (2020)', 'Next Year (2021)']
+# Up Last 7 Days ['2', '2', '2', '1']
+# Up Last 30 Days ['5', '6', '9', '8']
+# Down Last 7 Days ['N/A', 'N/A', 'N/A', 'N/A']
+# Down Last 30 Days ['N/A', 'N/A', 'N/A', '2']
+# Growth Estimates ['AAPL', 'Industry', 'Sector', 'S&P 500']
+# Current Qtr. ['-8.30%', 'N/A', 'N/A', '-0.44']
+# Next Qtr. ['-6.90%', 'N/A', 'N/A', '-0.16']
+# Current Year ['4.20%', 'N/A', 'N/A', '-0.22']
+# Next Year ['19.90%', 'N/A', 'N/A', '0.30']
+# Next 5 Years (per annum) ['11.47%', 'N/A', 'N/A', '0.03']
+# Past 5 Years (per annum) ['8.42%', 'N/A', 'N/A', 'N/A']
     erg = {}
     link = "https://finance.yahoo.com/quote/" + stock + "/analysis?p=" + stock
     driver = webdriver.Chrome (os.getcwd () + '/chromedriver')
@@ -386,8 +418,8 @@ def read_yahoo_analysis(stock):
     soup = BeautifulSoup (driver.page_source, 'html.parser')
     time.sleep (2)
     driver.quit ()
-    table = soup.find (id="Col1-1-Financials-Proxy")
 
+    table  = soup.find(id="YDC-Col1")
     erg = {}
     list_table = []
     for e in table.find_all (["th", "td"]): list_table.append (e.text.strip ())
@@ -402,7 +434,8 @@ stock = "AAPL"
 #erg3 = read_yahoo_statistics(stock)
 #erg4 = read_yahoo_statistics_valuation(stock)
 #erg5 = read_yahoo_income_statement(stock)
-erg6 = read_yahoo_balance_sheet(stock)
+#erg6 = read_yahoo_balance_sheet(stock)
+erg8 = read_yahoo_analysis(stock)
 
 #print(erg,"\n")
 #print(erg2,"\n")
@@ -410,6 +443,8 @@ erg6 = read_yahoo_balance_sheet(stock)
 #print(erg4,"\n")
 #print(erg5,"\n")
 #print(erg6,"\n")
+#print(erg7,"\n")
+#print(erg8,"\n")
 
 # for key, val in erg.items():
 #     print(key,":",val)
@@ -417,5 +452,5 @@ erg6 = read_yahoo_balance_sheet(stock)
 # for key, val in erg2.items():
 #     print(key,":",val)
 #     print(type(val))
-for key,val in erg6.items():
+for key,val in erg8.items():
     print(key,val)
