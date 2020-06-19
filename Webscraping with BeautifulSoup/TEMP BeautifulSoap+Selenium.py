@@ -4,21 +4,27 @@ import os
 from selenium import webdriver
 from bs4 import BeautifulSoup
 
-#link = "https://finance.yahoo.com/quote/AAPL/balance-sheet?p=AAPL"
-link = "https://finance.yahoo.com/quote/CAT/balance-sheet?p=CAT"
-#link = "https://finance.yahoo.com/quote/MSFT/balance-sheet?p=MSFT"
+link = "https://finance.yahoo.com/quote/AAPL/analysis?p=AAPL"
+#link = "https://finance.yahoo.com/quote/CAT/analysis?p=CAT"
+#link = "https://finance.yahoo.com/quote/MSFT/analysis?p=MSFT"
 driver = webdriver.Chrome(os.getcwd() + '/chromedriver')
 driver.get(link)
 time.sleep(2)
 driver.find_element_by_name("agree").click()
-time.sleep(2)
-driver.find_element_by_xpath('//*[@id="Col1-1-Financials-Proxy"]/section/div[2]/button/div/span').click()
 time.sleep (2)
 soup = BeautifulSoup(driver.page_source, 'html.parser')
 time.sleep (2)
 driver.quit ()
-table  = soup.find(id="Col1-1-Financials-Proxy")
-for e in table.find_all(["span"]): print(e.text.strip())
+table  = soup.find(id="YDC-Col1")
+
+erg = {}
+list_table = []
+for e in table.find_all(["th","td"]): list_table.append(e.text.strip())
+for i in range(0,len(list_table),5): erg[list_table[i]] = list_table[i+1:i+5]
+
+for key,val in erg.items():
+    print(key,val)
+print(len(erg))
 
 """
 erg = {}

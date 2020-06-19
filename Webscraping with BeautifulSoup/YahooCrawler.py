@@ -373,6 +373,27 @@ def read_yahoo_balance_sheet(stock):
 
     return (erg)
 
+def read_yahoo_analysis(stock):
+# Read analysis stock data from yahoo
+    erg = {}
+    link = "https://finance.yahoo.com/quote/" + stock + "/analysis?p=" + stock
+    driver = webdriver.Chrome (os.getcwd () + '/chromedriver')
+    driver.get (link)
+    time.sleep (2)
+    driver.find_element_by_name ("agree").click ()
+    time.sleep (2)
+    soup = BeautifulSoup (driver.page_source, 'html.parser')
+    time.sleep (2)
+    driver.quit ()
+    table = soup.find (id="Col1-1-Financials-Proxy")
+
+    erg = {}
+    list_table = []
+    for e in table.find_all (["th", "td"]): list_table.append (e.text.strip ())
+    for i in range (0, len (list_table), 5): erg[list_table[i]] = list_table[i + 1:i + 5]
+
+    return (erg)
+
 stock = "AAPL"
 #stock = "AMZN"
 #erg = read_yahoo_summary(stock)
