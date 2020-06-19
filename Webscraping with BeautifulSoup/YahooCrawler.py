@@ -336,6 +336,7 @@ def read_yahoo_balance_sheet(stock):
 
     erg = {}
     link = "https://finance.yahoo.com/quote/" + stock + "/balance-sheet?p=" + stock
+
     driver = webdriver.Chrome (os.getcwd () + '/chromedriver')
     driver.get (link)
     time.sleep (2)
