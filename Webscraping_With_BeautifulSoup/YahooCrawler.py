@@ -18,6 +18,7 @@ def read_yahoo_summary(stock):
 
     erg = {}
     link = "https://finance.yahoo.com/quote/" + stock
+    print("Reading web data...")
     page = requests.get (link)
     soup = BeautifulSoup (page.content, "html.parser")
     erg["symbol"] = stock
@@ -66,6 +67,7 @@ def read_yahoo_summary(stock):
 def read_yahoo_profile(stock):
 # Read profile stock data from yahoo
     erg = {}
+    print("Reading web data...")
     link = "https://finance.yahoo.com/quote/" + stock + "/profile?p=" + stock
     page = requests.get (link)
     soup = BeautifulSoup (page.content, "html.parser")
@@ -159,6 +161,8 @@ def read_yahoo_statistics(stock):
 # Enterprise Value/EBITDA 6 ['18.09', '66.00', '43.87', '50.16', '60.04', '51.78']
     erg_stat = {}
     erg_val = {}
+
+    print("Reading web data...")
     link = "https://finance.yahoo.com/quote/" + stock + "/key-statistics?p=" + stock
     driver = webdriver.Chrome (os.getcwd () + '/chromedriver')
     driver.get (link)
@@ -230,7 +234,8 @@ def read_yahoo_income_statement(stock):
 # Tax Rate for Calcs ['0', '0', '0', '0', '0']
 # Tax Effect of Unusual Items ['0', '0', '0', '0', '0']
     erg = {}
-    link = "https://finance.yahoo.com/quote/" + stock + "/financials?p=" + stock
+    link = "https://finance.yahoo.com/quote/" + stock + "/financials?p=" + stoc
+    print("Reading web data...")
     driver = webdriver.Chrome(os.getcwd() + '/chromedriver')       # Use chromedriver.exe to read website
     driver.get(link)                                               # Read link
     time.sleep(2)                                                  # Wait till the full site is loaded
@@ -346,6 +351,7 @@ def read_yahoo_balance_sheet(stock):
     erg = {}
     link = "https://finance.yahoo.com/quote/" + stock + "/balance-sheet?p=" + stock
 
+    print("Reading web data...")
     driver = webdriver.Chrome (os.getcwd () + '/chromedriver')
     driver.get (link)
     time.sleep (2)
@@ -446,6 +452,7 @@ def read_yahoo_cashflow(stock):
 # Repurchase of Capital Stock ['-73,679,000', '-66,897,000', '-72,738,000', '-32,900,000', '-29,722,000']
 # Free Cash Flow ['66,636,000', '58,896,000', '64,121,000', '50,803,000', '52,276,000']
     erg = {}
+    print("Reading web data...")
     link = "https://finance.yahoo.com/quote/" + stock + "/cash-flow?p=" + stock
     driver = webdriver.Chrome(os.getcwd() + '/chromedriver')       # Use chromedriver.exe to read website
     driver.get(link)                                               # Read link
@@ -523,6 +530,7 @@ def read_yahoo_analysis(stock):
 # Past 5 Years (per annum) ['8.42%', 'N/A', 'N/A', 'N/A']
     erg = {}
     link = "https://finance.yahoo.com/quote/" + stock + "/analysis?p=" + stock
+    print("Reading web data...")
     driver = webdriver.Chrome (os.getcwd () + '/chromedriver')
     driver.get (link)
     time.sleep (2)
