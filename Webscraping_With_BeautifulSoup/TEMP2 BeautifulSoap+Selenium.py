@@ -24,5 +24,5 @@ time.sleep (3)
 driver.quit ()
 
 table  = soup.find(id="app")
-#print(table.prettify())
+#print(table.prettify())ö
 print(screensize)
