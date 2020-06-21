@@ -1,50 +1,33 @@
 import requests
 from bs4 import BeautifulSoup
 from selenium import webdriver
-import os
 import time
+import os
+from selenium.webdriver.chrome.options import Options
+from sys import platform
+import urllib.request
+import codecs
+import csv
+from datetime import datetime, timedelta
 
-def read_stocktwits(account,emoji,scrolls=0):
-    SCROLL_PAUSE_TIME = 0.5
-    link = "https://stocktwits.com/" + account
-    driver = webdriver.Chrome(os.getcwd() + '/chromedriver')
-    driver.get(link)
-    time.sleep(2)
-    # Get scroll height
-    last_height = driver.execute_script("return document.body.scrollHeight")
+#link = "https://finance.yahoo.com/calendar/earnings/?symbol=AAPL"
+link = "https://finance.yahoo.com/calendar/earnings/?symbol=BAYRY"
 
-    for i in range(scrolls):
-        # Scroll down to bottom
-        driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
-        # Wait to load page
-        time.sleep(SCROLL_PAUSE_TIME)
-        # Calculate new scroll height and compare with last scroll height
-        new_height = driver.execute_script("return document.body.scrollHeight")
-        if new_height == last_height:
-            break
-        last_height = new_height
+erg = {}
+tmp_list = []
+page = requests.get (link)
+soup = BeautifulSoup (page.content, "html.parser")
+table  = soup.find(id="fin-cal-table")
+for row in soup.find_all("td"): tmp_list.append(row.text.strip())
+idx = 0
 
-    soup = BeautifulSoup(driver.page_source, 'html.parser')
-    table = soup.find ('div', attrs={"infinite-scroll-component__outerdiv"})
-    divs = table.find_all ("div")
-    erg_divs=[]
-    erg_stocks=[]
-    for i in divs:
-        if emoji in i.text and i.text.strip() not in erg_divs:
-            if erg_divs != []:
-                for j in i.text.strip().split():
-                    if "$" in j and j.replace("$","") not in erg_stocks: erg_stocks.append(j.replace("$",""))
-                    break
-            erg_divs.append(i.text.strip())
-    if erg_divs != []: erg_divs.pop(0)
-    return(erg_divs, erg_stocks)
-    time.sleep (2)
-    driver.quit ()
+while idx < len (tmp_list):
+    tmp = tmp_list[idx+2][:-3]
+    dt1 = datetime.strptime (tmp, "%b %d, %Y, %I %p")
+    dt2 = datetime.strftime(dt1, "%Y-%m-%d")
+    erg[dt2] = [tmp_list[idx+0],tmp_list[idx+1],tmp_list[idx+3],tmp_list[idx+4],tmp_list[idx+5]]
+    idx += 6
+for key, val in erg.items (): print (key, val)
 
 
-COUNT_SCROLL_DOWN = 4
-EMOJI = "🚨"     #🤝‍♂💪🚨
-STOCKTWITS = "mrinvestorpro"
 
-erg_cont, erg_stocks = read_stocktwits(STOCKTWITS,EMOJI,COUNT_SCROLL_DOWN)
-print(erg_stocks)

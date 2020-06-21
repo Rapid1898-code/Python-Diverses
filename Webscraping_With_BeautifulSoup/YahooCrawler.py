@@ -8,6 +8,7 @@ from sys import platform
 import urllib.request
 import codecs
 import csv
+from datetime import datetime, timedelta
 
 def is_na(value):
     if "N/A" in value: return "N/A"
@@ -572,19 +573,19 @@ def read_yahoo_analysis_rating(stock):
     while count < 5:
         erg = {}
         link = "https://finance.yahoo.com/quote/" + stock + "/analysis?p=" + stock
-        print("Reading analysis rating web data for", stock, "...approx 6sec...")
+        print("Reading analysis rating web data for", stock, "...approx 10sec...")
         options = Options()
         #options.add_argument('--headless')
         if platform == "win32": driver = webdriver.Chrome(os.getcwd() + '/chromedriver.exe', options=options)
         elif platform == "linux": driver = webdriver.Chrome(os.getcwd() + '/chromedriver', options=options)
-        driver.minimize_window()
+        #driver.minimize_window()
 
         driver.get (link)
         time.sleep (2)
         driver.find_element_by_name ("agree").click ()
         time.sleep (2)
         soup = BeautifulSoup (driver.page_source, 'html.parser')
-        time.sleep (5)
+        time.sleep (6)
         driver.quit ()
 
         tmp_list = []
@@ -617,20 +618,80 @@ def read_yahoo_histprice(stock):
 
     return erg
 
+def read_dayprice(prices,date,direction):
+# read price of a specific date
+# when date not available take nearest day in history from the date
+    nr = 0
+    while nr < 100:
+        if date in prices: return (date, prices[date][3])
+        else:
+            dt1 = datetime.strptime (date, "%Y-%m-%d")
+            if direction == "+": newdate = dt1 + timedelta (days=1)
+            elif direction == "-": newdate = dt1 - timedelta (days=1)
+            date = datetime.strftime (newdate, "%Y-%m-%d")
+            nr +=1
+    return ("1900-01-01",999999999)
+
+def read_zacks_rating(stock):
+    erg = {}
+    print("Reading rating web data for", stock, "...approx 6sec...")
+    link = "https://www.zacks.com/stock/quote/" + stock
+    options = Options()
+    options.add_argument('--headless')
+    if platform == "win32": driver = webdriver.Chrome (os.getcwd () + '/chromedriver.exe', options=options)
+    elif platform =="linux": driver = webdriver.Chrome (os.getcwd () + '/chromedriver', options=options)
+    driver.get(link)                                               # Read link
+    time.sleep(2)                                                  # Wait till the full site is loaded
+    soup = BeautifulSoup(driver.page_source, 'html.parser')        # Read page with html.parser
+    time.sleep (2)
+    driver.quit ()
+
+    tmp = []
+    table = soup.find (id="right_content")
+    for row in table.find_all ("p", class_="rank_view"): tmp.append (row.text.strip ())
+    erg["Rating"] = [tmp[0][-1],"1Buy to 5Sell"]
+
+    return (erg)
+
+def read_yahoo_earnings_cal(stock):
+    erg = {}
+    link = "https://finance.yahoo.com/calendar/earnings/?symbol=" + stock
+    print("Reading earnings calender web data for",stock,"...")
+    page = requests.get (link)
+    soup = BeautifulSoup (page.content, "html.parser")
+
+    tmp_list = []
+    page = requests.get (link)
+    soup = BeautifulSoup (page.content, "html.parser")
+    table = soup.find (id="fin-cal-table")
+    for row in soup.find_all ("td"): tmp_list.append (row.text.strip ())
+    idx = 0
+
+    while idx < len (tmp_list):
+        tmp = tmp_list[idx + 2][:-3]
+        dt1 = datetime.strptime (tmp, "%b %d, %Y, %I %p")
+        dt2 = datetime.strftime (dt1, "%Y-%m-%d")
+        erg[dt2] = [tmp_list[idx + 0], tmp_list[idx + 1], tmp_list[idx + 3], tmp_list[idx + 4], tmp_list[idx + 5]]
+        idx += 6
+
+    return(erg)
+
 if __name__ == '__main__':
     #stock = "CAT"
     #stock = "AMZN"
     stock = "AAPL"
-    #stock = "BAYN.DE"
+    #stock = "BAYRY"
     #erg1 = read_yahoo_summary(stock)
     #erg2 = read_yahoo_profile(stock)
     #erg3, erg4 = read_yahoo_statistics(stock)
-    erg5 = read_yahoo_income_statement(stock)
+    #erg5 = read_yahoo_income_statement(stock)
     #erg6 = read_yahoo_balance_sheet(stock)
     #erg7 = read_yahoo_cashflow(stock)
-    #erg8 = read_yahoo_analysis(stock)
+    erg8 = read_yahoo_analysis(stock)
     #erg9 = read_yahoo_analysis_rating(stock)
     #erg10 = read_yahoo_histprice(stock)
+    #erg11 = read_zacks_rating(stock)
+    #erg12 = read_yahoo_earnings_cal(stock)
 
     #print(erg,"\n")
     #print(erg2,"\n")
@@ -652,9 +713,11 @@ if __name__ == '__main__':
     #for key,val in erg2.items(): print(key,val)
     #for key,val in erg3.items(): print(key,val)
     #for key,val in erg4.items(): print(key,val)
-    for key,val in erg5.items(): print(key,val)
+    #for key,val in erg5.items(): print(key,val)
     #for key,val in erg6.items(): print(key,val)
     #for key,val in erg7.items(): print(key,val)
-    #for key, val in erg8.items (): print (key, val)
+    for key, val in erg8.items (): print (key, val)
     #for key, val in erg9.items (): print (key, val)
     #for key, val in erg10.items (): print (key, val)
+    #for key, val in erg11.items (): print (key, val)
+    #for key, val in erg12.items (): print (key, val)

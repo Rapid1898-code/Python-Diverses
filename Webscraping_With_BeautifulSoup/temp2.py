@@ -1,14 +1,6 @@
-s = ["200","abc","300","400","500"]
+from datetime import datetime, timedelta
 
-diff_temp = 0
-while True:
-    shift=False
-    for i,cont in enumerate(s):
-        if cont[0].isalpha ():
-            s.insert(0,"-")
-            s.pop()
-            diff_temp += 1
-            shift=True
-    if shift == False: break
+s = "Apr 28, 2021, 2 PMEST"
+s = s[:-3]
 print(s)
-print (diff_temp)
+#dt1 = datetime.strptime(s, "%b %d, %Y, %I %p")
