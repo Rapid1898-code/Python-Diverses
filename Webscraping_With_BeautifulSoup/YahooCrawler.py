@@ -265,7 +265,7 @@ def read_yahoo_income_statement(stock):
     for e in div_id.find_all (["div"]): list_div.append (e.text.strip ())
     while list_div[0] != "Breakdown": list_div.pop (0)
     for i in range (len (list_div) - 1, 0, -1):
-        if list_div[i].replace (",", "").replace ("-", "").isdigit () or list_div[i] == "-": continue
+        if list_div[i].replace (".", "").replace (",", "").replace ("-", "").isdigit () or list_div[i] == "-": continue
         elif i == len (list_div) - 1: del list_div[i]
         elif len (list_div[i]) == 0: del list_div[i]
         elif len (list_div[i]) > 50: del list_div[i]
@@ -382,10 +382,9 @@ def read_yahoo_balance_sheet(stock):
 
     list_div = []
     for e in table.find_all (["div"]): list_div.append (e.text.strip ())
-    print(list_div)
     while list_div[0] != "Breakdown": list_div.pop(0)
     for i in range (len (list_div) - 1, 0, -1):
-        if list_div[i].replace (",", "").replace ("-", "").isdigit () or list_div[i] == "-": continue
+        if list_div[i].replace (".", "").replace (",", "").replace ("-", "").isdigit () or list_div[i] == "-": continue
         elif i == len (list_div) - 1: del list_div[i]
         elif len (list_div[i]) == 0: del list_div[i]
         elif len (list_div[i]) > 50: del list_div[i]
@@ -489,7 +488,7 @@ def read_yahoo_cashflow(stock):
     for e in div_id.find_all (["div"]): list_div.append (e.text.strip ())
     while list_div[0] != "Breakdown": list_div.pop (0)
     for i in range (len (list_div) - 1, 0, -1):
-        if list_div[i].replace (",", "").replace ("-", "").isdigit () or list_div[i] == "-": continue
+        if list_div[i].replace (".", "").replace (",", "").replace ("-", "").isdigit () or list_div[i] == "-": continue
         elif i == len (list_div) - 1: del list_div[i]
         elif len (list_div[i]) == 0: del list_div[i]
         elif len (list_div[i]) > 50: del list_div[i]
@@ -622,10 +621,11 @@ if __name__ == '__main__':
     #stock = "CAT"
     #stock = "AMZN"
     stock = "AAPL"
-    # erg1 = read_yahoo_summary(stock)
-    # erg2 = read_yahoo_profile(stock)
-    erg3, erg4 = read_yahoo_statistics(stock)
-    #erg5 = read_yahoo_income_statement(stock)
+    #stock = "BAYN.DE"
+    #erg1 = read_yahoo_summary(stock)
+    #erg2 = read_yahoo_profile(stock)
+    #erg3, erg4 = read_yahoo_statistics(stock)
+    erg5 = read_yahoo_income_statement(stock)
     #erg6 = read_yahoo_balance_sheet(stock)
     #erg7 = read_yahoo_cashflow(stock)
     #erg8 = read_yahoo_analysis(stock)
@@ -648,11 +648,11 @@ if __name__ == '__main__':
     #     print(key,":",val)
     #     print(type(val))
 
-    # for key,val in erg1.items(): print(key,val)
-    # for key,val in erg2.items(): print(key,val)
-    for key,val in erg3.items(): print(key,val)
-    for key,val in erg4.items(): print(key,val)
-    #for key,val in erg5.items(): print(key,val)
+    #for key,val in erg1.items(): print(key,val)
+    #for key,val in erg2.items(): print(key,val)
+    #for key,val in erg3.items(): print(key,val)
+    #for key,val in erg4.items(): print(key,val)
+    for key,val in erg5.items(): print(key,val)
     #for key,val in erg6.items(): print(key,val)
     #for key,val in erg7.items(): print(key,val)
     #for key, val in erg8.items (): print (key, val)

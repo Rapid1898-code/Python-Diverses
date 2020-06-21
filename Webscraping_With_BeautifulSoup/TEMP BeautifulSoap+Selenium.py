@@ -4,34 +4,75 @@ import os
 from selenium import webdriver
 from bs4 import BeautifulSoup
 from selenium.webdriver.chrome.options import Options
+from sys import platform
 
 def is_na(value):
     if "N/A" in value: return "N/A"
     else: return value
 
-#stock = "AAPL"
-#link = "https://finance.yahoo.com/quote/" + stock + "/key-statistics?p=" + stock
-#link = "https://finance.yahoo.com/quote/" + stock + "/balance-sheet?p=" + stock
-#link = "https://finance.yahoo.com/quote/AAPL/cash-flow?p=AAPL"
-link = "https://finance.yahoo.com/quote/AAPL/history?period1=345427200&period2=1592697600&interval=1d&filter=history&frequency=1d"
-#link = "https://finance.yahoo.com/quote/CAT/analysis?p=CAT"
-#link = "https://finance.yahoo.com/quote/MSFT/analysis?p=MSFT"
-#options = Options()
-#options.add_argument('--headless')
-#driver = webdriver.Chrome(os.getcwd() + '/chromedriver', options=options)
-driver = webdriver.Chrome (os.getcwd () + '/chromedriver')
-driver.get(link)
-time.sleep(3)
-driver.find_element_by_name("agree").click()
-time.sleep (3)
-soup = BeautifulSoup(driver.page_source, 'html.parser')
-time.sleep (3)
+stock = "AAPL"
+
+erg = {}
+link = "https://finance.yahoo.com/quote/" + stock + "/financials?p=" + stock
+print ("Reading income statement web data for", stock, "...approx 6sec...")
+options = Options ()
+options.add_argument ('--headless')
+if platform == "win32":
+    driver = webdriver.Chrome (os.getcwd () + '/chromedriver.exe', options=options)
+elif platform == "linux":
+    driver = webdriver.Chrome (os.getcwd () + '/chromedriver', options=options)
+driver.get (link)  # Read link
+time.sleep (2)  # Wait till the full site is loaded
+driver.find_element_by_name ("agree").click ()
+time.sleep (2)
+driver.find_element_by_xpath ('//*[@id="Col1-1-Financials-Proxy"]/section/div[2]/button/div/span').click ()
+time.sleep (2)
+soup = BeautifulSoup (driver.page_source, 'html.parser')  # Read page with html.parser
+time.sleep (2)
 driver.quit ()
 
-table  = soup.find(id="Col1-1-HistoricalDataTable-Proxy")
-for e in table.find_all(["th","td"]): print(e.text.strip())
+div_id = soup.find (id="Col1-1-Financials-Proxy")
+table = soup.find (id="quote-header-info")
+erg["Header"] = [stock, "in thousands", table.find (["span"]).text.strip ()]
+
+list_div = []
+for e in div_id.find_all (["div"]): list_div.append (e.text.strip ())
+
+while list_div[0] != "Breakdown": list_div.pop (0)
+
+for i in range (len (list_div) - 1, 0, -1):
+    if list_div[i].replace(".","").replace (",", "").replace ("-", "").isdigit () or list_div[i] == "-": continue
+    elif i == len (list_div) - 1:
+        del list_div[i]
+    elif len (list_div[i]) == 0:
+        del list_div[i]
+    elif len (list_div[i]) > 50:
+        del list_div[i]
+    elif i == 0:
+        break
+    elif list_div[i] == list_div[i - 1]:
+        del list_div[i]
+    elif list_div[i + 1] in list_div[i]:
+        del list_div[i]
+
+idx = 0
+while idx < len (list_div):
+    if list_div[idx].replace (",", "").replace ("-", "").isdigit () == False and list_div[idx] != "-":
+        idx += 6
+    else:
+        while list_div[idx].replace (",", "").replace ("-", "").isdigit () == True or list_div[idx] == "-":
+            del list_div[idx]
+idx = 0
+while idx < len (list_div):
+    erg[list_div[idx]] = list_div[idx + 1:idx + 6]
+    idx += 6
+
+for key,val in erg.items(): print(key,val)
 
 
+
+#table  = soup.find(id="Col1-1-HistoricalDataTable-Proxy")
+#for e in table.find_all(["th","td"]): print(e.text.strip())
 """
 tmp_list = []
 #table  = soup.find(id="YDC-Col2")
