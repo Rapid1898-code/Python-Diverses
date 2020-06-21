@@ -18,7 +18,7 @@ def read_yahoo_summary(stock):
 
     erg = {}
     link = "https://finance.yahoo.com/quote/" + stock
-    print("Reading web data...")
+    print("Reading summary web data...")
     page = requests.get (link)
     soup = BeautifulSoup (page.content, "html.parser")
     erg["symbol"] = stock
@@ -67,7 +67,7 @@ def read_yahoo_summary(stock):
 def read_yahoo_profile(stock):
 # Read profile stock data from yahoo
     erg = {}
-    print("Reading web data...")
+    print("Reading profile web data...")
     link = "https://finance.yahoo.com/quote/" + stock + "/profile?p=" + stock
     page = requests.get (link)
     soup = BeautifulSoup (page.content, "html.parser")
@@ -162,7 +162,7 @@ def read_yahoo_statistics(stock):
     erg_stat = {}
     erg_val = {}
 
-    print("Reading web data...")
+    print("Reading statistic web data...")
     link = "https://finance.yahoo.com/quote/" + stock + "/key-statistics?p=" + stock
     driver = webdriver.Chrome (os.getcwd () + '/chromedriver')
     driver.get (link)
@@ -235,7 +235,7 @@ def read_yahoo_income_statement(stock):
 # Tax Effect of Unusual Items ['0', '0', '0', '0', '0']
     erg = {}
     link = "https://finance.yahoo.com/quote/" + stock + "/financials?p=" + stoc
-    print("Reading web data...")
+    print("Reading income statement web data...")
     driver = webdriver.Chrome(os.getcwd() + '/chromedriver')       # Use chromedriver.exe to read website
     driver.get(link)                                               # Read link
     time.sleep(2)                                                  # Wait till the full site is loaded
@@ -351,7 +351,7 @@ def read_yahoo_balance_sheet(stock):
     erg = {}
     link = "https://finance.yahoo.com/quote/" + stock + "/balance-sheet?p=" + stock
 
-    print("Reading web data...")
+    print("Reading balance sheet web data...")
     driver = webdriver.Chrome (os.getcwd () + '/chromedriver')
     driver.get (link)
     time.sleep (2)
@@ -452,7 +452,7 @@ def read_yahoo_cashflow(stock):
 # Repurchase of Capital Stock ['-73,679,000', '-66,897,000', '-72,738,000', '-32,900,000', '-29,722,000']
 # Free Cash Flow ['66,636,000', '58,896,000', '64,121,000', '50,803,000', '52,276,000']
     erg = {}
-    print("Reading web data...")
+    print("Reading cashflow web data...")
     link = "https://finance.yahoo.com/quote/" + stock + "/cash-flow?p=" + stock
     driver = webdriver.Chrome(os.getcwd() + '/chromedriver')       # Use chromedriver.exe to read website
     driver.get(link)                                               # Read link
@@ -530,14 +530,14 @@ def read_yahoo_analysis(stock):
 # Past 5 Years (per annum) ['8.42%', 'N/A', 'N/A', 'N/A']
     erg = {}
     link = "https://finance.yahoo.com/quote/" + stock + "/analysis?p=" + stock
-    print("Reading web data...")
+    print("Reading analysis web data...")
     driver = webdriver.Chrome (os.getcwd () + '/chromedriver')
     driver.get (link)
-    time.sleep (2)
+    time.sleep (5)
     driver.find_element_by_name ("agree").click ()
-    time.sleep (2)
+    time.sleep (5)
     soup = BeautifulSoup (driver.page_source, 'html.parser')
-    time.sleep (3)
+    time.sleep (5)
     driver.quit ()
 
     table = soup.find(id="YDC-Col1")
@@ -554,31 +554,32 @@ def read_yahoo_analysis(stock):
 
     return (erg)
 
-#stock = "CAT"
-#stock = "AMZN"
-stock = "AAPL"
-#erg = read_yahoo_summary(stock)
-#erg2 = read_yahoo_profile(stock)
-#erg3, erg4 = read_yahoo_statistics(stock)
-#erg5 = read_yahoo_income_statement(stock)
-#erg6 = read_yahoo_balance_sheet(stock)
-#erg7 = read_yahoo_cashflow(stock)
-erg8 = read_yahoo_analysis(stock)
+if __name__ == '__main__':
+    #stock = "CAT"
+    #stock = "AMZN"
+    stock = "AAPL"
+    #erg = read_yahoo_summary(stock)
+    #erg2 = read_yahoo_profile(stock)
+    #erg3, erg4 = read_yahoo_statistics(stock)
+    #erg5 = read_yahoo_income_statement(stock)
+    erg6 = read_yahoo_balance_sheet(stock)
+    erg7 = read_yahoo_cashflow(stock)
+    erg8 = read_yahoo_analysis(stock)
 
-#print(erg,"\n")
-#print(erg2,"\n")
-#print(erg3,"\n")
-#print(erg4,"\n")
-#print(erg5,"\n")
-#print(erg6,"\n")
-#print(erg7,"\n")
-#print(erg8,"\n")
+    #print(erg,"\n")
+    #print(erg2,"\n")
+    #print(erg3,"\n")
+    #print(erg4,"\n")
+    #print(erg5,"\n")
+    #print(erg6,"\n")
+    #print(erg7,"\n")
+    #print(erg8,"\n")
 
-# for key, val in erg.items():
-#     print(key,":",val)
-#     print(type(val))
-# for key, val in erg2.items():
-#     print(key,":",val)
-#     print(type(val))
-for key,val in erg8.items():
-    print(key,val)
+    # for key, val in erg.items():
+    #     print(key,":",val)
+    #     print(type(val))
+    # for key, val in erg2.items():
+    #     print(key,":",val)
+    #     print(type(val))
+    for key,val in erg8.items():
+        print(key,val)
