@@ -107,10 +107,22 @@ class TestYahooCrawler(unittest.TestCase):
     #      self.assertEqual (len (erg["Operating Cash Flow"]), 5)
     #      self.assertTrue((erg["Free Cash Flow"][3].replace(".","").replace("B","").replace(" ","").replace(",","")).isdigit())
 
-    def test_analysis_AAPL(self):
-         erg = read_yahoo_analysis("AAPL")
+    #def test_analysis_AAPL(self):
+    #     erg = read_yahoo_analysis("AAPL")
+    #     self.assertEqual (len (erg["EPS Est."]), 4)
+    #     self.assertTrue((erg["Avg. Estimate"][3].replace(".","").replace("B","").replace(" ","").replace(",","")).isdigit())
+    #     self.assertTrue(erg["Recommendation Rating"][0] in ["1","2","3","4","5"])
+
+    def test_analysis_AMZN(self):
+         erg = read_yahoo_analysis("AMZN")
          self.assertEqual (len (erg["EPS Est."]), 4)
          self.assertTrue((erg["Avg. Estimate"][3].replace(".","").replace("B","").replace(" ","").replace(",","")).isdigit())
          self.assertTrue(erg["Recommendation Rating"][0] in ["1","2","3","4","5"])
+
+    # def test_analysis_CAT(self):
+    #      erg = read_yahoo_analysis("CAT")
+    #      self.assertEqual (len (erg["EPS Est."]), 4)
+    #      self.assertTrue((erg["Avg. Estimate"][3].replace(".","").replace("B","").replace(" ","").replace(",","")).isdigit())
+    #      #self.assertTrue(erg["Recommendation Rating"][0] in ["1","2","3","4","5"])
 
 if __name__ == '__main__': unittest.main()
