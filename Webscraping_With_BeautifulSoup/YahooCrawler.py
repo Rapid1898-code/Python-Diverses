@@ -4,6 +4,7 @@ from selenium import webdriver
 import time
 import os
 from selenium.webdriver.chrome.options import Options
+from sys import platform
 
 def is_na(value):
     if "N/A" in value: return "N/A"
@@ -18,7 +19,7 @@ def read_yahoo_summary(stock):
 
     erg = {}
     link = "https://finance.yahoo.com/quote/" + stock
-    print("Reading summary web data...")
+    print("Reading summary web data for",stock,"...")
     page = requests.get (link)
     soup = BeautifulSoup (page.content, "html.parser")
     erg["symbol"] = stock
@@ -67,7 +68,7 @@ def read_yahoo_summary(stock):
 def read_yahoo_profile(stock):
 # Read profile stock data from yahoo
     erg = {}
-    print("Reading profile web data...")
+    print("Reading profile web data for",stock,"...")
     link = "https://finance.yahoo.com/quote/" + stock + "/profile?p=" + stock
     page = requests.get (link)
     soup = BeautifulSoup (page.content, "html.parser")
@@ -162,9 +163,10 @@ def read_yahoo_statistics(stock):
     erg_stat = {}
     erg_val = {}
 
-    print("Reading statistic web data...")
+    print("Reading statistic web data for",stock,"...")
     link = "https://finance.yahoo.com/quote/" + stock + "/key-statistics?p=" + stock
-    driver = webdriver.Chrome (os.getcwd () + '/chromedriver')
+    if platform == "win32": driver = webdriver.Chrome (os.getcwd () + '/chromedriver.exe')
+    elif platform =="linux": driver = webdriver.Chrome (os.getcwd () + '/chromedriver')
     driver.get (link)
     time.sleep (2)
     driver.find_element_by_name ("agree").click ()
@@ -234,9 +236,10 @@ def read_yahoo_income_statement(stock):
 # Tax Rate for Calcs ['0', '0', '0', '0', '0']
 # Tax Effect of Unusual Items ['0', '0', '0', '0', '0']
     erg = {}
-    link = "https://finance.yahoo.com/quote/" + stock + "/financials?p=" + stoc
-    print("Reading income statement web data...")
-    driver = webdriver.Chrome(os.getcwd() + '/chromedriver')       # Use chromedriver.exe to read website
+    link = "https://finance.yahoo.com/quote/" + stock + "/financials?p=" + stock
+    print("Reading income statement web data for",stock,"...")
+    if platform == "win32": driver = webdriver.Chrome (os.getcwd () + '/chromedriver.exe')
+    elif platform =="linux": driver = webdriver.Chrome (os.getcwd () + '/chromedriver')
     driver.get(link)                                               # Read link
     time.sleep(2)                                                  # Wait till the full site is loaded
     driver.find_element_by_name("agree").click()
@@ -352,7 +355,8 @@ def read_yahoo_balance_sheet(stock):
     link = "https://finance.yahoo.com/quote/" + stock + "/balance-sheet?p=" + stock
 
     print("Reading balance sheet web data...")
-    driver = webdriver.Chrome (os.getcwd () + '/chromedriver')
+    if platform == "win32": driver = webdriver.Chrome (os.getcwd () + '/chromedriver.exe')
+    elif platform =="linux": driver = webdriver.Chrome (os.getcwd () + '/chromedriver')
     driver.get (link)
     time.sleep (2)
     driver.find_element_by_name ("agree").click ()
@@ -454,7 +458,8 @@ def read_yahoo_cashflow(stock):
     erg = {}
     print("Reading cashflow web data...")
     link = "https://finance.yahoo.com/quote/" + stock + "/cash-flow?p=" + stock
-    driver = webdriver.Chrome(os.getcwd() + '/chromedriver')       # Use chromedriver.exe to read website
+    if platform == "win32": driver = webdriver.Chrome (os.getcwd () + '/chromedriver.exe')
+    elif platform =="linux": driver = webdriver.Chrome (os.getcwd () + '/chromedriver')
     driver.get(link)                                               # Read link
     time.sleep(2)                                                  # Wait till the full site is loaded
     driver.find_element_by_name("agree").click()
@@ -531,7 +536,9 @@ def read_yahoo_analysis(stock):
     erg = {}
     link = "https://finance.yahoo.com/quote/" + stock + "/analysis?p=" + stock
     print("Reading analysis web data...")
-    driver = webdriver.Chrome (os.getcwd () + '/chromedriver')
+    if platform == "win32": driver = webdriver.Chrome (os.getcwd () + '/chromedriver.exe')
+    elif platform =="linux": driver = webdriver.Chrome (os.getcwd () + '/chromedriver')
+    driver.minimize_window()
     driver.get (link)
     time.sleep (2)
     driver.find_element_by_name ("agree").click ()
@@ -546,25 +553,54 @@ def read_yahoo_analysis(stock):
     for e in table.find_all (["th", "td"]): list_table.append (e.text.strip ())
     for i in range (0, len (list_table), 5): erg[list_table[i]] = list_table[i + 1:i + 5]
 
-    tmp_list = []
-    table = soup.find (id="mrt-node-Col2-4-QuoteModule")
-    for i in table.find_all (["div"]):
-        if len(i.text.strip()) == 1: tmp_list.append(i.text.strip())
-    erg["Recommendation Rating"] = [tmp_list[0],"1 Strong Buy to 5 Sell"]
+    return (erg)
+
+def read_yahoo_analysis_rating(stock):
+# Read analysis rating stock data from yahoo
+    count = 0
+    while count < 5:
+        erg = {}
+        link = "https://finance.yahoo.com/quote/" + stock + "/analysis?p=" + stock
+        print("Reading analysis rating web data for",stock,"...")
+        if platform == "win32": driver = webdriver.Chrome (os.getcwd () + '/chromedriver.exe')
+        elif platform == "linux": driver = webdriver.Chrome (os.getcwd () + '/chromedriver')
+        driver.minimize_window()
+
+        driver.get (link)
+        time.sleep (2)
+        driver.find_element_by_name ("agree").click ()
+        time.sleep (2)
+        soup = BeautifulSoup (driver.page_source, 'html.parser')
+        time.sleep (5)
+        driver.quit ()
+
+        tmp_list = []
+
+        count += 1
+        table = soup.find (id="mrt-node-Col2-4-QuoteModule")
+        for i in table.find_all (["div"]):
+            if len(i.text.strip()) <= 3 and len(i.text.strip()) >= 1:
+                tmp_list.append(i.text.strip())
+        if tmp_list != []:
+            erg["Recommendation Rating"] = [tmp_list[0],"1 Strong Buy to 5 Sell"]
+            break
+        else:
+            print("Try to read again...")
 
     return (erg)
 
 if __name__ == '__main__':
-    #stock = "CAT"
+    stock = "CAT"
     #stock = "AMZN"
-    stock = "AAPL"
-    #erg = read_yahoo_summary(stock)
-    #erg2 = read_yahoo_profile(stock)
-    #erg3, erg4 = read_yahoo_statistics(stock)
-    #erg5 = read_yahoo_income_statement(stock)
-    #erg6 = read_yahoo_balance_sheet(stock)
-    #erg7 = read_yahoo_cashflow(stock)
+    #stock = "AAPL"
+    erg1 = read_yahoo_summary(stock)
+    erg2 = read_yahoo_profile(stock)
+    erg3, erg4 = read_yahoo_statistics(stock)
+    erg5 = read_yahoo_income_statement(stock)
+    erg6 = read_yahoo_balance_sheet(stock)
+    erg7 = read_yahoo_cashflow(stock)
     erg8 = read_yahoo_analysis(stock)
+    erg9 = read_yahoo_analysis_rating(stock)
 
     #print(erg,"\n")
     #print(erg2,"\n")
@@ -581,5 +617,14 @@ if __name__ == '__main__':
     # for key, val in erg2.items():
     #     print(key,":",val)
     #     print(type(val))
-    for key,val in erg8.items():
-        print(key,val)
+
+    for key,val in erg1.items(): print(key,val)
+    for key,val in erg2.items(): print(key,val)
+    for key,val in erg3.items(): print(key,val)
+    for key,val in erg4.items(): print(key,val)
+    for key,val in erg5.items(): print(key,val)
+    for key,val in erg6.items(): print(key,val)
+    for key,val in erg7.items(): print(key,val)
+    for key,val in erg7.items(): print(key,val)
+    for key, val in erg8.items (): print (key, val)
+    for key, val in erg9.items (): print (key, val)
