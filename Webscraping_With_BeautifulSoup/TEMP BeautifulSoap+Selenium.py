@@ -13,7 +13,7 @@ def is_na(value):
 #link = "https://finance.yahoo.com/quote/" + stock + "/key-statistics?p=" + stock
 #link = "https://finance.yahoo.com/quote/" + stock + "/balance-sheet?p=" + stock
 #link = "https://finance.yahoo.com/quote/AAPL/cash-flow?p=AAPL"
-link = "https://finance.yahoo.com/quote/AAPL/analysis?p=AAPL"
+link = "https://finance.yahoo.com/quote/AAPL/history?period1=345427200&period2=1592697600&interval=1d&filter=history&frequency=1d"
 #link = "https://finance.yahoo.com/quote/CAT/analysis?p=CAT"
 #link = "https://finance.yahoo.com/quote/MSFT/analysis?p=MSFT"
 #options = Options()
@@ -28,6 +28,11 @@ soup = BeautifulSoup(driver.page_source, 'html.parser')
 time.sleep (3)
 driver.quit ()
 
+table  = soup.find(id="Col1-1-HistoricalDataTable-Proxy")
+for e in table.find_all(["th","td"]): print(e.text.strip())
+
+
+"""
 tmp_list = []
 #table  = soup.find(id="YDC-Col2")
 table = soup.find("div", class_="Pos(r) T(5px) Miw(100px) Fz(s) Fw(500) D(ib) C($primaryColor)Ta(c) Translate3d($half3dTranslate)")
@@ -38,7 +43,11 @@ for i in table.find_all(["div"]): print(i.text.strip())
 #for e in table.find_all(["div"]): tmp_list.append(e.text.strip())
 #for i in range (len(tmp_list)-1,0,-1):
 #    if len(tmp_list[i]) != 1: del tmp_list[i]
-
+    tmp_list.append(e.text.strip())
+    tmp_list.append(e.text.strip())
+    tmp_list.append(e.text.strip())
+    tmp_list.append(e.text.strip())
+"""
 
 """
 list_div = []

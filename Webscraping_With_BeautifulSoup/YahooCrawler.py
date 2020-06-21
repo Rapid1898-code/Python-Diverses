@@ -5,6 +5,9 @@ import time
 import os
 from selenium.webdriver.chrome.options import Options
 from sys import platform
+import urllib.request
+import codecs
+import csv
 
 def is_na(value):
     if "N/A" in value: return "N/A"
@@ -589,18 +592,34 @@ def read_yahoo_analysis_rating(stock):
 
     return (erg)
 
+def read_yahoo_histprice(stock):
+    erg = {}
+    tmp_list = []
+    link = "https://query1.finance.yahoo.com/v7/finance/download/" + stock + "?period1=345427200&period2=1592697600&interval=1d&events=history"
+    print("Reading historical share price web data for", stock, "...")
+    ftpstream = urllib.request.urlopen(link)
+    csvfile = csv.reader(codecs.iterdecode(ftpstream, 'utf-8'))
+    for row in csvfile: tmp_list.append(row)
+    tmp_list.reverse()
+    erg[tmp_list[-1][0]] = tmp_list[-1][1:]
+    for i in range(len(tmp_list)):
+        erg[tmp_list[i][0]] = tmp_list[i][1:]
+
+    return erg
+
 if __name__ == '__main__':
     stock = "CAT"
     #stock = "AMZN"
     #stock = "AAPL"
-    erg1 = read_yahoo_summary(stock)
-    erg2 = read_yahoo_profile(stock)
-    erg3, erg4 = read_yahoo_statistics(stock)
-    erg5 = read_yahoo_income_statement(stock)
-    erg6 = read_yahoo_balance_sheet(stock)
-    erg7 = read_yahoo_cashflow(stock)
-    erg8 = read_yahoo_analysis(stock)
-    erg9 = read_yahoo_analysis_rating(stock)
+    # erg1 = read_yahoo_summary(stock)
+    # erg2 = read_yahoo_profile(stock)
+    # erg3, erg4 = read_yahoo_statistics(stock)
+    # erg5 = read_yahoo_income_statement(stock)
+    # erg6 = read_yahoo_balance_sheet(stock)
+    # erg7 = read_yahoo_cashflow(stock)
+    # erg8 = read_yahoo_analysis(stock)
+    # erg9 = read_yahoo_analysis_rating(stock)
+    erg10 = read_yahoo_histprice(stock)
 
     #print(erg,"\n")
     #print(erg2,"\n")
@@ -618,13 +637,14 @@ if __name__ == '__main__':
     #     print(key,":",val)
     #     print(type(val))
 
-    for key,val in erg1.items(): print(key,val)
-    for key,val in erg2.items(): print(key,val)
-    for key,val in erg3.items(): print(key,val)
-    for key,val in erg4.items(): print(key,val)
-    for key,val in erg5.items(): print(key,val)
-    for key,val in erg6.items(): print(key,val)
-    for key,val in erg7.items(): print(key,val)
-    for key,val in erg7.items(): print(key,val)
-    for key, val in erg8.items (): print (key, val)
-    for key, val in erg9.items (): print (key, val)
+    # for key,val in erg1.items(): print(key,val)
+    # for key,val in erg2.items(): print(key,val)
+    # for key,val in erg3.items(): print(key,val)
+    # for key,val in erg4.items(): print(key,val)
+    # for key,val in erg5.items(): print(key,val)
+    # for key,val in erg6.items(): print(key,val)
+    # for key,val in erg7.items(): print(key,val)
+    # for key,val in erg7.items(): print(key,val)
+    # for key, val in erg8.items (): print (key, val)
+    # for key, val in erg9.items (): print (key, val)
+    for key, val in erg10.items (): print (key, val)

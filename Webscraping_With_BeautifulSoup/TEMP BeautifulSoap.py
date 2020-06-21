@@ -1,15 +1,14 @@
 import requests
 from bs4 import BeautifulSoup
 
-link = "https://finance.yahoo.com/quote/AAPL/key-statistics?p=AAPL"
+link = "https://finance.yahoo.com/quote/AAPL/history?period1=345427200&period2=1592697600&interval=1d&filter=history&frequency=1d"
 #link = "https://finance.yahoo.com/quote/CAT/key-statistics?p=CAT"
 
 page = requests.get (link)
 soup = BeautifulSoup (page.content, "html.parser")
 
-tmp = soup.find('div', attrs={"data-reactid": "51"})
-for row in soup.find_all("div"): print(row.prettify())
-
+table  = soup.find(id="Col1-1-HistoricalDataTable-Proxy")
+for e in table.find_all(["th","td"]): print(e.text.strip())
 #print(tmp.prettify())
 """
 for row in soup.find_all("tr"): print(row.prettify())
