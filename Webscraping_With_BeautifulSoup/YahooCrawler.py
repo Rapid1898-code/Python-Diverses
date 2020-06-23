@@ -280,6 +280,9 @@ def read_yahoo_income_statement(stock):
         else:
             while list_div[idx].replace (",", "").replace ("-", "").isdigit () == True or list_div[idx] == "-":
                 del list_div[idx]
+    for i in range(len(list_div)-1):
+        if list_div[i].replace(".", "").replace(",", "").replace("-", "").isdigit():
+            list_div[i] = float(list_div[i].replace(",",""))
     idx = 0
     while idx < len (list_div):
         erg[list_div[idx]] = list_div[idx + 1:idx + 6]
@@ -606,6 +609,24 @@ def read_yahoo_analysis_rating(stock):
     return (erg)
 
 def read_yahoo_histprice(stock):
+    if stock.upper() == "DAX": stock = "%5EGDAXI"
+    if stock.upper() == "SP500": stock = "%5EGSPC"
+    if stock.upper() == "DowJones": stock = "%5EDJI%3B"
+    if stock.upper() == "NASDAQ": stock = "%5EIXIC"
+    if stock.upper() == "MDAX": stock = "%5EMDAXI"
+    if stock.upper() == "SDAX": stock = "%5ESDAXI"
+    if stock.upper() == "EUROStoxx50": stock = "%5ESTOXX50E"
+    if stock.upper() == "AEX25": stock = "%%5Eaex"
+    if stock.upper() == "ATX": stock = "%5EATX"
+    if stock.upper() == "CAC40": stock = "%5EFCHI"
+    if stock.upper() == "IBEX35": stock = "%5EIBEX"
+    if stock.upper() == "FTSE100": stock = "%5EFTSE"
+    if stock.upper() == "SMI": stock = "%5ESSMI"
+    if stock.upper() == "MIB": stock = "%FTSEMIB.MI"
+    if stock.upper() == "FTSE100": stock = "%5EFTSE"
+    if stock.upper() == "FTSE100": stock = "%5EFTSE"
+    if stock.upper() == "FTSE100": stock = "%5EFTSE"
+
     erg = {}
     tmp_list = []
     link = "https://query1.finance.yahoo.com/v7/finance/download/" + stock + "?period1=345427200&period2=1592697600&interval=1d&events=history"
@@ -678,18 +699,22 @@ def read_yahoo_earnings_cal(stock):
 
     return(erg)
 
+def read_yahoo_histprice_indices(index):
+    pass
+
 if __name__ == '__main__':
     #stock = "CAT"
     #stock = "AMZN"
     stock = "AAPL"
     #stock = "BAYRY"
+    #stock = "sp500"
     #erg1 = read_yahoo_summary(stock)
     #erg2 = read_yahoo_profile(stock)
     #erg3, erg4 = read_yahoo_statistics(stock)
-    #erg5 = read_yahoo_income_statement(stock)
+    erg5 = read_yahoo_income_statement(stock)
     #erg6 = read_yahoo_balance_sheet(stock)
     #erg7 = read_yahoo_cashflow(stock)
-    erg8 = read_yahoo_analysis(stock)
+    #erg8 = read_yahoo_analysis(stock)
     #erg9 = read_yahoo_analysis_rating(stock)
     #erg10 = read_yahoo_histprice(stock)
     #erg11 = read_zacks_rating(stock)
@@ -715,10 +740,10 @@ if __name__ == '__main__':
     #for key,val in erg2.items(): print(key,val)
     #for key,val in erg3.items(): print(key,val)
     #for key,val in erg4.items(): print(key,val)
-    #for key,val in erg5.items(): print(key,val)
+    for key,val in erg5.items(): print(key,val)
     #for key,val in erg6.items(): print(key,val)
     #for key,val in erg7.items(): print(key,val)
-    for key, val in erg8.items (): print (key, val)
+    #for key, val in erg8.items (): print (key, val)
     #for key, val in erg9.items (): print (key, val)
     #for key, val in erg10.items (): print (key, val)
     #for key, val in erg11.items (): print (key, val)
