@@ -559,6 +559,8 @@ def read_yahoo_analysis(stock):
     time.sleep (3)
     driver.quit ()
 
+
+
     table = soup.find(id="YDC-Col1")
     erg = {}
     list_table = []
