@@ -1,6 +1,10 @@
-from datetime import datetime, timedelta
+s="76.4B"
+if "B" in s:
+    decimal_place = s.find(".")
+    b_place = s.find("B")
+    s = s.replace(".","").replace("B","")
+    for i in range(9 - (b_place - decimal_place -1)): s = s + "0"
 
-s = "Apr 28, 2021, 2 PMEST"
-s = s[:-3]
+print(decimal_place)
+print(b_place)
 print(s)
-#dt1 = datetime.strptime(s, "%b %d, %Y, %I %p")

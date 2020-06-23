@@ -14,6 +14,28 @@ def is_na(value):
     if "N/A" in value: return "N/A"
     else: return value
 
+def read_dayprice(prices,date,direction):
+# read price of a specific date
+# when date not available take nearest day in history from the date
+    nr = 0
+    while nr < 100:
+        if date in prices: return (date, float(prices[date][3]))
+        else:
+            dt1 = datetime.strptime (date, "%Y-%m-%d")
+            if direction == "+": newdate = dt1 + timedelta (days=1)
+            elif direction == "-": newdate = dt1 - timedelta (days=1)
+            date = datetime.strftime (newdate, "%Y-%m-%d")
+            nr +=1
+    return ("1900-01-01",999999999)
+
+def clean_B_value(value):
+#clean value with for B as billion
+    decimal_place = value.find(".")
+    b_place = value.find("B")
+    value = value.replace(".","").replace("B","")
+    for i in range(9 - (b_place - decimal_place -1)): value = value + "0"
+    return(float(value))
+
 def read_yahoo_summary(stock):
     # Read summary stock data from yahoo
 
@@ -199,6 +221,15 @@ def read_yahoo_statistics(stock):
                 tmp_list_val[i] = tmp_list_val[i][:len(tmp_list_val[i])-2]
         else: tmp_list_val[i] = "Header"
         erg_val[tmp_list_val[i]] = tmp_list_val[i+1:i+7]
+
+    # replace B Billion values with float value
+    for key,val in erg_val.items():
+        for idx,cont in enumerate(val):
+            if "B" in cont:
+                erg_val[key][idx] = clean_B_value(erg_val[key][idx])
+    for key,val in erg_stat.items():
+        if "B" in val:
+            erg_stat[key] = clean_B_value(erg_stat[key])
 
     return (erg_stat,erg_val)
 
@@ -402,6 +433,9 @@ def read_yahoo_balance_sheet(stock):
         else:
             while list_div[idx].replace (",", "").replace ("-", "").isdigit () == True or list_div[idx] == "-":
                 del list_div[idx]
+    for i in range(len(list_div)-1):
+        if list_div[i].replace(".", "").replace(",", "").replace("-", "").isdigit():
+            list_div[i] = float(list_div[i].replace(",",""))
     idx = 0
     while idx < len (list_div):
         erg[list_div[idx]] = list_div[idx + 1:idx + 5]
@@ -506,6 +540,9 @@ def read_yahoo_cashflow(stock):
         else:
             while list_div[idx].replace (",", "").replace ("-", "").isdigit () == True or list_div[idx] == "-":
                 del list_div[idx]
+    for i in range(len(list_div)-1):
+        if list_div[i].replace(".", "").replace(",", "").replace("-", "").isdigit():
+            list_div[i] = float(list_div[i].replace(",",""))
     idx = 0
     while idx < len (list_div):
         erg[list_div[idx]] = list_div[idx + 1:idx + 6]
@@ -641,20 +678,6 @@ def read_yahoo_histprice(stock):
 
     return erg
 
-def read_dayprice(prices,date,direction):
-# read price of a specific date
-# when date not available take nearest day in history from the date
-    nr = 0
-    while nr < 100:
-        if date in prices: return (date, prices[date][3])
-        else:
-            dt1 = datetime.strptime (date, "%Y-%m-%d")
-            if direction == "+": newdate = dt1 + timedelta (days=1)
-            elif direction == "-": newdate = dt1 - timedelta (days=1)
-            date = datetime.strftime (newdate, "%Y-%m-%d")
-            nr +=1
-    return ("1900-01-01",999999999)
-
 def read_zacks_rating(stock):
     erg = {}
     print("Reading rating web data for", stock, "...approx 6sec...")
@@ -699,19 +722,16 @@ def read_yahoo_earnings_cal(stock):
 
     return(erg)
 
-def read_yahoo_histprice_indices(index):
-    pass
-
 if __name__ == '__main__':
     #stock = "CAT"
     #stock = "AMZN"
-    stock = "AAPL"
-    #stock = "BAYRY"
+    #stock = "AAPL"
+    stock = "BAYRY"
     #stock = "sp500"
     #erg1 = read_yahoo_summary(stock)
     #erg2 = read_yahoo_profile(stock)
-    #erg3, erg4 = read_yahoo_statistics(stock)
-    erg5 = read_yahoo_income_statement(stock)
+    erg3, erg4 = read_yahoo_statistics(stock)
+    ##erg5 = read_yahoo_income_statement(stock)
     #erg6 = read_yahoo_balance_sheet(stock)
     #erg7 = read_yahoo_cashflow(stock)
     #erg8 = read_yahoo_analysis(stock)
@@ -738,9 +758,9 @@ if __name__ == '__main__':
 
     #for key,val in erg1.items(): print(key,val)
     #for key,val in erg2.items(): print(key,val)
-    #for key,val in erg3.items(): print(key,val)
+    for key,val in erg3.items(): print(key,val)
     #for key,val in erg4.items(): print(key,val)
-    for key,val in erg5.items(): print(key,val)
+    #for key,val in erg5.items(): print(key,val)
     #for key,val in erg6.items(): print(key,val)
     #for key,val in erg7.items(): print(key,val)
     #for key, val in erg8.items (): print (key, val)

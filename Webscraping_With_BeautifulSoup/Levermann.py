@@ -2,12 +2,16 @@ import YahooCrawler
 from datetime import datetime, timedelta
 from datetime import date
 
-stock = "AAPL"
-index = "SP500"
+#stock = "AAPL"
+#index = "SP500"
+stock = "BAYRY"
+index = "DAX"
 
 #1 - Return On Equity RoE / Eigenkapitalrendite
 stat1,stat2 = YahooCrawler.read_yahoo_statistics(stock)
 roe = float(stat1["Return on Equity (ttm)"].replace("%",""))
+marketcap = stat2["Market Cap (intraday)"]
+shares_outstanding = stat1["Shares Outstanding"]
 
 hist_price_stock = YahooCrawler.read_yahoo_histprice(stock)
 hist_price_index = YahooCrawler.read_yahoo_histprice(index)
@@ -17,25 +21,6 @@ insstat = YahooCrawler.read_yahoo_income_statement(stock)
 ebit = insstat["EBIT"][0]
 revenue = insstat["Total Revenue"][0]
 ebit_marge = round(ebit / revenue * 100,2)
-eps_list = insstat["Basic EPS"]
-
-#5 - P/E-Ratio History 5Y / KGV Historisch 5J
-count = eps_hist = 0
-for idx,cont in enumerate(eps_list):
-    if cont == "-": continue
-    else:
-        dt1 = datetime.strptime(insstat["Breakdown"][idx],"%m/%d/%Y")
-        dt2 = datetime.strftime(dt1, "%Y-%m-%d")
-        tmp_date, tmp_price = YahooCrawler.read_dayprice(hist_price_stock,dt2,"+")
-        count += 1
-        #DEBUG-INFO
-        #print("Price: ", float(tmp_price))
-        #print("EPS: ", float(cont)*1000)
-        #print("P/E-Ratio: ", float(tmp_price) / (float(cont)*1000))
-        #print("\n")
-        eps_hist += float(tmp_price) / (float(cont) * 1000)
-pe_ratio_hist = round(eps_hist / count,2)
-print(pe_ratio_hist)
 
 #13 - Profit Growth / Gewinnwachstum
 net_income = insstat["Net Income"]
@@ -52,10 +37,30 @@ growth_hist = round(growth_sum / growth_count * 100,2)
 #print(growth_sum)
 #print(growth_count)
 
+#5 - P/E-Ratio History 5Y / KGV Historisch 5J
+count = eps_hist = 0
+for idx,cont in enumerate(net_income):
+    if cont == "-": continue
+    elif insstat["Breakdown"][idx] == "ttm": continue
+    else:
+        dt1 = datetime.strptime(insstat["Breakdown"][idx],"%m/%d/%Y")
+        dt2 = datetime.strftime(dt1, "%Y-%m-%d")
+        tmp_date, tmp_price = YahooCrawler.read_dayprice(hist_price_stock,dt2,"+")
+        count += 1
+        #DEBUG-INFO
+        #print("Price: ", tmp_price)
+        #print("Price Type: ", type(tmp_price))
+        #print("EPS: ", float(cont)*1000)
+        #print("P/E-Ratio: ", float(tmp_price) / (float(cont)*1000))
+        #print("\n")
+        eps_hist += tmp_price * shares_outstanding / cont
+pe_ratio_hist = round(eps_hist / count,2)
+print(pe_ratio_hist)
+
 #3 - Equity Ratio / Eigenkaptialquote
 bal_sheet = YahooCrawler.read_yahoo_balance_sheet(stock)
-equity = float(bal_sheet["Stockholders' Equity"][0].replace(",",""))
-total_assets = float(bal_sheet["Total Assets"][0].replace(",",""))
+equity = bal_sheet["Stockholders' Equity"][0]
+total_assets = bal_sheet["Total Assets"][0]
 eq_ratio = round(equity / total_assets * 100,2)
 
 #4 - P/E-Ratio Actual / KGV Aktuell
