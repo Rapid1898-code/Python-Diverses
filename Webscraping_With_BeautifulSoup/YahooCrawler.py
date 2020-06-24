@@ -698,7 +698,7 @@ def read_zacks_rating(stock):
     tmp = []
     table = soup.find (id="right_content")
     for row in table.find_all ("p", class_="rank_view"): tmp.append (row.text.strip ())
-    erg["Rating"] = [tmp[0][-1],"1Buy to 5Sell"]
+    erg["Rating"] = [int(tmp[0][-1]),"1Buy to 5Sell"]
 
     return (erg)
 
