@@ -28,12 +28,15 @@ def read_dayprice(prices,date,direction):
             nr +=1
     return ("1900-01-01",999999999)
 
-def clean_B_value(value):
+def clean_value_BT(value,char):
 #clean value with for B as billion
     decimal_place = value.find(".")
-    b_place = value.find("B")
-    value = value.replace(".","").replace("B","")
-    for i in range(9 - (b_place - decimal_place -1)): value = value + "0"
+    b_place = value.find(char)
+    value = value.replace(".","").replace(char,"")
+    if char == "B":
+        for i in range(6 - (b_place - decimal_place -1)): value = value + "0"
+    if char == "T":
+        for i in range(3 - (b_place - decimal_place -1)): value = value + "0"
     return(float(value))
 
 def read_yahoo_summary(stock):
@@ -225,11 +228,11 @@ def read_yahoo_statistics(stock):
     # replace B Billion values with float value
     for key,val in erg_val.items():
         for idx,cont in enumerate(val):
-            if "B" in cont:
-                erg_val[key][idx] = clean_B_value(erg_val[key][idx])
+            if "B" in cont: erg_val[key][idx] = clean_value_BT(erg_val[key][idx],"B")
+            if "T" in cont: erg_val[key][idx] = clean_value_BT(erg_val[key][idx], "T")
     for key,val in erg_stat.items():
-        if "B" in val:
-            erg_stat[key] = clean_B_value(erg_stat[key])
+        if "B" in val: erg_stat[key] = clean_value_BT(erg_stat[key],"B")
+        if "T" in val: erg_stat[key] = clean_value_BT(erg_stat[key], "T")
 
     return (erg_stat,erg_val)
 

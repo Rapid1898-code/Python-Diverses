@@ -1,11 +1,14 @@
 import YahooCrawler
 from datetime import datetime, timedelta
 from datetime import date
+import timeit
 
-#stock = "AAPL"
-#index = "SP500"
-stock = "BAYRY"
-index = "DAX"
+stock = "AAPL"
+index = "SP500"
+#stock = "BAYRY"
+#index = "DAX"
+
+start = timeit.default_timer()
 
 #1 - Return On Equity RoE / Eigenkapitalrendite
 stat1,stat2 = YahooCrawler.read_yahoo_statistics(stock)
@@ -46,16 +49,18 @@ for idx,cont in enumerate(net_income):
         dt1 = datetime.strptime(insstat["Breakdown"][idx],"%m/%d/%Y")
         dt2 = datetime.strftime(dt1, "%Y-%m-%d")
         tmp_date, tmp_price = YahooCrawler.read_dayprice(hist_price_stock,dt2,"+")
-        count += 1
         #DEBUG-INFO
         #print("Price: ", tmp_price)
-        #print("Price Type: ", type(tmp_price))
-        #print("EPS: ", float(cont)*1000)
-        #print("P/E-Ratio: ", float(tmp_price) / (float(cont)*1000))
+        #print("NetIncome: ", cont)
+        #print("Shares Outstanding: ", shares_outstanding)
         #print("\n")
-        eps_hist += tmp_price * shares_outstanding / cont
+        eps_hist += tmp_price / (cont / shares_outstanding)
+        count += 1
+#DEBUG-INFO
+#print("EPS-Hist-Summe: ", eps_hist)
+#print("EPS-Hist-Count: ", count)
+#print(pe_ratio_hist)
 pe_ratio_hist = round(eps_hist / count,2)
-print(pe_ratio_hist)
 
 #3 - Equity Ratio / Eigenkaptialquote
 bal_sheet = YahooCrawler.read_yahoo_balance_sheet(stock)
@@ -99,7 +104,9 @@ price_today = YahooCrawler.read_dayprice(hist_price_stock,dt1,"-")
 price_6m_ago = YahooCrawler.read_dayprice(hist_price_stock,dt2,"+")
 price_1y_ago = YahooCrawler.read_dayprice(hist_price_stock,dt3,"+")
 
+stop = timeit.default_timer()
 
+print("\n",stock,"calculated in ",round((stop-start)/60,2),"min")
 print("1 - Return on Equity RoE: ",roe)
 print("2 - Ebit-Margin: ",ebit_marge)
 print("3 - Equity Ratio: ",eq_ratio)
