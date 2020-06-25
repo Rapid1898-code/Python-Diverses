@@ -1,10 +1,14 @@
-s="76.4B"
-if "B" in s:
-    decimal_place = s.find(".")
-    b_place = s.find("B")
-    s = s.replace(".","").replace("B","")
-    for i in range(9 - (b_place - decimal_place -1)): s = s + "0"
+import xlwings as xw
+wb = xw.Book ("Test.xlsx")
+ws_db = wb.sheets["Tabelle1"]
+idx = 2
+cell_list = ws_db.range ("A" + str(idx) + ":" + "C" + str(idx)).value
+print(cell_list)
+print(cell_list[1])
+print(type(cell_list))
+print(type(cell_list[1]))
 
-print(decimal_place)
-print(b_place)
-print(s)
+cell_list = ["","",""]
+ws_db.range ("A" + str (idx) + ":" + "C" + str (idx)).value = cell_list
+
+

@@ -33,10 +33,12 @@ def clean_value_BT(value,char):
     decimal_place = value.find(".")
     b_place = value.find(char)
     value = value.replace(".","").replace(char,"")
+    if char == "M":
+        for i in range (3 - (b_place - decimal_place - 1)): value = value + "0"
     if char == "B":
         for i in range(6 - (b_place - decimal_place -1)): value = value + "0"
     if char == "T":
-        for i in range(3 - (b_place - decimal_place -1)): value = value + "0"
+        for i in range(9 - (b_place - decimal_place -1)): value = value + "0"
     return(float(value))
 
 def read_yahoo_summary(stock):
@@ -230,9 +232,12 @@ def read_yahoo_statistics(stock):
         for idx,cont in enumerate(val):
             if "B" in cont: erg_val[key][idx] = clean_value_BT(erg_val[key][idx],"B")
             if "T" in cont: erg_val[key][idx] = clean_value_BT(erg_val[key][idx], "T")
+            if "M" in cont: erg_val[key][idx] = clean_value_BT(erg_val[key][idx], "M")
     for key,val in erg_stat.items():
         if "B" in val: erg_stat[key] = clean_value_BT(erg_stat[key],"B")
         if "T" in val: erg_stat[key] = clean_value_BT(erg_stat[key], "T")
+        if "M" in val and "Mar" not in val and "May" not in val:
+            erg_stat[key] = clean_value_BT(erg_stat[key], "M")
 
     return (erg_stat,erg_val)
 
@@ -647,25 +652,25 @@ def read_yahoo_analysis_rating(stock):
     return (erg)
 
 def read_yahoo_histprice(stock):
-    if stock.upper() == "DAX": stock = "%5EGDAXI"
-    if stock.upper() == "SP500": stock = "%5EGSPC"
-    if stock.upper() == "DowJones": stock = "%5EDJI%3B"
-    if stock.upper() == "NASDAQ": stock = "%5EIXIC"
-    if stock.upper() == "MDAX": stock = "%5EMDAXI"
-    if stock.upper() == "SDAX": stock = "%5ESDAXI"
-    if stock.upper() == "EUROStoxx50": stock = "%5ESTOXX50E"
-    if stock.upper() == "AEX25": stock = "%%5Eaex"
-    if stock.upper() == "ATX": stock = "%5EATX"
-    if stock.upper() == "CAC40": stock = "%5EFCHI"
-    if stock.upper() == "IBEX35": stock = "%5EIBEX"
-    if stock.upper() == "FTSE100": stock = "%5EFTSE"
-    if stock.upper() == "SMI": stock = "%5ESSMI"
-    if stock.upper() == "MIB": stock = "%FTSEMIB.MI"
-    if stock.upper() == "EUROStoxx600": stock = "%5Estoxx"
-    if stock.upper() == "BEL20": stock = "%5EBFX"
-    if stock.upper() == "NIKKEI225": stock = "%5EN225"
-    if stock.upper() == "HangSeng": stock = "%5EHSI"
-    if stock.upper() == "ASX200": stock = "%5EAXJO"
+    if stock.upper () == "AEX25": stock = "%%5Eaex"
+    if stock.upper () == "ASX200": stock = "%5EAXJO"
+    if stock.upper () == "ATX": stock = "%5EATX"
+    if stock.upper () == "BEL20": stock = "%5EBFX"
+    if stock.upper () == "CAC40": stock = "%5EFCHI"
+    if stock.upper () == "DAX": stock = "%5EGDAXI"
+    if stock.upper () == "DowJones": stock = "%5EDJI%3B"
+    if stock.upper () == "EUROStoxx50": stock = "%5ESTOXX50E"
+    if stock.upper () == "EUROStoxx600": stock = "%5Estoxx"
+    if stock.upper () == "FTSE100": stock = "%5EFTSE"
+    if stock.upper () == "HangSeng": stock = "%5EHSI"
+    if stock.upper () == "IBEX35": stock = "%5EIBEX"
+    if stock.upper () == "MDAX": stock = "%5EMDAXI"
+    if stock.upper () == "MIB": stock = "%FTSEMIB.MI"
+    if stock.upper () == "NASDAQ": stock = "%5EIXIC"
+    if stock.upper () == "NIKKEI225": stock = "%5EN225"
+    if stock.upper () == "SDAX": stock = "%5ESDAXI"
+    if stock.upper () == "SMI": stock = "%5ESSMI"
+    if stock.upper () == "SP500": stock = "%5EGSPC"
 
     erg = {}
     tmp_list = []
@@ -733,8 +738,8 @@ if __name__ == '__main__':
     #stock = "sp500"
     #erg1 = read_yahoo_summary(stock)
     #erg2 = read_yahoo_profile(stock)
-    #erg3, erg4 = read_yahoo_statistics(stock)
-    erg5 = read_yahoo_income_statement(stock)
+    erg3, erg4 = read_yahoo_statistics(stock)
+    #erg5 = read_yahoo_income_statement(stock)
     #erg6 = read_yahoo_balance_sheet(stock)
     #erg7 = read_yahoo_cashflow(stock)
     #erg8 = read_yahoo_analysis(stock)
@@ -762,8 +767,8 @@ if __name__ == '__main__':
     #for key,val in erg1.items(): print(key,val)
     #for key,val in erg2.items(): print(key,val)
     #for key,val in erg3.items(): print(key,val)
-    #for key,val in erg4.items(): print(key,val)
-    for key,val in erg5.items(): print(key,val)
+    for key,val in erg4.items(): print(key,val)
+    #for key,val in erg5.items(): print(key,val)
     #for key,val in erg6.items(): print(key,val)
     #for key,val in erg7.items(): print(key,val)
     #for key, val in erg8.items (): print (key, val)
