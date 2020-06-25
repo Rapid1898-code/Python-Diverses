@@ -602,8 +602,6 @@ def read_yahoo_analysis(stock):
     time.sleep (3)
     driver.quit ()
 
-
-
     table = soup.find(id="YDC-Col1")
     erg = {}
     list_table = []
@@ -663,9 +661,11 @@ def read_yahoo_histprice(stock):
     if stock.upper() == "FTSE100": stock = "%5EFTSE"
     if stock.upper() == "SMI": stock = "%5ESSMI"
     if stock.upper() == "MIB": stock = "%FTSEMIB.MI"
-    if stock.upper() == "FTSE100": stock = "%5EFTSE"
-    if stock.upper() == "FTSE100": stock = "%5EFTSE"
-    if stock.upper() == "FTSE100": stock = "%5EFTSE"
+    if stock.upper() == "EUROStoxx600": stock = "%5Estoxx"
+    if stock.upper() == "BEL20": stock = "%5EBFX"
+    if stock.upper() == "NIKKEI225": stock = "%5EN225"
+    if stock.upper() == "HangSeng": stock = "%5EHSI"
+    if stock.upper() == "ASX200": stock = "%5EAXJO"
 
     erg = {}
     tmp_list = []
@@ -728,13 +728,13 @@ def read_yahoo_earnings_cal(stock):
 if __name__ == '__main__':
     #stock = "CAT"
     #stock = "AMZN"
-    #stock = "AAPL"
-    stock = "BAYRY"
+    stock = "AAPL"
+    #stock = "BAYRY"
     #stock = "sp500"
     #erg1 = read_yahoo_summary(stock)
     #erg2 = read_yahoo_profile(stock)
-    erg3, erg4 = read_yahoo_statistics(stock)
-    ##erg5 = read_yahoo_income_statement(stock)
+    #erg3, erg4 = read_yahoo_statistics(stock)
+    erg5 = read_yahoo_income_statement(stock)
     #erg6 = read_yahoo_balance_sheet(stock)
     #erg7 = read_yahoo_cashflow(stock)
     #erg8 = read_yahoo_analysis(stock)
@@ -761,9 +761,9 @@ if __name__ == '__main__':
 
     #for key,val in erg1.items(): print(key,val)
     #for key,val in erg2.items(): print(key,val)
-    for key,val in erg3.items(): print(key,val)
+    #for key,val in erg3.items(): print(key,val)
     #for key,val in erg4.items(): print(key,val)
-    #for key,val in erg5.items(): print(key,val)
+    for key,val in erg5.items(): print(key,val)
     #for key,val in erg6.items(): print(key,val)
     #for key,val in erg7.items(): print(key,val)
     #for key, val in erg8.items (): print (key, val)
