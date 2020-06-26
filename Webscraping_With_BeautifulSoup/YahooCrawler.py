@@ -236,7 +236,7 @@ def read_yahoo_statistics(stock):
     for key,val in erg_stat.items():
         if "B" in val: erg_stat[key] = clean_value_BT(erg_stat[key],"B")
         if "T" in val: erg_stat[key] = clean_value_BT(erg_stat[key], "T")
-        if "M" in val and "Mar" not in val and "May" not in val:
+        if "M" in val and "Mar" not in val and "May" not in val:ds
             erg_stat[key] = clean_value_BT(erg_stat[key], "M")
 
     return (erg_stat,erg_val)
