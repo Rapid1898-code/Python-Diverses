@@ -8,7 +8,7 @@ import logging
 import os
 from openpyxl import load_workbook
 from openpyxl.utils import get_column_letter
-from openpyxl.styles import Font, PatternFill, Border, Side
+from openpyxl.styles import Font, PatternFill, Border, Side, Alignment
 import pandas as pd
 
 def save_xls(stock, content, filename):
@@ -36,11 +36,20 @@ def save_xls(stock, content, filename):
     bold = Font (bold=True)
     bg_yellow = PatternFill (fill_type="solid", start_color='fbfce1', end_color='fbfce1')
     bg_grey = PatternFill (fill_type="solid", start_color='babab6', end_color='babab6')
-    bg_green = PatternFill (fill_type="solid", start_color='c7ffcd', end_color='fffbc7')
+    bg_green = PatternFill (fill_type="solid", start_color='8af542', end_color='8af542')
+    bg_blue = PatternFill (fill_type="solid", start_color='42b9f5', end_color='42b9f5')
     frame_all = Border (left=Side (style='thin'), right=Side (style='thin'), top=Side (style='thin'),
                         bottom=Side (style='thin'))
     frame_upanddown = Border (top=Side (style='thin'), bottom=Side (style='thin'))
     size14 = Font (bold=True, size="14")
+    left_allign = Alignment (horizontal="left")
+
+    for row in ws["A1":"B5"]:
+        for cell in row:
+            cell.fill = bg_yellow
+            cell.border = frame_all
+            cell.font = bold
+            cell.alignment = left_allign
 
     """
     # Formatierung Excel-Sheet
@@ -154,10 +163,12 @@ if __name__ == '__main__':
         hist_price_index = YahooCrawler.read_yahoo_histprice(index)
 
         #2 - EBIT-Margin / EBIT Marge
-        insstat = YahooCrawler.read_yahoo_income_statement(stock)
-        ebit = insstat["EBIT"][0]
-        revenue = insstat["Total Revenue"][0]
-        ebit_marge = round(ebit / revenue * 100,2)
+        insstat = YahooCrawler.read_yahoo_income_statement (stock)
+        if fin.upper() == "N":
+            ebit = insstat["EBIT"][0]
+            revenue = insstat["Total Revenue"][0]
+            ebit_marge = round(ebit / revenue * 100,2)
+        else: ebit_marge = "N/A"
 
         #4 - P/E-Ratio History 5Y / KGV Historisch 5J
         net_income = insstat["Net Income"]
@@ -175,10 +186,6 @@ if __name__ == '__main__':
                 #print("NetIncome: ", cont)
                 #print("Shares Outstanding: ", shares_outstanding)
                 #print("\n")
-
-                print(tmp_price)
-                print(cont)
-                print(shares_outstanding)
 
                 eps_hist += tmp_price / (cont / shares_outstanding)
                 pe_ratio_hist_list.append(round(tmp_price / (cont / shares_outstanding),2))
@@ -201,7 +208,8 @@ if __name__ == '__main__':
 
         #6 - Analyst Opinions / Analystenmeinung
         analyst_rating = YahooCrawler.read_zacks_rating(stock)
-        rating = analyst_rating["Rating"][0]
+        if analyst_rating["Rating"] == "N/A": rating = "N/A"
+        else: rating = analyst_rating["Rating"][0]
 
         #7 Reaction to quarter numbers / Reaktion auf Quartalszahlen
         dates_earnings = YahooCrawler.read_yahoo_earnings_cal(stock)
@@ -226,10 +234,16 @@ if __name__ == '__main__':
         next_year_est_current = float(analysis["Current Estimate"][3])
         next_year_est_90d_ago = float(analysis["90 Days Ago"][3])
         profit_revision = next_year_est_current - next_year_est_90d_ago
-        profit_revision = round(((next_year_est_current-next_year_est_90d_ago)/next_year_est_90d_ago)*100,2)
+        if next_year_est_90d_ago == 0:
+            profit_revision = 0
+        else:
+            profit_revision = round(((next_year_est_current-next_year_est_90d_ago)/next_year_est_90d_ago)*100,2)
         profit_growth_act = float(analysis["Current Estimate"][2])
         profit_growth_fut = float(analysis["Current Estimate"][3])
-        profit_growth = round(((profit_growth_fut - profit_growth_act) / profit_growth_act)*100,2)
+        if profit_growth_act == 0:
+            profit_growth = 0
+        else:
+            profit_growth = round(((profit_growth_fut - profit_growth_act) / profit_growth_act)*100,2)
 
         #9 Price Change 6month / Kurs Heute vs. Kurs vor 6M
         #10 Price Change 12month / Kurs Heute vs. Kurs vo 1J
@@ -313,11 +327,13 @@ if __name__ == '__main__':
 
         #6 - check rating
         if cap == "SmallCap":
-            if rating <= 2: lm_score["rating"] = 1
+            if rating == "N/A": lm_score["rating"] = 0
+            elif rating <= 2: lm_score["rating"] = 1
             elif rating >= 4: lm_score["rating"] = -1
             else: lm_score["rating"] = 0
         else:
-            if rating >= 4: lm_score["rating"] = 1
+            if rating == "N/A": lm_score["rating"] = 0
+            elif rating >= 4: lm_score["rating"] = 1
             elif rating <= 2: lm_score["rating"] = -1
             else: lm_score["rating"] = 0
 

@@ -12,7 +12,11 @@ from datetime import datetime, timedelta
 
 def is_na(value):
     if "N/A" in value: return "N/A"
-    else: return float(value)
+    else:
+        try:
+            return (float(value))
+        except ValueError:
+            return (value)
 
 def read_dayprice(prices,date,direction):
 # read price of a specific date
@@ -58,7 +62,8 @@ def read_yahoo_summary(stock):
 
     table = soup.find ('div', id="quote-header-info")
     name = table.find ("h1").text.split ("-")[1].strip ()
-    erg["name"] = table.find ("h1").text.split ("-")[1].strip ()
+    if name == None: return None
+    else: erg["name"] = table.find ("h1").text.split ("-")[1].strip ()
 
     table = soup.find ('div', id="quote-header")
     erg["vol"] = int(soup.find('td', attrs={"data-test": "TD_VOLUME-value"}).text.strip().replace(",",""))
@@ -229,17 +234,19 @@ def read_yahoo_statistics(stock):
         else: tmp_list_val[i] = "Header"
         erg_val[tmp_list_val[i]] = tmp_list_val[i+1:i+7]
 
-    # replace B Billion values with float value
+    # replace B Billion, M Million, T Thousand values with float value
     for key,val in erg_val.items():
         for idx,cont in enumerate(val):
-            if "B" in cont: erg_val[key][idx] = clean_value_BT(erg_val[key][idx],"B")
-            if "T" in cont: erg_val[key][idx] = clean_value_BT(erg_val[key][idx], "T")
-            if "M" in cont: erg_val[key][idx] = clean_value_BT(erg_val[key][idx], "M")
+            if type(val) != float:
+                if "B" in cont: erg_val[key][idx] = clean_value_BT(erg_val[key][idx],"B")
+                if "T" in cont: erg_val[key][idx] = clean_value_BT(erg_val[key][idx], "T")
+                if "M" in cont: erg_val[key][idx] = clean_value_BT(erg_val[key][idx], "M")
     for key,val in erg_stat.items():
-        if "B" in val: erg_stat[key] = clean_value_BT(erg_stat[key],"B")
-        if "T" in val: erg_stat[key] = clean_value_BT(erg_stat[key], "T")
-        if "M" in val and "Mar" not in val and "May" not in val:
-            erg_stat[key] = clean_value_BT(erg_stat[key], "M")
+        if type(val) != float:
+            if "B" in val: erg_stat[key] = clean_value_BT(erg_stat[key],"B")
+            if "T" in val: erg_stat[key] = clean_value_BT(erg_stat[key], "T")
+            if "M" in val and "Mar" not in val and "May" not in val:
+                erg_stat[key] = clean_value_BT(erg_stat[key], "M")
 
     return (erg_stat,erg_val)
 
@@ -704,7 +711,11 @@ def read_zacks_rating(stock):
 
     tmp = []
     table = soup.find (id="right_content")
-    for row in table.find_all ("p", class_="rank_view"): tmp.append (row.text.strip ())
+    if table == None:
+        erg["Rating"] = "N/A"
+        return(erg)
+    else:
+        for row in table.find_all ("p", class_="rank_view"): tmp.append (row.text.strip ())
     erg["Rating"] = [int(tmp[0][-1]),"1Buy to 5Sell"]
 
     return (erg)
@@ -735,13 +746,14 @@ def read_yahoo_earnings_cal(stock):
 if __name__ == '__main__':
     #stock = "CAT"
     #stock = "AMZN"
-    stock = "AAPL"
+    #stock = "AAPL"
     #stock = "BAYRY"
     #stock = "sp500"
+    stock = "BAC"
     #erg1 = read_yahoo_summary(stock)
     #erg2 = read_yahoo_profile(stock)
-    erg3, erg4 = read_yahoo_statistics(stock)
-    #erg5 = read_yahoo_income_statement(stock)
+    #erg3, erg4 = read_yahoo_statistics(stock)
+    erg5 = read_yahoo_income_statement(stock)
     #erg6 = read_yahoo_balance_sheet(stock)
     #erg7 = read_yahoo_cashflow(stock)
     #erg8 = read_yahoo_analysis(stock)
@@ -769,8 +781,8 @@ if __name__ == '__main__':
     #for key,val in erg1.items(): print(key,val)
     #for key,val in erg2.items(): print(key,val)
     #for key,val in erg3.items(): print(key,val)
-    for key,val in erg4.items(): print(key,val)
-    #for key,val in erg5.items(): print(key,val)
+    #for key,val in erg4.items(): print(key,val)
+    for key,val in erg5.items(): print(key,val)
     #for key,val in erg6.items(): print(key,val)
     #for key,val in erg7.items(): print(key,val)
     #for key, val in erg8.items (): print (key, val)

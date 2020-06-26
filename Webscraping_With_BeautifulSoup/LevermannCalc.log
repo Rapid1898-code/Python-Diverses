@@ -1,88 +1,110 @@
-2020-06-25 23:12:15,590 Release <POINTER(IDispatch) ptr=0x1f7c6aed058 at 1f7d3d08dc8>
-2020-06-25 23:12:15,614 Filename:C:\Users\Polzi\Documents\GitHub\Python-Diverses\Webscraping_With_BeautifulSoup\LevermannInput.xlsx
-2020-06-25 23:12:16,173 POST http://127.0.0.1:56433/session {"capabilities": {"firstMatch": [{}], "alwaysMatch": {"browserName": "chrome", "platformName": "any", "goog:chromeOptions": {"extensions": [], "args": ["--headless"]}}}, "desiredCapabilities": {"browserName": "chrome", "version": "", "platform": "ANY", "goog:chromeOptions": {"extensions": [], "args": ["--headless"]}}}
-2020-06-25 23:12:16,174 Starting new HTTP connection (1): 127.0.0.1:56433
-2020-06-25 23:12:18,656 http://127.0.0.1:56433 "POST /session HTTP/1.1" 200 718
-2020-06-25 23:12:18,656 Finished Request
-2020-06-25 23:12:18,656 POST http://127.0.0.1:56433/session/77cf08591affce230c62458acfe99b69/url {"url": "https://finance.yahoo.com/quote/VAR1.DE/key-statistics?p=VAR1.DE"}
-2020-06-25 23:12:19,836 http://127.0.0.1:56433 "POST /session/77cf08591affce230c62458acfe99b69/url HTTP/1.1" 200 14
-2020-06-25 23:12:19,837 Finished Request
-2020-06-25 23:12:21,838 POST http://127.0.0.1:56433/session/77cf08591affce230c62458acfe99b69/element {"using": "css selector", "value": "[name=\"agree\"]"}
-2020-06-25 23:12:21,876 http://127.0.0.1:56433 "POST /session/77cf08591affce230c62458acfe99b69/element HTTP/1.1" 200 88
-2020-06-25 23:12:21,876 Finished Request
-2020-06-25 23:12:21,877 POST http://127.0.0.1:56433/session/77cf08591affce230c62458acfe99b69/element/d930b1ed-c5c7-4227-bf11-a0fd522cc598/click {"id": "d930b1ed-c5c7-4227-bf11-a0fd522cc598"}
-2020-06-25 23:12:23,808 http://127.0.0.1:56433 "POST /session/77cf08591affce230c62458acfe99b69/element/d930b1ed-c5c7-4227-bf11-a0fd522cc598/click HTTP/1.1" 200 14
-2020-06-25 23:12:23,808 Finished Request
-2020-06-25 23:12:25,809 GET http://127.0.0.1:56433/session/77cf08591affce230c62458acfe99b69/source {}
-2020-06-25 23:12:25,879 http://127.0.0.1:56433 "GET /session/77cf08591affce230c62458acfe99b69/source HTTP/1.1" 200 799832
-2020-06-25 23:12:25,891 Finished Request
-2020-06-25 23:12:27,955 DELETE http://127.0.0.1:56433/session/77cf08591affce230c62458acfe99b69 {}
-2020-06-25 23:12:28,005 http://127.0.0.1:56433 "DELETE /session/77cf08591affce230c62458acfe99b69 HTTP/1.1" 200 14
-2020-06-25 23:12:28,006 Finished Request
-2020-06-25 23:12:31,280 POST http://127.0.0.1:56504/session {"capabilities": {"firstMatch": [{}], "alwaysMatch": {"browserName": "chrome", "platformName": "any", "goog:chromeOptions": {"extensions": [], "args": ["--headless"]}}}, "desiredCapabilities": {"browserName": "chrome", "version": "", "platform": "ANY", "goog:chromeOptions": {"extensions": [], "args": ["--headless"]}}}
-2020-06-25 23:12:31,281 Starting new HTTP connection (1): 127.0.0.1:56504
-2020-06-25 23:12:33,790 http://127.0.0.1:56504 "POST /session HTTP/1.1" 200 716
-2020-06-25 23:12:33,790 Finished Request
-2020-06-25 23:12:33,790 POST http://127.0.0.1:56504/session/283ad313b1998818543bbe2cbf406b05/url {"url": "https://finance.yahoo.com/quote/VAR1.DE/financials?p=VAR1.DE"}
-2020-06-25 23:12:34,720 http://127.0.0.1:56504 "POST /session/283ad313b1998818543bbe2cbf406b05/url HTTP/1.1" 200 14
-2020-06-25 23:12:34,720 Finished Request
-2020-06-25 23:12:36,721 POST http://127.0.0.1:56504/session/283ad313b1998818543bbe2cbf406b05/element {"using": "css selector", "value": "[name=\"agree\"]"}
-2020-06-25 23:12:36,732 http://127.0.0.1:56504 "POST /session/283ad313b1998818543bbe2cbf406b05/element HTTP/1.1" 200 88
-2020-06-25 23:12:36,732 Finished Request
-2020-06-25 23:12:36,732 POST http://127.0.0.1:56504/session/283ad313b1998818543bbe2cbf406b05/element/68c167b8-cf97-451f-91dd-fd0b22b18420/click {"id": "68c167b8-cf97-451f-91dd-fd0b22b18420"}
-2020-06-25 23:12:38,679 http://127.0.0.1:56504 "POST /session/283ad313b1998818543bbe2cbf406b05/element/68c167b8-cf97-451f-91dd-fd0b22b18420/click HTTP/1.1" 200 14
-2020-06-25 23:12:38,680 Finished Request
-2020-06-25 23:12:40,680 POST http://127.0.0.1:56504/session/283ad313b1998818543bbe2cbf406b05/element {"using": "xpath", "value": "//*[@id=\"Col1-1-Financials-Proxy\"]/section/div[2]/button/div/span"}
-2020-06-25 23:12:40,692 http://127.0.0.1:56504 "POST /session/283ad313b1998818543bbe2cbf406b05/element HTTP/1.1" 200 88
-2020-06-25 23:12:40,692 Finished Request
-2020-06-25 23:12:40,692 POST http://127.0.0.1:56504/session/283ad313b1998818543bbe2cbf406b05/element/0704df2b-d994-4ba1-9d46-071063e45386/click {"id": "0704df2b-d994-4ba1-9d46-071063e45386"}
-2020-06-25 23:12:40,769 http://127.0.0.1:56504 "POST /session/283ad313b1998818543bbe2cbf406b05/element/0704df2b-d994-4ba1-9d46-071063e45386/click HTTP/1.1" 200 14
-2020-06-25 23:12:40,769 Finished Request
-2020-06-25 23:12:42,770 GET http://127.0.0.1:56504/session/283ad313b1998818543bbe2cbf406b05/source {}
-2020-06-25 23:12:42,849 http://127.0.0.1:56504 "GET /session/283ad313b1998818543bbe2cbf406b05/source HTTP/1.1" 200 934508
-2020-06-25 23:12:42,863 Finished Request
-2020-06-25 23:12:44,934 DELETE http://127.0.0.1:56504/session/283ad313b1998818543bbe2cbf406b05 {}
-2020-06-25 23:12:44,981 http://127.0.0.1:56504 "DELETE /session/283ad313b1998818543bbe2cbf406b05 HTTP/1.1" 200 14
-2020-06-25 23:12:44,982 Finished Request
-2020-06-25 23:12:47,614 POST http://127.0.0.1:56578/session {"capabilities": {"firstMatch": [{}], "alwaysMatch": {"browserName": "chrome", "platformName": "any", "goog:chromeOptions": {"extensions": [], "args": ["--headless"]}}}, "desiredCapabilities": {"browserName": "chrome", "version": "", "platform": "ANY", "goog:chromeOptions": {"extensions": [], "args": ["--headless"]}}}
-2020-06-25 23:12:47,616 Starting new HTTP connection (1): 127.0.0.1:56578
-2020-06-25 23:12:50,134 http://127.0.0.1:56578 "POST /session HTTP/1.1" 200 717
-2020-06-25 23:12:50,135 Finished Request
-2020-06-25 23:12:50,135 POST http://127.0.0.1:56578/session/f877dbe955a7c777a68b3643a472617d/url {"url": "https://finance.yahoo.com/quote/VAR1.DE/balance-sheet?p=VAR1.DE"}
-2020-06-25 23:12:51,089 http://127.0.0.1:56578 "POST /session/f877dbe955a7c777a68b3643a472617d/url HTTP/1.1" 200 14
-2020-06-25 23:12:51,089 Finished Request
-2020-06-25 23:12:53,089 POST http://127.0.0.1:56578/session/f877dbe955a7c777a68b3643a472617d/element {"using": "css selector", "value": "[name=\"agree\"]"}
-2020-06-25 23:12:53,127 http://127.0.0.1:56578 "POST /session/f877dbe955a7c777a68b3643a472617d/element HTTP/1.1" 200 88
-2020-06-25 23:12:53,128 Finished Request
-2020-06-25 23:12:53,129 POST http://127.0.0.1:56578/session/f877dbe955a7c777a68b3643a472617d/element/97d38dc9-5161-495a-9a04-6ae0ce102166/click {"id": "97d38dc9-5161-495a-9a04-6ae0ce102166"}
-2020-06-25 23:12:55,147 http://127.0.0.1:56578 "POST /session/f877dbe955a7c777a68b3643a472617d/element/97d38dc9-5161-495a-9a04-6ae0ce102166/click HTTP/1.1" 200 14
-2020-06-25 23:12:55,148 Finished Request
-2020-06-25 23:12:57,148 POST http://127.0.0.1:56578/session/f877dbe955a7c777a68b3643a472617d/element {"using": "xpath", "value": "//*[@id=\"Col1-1-Financials-Proxy\"]/section/div[2]/button/div/span"}
-2020-06-25 23:12:57,188 http://127.0.0.1:56578 "POST /session/f877dbe955a7c777a68b3643a472617d/element HTTP/1.1" 200 88
-2020-06-25 23:12:57,189 Finished Request
-2020-06-25 23:12:57,189 POST http://127.0.0.1:56578/session/f877dbe955a7c777a68b3643a472617d/element/e6e5781d-ca80-4645-965e-7d18b9f66b9c/click {"id": "e6e5781d-ca80-4645-965e-7d18b9f66b9c"}
-2020-06-25 23:12:57,299 http://127.0.0.1:56578 "POST /session/f877dbe955a7c777a68b3643a472617d/element/e6e5781d-ca80-4645-965e-7d18b9f66b9c/click HTTP/1.1" 200 14
-2020-06-25 23:12:57,299 Finished Request
-2020-06-25 23:12:59,300 GET http://127.0.0.1:56578/session/f877dbe955a7c777a68b3643a472617d/source {}
-2020-06-25 23:12:59,386 http://127.0.0.1:56578 "GET /session/f877dbe955a7c777a68b3643a472617d/source HTTP/1.1" 200 945670
-2020-06-25 23:12:59,401 Finished Request
-2020-06-25 23:13:01,473 DELETE http://127.0.0.1:56578/session/f877dbe955a7c777a68b3643a472617d {}
-2020-06-25 23:13:01,511 http://127.0.0.1:56578 "DELETE /session/f877dbe955a7c777a68b3643a472617d HTTP/1.1" 200 14
-2020-06-25 23:13:01,511 Finished Request
-2020-06-25 23:13:03,580 Starting new HTTPS connection (1): finance.yahoo.com:443
-2020-06-25 23:13:04,001 https://finance.yahoo.com:443 "GET /quote/VAR1.DE HTTP/1.1" 200 None
-2020-06-25 23:13:04,675 POST http://127.0.0.1:56655/session {"capabilities": {"firstMatch": [{}], "alwaysMatch": {"browserName": "chrome", "platformName": "any", "goog:chromeOptions": {"extensions": [], "args": ["--headless"]}}}, "desiredCapabilities": {"browserName": "chrome", "version": "", "platform": "ANY", "goog:chromeOptions": {"extensions": [], "args": ["--headless"]}}}
-2020-06-25 23:13:04,675 Starting new HTTP connection (1): 127.0.0.1:56655
-2020-06-25 23:13:07,146 http://127.0.0.1:56655 "POST /session HTTP/1.1" 200 717
-2020-06-25 23:13:07,147 Finished Request
-2020-06-25 23:13:07,147 POST http://127.0.0.1:56655/session/ecb5403e0a01939d06aec384d849339e/url {"url": "https://www.zacks.com/stock/quote/VAR1.DE"}
-2020-06-25 23:13:11,186 http://127.0.0.1:56655 "POST /session/ecb5403e0a01939d06aec384d849339e/url HTTP/1.1" 200 14
-2020-06-25 23:13:11,187 Finished Request
-2020-06-25 23:13:13,188 GET http://127.0.0.1:56655/session/ecb5403e0a01939d06aec384d849339e/source {}
-2020-06-25 23:13:13,213 http://127.0.0.1:56655 "GET /session/ecb5403e0a01939d06aec384d849339e/source HTTP/1.1" 200 125209
-2020-06-25 23:13:13,216 Finished Request
-2020-06-25 23:13:15,276 DELETE http://127.0.0.1:56655/session/ecb5403e0a01939d06aec384d849339e {}
-2020-06-25 23:13:15,311 http://127.0.0.1:56655 "DELETE /session/ecb5403e0a01939d06aec384d849339e HTTP/1.1" 200 14
-2020-06-25 23:13:15,311 Finished Request
-2020-06-25 23:13:17,381 Calling CoUnititialize()
-2020-06-25 23:13:17,381 CoUnititialize() done.
+2020-06-26 23:43:40,246 Filename:C:\Users\Polzi\Documents\GitHub\Python-Diverses\Webscraping_With_BeautifulSoup\LevermannInput.xlsx
+2020-06-26 23:43:40,771 POST http://127.0.0.1:63708/session {"capabilities": {"firstMatch": [{}], "alwaysMatch": {"browserName": "chrome", "platformName": "any", "goog:chromeOptions": {"extensions": [], "args": ["--headless"]}}}, "desiredCapabilities": {"browserName": "chrome", "version": "", "platform": "ANY", "goog:chromeOptions": {"extensions": [], "args": ["--headless"]}}}
+2020-06-26 23:43:40,772 Starting new HTTP connection (1): 127.0.0.1:63708
+2020-06-26 23:43:43,485 http://127.0.0.1:63708 "POST /session HTTP/1.1" 200 717
+2020-06-26 23:43:43,485 Finished Request
+2020-06-26 23:43:43,485 POST http://127.0.0.1:63708/session/86646da9e21ed0ae16a7bcab8a43dc80/url {"url": "https://finance.yahoo.com/quote/BAC/key-statistics?p=BAC"}
+2020-06-26 23:43:44,924 http://127.0.0.1:63708 "POST /session/86646da9e21ed0ae16a7bcab8a43dc80/url HTTP/1.1" 200 14
+2020-06-26 23:43:44,925 Finished Request
+2020-06-26 23:43:46,926 POST http://127.0.0.1:63708/session/86646da9e21ed0ae16a7bcab8a43dc80/element {"using": "css selector", "value": "[name=\"agree\"]"}
+2020-06-26 23:43:46,962 http://127.0.0.1:63708 "POST /session/86646da9e21ed0ae16a7bcab8a43dc80/element HTTP/1.1" 200 88
+2020-06-26 23:43:46,963 Finished Request
+2020-06-26 23:43:46,963 POST http://127.0.0.1:63708/session/86646da9e21ed0ae16a7bcab8a43dc80/element/42ee9c38-6f67-488a-8ee4-816ce36baa8a/click {"id": "42ee9c38-6f67-488a-8ee4-816ce36baa8a"}
+2020-06-26 23:43:48,814 http://127.0.0.1:63708 "POST /session/86646da9e21ed0ae16a7bcab8a43dc80/element/42ee9c38-6f67-488a-8ee4-816ce36baa8a/click HTTP/1.1" 200 14
+2020-06-26 23:43:48,814 Finished Request
+2020-06-26 23:43:50,815 GET http://127.0.0.1:63708/session/86646da9e21ed0ae16a7bcab8a43dc80/source {}
+2020-06-26 23:43:50,930 http://127.0.0.1:63708 "GET /session/86646da9e21ed0ae16a7bcab8a43dc80/source HTTP/1.1" 200 799311
+2020-06-26 23:43:50,942 Finished Request
+2020-06-26 23:43:53,003 DELETE http://127.0.0.1:63708/session/86646da9e21ed0ae16a7bcab8a43dc80 {}
+2020-06-26 23:43:53,018 http://127.0.0.1:63708 "DELETE /session/86646da9e21ed0ae16a7bcab8a43dc80 HTTP/1.1" 200 14
+2020-06-26 23:43:53,018 Finished Request
+2020-06-26 23:43:56,500 POST http://127.0.0.1:63781/session {"capabilities": {"firstMatch": [{}], "alwaysMatch": {"browserName": "chrome", "platformName": "any", "goog:chromeOptions": {"extensions": [], "args": ["--headless"]}}}, "desiredCapabilities": {"browserName": "chrome", "version": "", "platform": "ANY", "goog:chromeOptions": {"extensions": [], "args": ["--headless"]}}}
+2020-06-26 23:43:56,501 Starting new HTTP connection (1): 127.0.0.1:63781
+2020-06-26 23:43:59,079 http://127.0.0.1:63781 "POST /session HTTP/1.1" 200 718
+2020-06-26 23:43:59,080 Finished Request
+2020-06-26 23:43:59,080 POST http://127.0.0.1:63781/session/d62ac6bb3411fa9974e7e9ab8eedab7b/url {"url": "https://finance.yahoo.com/quote/BAC/financials?p=BAC"}
+2020-06-26 23:43:59,858 http://127.0.0.1:63781 "POST /session/d62ac6bb3411fa9974e7e9ab8eedab7b/url HTTP/1.1" 200 14
+2020-06-26 23:43:59,858 Finished Request
+2020-06-26 23:44:01,859 POST http://127.0.0.1:63781/session/d62ac6bb3411fa9974e7e9ab8eedab7b/element {"using": "css selector", "value": "[name=\"agree\"]"}
+2020-06-26 23:44:01,897 http://127.0.0.1:63781 "POST /session/d62ac6bb3411fa9974e7e9ab8eedab7b/element HTTP/1.1" 200 88
+2020-06-26 23:44:01,898 Finished Request
+2020-06-26 23:44:01,898 POST http://127.0.0.1:63781/session/d62ac6bb3411fa9974e7e9ab8eedab7b/element/66e56ce1-2ee4-448d-a335-78eae69d6b50/click {"id": "66e56ce1-2ee4-448d-a335-78eae69d6b50"}
+2020-06-26 23:44:07,619 http://127.0.0.1:63781 "POST /session/d62ac6bb3411fa9974e7e9ab8eedab7b/element/66e56ce1-2ee4-448d-a335-78eae69d6b50/click HTTP/1.1" 200 14
+2020-06-26 23:44:07,620 Finished Request
+2020-06-26 23:44:09,620 POST http://127.0.0.1:63781/session/d62ac6bb3411fa9974e7e9ab8eedab7b/element {"using": "xpath", "value": "//*[@id=\"Col1-1-Financials-Proxy\"]/section/div[2]/button/div/span"}
+2020-06-26 23:44:09,661 http://127.0.0.1:63781 "POST /session/d62ac6bb3411fa9974e7e9ab8eedab7b/element HTTP/1.1" 200 88
+2020-06-26 23:44:09,662 Finished Request
+2020-06-26 23:44:09,663 POST http://127.0.0.1:63781/session/d62ac6bb3411fa9974e7e9ab8eedab7b/element/3e1329ec-6007-460f-862f-e58b6e8c0d70/click {"id": "3e1329ec-6007-460f-862f-e58b6e8c0d70"}
+2020-06-26 23:44:09,855 http://127.0.0.1:63781 "POST /session/d62ac6bb3411fa9974e7e9ab8eedab7b/element/3e1329ec-6007-460f-862f-e58b6e8c0d70/click HTTP/1.1" 200 14
+2020-06-26 23:44:09,855 Finished Request
+2020-06-26 23:44:11,855 GET http://127.0.0.1:63781/session/d62ac6bb3411fa9974e7e9ab8eedab7b/source {}
+2020-06-26 23:44:11,973 http://127.0.0.1:63781 "GET /session/d62ac6bb3411fa9974e7e9ab8eedab7b/source HTTP/1.1" 200 971206
+2020-06-26 23:44:11,989 Finished Request
+2020-06-26 23:44:14,107 DELETE http://127.0.0.1:63781/session/d62ac6bb3411fa9974e7e9ab8eedab7b {}
+2020-06-26 23:44:14,185 http://127.0.0.1:63781 "DELETE /session/d62ac6bb3411fa9974e7e9ab8eedab7b HTTP/1.1" 200 14
+2020-06-26 23:44:14,185 Finished Request
+2020-06-26 23:44:16,892 POST http://127.0.0.1:51696/session {"capabilities": {"firstMatch": [{}], "alwaysMatch": {"browserName": "chrome", "platformName": "any", "goog:chromeOptions": {"extensions": [], "args": ["--headless"]}}}, "desiredCapabilities": {"browserName": "chrome", "version": "", "platform": "ANY", "goog:chromeOptions": {"extensions": [], "args": ["--headless"]}}}
+2020-06-26 23:44:16,893 Starting new HTTP connection (1): 127.0.0.1:51696
+2020-06-26 23:44:19,409 http://127.0.0.1:51696 "POST /session HTTP/1.1" 200 717
+2020-06-26 23:44:19,410 Finished Request
+2020-06-26 23:44:19,411 POST http://127.0.0.1:51696/session/784cdd2a99476cf853831cdbc89097cf/url {"url": "https://finance.yahoo.com/quote/BAC/balance-sheet?p=BAC"}
+2020-06-26 23:44:20,247 http://127.0.0.1:51696 "POST /session/784cdd2a99476cf853831cdbc89097cf/url HTTP/1.1" 200 14
+2020-06-26 23:44:20,247 Finished Request
+2020-06-26 23:44:22,247 POST http://127.0.0.1:51696/session/784cdd2a99476cf853831cdbc89097cf/element {"using": "css selector", "value": "[name=\"agree\"]"}
+2020-06-26 23:44:22,257 http://127.0.0.1:51696 "POST /session/784cdd2a99476cf853831cdbc89097cf/element HTTP/1.1" 200 88
+2020-06-26 23:44:22,257 Finished Request
+2020-06-26 23:44:22,257 POST http://127.0.0.1:51696/session/784cdd2a99476cf853831cdbc89097cf/element/99145bb8-a4d4-46db-bf21-26bc493fb106/click {"id": "99145bb8-a4d4-46db-bf21-26bc493fb106"}
+2020-06-26 23:44:24,826 http://127.0.0.1:51696 "POST /session/784cdd2a99476cf853831cdbc89097cf/element/99145bb8-a4d4-46db-bf21-26bc493fb106/click HTTP/1.1" 200 14
+2020-06-26 23:44:24,826 Finished Request
+2020-06-26 23:44:26,827 POST http://127.0.0.1:51696/session/784cdd2a99476cf853831cdbc89097cf/element {"using": "xpath", "value": "//*[@id=\"Col1-1-Financials-Proxy\"]/section/div[2]/button/div/span"}
+2020-06-26 23:44:26,864 http://127.0.0.1:51696 "POST /session/784cdd2a99476cf853831cdbc89097cf/element HTTP/1.1" 200 88
+2020-06-26 23:44:26,864 Finished Request
+2020-06-26 23:44:26,864 POST http://127.0.0.1:51696/session/784cdd2a99476cf853831cdbc89097cf/element/ea5a2d6f-f0ef-4675-b009-377c6c82a5e3/click {"id": "ea5a2d6f-f0ef-4675-b009-377c6c82a5e3"}
+2020-06-26 23:44:26,981 http://127.0.0.1:51696 "POST /session/784cdd2a99476cf853831cdbc89097cf/element/ea5a2d6f-f0ef-4675-b009-377c6c82a5e3/click HTTP/1.1" 200 14
+2020-06-26 23:44:26,981 Finished Request
+2020-06-26 23:44:28,981 GET http://127.0.0.1:51696/session/784cdd2a99476cf853831cdbc89097cf/source {}
+2020-06-26 23:44:29,103 http://127.0.0.1:51696 "GET /session/784cdd2a99476cf853831cdbc89097cf/source HTTP/1.1" 200 946674
+2020-06-26 23:44:29,117 Finished Request
+2020-06-26 23:44:31,195 DELETE http://127.0.0.1:51696/session/784cdd2a99476cf853831cdbc89097cf {}
+2020-06-26 23:44:31,324 http://127.0.0.1:51696 "DELETE /session/784cdd2a99476cf853831cdbc89097cf HTTP/1.1" 200 14
+2020-06-26 23:44:31,325 Finished Request
+2020-06-26 23:44:33,419 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-26 23:44:34,881 https://finance.yahoo.com:443 "GET /quote/BAC HTTP/1.1" 200 None
+2020-06-26 23:44:36,046 POST http://127.0.0.1:51784/session {"capabilities": {"firstMatch": [{}], "alwaysMatch": {"browserName": "chrome", "platformName": "any", "goog:chromeOptions": {"extensions": [], "args": ["--headless"]}}}, "desiredCapabilities": {"browserName": "chrome", "version": "", "platform": "ANY", "goog:chromeOptions": {"extensions": [], "args": ["--headless"]}}}
+2020-06-26 23:44:36,047 Starting new HTTP connection (1): 127.0.0.1:51784
+2020-06-26 23:44:38,565 http://127.0.0.1:51784 "POST /session HTTP/1.1" 200 716
+2020-06-26 23:44:38,566 Finished Request
+2020-06-26 23:44:38,566 POST http://127.0.0.1:51784/session/848a1c668f6233c3f4d12f079c1be5dc/url {"url": "https://www.zacks.com/stock/quote/BAC"}
+2020-06-26 23:44:56,736 http://127.0.0.1:51784 "POST /session/848a1c668f6233c3f4d12f079c1be5dc/url HTTP/1.1" 200 14
+2020-06-26 23:44:56,736 Finished Request
+2020-06-26 23:44:58,737 GET http://127.0.0.1:51784/session/848a1c668f6233c3f4d12f079c1be5dc/source {}
+2020-06-26 23:44:58,760 http://127.0.0.1:51784 "GET /session/848a1c668f6233c3f4d12f079c1be5dc/source HTTP/1.1" 200 179405
+2020-06-26 23:44:58,763 Finished Request
+2020-06-26 23:45:00,838 DELETE http://127.0.0.1:51784/session/848a1c668f6233c3f4d12f079c1be5dc {}
+2020-06-26 23:45:00,860 http://127.0.0.1:51784 "DELETE /session/848a1c668f6233c3f4d12f079c1be5dc HTTP/1.1" 200 14
+2020-06-26 23:45:00,861 Finished Request
+2020-06-26 23:45:03,914 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-26 23:45:04,446 https://finance.yahoo.com:443 "GET /calendar/earnings/?symbol=BAC HTTP/1.1" 200 None
+2020-06-26 23:45:04,679 Starting new HTTPS connection (1): finance.yahoo.com:443
+2020-06-26 23:45:05,182 https://finance.yahoo.com:443 "GET /calendar/earnings/?symbol=BAC HTTP/1.1" 200 None
+2020-06-26 23:45:05,932 POST http://127.0.0.1:51903/session {"capabilities": {"firstMatch": [{}], "alwaysMatch": {"browserName": "chrome", "platformName": "any", "goog:chromeOptions": {"extensions": [], "args": ["--headless"]}}}, "desiredCapabilities": {"browserName": "chrome", "version": "", "platform": "ANY", "goog:chromeOptions": {"extensions": [], "args": ["--headless"]}}}
+2020-06-26 23:45:05,932 Starting new HTTP connection (1): 127.0.0.1:51903
+2020-06-26 23:45:08,472 http://127.0.0.1:51903 "POST /session HTTP/1.1" 200 716
+2020-06-26 23:45:08,473 Finished Request
+2020-06-26 23:45:08,473 POST http://127.0.0.1:51903/session/45ddfa40a3254a4089fa24f3abcbf7bc/url {"url": "https://finance.yahoo.com/quote/BAC/analysis?p=BAC"}
+2020-06-26 23:45:09,170 http://127.0.0.1:51903 "POST /session/45ddfa40a3254a4089fa24f3abcbf7bc/url HTTP/1.1" 200 14
+2020-06-26 23:45:09,170 Finished Request
+2020-06-26 23:45:11,171 POST http://127.0.0.1:51903/session/45ddfa40a3254a4089fa24f3abcbf7bc/element {"using": "css selector", "value": "[name=\"agree\"]"}
+2020-06-26 23:45:11,181 http://127.0.0.1:51903 "POST /session/45ddfa40a3254a4089fa24f3abcbf7bc/element HTTP/1.1" 200 88
+2020-06-26 23:45:11,182 Finished Request
+2020-06-26 23:45:11,182 POST http://127.0.0.1:51903/session/45ddfa40a3254a4089fa24f3abcbf7bc/element/1164e314-ff06-4cdd-bb19-6f342eeadf02/click {"id": "1164e314-ff06-4cdd-bb19-6f342eeadf02"}
+2020-06-26 23:45:15,216 http://127.0.0.1:51903 "POST /session/45ddfa40a3254a4089fa24f3abcbf7bc/element/1164e314-ff06-4cdd-bb19-6f342eeadf02/click HTTP/1.1" 200 14
+2020-06-26 23:45:15,216 Finished Request
+2020-06-26 23:45:17,217 GET http://127.0.0.1:51903/session/45ddfa40a3254a4089fa24f3abcbf7bc/source {}
+2020-06-26 23:45:17,289 http://127.0.0.1:51903 "GET /session/45ddfa40a3254a4089fa24f3abcbf7bc/source HTTP/1.1" 200 789855
+2020-06-26 23:45:17,301 Finished Request
+2020-06-26 23:45:20,359 DELETE http://127.0.0.1:51903/session/45ddfa40a3254a4089fa24f3abcbf7bc {}
+2020-06-26 23:45:20,396 http://127.0.0.1:51903 "DELETE /session/45ddfa40a3254a4089fa24f3abcbf7bc HTTP/1.1" 200 14
+2020-06-26 23:45:20,397 Finished Request
+2020-06-26 23:45:22,707 Calling CoUnititialize()
+2020-06-26 23:45:22,708 CoUnititialize() done.
