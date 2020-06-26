@@ -12,7 +12,7 @@ from datetime import datetime, timedelta
 
 def is_na(value):
     if "N/A" in value: return "N/A"
-    else: return value
+    else: return float(value)
 
 def read_dayprice(prices,date,direction):
 # read price of a specific date
@@ -53,6 +53,7 @@ def read_yahoo_summary(stock):
     print("Reading summary web data for",stock,"...")
     page = requests.get (link)
     soup = BeautifulSoup (page.content, "html.parser")
+    time.sleep (0.5)
     erg["symbol"] = stock
 
     table = soup.find ('div', id="quote-header-info")
@@ -76,12 +77,12 @@ def read_yahoo_summary(stock):
     erg["fifty_range_from"] = float(f_r_temp[0].strip().replace(",",""))
     erg["fifty_range_to"] = float(f_r_temp[1].strip ().replace(",",""))
     erg["marketcap"] = soup.find ('td', attrs={"data-test": "MARKET_CAP-value"}).text.strip ()
-    erg["beta"] = float (soup.find ('td', attrs={"data-test": "BETA_5Y-value"}).text.strip ())
+    erg["beta"] = is_na(soup.find ('td', attrs={"data-test": "BETA_5Y-value"}).text.strip ())
     if "N/A" in soup.find ('td', attrs={"data-test": "PE_RATIO-value"}).text.strip ():
         erg["pe_ratio"] = "N/A"
     else:
         erg["pe_ratio"] = float(soup.find ('td', attrs={"data-test": "PE_RATIO-value"}).text.strip ())
-    erg["eps_ratio"] = float(soup.find ('td', attrs={"data-test": "EPS_RATIO-value"}).text.strip ())
+    erg["eps_ratio"] = is_na(soup.find ('td', attrs={"data-test": "EPS_RATIO-value"}).text.strip ())
     div_temp = soup.find ('td', attrs={"data-test": "DIVIDEND_AND_YIELD-value"}).text.strip ().split ("(")
     if "N/A" in div_temp[0].strip():
         erg["forw_dividend"] = "N/A"
@@ -103,6 +104,7 @@ def read_yahoo_profile(stock):
     link = "https://finance.yahoo.com/quote/" + stock + "/profile?p=" + stock
     page = requests.get (link)
     soup = BeautifulSoup (page.content, "html.parser")
+    time.sleep (0.5)
     erg["symbol"] = stock
 
     tmp_empl = soup.find ('span', attrs={"data-reactid": "30"})
@@ -236,7 +238,7 @@ def read_yahoo_statistics(stock):
     for key,val in erg_stat.items():
         if "B" in val: erg_stat[key] = clean_value_BT(erg_stat[key],"B")
         if "T" in val: erg_stat[key] = clean_value_BT(erg_stat[key], "T")
-        if "M" in val and "Mar" not in val and "May" not in val:ds
+        if "M" in val and "Mar" not in val and "May" not in val:
             erg_stat[key] = clean_value_BT(erg_stat[key], "M")
 
     return (erg_stat,erg_val)
