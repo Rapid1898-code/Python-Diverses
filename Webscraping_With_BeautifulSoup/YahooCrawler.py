@@ -18,6 +18,31 @@ def is_na(value):
         except ValueError:
             return (value)
 
+def clean_value_BT(value,char):
+#clean value with for B as billion
+    decimal_place = value.find(".")
+    b_place = value.find(char)
+    value = value.replace(".","").replace(char,"")
+    if char == "M":
+        for i in range (3 - (b_place - decimal_place - 1)): value = value + "0"
+    if char == "B":
+        for i in range(6 - (b_place - decimal_place -1)): value = value + "0"
+    if char == "T":
+        for i in range(9 - (b_place - decimal_place -1)): value = value + "0"
+    return(float(value))
+
+def print_num_abbr(value):
+    if value > 1000000000:
+        tmp = round(value / 1000000000,2)
+        return (str(tmp)+"B")
+    elif value > 1000000:
+        tmp = round (value / 1000000, 2)
+        return (str (tmp) + "M")
+    elif value > 1000:
+        tmp = round (value / 1000, 2)
+        return (str (tmp) + "T")
+    else: return value
+
 def read_dayprice(prices,date,direction):
 # read price of a specific date
 # when date not available take nearest day in history from the date
@@ -31,19 +56,6 @@ def read_dayprice(prices,date,direction):
             date = datetime.strftime (newdate, "%Y-%m-%d")
             nr +=1
     return ("1900-01-01",999999999)
-
-def clean_value_BT(value,char):
-#clean value with for B as billion
-    decimal_place = value.find(".")
-    b_place = value.find(char)
-    value = value.replace(".","").replace(char,"")
-    if char == "M":
-        for i in range (3 - (b_place - decimal_place - 1)): value = value + "0"
-    if char == "B":
-        for i in range(6 - (b_place - decimal_place -1)): value = value + "0"
-    if char == "T":
-        for i in range(9 - (b_place - decimal_place -1)): value = value + "0"
-    return(float(value))
 
 def read_yahoo_summary(stock):
     # Read summary stock data from yahoo
@@ -61,8 +73,8 @@ def read_yahoo_summary(stock):
     erg["symbol"] = stock
 
     table = soup.find ('div', id="quote-header-info")
-    name = table.find ("h1").text.split ("-")[1].strip ()
-    if name == None: return None
+
+    if table == None: return None
     else: erg["name"] = table.find ("h1").text.split ("-")[1].strip ()
 
     table = soup.find ('div', id="quote-header")
@@ -112,25 +124,43 @@ def read_yahoo_profile(stock):
     time.sleep (0.5)
     erg["symbol"] = stock
 
-    tmp_empl = soup.find ('span', attrs={"data-reactid": "30"})
-    # there 2 different kinds of site-information - so there are 2 ways
-    if tmp_empl != None:
-        erg["empl"] = int(tmp_empl.text.strip().replace(",",""))
-        sector_tmp = soup.find_all ('span', attrs={"data-reactid": "21"})
-        for row in sector_tmp:
-            if row.get ("class") != None: erg["sector"] = row.text.strip ()
-        industry_tmp = soup.find_all ('span', attrs={"data-reactid": "25"})
-        for row in industry_tmp:
-            if row.get ("class") != None: erg["industry"] = row.text.strip ()
-        erg["desc"] = soup.find ('p', attrs={"data-reactid": "141"}).text.strip ()
+    table = soup.find ('div', attrs={"class": "asset-profile-container"})
+    if table == None:
+        return None
     else:
-        table = soup.find ('div', attrs={"class": "asset-profile-container"})
         spans = table.find_all ("span")
-        erg["empl"] = int(spans[5].text.strip().replace(",",""))
-        erg["sector"] = spans[1].text.strip ()
-        erg["industry"] = spans[3].text.strip ()
-        table = soup.find ('section', attrs={"class": "quote-sub-section Mt(30px)"})
-        erg["desc"] = table.find ("p").text.strip ()
+
+    if len(spans[5].text.strip()) == 0:
+        erg["empl"] = "N/A"
+    else:
+        erg["empl"] = int(spans[5].text.strip ().replace (",", ""))
+
+    erg["sector"] = spans[1].text.strip ()
+    erg["industry"] = spans[3].text.strip ()
+    table = soup.find ('section', attrs={"class": "quote-sub-section Mt(30px)"})
+    erg["desc"] = table.find ("p").text.strip ()
+
+    # OLD Code: probably not need anymore...
+    # there 2 different kinds of site-information - so there are 2 ways
+    # tmp_empl = soup.find ('span', attrs={"data-reactid": "30"})
+    # there 2 different kinds of site-information - so there are 2 ways
+    # if tmp_empl != None:
+    #     erg["empl"] = int(tmp_empl.text.strip().replace(",",""))
+    #     sector_tmp = soup.find_all ('span', attrs={"data-reactid": "21"})
+    #     for row in sector_tmp:
+    #         if row.get ("class") != None: erg["sector"] = row.text.strip ()
+    #     industry_tmp = soup.find_all ('span', attrs={"data-reactid": "25"})
+    #     for row in industry_tmp:
+    #         if row.get ("class") != None: erg["industry"] = row.text.strip ()
+    #     erg["desc"] = soup.find ('p', attrs={"data-reactid": "141"}).text.strip ()
+    # else:
+    #     table = soup.find ('div', attrs={"class": "asset-profile-container"})
+    #     spans = table.find_all ("span")
+    #     erg["empl"] = int(spans[5].text.strip().replace(",",""))
+    #     erg["sector"] = spans[1].text.strip ()
+    #     erg["industry"] = spans[3].text.strip ()
+    #     table = soup.find ('section', attrs={"class": "quote-sub-section Mt(30px)"})
+    #     erg["desc"] = table.find ("p").text.strip ()
 
     return(erg)
 
@@ -239,14 +269,16 @@ def read_yahoo_statistics(stock):
         for idx,cont in enumerate(val):
             if type(val) != float:
                 if "B" in cont: erg_val[key][idx] = clean_value_BT(erg_val[key][idx],"B")
-                if "T" in cont: erg_val[key][idx] = clean_value_BT(erg_val[key][idx], "T")
-                if "M" in cont: erg_val[key][idx] = clean_value_BT(erg_val[key][idx], "M")
+                elif "T" in cont: erg_val[key][idx] = clean_value_BT(erg_val[key][idx], "T")
+                elif "M" in cont: erg_val[key][idx] = clean_value_BT(erg_val[key][idx], "M")
+                else: erg_val[key][idx] = is_na(erg_val[key][idx])
     for key,val in erg_stat.items():
         if type(val) != float:
             if "B" in val: erg_stat[key] = clean_value_BT(erg_stat[key],"B")
-            if "T" in val: erg_stat[key] = clean_value_BT(erg_stat[key], "T")
-            if "M" in val and "Mar" not in val and "May" not in val:
+            elif "T" in val: erg_stat[key] = clean_value_BT(erg_stat[key], "T")
+            elif "M" in val and "Mar" not in val and "May" not in val:
                 erg_stat[key] = clean_value_BT(erg_stat[key], "M")
+            else: erg_stat[key] = is_na(erg_stat[key])
 
     return (erg_stat,erg_val)
 
@@ -667,11 +699,11 @@ def read_yahoo_histprice(stock):
     if stock.upper () == "BEL20": stock = "%5EBFX"
     if stock.upper () == "CAC40": stock = "%5EFCHI"
     if stock.upper () == "DAX": stock = "%5EGDAXI"
-    if stock.upper () == "DowJones": stock = "%5EDJI%3B"
-    if stock.upper () == "EUROStoxx50": stock = "%5ESTOXX50E"
-    if stock.upper () == "EUROStoxx600": stock = "%5Estoxx"
+    if stock.upper () == "DOWJONES": stock = "%5EDJI"
+    if stock.upper () == "EUROSTOXX50": stock = "%5ESTOXX50E"
+    if stock.upper () == "EUROSTOXX600": stock = "%5Estoxx"
     if stock.upper () == "FTSE100": stock = "%5EFTSE"
-    if stock.upper () == "HangSeng": stock = "%5EHSI"
+    if stock.upper () == "HANGSENG": stock = "%5EHSI"
     if stock.upper () == "IBEX35": stock = "%5EIBEX"
     if stock.upper () == "MDAX": stock = "%5EMDAXI"
     if stock.upper () == "MIB": stock = "%FTSEMIB.MI"
@@ -748,12 +780,18 @@ if __name__ == '__main__':
     #stock = "AMZN"
     #stock = "AAPL"
     #stock = "BAYRY"
+    #stock = "SAN.MC"
+    #stock = "8035.T"
+    stock = "DLR"
     #stock = "sp500"
-    stock = "BAC"
-    #erg1 = read_yahoo_summary(stock)
+    #stock = "BAC"
+    #stock = "%5EDJI"    # DowJones
+    #stock = "DowJones"
+
+    erg1 = read_yahoo_summary(stock)
     #erg2 = read_yahoo_profile(stock)
     #erg3, erg4 = read_yahoo_statistics(stock)
-    erg5 = read_yahoo_income_statement(stock)
+    #erg5 = read_yahoo_income_statement(stock)
     #erg6 = read_yahoo_balance_sheet(stock)
     #erg7 = read_yahoo_cashflow(stock)
     #erg8 = read_yahoo_analysis(stock)
@@ -778,11 +816,11 @@ if __name__ == '__main__':
     #     print(key,":",val)
     #     print(type(val))
 
-    #for key,val in erg1.items(): print(key,val)
+    for key,val in erg1.items(): print(key,val)
     #for key,val in erg2.items(): print(key,val)
-    #for key,val in erg3.items(): print(key,val)
+    #for key,val in erg3.items(): print(key,val,type(val))
     #for key,val in erg4.items(): print(key,val)
-    for key,val in erg5.items(): print(key,val)
+    #for key,val in erg5.items(): print(key,val)
     #for key,val in erg6.items(): print(key,val)
     #for key,val in erg7.items(): print(key,val)
     #for key, val in erg8.items (): print (key, val)

@@ -38,74 +38,71 @@ def save_xls(stock, content, filename):
     bg_grey = PatternFill (fill_type="solid", start_color='babab6', end_color='babab6')
     bg_green = PatternFill (fill_type="solid", start_color='8af542', end_color='8af542')
     bg_blue = PatternFill (fill_type="solid", start_color='42b9f5', end_color='42b9f5')
+    bg_orange = PatternFill (fill_type="solid", start_color='fc6f03', end_color='fc6f03')
+
     frame_all = Border (left=Side (style='thin'), right=Side (style='thin'), top=Side (style='thin'),
                         bottom=Side (style='thin'))
     frame_upanddown = Border (top=Side (style='thin'), bottom=Side (style='thin'))
     size14 = Font (bold=True, size="14")
+    size12 = Font (bold=True, size="12")
     left_allign = Alignment (horizontal="left")
+    right_allign = Alignment (horizontal="right")
 
-    for row in ws["A1":"B5"]:
+    for row in ws["D1":"G34"]:
+        for cell in row: cell.alignment = right_allign
+    areas = ["A7:G19","A27:G31"]
+    for area in areas:
+        for row in ws[area]:
+            for cell in row: cell.border = frame_all
+    for row in ws["A1":"B4"]:
         for cell in row:
             cell.fill = bg_yellow
-            cell.border = frame_all
-            cell.font = bold
+            cell.font = size12
             cell.alignment = left_allign
-
-    """
-    # Formatierung Excel-Sheet
-    row = ""
-    for i, cont in enumerate (content):
-        if cont == []: continue  # Leerzeile überspringen...
-        if cont[0].find ("Bilanz in ") != -1:
-            row = i + 1
-            break
-    for cell in ws["A:A"]:
-        cell.font = bold
-        cell.fill = bg_yellow
-        cell.border = frame_all
-    for cell in ws["A1:A2"]: cell[0].fill = bg_yellow
-    for cell in ws[f"{row}:{row}"]:
-        cell.font = bold
-        cell.fill = bg_yellow
-        cell.border = frame_all
-    for cell in ws[f"B{row}:B{len (content)}"]:
-        cell[0].fill = bg_yellow
-        cell[0].font = bold
-        cell[0].border = frame_all
-    for cell in ws["C3:C10"]:
-        cell[0].fill = bg_yellow
-        cell[0].border = frame_all
-        cell[0].font = bold
-    for cell in ws["D3:D10"]:
-        cell[0].fill = bg_yellow
-        cell[0].border = frame_all
-        cell[0].font = bold
-    for cell in ws[f"{row - 1}:{row - 1}"]:
-        cell.fill = bg_grey
-        cell.border = frame_upanddown
-    for cell in ws["2:2"]:
-        cell.fill = bg_grey
-        cell.border = frame_upanddown
-    ws["G3"].font = bold
-    ws["G3"].fill = bg_yellow
-    ws["G3"].border = frame_all
-    ws["H3"].font = bold
-    ws["H3"].fill = bg_yellow
-    ws["H3"].border = frame_all
-    ws["J3"].font = bold
-    ws["J3"].fill = bg_yellow
-    ws["J3"].border = frame_all
-    ws["K3"].font = bold
-    ws["K3"].fill = bg_yellow
-    ws["K3"].border = frame_all
-    for cell in ws["1:1"]:
-        cell.font = bold
-        cell.fill = bg_green
-        cell.border = frame_all
-    ws["A1"].font = size14
-    freeze = ws["B2"]
-    ws.freeze_panes = freeze
-    """
+    areas = ["A7:C19","A27:C31"]
+    for area in areas:
+        for row in ws[area]:
+            for cell in row:
+                cell.fill = bg_green
+                cell.font = size12
+                cell.alignment = left_allign
+    for i in ["A6","D6","E6","A26","D26","E26"]:
+        ws[i].fill = bg_green
+        ws[i].font = size12
+    for i in ["G20","G32"]:
+        ws[i].fill = bg_blue
+        ws[i].font = size14
+    areas = ["B6:C6","B26:C26"]
+    for area in areas:
+        for row in ws[area]:
+            for cell in row:
+                cell.fill = bg_blue
+                cell.font = size12
+    if "Buy" in rec:
+        for row in ws["B20":"C22"]:
+            for cell in row:
+                cell.fill = bg_blue
+                cell.font = size14
+    if "Hold" in rec:
+        for row in ws["B20":"C22"]:
+            for cell in row:
+                cell.fill = bg_yellow
+                cell.font = size14
+    if "Sell" in rec:
+        for row in ws["B20":"C22"]:
+            for cell in row:
+                cell.fill = bg_orange
+                cell.font = size14
+    if "Buy" in rec_light:
+        for row in ws["B32":"C34"]:
+            for cell in row:
+                cell.fill = bg_blue
+                cell.font = size14
+    if "Sell" in rec_light:
+        for row in ws["B32":"C34"]:
+            for cell in row:
+                cell.fill = bg_orange
+                cell.font = size14
 
     while True:
         try:
@@ -144,18 +141,21 @@ if __name__ == '__main__':
             print("Stock:",stock,"skipped - no index or finance flag choosen...")
             continue
         if fin.upper() not in ["Y","J","N"]:
-            print("Stock:",stock,"skipped - wrong finance flag in cell C",idx_stock,"...")
+            print("Stock:",stock,"skipped - wrong finance flag in cell C",idx_stock+3,"...")
             continue
         if index not in l_index_selection:
-            print("Stock:",stock,"skipped - wrong index name in cell B",idx_stock,"...")
+            print("Stock:",stock,"skipped - wrong index name in cell B",idx_stock+3,"...")
             continue
 
+        print("Working on...")
 
         start = timeit.default_timer()
 
         #1 - Return On Equity RoE / Eigenkapitalrendite
         stat1,stat2 = YahooCrawler.read_yahoo_statistics(stock)
-        roe = float(stat1["Return on Equity (ttm)"].replace("%",""))
+        if stat1["Return on Equity (ttm)"] != "N/A":
+            roe = float(stat1["Return on Equity (ttm)"].replace("%",""))
+        else: roe = "N/A"
         marketcap = stat2["Market Cap (intraday)"]
         shares_outstanding = stat1["Shares Outstanding"]
 
@@ -205,6 +205,7 @@ if __name__ == '__main__':
         #5 - P/E-Ratio Actual / KGV Aktuell
         summary = YahooCrawler.read_yahoo_summary(stock)
         pe_ratio = float(summary["pe_ratio"])
+        name = summary["name"]
 
         #6 - Analyst Opinions / Analystenmeinung
         analyst_rating = YahooCrawler.read_zacks_rating(stock)
@@ -294,7 +295,8 @@ if __name__ == '__main__':
         lm_score = {}
 
         #1 - check RoE
-        if roe > 20: lm_score["roe"] = 1
+        if roe == "N/A": lm_score["roe"] = 0
+        elif roe > 20: lm_score["roe"] = 1
         elif roe < 10: lm_score["roe"] = -1
         else: lm_score["roe"] = 0
 
@@ -347,7 +349,6 @@ if __name__ == '__main__':
         elif profit_revision <-1: lm_score["profit_revision"] = -1
         else: lm_score["profit_revision"] = 0
 
-
         if next_year_est_current >1: lm_score["next_year_est_current"] = 1
         elif next_year_est_current <-1: lm_score["next_year_est_current"] = -1
         else: lm_score["next_year_est_current"] = 0
@@ -384,34 +385,76 @@ if __name__ == '__main__':
         elif profit_growth <-5: lm_score["profit_growth"] = -1
         else: lm_score["profit_growth"] = 0
 
+        # print format marketcap
+        print_cap = YahooCrawler.print_num_abbr(marketcap[0])
+
         lm_sum = 0
         for val in lm_score.values(): lm_sum += val
+        # overall recomendation levermann full
+        if cap in ["SmallCap","MidCap"]:
+            if lm_sum >=7: rec = "Possible Buy"
+            elif lm_sum in [5,6]: rec = "Possible Holding"
+            else: rec = "Possible Sell"
+        else:
+            if lm_sum >=4: rec = "Possible Buy"
+            elif lm_sum in [3]: rec = "Possible Holding"
+            else: rec = "Possible Sell"
+
+        lm_sum_light = lm_score["roe"] + lm_score["ebit_marge"] + lm_score["pe_ratio"] \
+                       + lm_score["reaction"] + lm_score["change_price_6m"]
+        # overall recomendation levermann full
+        if cap in ["SmallCap","MidCap"]:
+            if lm_sum_light >=4: rec_light = "Possible Buy"
+            else: rec_light = "Possible Sell"
+        else:
+            if lm_sum_light >=3: rec_light = "Possible Buy"
+            else: rec_light = "Possible Sell"
 
         output = []
-        output.append(["Stock",stock])
-        output.append(["Index", index])
-        output.append(["MarketCap", marketcap[0]])
-        output.append(["Cap",cap])
-        output.append(["Finance Stock", fin])
+        output.append(["Name",name,"","","","","","","","","Details"])
+        output.append(["Ticker",stock,"","","","","","","","",1,"Return on Equity (ttm)",stat1["Return on Equity (ttm)"])
+        output.append(["Index", index,2,"EBIT (ttm): "+str(insstat["EBIT"][0]),])
+        output.append(["MCap", print_cap])
         output.append([""])
-        output.append(["Nr.", "Levermann", "Checkliste FULL",1,-1])
-        output.append(["1","Eigenkapitalrendite RoE","Return on Equity RoE",">20","<10",roe,lm_score["roe"]])
-        output.append(["2","EBIT-Marge","EBIT-Margin",">12","<6",ebit_marge,lm_score["ebit_marge"]])
-        output.append(["3","Eigenkapitalquote","Equity Ratio",">25","<15",eq_ratio,lm_score["eq_ratio"]])
-        output.append(["4","KGV Aktuell","P/E-Ratio History","<12",">16",pe_ratio_hist,lm_score["pe_ratio_hist"]])
-        output.append(["5","KGV 5 Jahre Mittel","P/E-Ratio Actual","<12",">16",pe_ratio,lm_score["pe_ratio"]])
-        output.append(["6","Analystenmeinung","Analyst Opinions","<2",">4",rating,lm_score["rating"]])
-        output.append(["7","Reaktion auf Quartalszahlen","Reaction to quarter numbers",">1","<-1",reaction,lm_score["reaction"]])
-        output.append(["8","Gewinnrevision","Profit Revision",">5","<5",round (profit_revision, 2),lm_score["profit_revision"]])
-        output.append(["9","Kurs Heute vs. Kurs 6M","Price Change for 6 month",">5","<5",change_price_6m,lm_score["change_price_6m"]])
-        output.append(["10","Kurs Heute vs. Kurs 1J","Price Change for 12 month", change_price_1y,lm_score["change_price_1y"]])
-        output.append(["11","Kursmomentum Steigend","Price Momentum","","","",lm_score["price_momentum"]])
-        output.append(["12","Dreimonatsreversal","3 Month Reversal Effect","","","",lm_score["3monatsreversal"]])
-        output.append(["13","Gewinnwachstum","Profit Growth",">5","<5",profit_growth,lm_score["profit_growth"]])
-        output.append(["Summe","Levermann-Score","","","","",lm_sum])
+        output.append(["Nr.", "Levermann Checkliste FULL","",1,-1])
+        output.append([1,"Eigenkapitalrendite RoE","Return on Equity RoE",">20","<10",roe,lm_score["roe"]])
+        output.append([2,"EBIT-Marge","EBIT-Margin",">12","<6",ebit_marge,lm_score["ebit_marge"]])
+        output.append([3,"Eigenkapitalquote","Equity Ratio",">25","<15",eq_ratio,lm_score["eq_ratio"]])
+        output.append([4,"KGV Aktuell","P/E-Ratio History","<12",">16",pe_ratio_hist,lm_score["pe_ratio_hist"]])
+        output.append([5,"KGV 5 Jahre Mittel","P/E-Ratio Actual","<12",">16",pe_ratio,lm_score["pe_ratio"]])
+        output.append([6,"Analystenmeinung","Analyst Opinions","<2",">4",rating,lm_score["rating"]])
+        output.append([7,"Reaktion auf Quartalszahlen","Reaction to quarter numbers",">1","<-1",reaction,lm_score["reaction"]])
+        output.append([8,"Gewinnrevision","Profit Revision",">5","<5",round (profit_revision, 2),lm_score["profit_revision"]])
+        output.append([9,"Kurs Heute vs. Kurs 6M","Price Change for 6 month",">5","<5",change_price_6m,lm_score["change_price_6m"]])
+        output.append([10,"Kurs Heute vs. Kurs 1J","Price Change for 12 month","","",change_price_1y,lm_score["change_price_1y"]])
+        output.append([11,"Kursmomentum Steigend","Price Momentum","","","",lm_score["price_momentum"]])
+        output.append([12,"Dreimonatsreversal","3 Month Reversal Effect","","","",lm_score["3monatsreversal"]])
+        output.append([13,"Gewinnwachstum","Profit Growth",">5","<5",profit_growth,lm_score["profit_growth"]])
+        output.append(["",rec,rec,"","","",lm_sum])
+        output.append(["",cap,cap])
+        if fin.upper() in ["Y","J"]:
+            output.append (["","Finanzwert","Financial Stock"])
+        else:
+            output.append (["","Kein Finanzwert","No Financial Stock"])
+
+        for i in range(3): output.append([""])
+        output.append (["Nr.", "Levermann Checkliste LIGHT", "", 1, -1])
+        output.append([1,"Eigenkapitalrendite RoE","Return on Equity RoE",">20","<10",roe,lm_score["roe"]])
+        output.append([2,"EBIT-Marge","EBIT-Margin",">12","<6",ebit_marge,lm_score["ebit_marge"]])
+        output.append([3,"KGV 5 Jahre Mittel","P/E-Ratio Actual","<12",">16",pe_ratio,lm_score["pe_ratio"]])
+        output.append([4,"Reaktion auf Quartalszahlen","Reaction to quarter numbers",">1","<-1",reaction,lm_score["reaction"]])
+        output.append([5,"Kurs Heute vs. Kurs 6M","Price Change for 6 month",">5","<5",change_price_6m,lm_score["change_price_6m"]])
+        output.append (["", rec_light, rec_light, "", "", "", lm_sum_light])
+        output.append (["", cap, cap])
+        if fin.upper() in ["Y","J"]:
+            output.append (["","Finanzwert","Financial Stock"])
+        else:
+            output.append (["","Kein Finanzwert","No Financial Stock"])
 
         stop = timeit.default_timer()
+        print ("Total time working on stock",stock,":",round (stop - start, 0),"sec...")
 
+        """
         print(stock,"calculated in",round((stop-start)/60,2),"min")
         print("Index: ",index," ,MarketCap:",marketcap," ,Finance Stock:",fin)
         print("1 - Return on Equity RoE:",roe,"=>",lm_score["roe"])
@@ -441,7 +484,8 @@ if __name__ == '__main__':
         print("\n13 - Profit Growth:",profit_growth,"=>",lm_score["profit_growth"])
         print("Estimate Current Year:",profit_growth_act,"=> Estimate Next Year:",profit_growth_fut)
         print("\nSumme Levermann-Score:",lm_sum)
-
+        """
+        # delete input stocks in input-xlsx
         if ws_db["G2"].value.upper() in ["J","Y"]:
             cell_list = ["","",""]
             i = str (idx_stock + 3)

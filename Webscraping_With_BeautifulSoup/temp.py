@@ -1,24 +1,40 @@
-from openpyxl import load_workbook
-from openpyxl.utils import get_column_letter
-from openpyxl.styles import Font, PatternFill, Border, Side, Alignment
-import pandas as pd
+import requests
+from bs4 import BeautifulSoup
+import time
 
-wb = load_workbook("Test.xlsx")
-writer = pd.ExcelWriter ("Test.xlsx", engine='openpyxl', options={'strings_to_numbers': True})
-writer.book = wb
-ws = wb["TAB"]
+def is_na(value):
+    if "N/A" in value: return "N/A"
+    else:
+        try:
+            return (float(value))
+        except ValueError:
+            return (value)
 
-bg_yellow = PatternFill (fill_type="solid", start_color='fbfce1', end_color='fbfce1')
+stock = "UG.PA"
+#stock = "AAPL"
 
-for row in ws["A1":"B5"]:
-    for cell in row:
-        cell.fill = bg_yellow
+erg = {}
+print ("Reading profile web data for", stock, "...")
+link = "https://finance.yahoo.com/quote/" + stock + "/profile?p=" + stock
+page = requests.get (link)
+soup = BeautifulSoup (page.content, "html.parser")
+time.sleep (0.5)
+erg["symbol"] = stock
 
-while True:
-    try:
-        writer.save ()
-        writer.close ()
-        break
-    except Exception as e:
-        print ("Error: ", e)
-        input ("Datei kann nicht geöffnet werden - bitte schließen und <Enter> drücken!")
+table = soup.find ('div', attrs={"class": "asset-profile-container"})
+if table == None:
+    print("None!")
+else:
+    spans = table.find_all ("span")
+
+if len (spans[5].text.strip ()) == 0:
+    erg["empl"] = "N/A"
+else:
+    erg["empl"] = int (spans[5].text.strip ().replace (",", ""))
+
+erg["sector"] = spans[1].text.strip ()
+erg["industry"] = spans[3].text.strip ()
+table = soup.find ('section', attrs={"class": "quote-sub-section Mt(30px)"})
+erg["desc"] = table.find ("p").text.strip ()
+
+for key,val in erg.items(): print(key,val)
