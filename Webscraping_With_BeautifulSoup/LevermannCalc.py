@@ -412,10 +412,11 @@ if __name__ == '__main__':
 
         output = []
         output.append(["Name",name,"","","","","","","","","Details"])
-        output.append(["Ticker",stock,"","","","","","","","",1,"Return on Equity (ttm)",stat1["Return on Equity (ttm)"])
-        output.append(["Index", index,2,"EBIT (ttm): "+str(insstat["EBIT"][0]),])
-        output.append(["MCap", print_cap])
-        output.append([""])
+        output.append(["Ticker",stock,"","","","","","","","",1,"Return on Equity (ttm)",stat1["Return on Equity (ttm)"]])
+        output.append(["Index", index,"","","","","","","","",2,"EBIT (ttm)",str(YahooCrawler.print_num_abbr(insstat["EBIT"][0])),])
+        output.append(["MCap", print_cap,"","","","","","","","","","Revenue (ttm)",str(YahooCrawler.print_num_abbr(insstat["Total Revenue"][0]))])
+        if ebit_marge == "N/A": output.append(["","","","","","","","","","","","EBIT Marge (ttm)","N/A"])
+        else: output.append(["","","","","","","","","","","","EBIT Marge (ttm)",str(ebit_marge)+"%"])
         output.append(["Nr.", "Levermann Checkliste FULL","",1,-1])
         output.append([1,"Eigenkapitalrendite RoE","Return on Equity RoE",">20","<10",roe,lm_score["roe"]])
         output.append([2,"EBIT-Marge","EBIT-Margin",">12","<6",ebit_marge,lm_score["ebit_marge"]])
@@ -454,37 +455,6 @@ if __name__ == '__main__':
         stop = timeit.default_timer()
         print ("Total time working on stock",stock,":",round (stop - start, 0),"sec...")
 
-        """
-        print(stock,"calculated in",round((stop-start)/60,2),"min")
-        print("Index: ",index," ,MarketCap:",marketcap," ,Finance Stock:",fin)
-        print("1 - Return on Equity RoE:",roe,"=>",lm_score["roe"])
-        print("\n2 - Ebit-Margin:",ebit_marge,"=>",lm_score["ebit_marge"])
-        print("\n3 - Equity Ratio:",eq_ratio,"=>",lm_score["eq_ratio"])
-        print("\n4 - P/E-Ratio History:",pe_ratio_hist,"=>",lm_score["pe_ratio_hist"])
-        print("Dates:",insstat["Breakdown"][1:])
-        print("P/E-Ratio History:",pe_ratio_hist_list)
-        print("\n5 - P/E-Ratio Actual:",pe_ratio,"=>",lm_score["pe_ratio"])
-        print("\n6 - Analyst Opinions:",rating,"=>",lm_score["rating"])
-        print("\n7 - Reaction to quarter numbers:",reaction,"=>",lm_score["reaction"])
-        print ("Last Earnings Info: ",last_earningsinfo)
-        print(round(stock_price_before[1],2),"=>",round(stock_price_after[1],2),"=>",round(stock_reaction,2))
-        print(round(index_price_before[1],2),"=>",round(index_price_after[1],2),"=>",round(index_reaction,2))
-        print("\n8 - Profit Revision:",round(profit_revision,2),"=>",lm_score["profit_revision"])
-        print("90Day ago:",next_year_est_90d_ago,"=> Current:",next_year_est_current)
-        print("\n9 - Price Change for 6 month:",change_price_6m,"=>",lm_score["change_price_6m"])
-        print("6M ago:",round(price_6m_ago[1],2),"=> Today:",round(price_today[1],2),"=> Change:",change_price_6m)
-        print("\n10 - Price Change for 12 month:",change_price_1y,"=>",lm_score["change_price_1y"])
-        print("1Y ago:",round(price_1y_ago[1],2),"=> Today:",round(price_today[1],2),"=> Change:",change_price_1y)
-        print("\n11 - Kursmomentum:",lm_score["price_momentum"])
-        print("\n12 - Dreimonatsreversal:",lm_score["3monatsreversal"])
-        print("Stock Price: ",stock_price)
-        print("Index Price: ",index_price)
-        print("Stock Change: ",stock_change)
-        print("Index Change: ",index_change)
-        print("\n13 - Profit Growth:",profit_growth,"=>",lm_score["profit_growth"])
-        print("Estimate Current Year:",profit_growth_act,"=> Estimate Next Year:",profit_growth_fut)
-        print("\nSumme Levermann-Score:",lm_sum)
-        """
         # delete input stocks in input-xlsx
         if ws_db["G2"].value.upper() in ["J","Y"]:
             cell_list = ["","",""]

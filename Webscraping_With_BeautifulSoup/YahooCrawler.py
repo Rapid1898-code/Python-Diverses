@@ -257,27 +257,30 @@ def read_yahoo_statistics(stock):
     for i in range(0,len(tmp_list_stat),2):
         if tmp_list_stat[i][-1] in ["1","2","3","4","5","6"]: tmp_list_stat[i] = tmp_list_stat[i][:len(tmp_list_stat[i])-2]
         erg_stat[tmp_list_stat[i]] = is_na(tmp_list_stat[i+1])
-    for i in range(0,len(tmp_list_val),7):
+
+    for idx_header, cont_header in enumerate(tmp_list_val):
+        if "Market Cap" in cont_header: break
+    for i in range(0,len(tmp_list_val),idx_header):
         if tmp_list_val[i] != "":
             if tmp_list_val[i][-1] in ["1","2","3","4","5","6"]:
                 tmp_list_val[i] = tmp_list_val[i][:len(tmp_list_val[i])-2]
         else: tmp_list_val[i] = "Header"
-        erg_val[tmp_list_val[i]] = tmp_list_val[i+1:i+7]
+        erg_val[tmp_list_val[i]] = tmp_list_val[i+1:i+idx_header]
 
     # replace B Billion, M Million, T Thousand values with float value
     for key,val in erg_val.items():
         for idx,cont in enumerate(val):
             if type(val) != float:
-                if "B" in cont: erg_val[key][idx] = clean_value_BT(erg_val[key][idx],"B")
-                elif "T" in cont: erg_val[key][idx] = clean_value_BT(erg_val[key][idx], "T")
-                elif "M" in cont: erg_val[key][idx] = clean_value_BT(erg_val[key][idx], "M")
+                if cont[-1] == "B": erg_val[key][idx] = clean_value_BT(erg_val[key][idx],"B")
+                elif cont[-1] == "T": erg_val[key][idx] = clean_value_BT(erg_val[key][idx], "T")
+                elif cont[-1] == "M": erg_val[key][idx] = clean_value_BT(erg_val[key][idx], "M")
                 else: erg_val[key][idx] = is_na(erg_val[key][idx])
+
     for key,val in erg_stat.items():
         if type(val) != float:
-            if "B" in val: erg_stat[key] = clean_value_BT(erg_stat[key],"B")
-            elif "T" in val: erg_stat[key] = clean_value_BT(erg_stat[key], "T")
-            elif "M" in val and "Mar" not in val and "May" not in val:
-                erg_stat[key] = clean_value_BT(erg_stat[key], "M")
+            if val[-1] == "B": erg_stat[key] = clean_value_BT(erg_stat[key],"B")
+            elif val[-1] == "T": erg_stat[key] = clean_value_BT(erg_stat[key], "T")
+            elif val[-1] == "M": erg_stat[key] = clean_value_BT(erg_stat[key], "M")
             else: erg_stat[key] = is_na(erg_stat[key])
 
     return (erg_stat,erg_val)
@@ -367,6 +370,12 @@ def read_yahoo_income_statement(stock):
     while idx < len (list_div):
         erg[list_div[idx]] = list_div[idx + 1:idx + 6]
         idx += 6
+
+    tmp_header = erg["Breakdown"]
+    for idx_tmp, cont_tmp in enumerate(tmp_header):
+        if cont_tmp == "TTM": continue
+        tmp_header[idx_tmp] = datetime.strftime((datetime.strptime (cont_tmp,"%m/%d/%Y")),"%Y-%m-%d")
+    erg["Breakdown"] = tmp_header
 
     return (erg)
 
@@ -490,6 +499,12 @@ def read_yahoo_balance_sheet(stock):
         erg[list_div[idx]] = list_div[idx + 1:idx + 5]
         idx += 5
 
+    tmp_header = erg["Breakdown"]
+    for idx_tmp, cont_tmp in enumerate(tmp_header):
+        if cont_tmp == "TTM": continue
+        tmp_header[idx_tmp] = datetime.strftime((datetime.strptime (cont_tmp,"%m/%d/%Y")),"%Y-%m-%d")
+    erg["Breakdown"] = tmp_header
+
     return (erg)
 
 def read_yahoo_cashflow(stock):
@@ -597,6 +612,12 @@ def read_yahoo_cashflow(stock):
         erg[list_div[idx]] = list_div[idx + 1:idx + 6]
         idx += 6
 
+    tmp_header = erg["Breakdown"]
+    for idx_tmp, cont_tmp in enumerate(tmp_header):
+        if cont_tmp == "TTM": continue
+        tmp_header[idx_tmp] = datetime.strftime((datetime.strptime (cont_tmp,"%m/%d/%Y")),"%Y-%m-%d")
+    erg["Breakdown"] = tmp_header
+
     return (erg)
 
 def read_yahoo_analysis(stock):
@@ -654,6 +675,12 @@ def read_yahoo_analysis(stock):
     for e in table.find_all (["th", "td"]): list_table.append (e.text.strip ())
     for i in range (0, len (list_table), 5): erg[list_table[i]] = list_table[i + 1:i + 5]
 
+    tmp_header = erg["Breakdown"]
+    for idx_tmp, cont_tmp in enumerate(tmp_header):
+        if cont_tmp == "TTM": continue
+        tmp_header[idx_tmp] = datetime.strftime((datetime.strptime (cont_tmp,"%m/%d/%Y")),"%Y-%m-%d")
+    erg["Breakdown"] = tmp_header
+
     return (erg)
 
 def read_yahoo_analysis_rating(stock):
@@ -693,7 +720,7 @@ def read_yahoo_analysis_rating(stock):
     return (erg)
 
 def read_yahoo_histprice(stock):
-    if stock.upper () == "AEX25": stock = "%%5Eaex"
+    if stock.upper () == "AEX25": stock = "%5Eaex"
     if stock.upper () == "ASX200": stock = "%5EAXJO"
     if stock.upper () == "ATX": stock = "%5EATX"
     if stock.upper () == "BEL20": stock = "%5EBFX"
@@ -778,21 +805,22 @@ def read_yahoo_earnings_cal(stock):
 if __name__ == '__main__':
     #stock = "CAT"
     #stock = "AMZN"
-    #stock = "AAPL"
+    stock = "AAPL"
     #stock = "BAYRY"
     #stock = "SAN.MC"
     #stock = "8035.T"
-    stock = "DLR"
+    #stock = "DLR"
+    #stock = "HEIA.AS"
     #stock = "sp500"
     #stock = "BAC"
     #stock = "%5EDJI"    # DowJones
     #stock = "DowJones"
 
-    erg1 = read_yahoo_summary(stock)
+    #erg1 = read_yahoo_summary(stock)
     #erg2 = read_yahoo_profile(stock)
     #erg3, erg4 = read_yahoo_statistics(stock)
     #erg5 = read_yahoo_income_statement(stock)
-    #erg6 = read_yahoo_balance_sheet(stock)
+    erg6 = read_yahoo_balance_sheet(stock)
     #erg7 = read_yahoo_cashflow(stock)
     #erg8 = read_yahoo_analysis(stock)
     #erg9 = read_yahoo_analysis_rating(stock)
@@ -816,12 +844,12 @@ if __name__ == '__main__':
     #     print(key,":",val)
     #     print(type(val))
 
-    for key,val in erg1.items(): print(key,val)
+    #for key,val in erg1.items(): print(key,val)
     #for key,val in erg2.items(): print(key,val)
     #for key,val in erg3.items(): print(key,val,type(val))
     #for key,val in erg4.items(): print(key,val)
     #for key,val in erg5.items(): print(key,val)
-    #for key,val in erg6.items(): print(key,val)
+    for key,val in erg6.items(): print(key,val)
     #for key,val in erg7.items(): print(key,val)
     #for key, val in erg8.items (): print (key, val)
     #for key, val in erg9.items (): print (key, val)

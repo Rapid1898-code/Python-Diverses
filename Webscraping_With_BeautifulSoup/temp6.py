@@ -1,4 +1,12 @@
-l = ['Recommendation Rating21StrongBuy2Buy3Hold4Under-perform5Sell', 'Recommendation Rating21StrongBuy2Buy3Hold4Under-perform5Sell', '21StrongBuy2Buy3Hold4Under-perform5Sell', '2', '2', '']
-for i in range(len(l)-1,-1,-1):
-    if len(l[i]) != 1: del l[i]
+from datetime import datetime, timedelta
+s = "9/29/2019"
+dt = datetime.strptime(s, "%d/%m/%Y")
 
+#"%#d/%m/%Y"
+#ValueError: '#' is a bad directive in format '%#d/%m/%Y'
+
+#"%-d/%m/%Y"
+#ValueError: '-' is a bad directive in format '%-d/%m/%Y'
+
+#"%d/%m/%Y"
+#ValueError: time data "'9/29/2019'" does not match format '%d/%m/%Y'
