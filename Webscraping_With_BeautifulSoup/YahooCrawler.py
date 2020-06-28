@@ -373,7 +373,7 @@ def read_yahoo_income_statement(stock):
 
     tmp_header = erg["Breakdown"]
     for idx_tmp, cont_tmp in enumerate(tmp_header):
-        if cont_tmp == "TTM": continue
+        if cont_tmp.upper() == "TTM": continue
         tmp_header[idx_tmp] = datetime.strftime((datetime.strptime (cont_tmp,"%m/%d/%Y")),"%Y-%m-%d")
     erg["Breakdown"] = tmp_header
 
@@ -501,7 +501,7 @@ def read_yahoo_balance_sheet(stock):
 
     tmp_header = erg["Breakdown"]
     for idx_tmp, cont_tmp in enumerate(tmp_header):
-        if cont_tmp == "TTM": continue
+        if cont_tmp.upper() == "TTM": continue
         tmp_header[idx_tmp] = datetime.strftime((datetime.strptime (cont_tmp,"%m/%d/%Y")),"%Y-%m-%d")
     erg["Breakdown"] = tmp_header
 
@@ -614,7 +614,7 @@ def read_yahoo_cashflow(stock):
 
     tmp_header = erg["Breakdown"]
     for idx_tmp, cont_tmp in enumerate(tmp_header):
-        if cont_tmp == "TTM": continue
+        if cont_tmp.upper() == "TTM": continue
         tmp_header[idx_tmp] = datetime.strftime((datetime.strptime (cont_tmp,"%m/%d/%Y")),"%Y-%m-%d")
     erg["Breakdown"] = tmp_header
 
@@ -674,12 +674,6 @@ def read_yahoo_analysis(stock):
     list_table = []
     for e in table.find_all (["th", "td"]): list_table.append (e.text.strip ())
     for i in range (0, len (list_table), 5): erg[list_table[i]] = list_table[i + 1:i + 5]
-
-    tmp_header = erg["Breakdown"]
-    for idx_tmp, cont_tmp in enumerate(tmp_header):
-        if cont_tmp == "TTM": continue
-        tmp_header[idx_tmp] = datetime.strftime((datetime.strptime (cont_tmp,"%m/%d/%Y")),"%Y-%m-%d")
-    erg["Breakdown"] = tmp_header
 
     return (erg)
 
@@ -805,7 +799,7 @@ def read_yahoo_earnings_cal(stock):
 if __name__ == '__main__':
     #stock = "CAT"
     #stock = "AMZN"
-    stock = "AAPL"
+    #stock = "AAPL"
     #stock = "BAYRY"
     #stock = "SAN.MC"
     #stock = "8035.T"
@@ -815,14 +809,16 @@ if __name__ == '__main__':
     #stock = "BAC"
     #stock = "%5EDJI"    # DowJones
     #stock = "DowJones"
+    #stock = "BSL.AX"
+    stock = "RBI.VI"
 
     #erg1 = read_yahoo_summary(stock)
     #erg2 = read_yahoo_profile(stock)
     #erg3, erg4 = read_yahoo_statistics(stock)
     #erg5 = read_yahoo_income_statement(stock)
-    erg6 = read_yahoo_balance_sheet(stock)
+    #erg6 = read_yahoo_balance_sheet(stock)
     #erg7 = read_yahoo_cashflow(stock)
-    #erg8 = read_yahoo_analysis(stock)
+    erg8 = read_yahoo_analysis(stock)
     #erg9 = read_yahoo_analysis_rating(stock)
     #erg10 = read_yahoo_histprice(stock)
     #erg11 = read_zacks_rating(stock)
@@ -849,10 +845,11 @@ if __name__ == '__main__':
     #for key,val in erg3.items(): print(key,val,type(val))
     #for key,val in erg4.items(): print(key,val)
     #for key,val in erg5.items(): print(key,val)
-    for key,val in erg6.items(): print(key,val)
+    #for key,val in erg6.items(): print(key,val)
     #for key,val in erg7.items(): print(key,val)
     #for key, val in erg8.items (): print (key, val)
     #for key, val in erg9.items (): print (key, val)
     #for key, val in erg10.items (): print (key, val)
     #for key, val in erg11.items (): print (key, val)
     #for key, val in erg12.items (): print (key, val)
+

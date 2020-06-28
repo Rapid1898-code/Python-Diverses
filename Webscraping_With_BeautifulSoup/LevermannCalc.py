@@ -168,7 +168,9 @@ if __name__ == '__main__':
             ebit = insstat["EBIT"][0]
             revenue = insstat["Total Revenue"][0]
             ebit_marge = round(ebit / revenue * 100,2)
-        else: ebit_marge = "N/A"
+        else:
+            ebit = "N/A"
+            ebit_marge = "N/A"
 
         #4 - P/E-Ratio History 5Y / KGV Historisch 5J
         net_income = insstat["Net Income"]
@@ -178,9 +180,7 @@ if __name__ == '__main__':
             if cont == "-": continue
             elif insstat["Breakdown"][idx] == "ttm": continue
             else:
-                dt1 = datetime.strptime(insstat["Breakdown"][idx],"%m/%d/%Y")
-                dt2 = datetime.strftime(dt1, "%Y-%m-%d")
-                tmp_date, tmp_price = YahooCrawler.read_dayprice(hist_price_stock,dt2,"+")
+                tmp_date, tmp_price = YahooCrawler.read_dayprice(hist_price_stock,insstat["Breakdown"][idx],"+")
                 #DEBUG-INFO
                 #print("Price: ", tmp_price)
                 #print("NetIncome: ", cont)
@@ -232,19 +232,23 @@ if __name__ == '__main__':
         #8 Profit Revision / Gewinnrevision
         #13 - Profit Growth / Gewinnwachstum
         analysis = YahooCrawler.read_yahoo_analysis(stock)
-        next_year_est_current = float(analysis["Current Estimate"][3])
-        next_year_est_90d_ago = float(analysis["90 Days Ago"][3])
-        profit_revision = next_year_est_current - next_year_est_90d_ago
-        if next_year_est_90d_ago == 0:
+        if analysis != {}:
+            next_year_est_current = float(analysis["Current Estimate"][3])
+            next_year_est_90d_ago = float(analysis["90 Days Ago"][3])
+            profit_revision = next_year_est_current - next_year_est_90d_ago
+            if next_year_est_90d_ago == 0:
+                profit_revision = 0
+            else:
+                profit_revision = round(((next_year_est_current-next_year_est_90d_ago)/next_year_est_90d_ago)*100,2)
+            profit_growth_act = float(analysis["Current Estimate"][2])
+            profit_growth_fut = float(analysis["Current Estimate"][3])
+            if profit_growth_act == 0:
+                profit_growth = 0
+            else:
+                profit_growth = round(((profit_growth_fut - profit_growth_act) / profit_growth_act)*100,2)
+        else:
             profit_revision = 0
-        else:
-            profit_revision = round(((next_year_est_current-next_year_est_90d_ago)/next_year_est_90d_ago)*100,2)
-        profit_growth_act = float(analysis["Current Estimate"][2])
-        profit_growth_fut = float(analysis["Current Estimate"][3])
-        if profit_growth_act == 0:
             profit_growth = 0
-        else:
-            profit_growth = round(((profit_growth_fut - profit_growth_act) / profit_growth_act)*100,2)
 
         #9 Price Change 6month / Kurs Heute vs. Kurs vor 6M
         #10 Price Change 12month / Kurs Heute vs. Kurs vo 1J
@@ -349,9 +353,10 @@ if __name__ == '__main__':
         elif profit_revision <-1: lm_score["profit_revision"] = -1
         else: lm_score["profit_revision"] = 0
 
-        if next_year_est_current >1: lm_score["next_year_est_current"] = 1
-        elif next_year_est_current <-1: lm_score["next_year_est_current"] = -1
-        else: lm_score["next_year_est_current"] = 0
+        #OLD CODE:
+        #if next_year_est_current >1: lm_score["next_year_est_current"] = 1
+        #elif next_year_est_current <-1: lm_score["next_year_est_current"] = -1
+        #else: lm_score["next_year_est_current"] = 0
 
         #9 - change price 6 month
         if change_price_6m >5: lm_score["change_price_6m"] = 1
@@ -412,16 +417,24 @@ if __name__ == '__main__':
 
         output = []
         output.append(["Name",name,"","","","","","","","","Details"])
-        output.append(["Ticker",stock,"","","","","","","","",1,"Return on Equity (ttm)",stat1["Return on Equity (ttm)"]])
-        output.append(["Index", index,"","","","","","","","",2,"EBIT (ttm)",str(YahooCrawler.print_num_abbr(insstat["EBIT"][0])),])
-        output.append(["MCap", print_cap,"","","","","","","","","","Revenue (ttm)",str(YahooCrawler.print_num_abbr(insstat["Total Revenue"][0]))])
-        if ebit_marge == "N/A": output.append(["","","","","","","","","","","","EBIT Marge (ttm)","N/A"])
-        else: output.append(["","","","","","","","","","","","EBIT Marge (ttm)",str(ebit_marge)+"%"])
-        output.append(["Nr.", "Levermann Checkliste FULL","",1,-1])
-        output.append([1,"Eigenkapitalrendite RoE","Return on Equity RoE",">20","<10",roe,lm_score["roe"]])
-        output.append([2,"EBIT-Marge","EBIT-Margin",">12","<6",ebit_marge,lm_score["ebit_marge"]])
-        output.append([3,"Eigenkapitalquote","Equity Ratio",">25","<15",eq_ratio,lm_score["eq_ratio"]])
-        output.append([4,"KGV Aktuell","P/E-Ratio History","<12",">16",pe_ratio_hist,lm_score["pe_ratio_hist"]])
+        output.append(["Ticker",stock,"","","","","","","","",1,"Return on Equity (ttm)",
+                       stat1["Return on Equity (ttm)"]])
+        output.append(["Index", index,"","","","","","","","",2,"EBIT",
+                       ebit,"ttm"])
+        output.append(["MCap", print_cap,"","","","","","","","","","Revenue",
+                       str(YahooCrawler.print_num_abbr(insstat["Total Revenue"][0])),"ttm"])
+        if ebit_marge == "N/A": output.append(["","","","","","","","","","","","EBIT Marge","N/A"])
+        else: output.append(["","","","","","","","","","","","EBIT Marge",str(ebit_marge)+"%","(EBIT / Revenue) * 100"])
+        output.append(["Nr.","Levermann Checkliste FULL","",1,-1,"","","","","",3,"Stockholders Equity",
+                       YahooCrawler.print_num_abbr(equity),bal_sheet["Breakdown"][0]])
+        output.append([1,"Eigenkapitalrendite RoE","Return on Equity RoE",">20","<10",roe,lm_score["roe"],
+                       "","","","","Total Assets",YahooCrawler.print_num_abbr(total_assets),bal_sheet["Breakdown"][0]])
+        output.append([2,"EBIT-Marge","EBIT-Margin",">12","<6",ebit_marge,lm_score["ebit_marge"],"","","","",
+                       "Equity Ratio",str(eq_ratio)+"%","(Stockholder Equity / Total Assets) * 100"])
+        output.append([3,"Eigenkapitalquote","Equity Ratio",">25","<15",eq_ratio,lm_score["eq_ratio"],"","","",
+                       4,"P/E-Ratio History per year",pe_ratio_hist_list])
+        output.append([4,"KGV Aktuell","P/E-Ratio History","<12",">16",pe_ratio_hist,lm_score["pe_ratio_hist"],
+                       "","","","","P/E-Ratio 5Y",pe_ratio_hist])
         output.append([5,"KGV 5 Jahre Mittel","P/E-Ratio Actual","<12",">16",pe_ratio,lm_score["pe_ratio"]])
         output.append([6,"Analystenmeinung","Analyst Opinions","<2",">4",rating,lm_score["rating"]])
         output.append([7,"Reaktion auf Quartalszahlen","Reaction to quarter numbers",">1","<-1",reaction,lm_score["reaction"]])
