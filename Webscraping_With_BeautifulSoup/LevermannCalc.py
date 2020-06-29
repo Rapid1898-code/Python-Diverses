@@ -29,8 +29,15 @@ def save_xls(stock, content, filename):
             else:
                 column_widths += [len (str (cell))]
     for i, column_width in enumerate (column_widths):
-        # Spalte 2 mit langem Profil fix mit Breite 17 - restliche Spaten immer mit maximalen Wert pro Spalte
-        ws.column_dimensions[get_column_letter (i + 1)].width = column_width + 2
+        # columns B and C with fix length
+        if i == 0:
+            ws.column_dimensions[get_column_letter (i + 1)].width = 10
+        elif i == 1:
+            ws.column_dimensions[get_column_letter (i + 1)].width = 40
+        elif i == 2:
+            ws.column_dimensions[get_column_letter (i + 1)].width = 40
+        else:
+            ws.column_dimensions[get_column_letter (i + 1)].width = column_width + 2
 
     # Formatierung des Excel-Sheets
     bold = Font (bold=True)
@@ -104,6 +111,9 @@ def save_xls(stock, content, filename):
                 cell.fill = bg_orange
                 cell.font = size14
 
+    ws.sheet_properties.pageSetUpPr.fitToPage = True
+    ws.page_setup.fitToHeight = False
+
     while True:
         try:
             writer.save ()
@@ -176,6 +186,7 @@ if __name__ == '__main__':
         net_income = insstat["Net Income"]
         count = eps_hist = 0
         pe_ratio_hist_list = []
+        pe_ratio_hist_dates = []
         for idx,cont in enumerate(net_income):
             if cont == "-": continue
             elif insstat["Breakdown"][idx] == "ttm": continue
@@ -188,7 +199,8 @@ if __name__ == '__main__':
                 #print("\n")
 
                 eps_hist += tmp_price / (cont / shares_outstanding)
-                pe_ratio_hist_list.append(round(tmp_price / (cont / shares_outstanding),2))
+                pe_ratio_hist_list.append(str(round(tmp_price / (cont / shares_outstanding),2)))
+                pe_ratio_hist_dates.append(insstat["Breakdown"][idx])
                 count += 1
         #DEBUG-INFO
         #print("EPS-Hist-Summe: ", eps_hist)
@@ -416,32 +428,44 @@ if __name__ == '__main__':
             else: rec_light = "Possible Sell"
 
         output = []
-        output.append(["Name",name,"","","","","","","","","Details"])
-        output.append(["Ticker",stock,"","","","","","","","",1,"Return on Equity (ttm)",
-                       stat1["Return on Equity (ttm)"]])
-        output.append(["Index", index,"","","","","","","","",2,"EBIT",
-                       ebit,"ttm"])
-        output.append(["MCap", print_cap,"","","","","","","","","","Revenue",
-                       str(YahooCrawler.print_num_abbr(insstat["Total Revenue"][0])),"ttm"])
-        if ebit_marge == "N/A": output.append(["","","","","","","","","","","","EBIT Marge","N/A"])
-        else: output.append(["","","","","","","","","","","","EBIT Marge",str(ebit_marge)+"%","(EBIT / Revenue) * 100"])
-        output.append(["Nr.","Levermann Checkliste FULL","",1,-1,"","","","","",3,"Stockholders Equity",
-                       YahooCrawler.print_num_abbr(equity),bal_sheet["Breakdown"][0]])
-        output.append([1,"Eigenkapitalrendite RoE","Return on Equity RoE",">20","<10",roe,lm_score["roe"],
-                       "","","","","Total Assets",YahooCrawler.print_num_abbr(total_assets),bal_sheet["Breakdown"][0]])
+        output.append(["Name:",name,"","","","","","","","",
+                       "Details"])
+        output.append(["Ticker:",stock,"","","","","","","","",
+                       1,"Return on Equity (ttm)",stat1["Return on Equity (ttm)"]])
+        output.append(["Index:", index,"","","","","","","","",
+                       2,"EBIT",str(YahooCrawler.print_num_abbr(ebit)),"ttm"])
+        output.append(["MCap:", print_cap,"","","","","","","","","",
+                       "Revenue",str(YahooCrawler.print_num_abbr(insstat["Total Revenue"][0])),"ttm"])
+        if ebit_marge == "N/A":
+            output.append(["","","","","","","","","","","",
+                           "EBIT Marge","N/A"])
+        else:
+            output.append(["","","","","","","","","","","",
+                           "EBIT Marge",str(ebit_marge)+"%","(EBIT / Revenue) * 100"])
+        output.append(["Nr.","Levermann Checkliste FULL","",1,-1,"","","","","",
+                       3,"Stockholders Equity",YahooCrawler.print_num_abbr(equity),bal_sheet["Breakdown"][0]])
+        output.append([1,"Eigenkapitalrendite RoE","Return on Equity RoE",">20","<10",roe,lm_score["roe"],"","","","",
+                       "Total Assets",YahooCrawler.print_num_abbr(total_assets),bal_sheet["Breakdown"][0]])
         output.append([2,"EBIT-Marge","EBIT-Margin",">12","<6",ebit_marge,lm_score["ebit_marge"],"","","","",
                        "Equity Ratio",str(eq_ratio)+"%","(Stockholder Equity / Total Assets) * 100"])
         output.append([3,"Eigenkapitalquote","Equity Ratio",">25","<15",eq_ratio,lm_score["eq_ratio"],"","","",
-                       4,"P/E-Ratio History per year",pe_ratio_hist_list])
-        output.append([4,"KGV Aktuell","P/E-Ratio History","<12",">16",pe_ratio_hist,lm_score["pe_ratio_hist"],
-                       "","","","","P/E-Ratio 5Y",pe_ratio_hist])
-        output.append([5,"KGV 5 Jahre Mittel","P/E-Ratio Actual","<12",">16",pe_ratio,lm_score["pe_ratio"]])
-        output.append([6,"Analystenmeinung","Analyst Opinions","<2",">4",rating,lm_score["rating"]])
-        output.append([7,"Reaktion auf Quartalszahlen","Reaction to quarter numbers",">1","<-1",reaction,lm_score["reaction"]])
-        output.append([8,"Gewinnrevision","Profit Revision",">5","<5",round (profit_revision, 2),lm_score["profit_revision"]])
-        output.append([9,"Kurs Heute vs. Kurs 6M","Price Change for 6 month",">5","<5",change_price_6m,lm_score["change_price_6m"]])
-        output.append([10,"Kurs Heute vs. Kurs 1J","Price Change for 12 month","","",change_price_1y,lm_score["change_price_1y"]])
-        output.append([11,"Kursmomentum Steigend","Price Momentum","","","",lm_score["price_momentum"]])
+                       4,"P/E-Ratio History per year",", ".join(pe_ratio_hist_list),", ".join(pe_ratio_hist_dates)])
+        output.append([4,"KGV Aktuell","P/E-Ratio History","<12",">16",pe_ratio_hist,lm_score["pe_ratio_hist"],"","","","",
+                       "P/E-Ratio 5Y",pe_ratio_hist])
+        output.append([5,"KGV 5 Jahre Mittel","P/E-Ratio Actual","<12",">16",pe_ratio,lm_score["pe_ratio"],"","","",
+                       5,"P/E-Ratio Actual",pe_ratio,"ttm"])
+        output.append([6,"Analystenmeinung","Analyst Opinions","<2",">4",rating,lm_score["rating"],"","","",
+                       6,"Analyst Opinions",rating,"1:Buy, 5:Sell"])
+        output.append([7,"Reaktion auf Quartalszahlen","Reaction to quarter numbers",">1","<-1",reaction,lm_score["reaction"],"","","",
+                       7,"Reaction Qt. Numbers","Last Earnings Info",key])
+        output.append([8,"Gewinnrevision","Profit Revision",">5","<5",round (profit_revision, 2),lm_score["profit_revision"],"","","","",
+                       "Stock Price", "Before: "+str(stock_price_before),"After: "+str(stock_price_after)])
+        output.append([9,"Kurs Heute vs. Kurs 6M","Price Change for 6 month",">5","<5",change_price_6m,lm_score["change_price_6m"],"","","","",
+                       "Index Price", "Before: "+st(index_price_before),"After: "+str(index_price_after)])
+        output.append([10,"Kurs Heute vs. Kurs 1J","Price Change for 12 month","","",change_price_1y,lm_score["change_price_1y"],"","","","",
+                       "Reaction", "Stock: "+str(stock_reaction),"Index: "+str(index_reaction)])
+        output.append([11,"Kursmomentum Steigend","Price Momentum","","","",lm_score["price_momentum"],"","","","",
+                       "Reactio Difference",str(reaction)])
         output.append([12,"Dreimonatsreversal","3 Month Reversal Effect","","","",lm_score["3monatsreversal"]])
         output.append([13,"Gewinnwachstum","Profit Growth",">5","<5",profit_growth,lm_score["profit_growth"]])
         output.append(["",rec,rec,"","","",lm_sum])

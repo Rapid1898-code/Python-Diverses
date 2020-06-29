@@ -810,15 +810,16 @@ if __name__ == '__main__':
     #stock = "%5EDJI"    # DowJones
     #stock = "DowJones"
     #stock = "BSL.AX"
-    stock = "RBI.VI"
+    #stock = "RBI.VI"
+    stock = "UG.PA"
 
     #erg1 = read_yahoo_summary(stock)
     #erg2 = read_yahoo_profile(stock)
     #erg3, erg4 = read_yahoo_statistics(stock)
-    #erg5 = read_yahoo_income_statement(stock)
+    erg5 = read_yahoo_income_statement(stock)
     #erg6 = read_yahoo_balance_sheet(stock)
     #erg7 = read_yahoo_cashflow(stock)
-    erg8 = read_yahoo_analysis(stock)
+    #erg8 = read_yahoo_analysis(stock)
     #erg9 = read_yahoo_analysis_rating(stock)
     #erg10 = read_yahoo_histprice(stock)
     #erg11 = read_zacks_rating(stock)
@@ -844,7 +845,7 @@ if __name__ == '__main__':
     #for key,val in erg2.items(): print(key,val)
     #for key,val in erg3.items(): print(key,val,type(val))
     #for key,val in erg4.items(): print(key,val)
-    #for key,val in erg5.items(): print(key,val)
+    for key,val in erg5.items(): print(key,val)
     #for key,val in erg6.items(): print(key,val)
     #for key,val in erg7.items(): print(key,val)
     #for key, val in erg8.items (): print (key, val)
