@@ -25,21 +25,36 @@ def read_dayprice(prices,date):
             nr +=1
     return ("1900-01-01",999999999)
 
-stock = "AAPL"
+stock = "HLMA.L"
 
 erg = {}
-tmp_list = []
-link = "https://query1.finance.yahoo.com/v7/finance/download/" + stock + "?period1=345427200&period2=1592697600&interval=1d&events=history"
-print ("Reading historical share price web data for", stock, "...")
-ftpstream = urllib.request.urlopen (link)
-csvfile = csv.reader (codecs.iterdecode (ftpstream, 'utf-8'))
-for row in csvfile: tmp_list.append (row)
-tmp_list.reverse ()
-erg[tmp_list[-1][0]] = tmp_list[-1][1:]
-for i in range (len (tmp_list)):
-    erg[tmp_list[i][0]] = tmp_list[i][1:]
-for key,val in erg.items(): print(key,val)
+link = "https://finance.yahoo.com/quote/" + stock + "/financials?p=" + stock
+print("Reading income statement web data for", stock, "...approx 6sec...")
+options = Options()
+options.add_argument('--headless')
+if platform == "win32": driver = webdriver.Chrome (os.getcwd () + '/chromedriver.exe', options=options)
+elif platform =="linux": driver = webdriver.Chrome (os.getcwd () + '/chromedriver', options=options)
+driver.get(link)                                               # Read link
+time.sleep(2)                                                  # Wait till the full site is loaded
+driver.find_element_by_name("agree").click()
+time.sleep (2)
+driver.find_element_by_xpath ('//*[@id="Col1-1-Financials-Proxy"]/section/div[2]/button/div/span').click ()
+time.sleep(2)
+soup = BeautifulSoup(driver.page_source, 'html.parser')        # Read page with html.parser
+time.sleep (2)
+driver.quit ()
+div_id = soup.find(id="Col1-1-Financials-Proxy")
 
-date = "1980-12-14"
-print(read_dayprice(erg,date))
+list_div = []
+table = soup.find (id="quote-header-info")
+for e in div_id.find_all (["div"]): list_div.append (e.text.strip ())
+while list_div[0] != "Breakdown": list_div.pop (0)
+for i in range (len (list_div) - 1, 0, -1):
+    if list_div[i].replace (".", "").replace (",", "").replace ("-", "").isdigit () or list_div[i] == "-": continue
+    elif i == len (list_div) - 1: del list_div[i]
+    elif len (list_div[i]) == 0: del list_div[i]
+    elif len (list_div[i]) > 50: del list_div[i]
+    elif list_div[i] == list_div[i - 1]: del list_div[i]
+    elif list_div[i + 1] in list_div[i]: del list_div[i]
 
+for i in list_div: print(i)
