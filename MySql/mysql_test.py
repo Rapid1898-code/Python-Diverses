@@ -19,13 +19,19 @@ mycursor = mydb.cursor()
 #mycursor.executemany(sqlFormula,students)
 #mydb.commit()
 
-sql = "UPDATE students SET age = 82 WHERE name='Helmut'"
-sql = "SELECT * FROM students LIMIT 5"
-sql = "SELECT * FROM students ORDER BY name DESC"
-sql = "SELECT * FROM students LIMIT 5 OFFSET 5"
-sql = "DELETE FROM students WHERE name="
-mycursor.execute((sql))
+sql = "INSERT INTO students (name, age) VALUES (%s, %s)"
+students = [("Rachel", 22)]
+mycursor.executemany(sql,students)
 mydb.commit()
+
+#sql = "UPDATE students SET age = 82 WHERE name='Helmut'"
+#sql = "SELECT * FROM students LIMIT 5"
+#sql = "SELECT * FROM students ORDER BY name DESC"
+#sql = "SELECT * FROM students LIMIT 5 OFFSET 5"
+
+# sql = "DELETE FROM students WHERE age>10"
+# mycursor.execute((sql))
+# mydb.commit()
 
 #myresult = mycursor.fetchall()
 #print(myresult)
