@@ -29,7 +29,6 @@ def csv_write(content, filename):
             print ("Error: ", e)
             input ("Datei kann nicht geöffnet werden - bitte schließen und <Enter> drücken!")
 
-
 # Check ob Aktie schon enthalten ist im XLS
 def check_xls(stock, filename):
     global writemodus
@@ -45,7 +44,6 @@ def check_xls(stock, filename):
     if stock in book.sheetnames and writemodus == 1:
         print ("Aktie: ", stock, " bereits im XLS: ", filename, " enthalten - Aktie wird übersprungen")
         return True
-
 
 # Ausgabe der Liste als XLS-File inkl. Prüfung ob Datei geöffnet ist
 # Input stock: Name der Aktie
