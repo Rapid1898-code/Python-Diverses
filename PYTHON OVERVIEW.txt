@@ -4,6 +4,7 @@ import math                      # Import python module
 from math import ceil            # Import specific function of a module
 import numpy as np               # Import a module with abbreviation
 if __name__ == '__main__':       # When directly called - programm is running from here
+python --version				 # Check which python version is installed
 ----
 
 
@@ -123,31 +124,32 @@ l.sort()                                         # Sort list ascending
 l.sort(reverse=True)                             # Sort list descending
 l_sort = sorted(l)                               # Sort list and store it in a different independent list
 l.reverse()                                      # Reverse the complete list
-l_reverse = revrsed(l)                           # Reverse complete list and store it in different independent list
-del l[2]                                         # Delete element at index position 2
-l.remove("abc")                                  # Delete element with this value from the list
-l.clear()                                        # Delete complete content of the list (same as l = [])
-min(l)                                           # Find smallest element in the list
-max(l)                                           # Fing biggest element in the list
-sum(l)                                           # Sum of all elements in the list
-2xls_sum  = [sum(pair) for pair in zip(l1, l2)]  # Pair Sorting from 2 lists (1 with 1, 2 with 2, 3 mit 3, aso.) 
-len(l)                                           # Count of elements in list
-l2 = l[:]                                        # Copy of a list (with normal allocation - both lists are updated)
-l2 = list(l)                                     # Copy of a list (second variant)
-l[0]                                             # First element
-l[-1]                                            # Last element
-l[-3:]                                           # Last 3 elements
-l[2:4]                                           # Elements from index position 2 to 3
-l[:2]                                            # Elements from 0 to 1 (exclusive index position 2)
-l[2:]                                            # Elements from index position 2 to the end of the list
-l[::2]                                           # Every second element [start:end:step]
-9 in l                                           # Check if element is in list
-if any(x in string for x in ["ab","cd","de"]):   # Check if any elements from the list are in the string
-if all(x in string for x in ["ab","cd","de"]):   # Check if all elements from the list are in the string    
-for i in l:                                      # Iterate through list content
-for i in range(len(l)):                          # Iterate through list with index
-for idx, cont in enumerate(l):                   # Iterate through list with index and content
-print(', '.join(l))                              # Print list without brackets ["a","b","c"] => a, b, c
+l_reverse = revrsed(l)                               # Reverse complete list and store it in different independent list
+del l[2]                                             # Delete element at index position 2
+l.remove("abc")                                      # Delete element with this value from the list
+l.clear()                                            # Delete complete content of the list (same as l = [])
+min(l)                                               # Find smallest element in the list
+max(l)                                               # Fing biggest element in the list
+sum(l)                                               # Sum of all elements in the list
+2xls_sum  = [sum(pair) for pair in zip(l1, l2)]      # Pair Sorting from 2 lists (1 with 1, 2 with 2, 3 mit 3, aso.) 
+len(l)                                               # Count of elements in list
+l2 = l[:]                                            # Copy of a list (with normal allocation - both lists are updated)
+l2 = list(l)                                         # Copy of a list (second variant)
+l[0]                                                 # First element
+l[-1]                                                # Last element
+l[-3:]                                               # Last 3 elements
+l[2:4]                                               # Elements from index position 2 to 3
+l[:2]                                                # Elements from 0 to 1 (exclusive index position 2)
+l[2:]                                                # Elements from index position 2 to the end of the list
+l[::2]                                               # Every second element [start:end:step]
+9 in l                                               # Check if element is in list
+if any(x in string for x in ["ab","cd","de"]):       # Check if any elements from the list are in the string
+if all(x in string for x in ["ab","cd","de"]):       # Check if all elements from the list are in the string    
+if all(x not in string for x in ["ab","cd","de"]):   # Check if all elements from the list are NOT in the string    
+for i in l:                                          # Iterate through list content
+for i in range(len(l)):                              # Iterate through list with index
+for idx, cont in enumerate(l):                       # Iterate through list with index and content
+print(', '.join(l))                                  # Print list without brackets ["a","b","c"] => a, b, c
 ----
 
 
