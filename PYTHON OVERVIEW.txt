@@ -583,6 +583,19 @@ screensize = user32.GetSystemMetrics(0),                # 1st parameter is width
 
 
 ----
+# MODULE Currencyconverter
+from currency_converter import CurrencyConverter		# Import Module
+from datetime import date								# Import Module for rate-checks for specific date
+c = CurrencyConverter()
+c.convert(100, 'USD', 'AUD')							# Convert 100 USD to AUD with for actual date
+c.convert(100, 'USD', 'AUD', date=date(2013, 3, 21))	# Convert 100 USD to AUD for date 2013-03-21
+first_date, last_date = c.bounds['BGN']					# Check begin and end-date for all rates for BGN
+c.currencies											# Read all possible currencies in a set	
+----
+
+
+
+----
 # MODULES - SMTPLIB, MIMEText - Sending EMails
 # if you have 2-Factor-Authentification you must generate a App-Password for GMail
 import smtplib
