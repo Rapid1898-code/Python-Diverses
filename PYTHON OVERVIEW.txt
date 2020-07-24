@@ -730,6 +730,7 @@ combinations_with_replacement('abc', 2) # alle Kombis des einen Strings inkl. Do
 
 ----
 # MODULE - PANDAS
+https://gist.github.com/why-not/4582705                       # examples
 import pandas as pd                                           # Import Module
 df = pd.read_csv("file.csv")                                  # Read csv into dataframe
 df = pd.read_excel("file.xlsx")                               # Read xlsx into dataframe
@@ -737,9 +738,13 @@ df.shape                                                      # Show the shape o
 df.info()                                                     # Info about the columns (number, column name, data type)
 df.head(5)                                                    # Output of the first 5 rows
 df.tail(5)                                                    # Output of the last 5 rows
-df.["col1"] or df.row1                                        # Output of on column (= series)
-df[["col1","col2"]][0:5]                                      # Output of 2 columns for the first 5 rows
 df.columns                                                    # Output of all column names
+df["2010":"2020"]["Close"]                                    # Output for slice of rows for one column
+df.loc["2010":"2020", "Open":"Close"]                         # Output for slice of rows and slice of columns
+df[["Open","Close"]]["2010":"2020"]                           # Output of 2 columns for the column slice
+df[df.index.isin(["2020","2019"])][hist.columns[0:4]]         # Output specific rows and slice of columns
+df[df.index.isin(["2020","2019"])][["Open","Close"]]          # Output specific rows and columns
+df.["col1"] or df.row1                                        # Output of on column (= series)
 df["col1"].value_counts()                                     # Output of alle values with their count
 df["col1"].value_counts(normalize=True)                       # Output of alle values with their count in percentage
 df.iloc[0]                                                    # Output of the first row
@@ -747,6 +752,7 @@ df.iloc[0,1]                                                  # Output of the fi
 df.iloc[[0,1],0]                                              # Output of the first 2 rows for the first column
 df.iloc[[0,1],[5,6]]                                          # Output of the first 2 rows for the columns 6 and 7
 df.loc[[0,1],["col1","col2"]]                                 # Output of the first 2 rows for the named columns
+df.loc["2020-07-20", :]                                       # Output all cols for specific row
 df.set_index("col1", inplace=True)                            # Define col1 as new index - with inplace it is permanently saved
 df.loc["xyz_col1"]                                            # Output for the before defined new index
 df.sort_index(inplace=True)                                   # Sorting the new index ascending
