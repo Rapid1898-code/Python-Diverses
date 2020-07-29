@@ -62,6 +62,7 @@ dir(var)                        # Shows all available methods and attributes for
 isinstance(x,float)             # Check if x has type format float
 x = float("inf")                # Set var to max-value (float infinite)
 math.sqrt(9)                    # Calculates the sqrt of the value => 3
+if "myVar" in locals():         # Check if a variable exists
 ----
 
 
@@ -479,7 +480,7 @@ ws.PageSetup.PrintArea = "A1:G50"                       # Select specific print 
 
 
 ----
-# MYSQL / SQL
+###### MYSQL / SQL
 import mysql.connector                                     # Import module for mysql access
 mydb = mysql.connector.connect                             # Define connection
     (host="localhost",user="root",passwd="pwd")
@@ -515,11 +516,91 @@ sql = "SELECT * FROM students ORDER BY name DESC"          # Output content - de
 sql = "DELETE FROM students WHERE name = 'xyz'"            # Delete row with name "xyz"
 sql = "DROP TABLE IF EXISTS students"                      # Drop whole table (if exists helps if there no table anymore)  
 
-#Read ticker for specific ticker                 
+##Read ticker for specific ticker                 
 sql = "SELECT ticker FROM stock_main where ticker=%s"      # Or Select * to get all values from the table
 cont = [(summary["symbol"])]
 c.execute(sql,cont)
 data = c.fetchall()                 
+----
+
+
+
+----
+###### MYSQL / SQL ALCHEMY ######
+from sqlalchemy import create_engine                       # Import MODULE
+engine = create_engine("mysql+pymysql:                     # Define access to the MySQL-DB (username, pw, dbname)
+//user:pw@localhost/dbname?host=localhost?port=3306")
+conn = engine.connect()                                    # Establish connection
+engine.table_names()                                       # Read all existing tables from the databasen - returns list
+conn.execute("SELECT * FROM actor").fetchall()             # Read data from db - returns list with tupels as rows
+
+## Tabelle anlegen in MySQL DB
+from sqlalchemy import Table, Column, Integer, String, Float, MetaData
+meta = MetaData()                                          # Tabelle anlegen in MySQL DB
+students = Table(
+   'students', meta,
+   Column('id', Integer, primary_key = True),
+   Column('name', String(45)),
+   Column('lastname', String(45)),
+)
+meta.create_all(engine)
+
+## Create INSERT / UPDATE / DELETE / SELECT statements
+students.insert()                                           # Creates INSERT Statement according due the whole students structure
+	=> shows: INSERT INTO students (id, name, lastname, floatvar) VALUES (:id, :name, :lastname, :floatvar)
+students.insert().values(name = 'Karan')                    # Creates INSERT Statement for specific attribute
+	=> shows: INSERT INTO students (name) VALUES (:name)
+students.update()                                           # Creates UPDATE Statement
+	=> shows: UPDATE students SET id=:id, name=:name, lastname=:lastname, floatvar=:floatvar
+students.delete()                                           # Creates DELETE Statement 
+	=> shows: DELETE FROM students
+students.select()                                           # Creates SELECT Statement
+	=> shows: SELECT students.id, students.name, students.lastname, students.floatvar  FROM students
+
+## Execute SQL command - INSERT                             # Insert rows in table
+conn = engine.connect()                                     # Insert one row
+ins = students.insert().values name = 'Brauneder', lastname = 'Karl')
+result = conn.execute(ins)
+result.inserted_primary_key                                 # Shows the inserted primary key
+conn.execute(students.insert(), [                           # Insert more rows
+   {'name':'Krankl', 'lastname' : 'Hans'},
+   {'name':'Herzog','lastname' : 'Andreas'},
+])
+
+## Execute SQL command - SELECT                             # Select rows from table
+s = students.select()                                       # Creates select statement for SELECT *
+result = conn.execute(s)                                    # Excenute select statement
+for row in result: print(row)                               # Outputs the result rows for select
+s = students.select().where(students.c.id > 10)             # Creates select statement with WHERE clausel
+
+## Execute SQL with Textual SQL                             # Select Statement with textual SQL
+from sqlalchemy.sql import text
+t = text("SELECT name FROM students")
+result = conn.execute(t)
+for row in result: print(row)
+t = text("select students.name, students.lastname from students where students.name between :x and :y")
+result = conn.execute(t, x = 'A', y = 'L')                  # Select statement with where-parameters
+
+## Using Aliases
+from sqlalchemy.sql import alias, select
+st = students.alias("a")
+s = select([st]).where(st.c.id > 2)
+conn.execute(s).fetchall()
+
+## Execute UPDATE statement
+conn = engine.connect()
+stmt=students.update().where(students.c.lastname=='Khanna').values(lastname='Kapoor')
+conn.execute(stmt)
+s = students.select()
+conn.execute(s).fetchall()
+
+## Execute DELETE statementconn = engine.connect()
+stmt = students.delete().where(students.c.lastname == 'Khanna')
+conn.execute(stmt)
+s = students.select()
+conn.execute(s).fetchall()
+
+
 ----
 
 
