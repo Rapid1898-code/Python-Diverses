@@ -49,7 +49,7 @@ import math                     # Import module for math calculations
 5 // 2                          # Result without Decimals (=> 2)
 7 % 2                           # Modulo / Rest of the division (=> 1)
 d,e,f = 4,5,6                   # Assigment of several varaibles
-a,b = b,a                       # Change 2 values
+a,b = b,a                       # Change / swap 2 values
 a += 1                          # Increase value by one
 round (77.2321, 2)              # Value is rounded to two decimal places => 77.23
 random.randint(1,6)             # Random number between 1 and 6 like a cube (needs import random)
@@ -60,9 +60,11 @@ int(input("Alter?"))            # Input age and change to int
 type(var)                       # Returns the type of a variable
 dir(var)                        # Shows all available methods and attributes for the object as list
 isinstance(x,float)             # Check if x has type format float
+isinstance(x,str)               # Check if x has type format string
 x = float("inf")                # Set var to max-value (float infinite)
 math.sqrt(9)                    # Calculates the sqrt of the value => 3
 if "myVar" in locals():         # Check if a variable exists
+sys.argv[1:].upper()            # Check for argument which is given when starting the program
 ----
 
 
@@ -93,6 +95,7 @@ chr(ascii)                                                         # Convert ASC
 hashlib.md5(s).encode('utf-8')).hexdigest()                        # Outputs hashvalue oif the string (needs import hashlib)
 exec(print("hello"))                                               # Execute statement in a string => hello
 eval("2+2")                                                        # Gives the value of an expression => 4
+my_string[::-1]													   # Reverse a string
 ----
 
 
@@ -152,6 +155,12 @@ for i in l:                                          # Iterate through list cont
 for i in range(len(l)):                              # Iterate through list with index
 for idx, cont in enumerate(l):                       # Iterate through list with index and content
 print(', '.join(l))                                  # Print list without brackets ["a","b","c"] => a, b, c
+# Check if list is all unique						 # Check if list is all unique
+def all_unique(lst):
+    return len(lst) == len(set(lst))
+all_unique(l)
+
+
 ----
 
 
@@ -171,6 +180,7 @@ len(d)                                               # Count of entries in dict
 d["four"] = 4                                        # New entry for dict (key = "four", value = 4)
 del d["one"]                                         # Delete specific key in dict
 mydict[new_key] = mydict.pop(old_key)                # Rename dict-keyname
+combined_dict = {**d1, **d2}                         # Combine 2 dicts
 for key in d.keys():                                 # Iterate through dict keys
 for key in sorted(d.keys()):                         # Iterate through sorted dict keys ascending
 for key in sorted(d.keys(),reverse=True):            # Iterate through sorted dict keys descending
@@ -281,6 +291,7 @@ try:                         # otherwise outputs a error message
     break
 except Exception as e:
     print ("Error: ", e)
+	traceback.print_exc()                                 # Outputs the detailed error message
     input ("Datei kann nicht geöffnet werden - bitte schließen und <Enter> drücken!")    
     
 import json                                               # Import json-module
@@ -346,7 +357,7 @@ worksheet.update_cells(cell_list)                                   # Upate cell
 
 
 ----
-### MODULE - OPENPYXL
+###### MODULE - OPENPYXL
 from openpyxl import load_workbook                      # Import module
 wb = load_workbook(("Test.xlsx"))                       # Load xlsx
 wb.sheetnames                                           # All worksheets from the 
@@ -363,7 +374,18 @@ ws.insert(cols(2,2))                                    # Insert 2 new columns a
 ws.delete(cols(2))                                      # Delete column 2
 del wb["sheet4"]                                        # Delete worksheet in workbook
 
-# Saving a nested list in XLSX
+### Read whole worksheet to a nested list
+data_list = []
+for row in ws.iter_rows ():
+    zeile = []
+    for cell in row:
+        if cell.value is None:
+            zeile.append ("")
+        else:
+            zeile.append (cell.value)
+    data_list.append (zeile)
+
+### Saving a nested list in XLSX
 import pandas as pd
 from openpyxl import load_workbook
 cont = [[row1_cell1, row1_cell2], [row2.cell1,row3_cell3]]      # Nested list for saving
@@ -375,7 +397,7 @@ pd.DataFrame (cont).to_excel (writer, sheet_name="Worksheet",   # Prepare Data f
 writer.save()                                                   # Save XLSX
 writer.close()
 
-# Checking if xlsx is open while trying to save
+### Checking if xlsx is open while trying to save
 while True:
     try:
         writer.save ()
@@ -383,9 +405,15 @@ while True:
         break
     except Exception as e:
         print ("Error: ", e)
+		traceback.print_exc()
         input ("Datei kann nicht geöffnet werden - bitte schließen und <Enter> drücken!")
 
-# Automatic adjustment of the columns accoring to best fit
+### Read column to a list
+mylist = []
+for col in ws['A']:
+     mylist.append(col.value)
+
+### Automatic adjustment of the columns accoring to best fit
 column_widths = []
 ws = writer.sheets[stock]
 for row in content:                                    # Determination of the longest value per column
@@ -403,7 +431,7 @@ for row in content:                                    # Determination of the lo
         else:
             ws.column_dimensions[get_column_letter (i + 1)].width = column_width + 2
     
-# Formating the xlsx
+### Formating the xlsx
 (when a cell is formated 2 times - it gets overwritten)
 from openpyxl.styles import Font, PatternFill, Border, Side, Alignment
 bold = Font (bold=True)                                                                # bold font
@@ -436,8 +464,8 @@ ws.set_printer_settings(paper_size=1, orientation = 'portrait')   # set page to 
 
 
 ----
-# MODULE - XLWINNGS
-# Update XLSX in reealtime
+###### MODULE - XLWINNGS
+### Update XLSX in reealtime
 import xlwings as xw                                    # Import module
 wb = xw.Book ("name.xlsx")                              # Read XLSX
 ws = wb.sheets["name_sheet"]                            # Read specific worksheet
@@ -447,7 +475,7 @@ l[1].value = "new value"                                # Update a before read v
 ws.range("A2:A100").value = l                           # Update a 
 xl_col_sort(ws,1)                                       # Sort worksheet in the first col (function see below)
 
-# Sorting workssheet in given col
+### Sorting workssheet in given col
 def xl_col_sort(sheet,col_num):                         
     sheet.range((2,col_num)).api.SortKey1=sheet.range((2,col_num)).api, Order1=1)
     return
@@ -614,7 +642,8 @@ https://www.programiz.com/python-programming/datetime/strptime      # Overview %
 datetime.strptime(s, "%Y-%m-%d")                             # Conversion string to datetime in format dd.mm.jjjj
 datetime.strftime(dt, "%Y-%m-%d")                            # Conversion datetime to string in format  dd.mm.jjjj
 datetime.strftime((datetime.strptime(cont_tmp,"%m/%d/%Y")),"%Y-%m-%d")      # Convert dateformat from string in one line (1st from - 2nd to)
-                   
+
+isinstance(x, datetime.date)								 # Check if variable is of type datetime.date                   
 date = date(2020,7,24)                                       # Define date as "2020-07-24"
 date_time = datetime(2020,3,5,19,27,23)                      # Define date+time as "2020-03-05 19:27:23"
 tday = datetime.today()                                      # Actual date in datetime format
@@ -783,10 +812,11 @@ self.assertNotIn(i,list)                                     # Check if i not in
 ----
 # MODULE - COLLECTIONS - COUNTER
 from collections import Counter
-colors = ['blue', 'blue', 'red', 'red',"red"]
+colors = ['blue', 'blue', 'red', 'red', "red"]
 counter = Counter(colors)
 print(counter)                                               # Outputs counter ({'red': 3, 'blue': 2})
 print(counter.most_common()[0][0])                           # Outputs the element with the most counts
+print(counter["red"})                                        # Outputs the occurence of the value "red" => 3
 
 # MOUDLE - COLLECTIONS - DEFAULTDIC
 from collections import defaultdict
