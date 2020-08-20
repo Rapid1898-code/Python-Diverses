@@ -484,7 +484,7 @@ def xl_col_sort(sheet,col_num):
 
 
 ----
-# MODULE WIN32COM
+### MODULE WIN32COM
 # Create Worksheets as PDF from XLSX
 import win32com.client                                  # Import Module
 import os
@@ -503,6 +503,44 @@ ws.PageSetup.Zoom = False                               # No Zooming
 ws.PageSetup.FitToPagesTall = 1                         # Fit to 1 height
 ws.PageSetup.FitToPagesWide = 1                         # Fit to 1 width
 ws.PageSetup.PrintArea = "A1:G50"                       # Select specific print area
+----
+
+
+
+----
+### MODULE PyPDF2 (Working with PDFs)
+# Read PDF informations / metadata
+from PyPDF2 import PdfFileReader 						# Import Module for PDF Reading
+with open (fn, 'rb') as f:
+    pdf = PdfFileReader (f)								# Read PDF informations
+    info = pdf.getDocumentInfo ()						# Read PDF infos^
+    number_of_pages = pdf.getNumPages ()				# Read number of pages
+	print(info)											# Outputs all informations
+	print(info.title)									# Outputs title of the pdf
+	print(info.author)									# Outputs author of the pdf
+
+# Read Text from Pdf			
+page = pdf.getPage (7)									# Select page 8						
+text = page.extractText ()								# Extract text	
+print (text)											# print (text	
+
+# Split PDFs
+from PyPDF2 import PdfFileWriter						# Import Module for PDF Writing
+pdf_writer = PdfFileWriter()							# Create new instance of PDF writer
+pdf_writer.addPage(page)                                # Add Page to writer
+with open(output_filename, 'wb') as out:				# Write splitted PDF
+	pdf_writer.write(out)
+
+# Merge PDFs
+from PyPDF2 import PdfFileMerger						# Import Module for PDF Merging
+pdf_merger = PdfFileMerger()							# Create new instance of PDF merger
+pdf_merger.append(path)                                 # Append Page for merging
+with open(output_path, 'wb') as fileobj:				# Write merged PDF
+	pdf_merger.write(fileobj)
+
+page.rotateClockwise(90)								# Rotate clockwise
+page.rotateCounterClockwise(90)							# Rotate counter clockwise
+page.mergePage(watermark_page)							# Overlaying / Watermarking two pages
 ----
 
 
@@ -694,7 +732,7 @@ screensize = user32.GetSystemMetrics(0),                # 1st parameter is width
 
 
 ----
-# MODULE Currencyconverter
+###### MODULE Currencyconverter
 from currency_converter import CurrencyConverter		# Import Module
 from datetime import date								# Import Module for rate-checks for specific date
 c = CurrencyConverter()
@@ -702,6 +740,25 @@ c.convert(100, 'USD', 'AUD')							# Convert 100 USD to AUD with for actual date
 c.convert(100, 'USD', 'AUD', date=date(2013, 3, 21))	# Convert 100 USD to AUD for date 2013-03-21
 first_date, last_date = c.bounds['BGN']					# Check begin and end-date for all rates for BGN
 c.currencies											# Read all possible currencies in a set	
+----
+
+
+
+----
+###### MOUDLE Countries, Currency, Language
+Description: https://pypi.org/project/pycountry/
+import pycountry								# Install moduel
+list(pycountry.countries)                       # List of all countries with several informations
+c = pycountry.countries.get(alpha_2='DE')       # Searching for country-informatns for "DE"
+c.alpha_2                                       # Outputs => DE
+c.alpha_3										# Outputs => DEU
+c.numeric                                       # Outputs number of the coutnry => 276
+c.name                                          # Outputs full name of the country => Germany	
+c.official_name                                 # Outputs the official name => "Federal Republic of Germany!
+list(pycountry.currencies)						# List of all currencies
+list(pycountry.languages)						# List of all languages                            
+list(pycountry.historic_countries)              # List of all historic countries which not more exists
+list(pycountry.subdivisiones)                   # List of all subdivided countries
 ----
 
 
