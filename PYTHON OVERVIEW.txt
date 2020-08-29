@@ -137,6 +137,7 @@ max(l)                                               # Fing biggest element in t
 sum(l)                                               # Sum of all elements in the list
 2xls_sum  = [sum(pair) for pair in zip(l1, l2)]      # Pair Sorting from 2 lists (1 with 1, 2 with 2, 3 mit 3, aso.) 
 len(l)                                               # Count of elements in list
+l.count("a")										 # Count of occurence of the element "a" in the list	
 l2 = l[:]                                            # Copy of a list (with normal allocation - both lists are updated)
 l2 = list(l)                                         # Copy of a list (second variant)
 l.copy()                                             # 
@@ -228,7 +229,7 @@ while x < 4:                 # While loop with break condition
 while True:                  # Endless while loop - has to be exited with break
 break                        # Break loop completely
 continue                     # Break actual loop run - continue with next loop run
-----
+----t
 
 
 
@@ -238,7 +239,12 @@ def add(x=0,y=0):                # Define function - with default value 0 if no 
     erg = x+y                    # Calculatin in function
     return erg                   # Return value from the function
 
-def pet (animal, name=None)      # Optional argument in the funtction (first element is must - second optional)   
+def pet (animal,n1=None,n2="x")  # Optional argument in the funtction (first element is must - second optional)   
+pet("Cat")                       # Calling function with n1=None and n2 = "x"
+pet("Cat","name")				 # Calling function with n1=name and n2 = "X"
+pet("Cat",n2="xyz") 			 # Calling function with n1=None and n2 = "xyz" (third parameter has to be named when calling)
+
+
 def varargs(*args): print(args)  # Function with infinite arguments
 varargs(1,2,3)                   # Oututs (1,2,3)
 
@@ -1136,6 +1142,39 @@ buttons.setStandardButtons(QDialogButtons.OK)          # Defines a ok button on 
 layout_qv.addWidget(buttons)                           # Adds buttons to vertical layout
 class Window(QMainWindow):                             # Defines a class Windows which inherits from QMainWindow
 ----
+
+
+
+
+----
+###### MODULE - TKinter
+from tkinter import *										# Import tkinter module
+root = Tk()													# Create root window
+root.title("Header Title")                              	# Name of the window in the title
+myLabel = Label(root,text="Hello World!")               	# Creating a label widget
+myLabel.pack()												# Showing myLabel on the screen
+myLabel.grid(row=0, column=0)								# Showing myLabel on grid place 0/0 (left upper)
+myButton = Button(root,text="Click Me!")  					# Creating a button widget with a name
+myButton = Button(root,text="Click Me!",state=DISABLED) 	# Creating a deactivated, greyed button widget with a name
+myButton = Button(root,text="C",padx=50,pady=50)			# Creating a button widget with a name and size 50 * 50
+myButton = Button(root,text="T",command=myfunc)     		# Creating a button which will excute the myfunc-function when its clicked
+myButton = Button(root,text="T",command=lambda: func(nr))   # Creating a button which will excute the func-function with a numeric parameter
+myButton = Button(root,text="col",bg="blue",fg="white") 	# Creating a button with background blue and foreground white
+myEntry = Entry(root, width=50, borderwidth=5)          	# Creating a entry field - with width 50 and borderwidth 5
+myEntry.pack()												# Showing the entry field
+myEntry.grid(row=0,column=0,columnspan=3)               	# Showing myEntry as grid in row/col = 0/0 and spanned over 3 columns
+e.grid(row=0,column=0,padx=10,pady=10)						# Showing myEntry as grid in row/col = 0/0 and with pading in x/y-axes 
+myEntry.get()												# Read content of the entry field
+myEntry.insert(0,"Default-Text")                        	# Shows a default value in the entry field
+myEntry.insert(0, number)									# Insert a number into the entry field
+myEntry.delete(0,END)										# Delete content of the entry field
+root.mainloop()												# Mainloop of the program
+
+
+----
+
+
+
 
 
 
