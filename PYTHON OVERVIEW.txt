@@ -229,7 +229,7 @@ while x < 4:                 # While loop with break condition
 while True:                  # Endless while loop - has to be exited with break
 break                        # Break loop completely
 continue                     # Break actual loop run - continue with next loop run
-----t
+----
 
 
 
@@ -284,28 +284,65 @@ Human.grant()                  # Aufruf der statischen Methode => Ausgabe: "*gru
 
 
 ----
-### FILES TXT,JSON
+### FILES TXT
 fn = "test.txt"
-with open(fn) as f:                                       # Read textfile - stored in list per line
-    lines = [x.strip() for x in f.readlines()]            # Whitespaces are eliminated with strip()
-with open(fn,"w") as obj: obj.write("Ein neuer Text")     # Writing in textfile
-with open(fn,"a") as obj: obj.write("\nNoch ein Text")    # Append text in the next line
+with open(fn) as f:                                     # Read textfile - stored in list per line
+    lines = [x.strip() for x in f.readlines()]          # Whitespaces are eliminated with strip()
+with open(fn,"w") as obj: obj.write("Ein neuer Text")   # Writing in textfile
+with open(fn,"a") as obj: obj.write("\nNoch ein Text")  # Append text in the next line
     
-while True:                  # Try/Except - checks if file can be saved
-try:                         # otherwise outputs a error message
+while True:                  							# Try/Except - checks if file can be saved
+try:                         							# otherwise outputs a error message
     writer.save ()    
     break
 except Exception as e:
     print ("Error: ", e)
-	traceback.print_exc()                                 # Outputs the detailed error message
-    input ("Datei kann nicht geöffnet werden - bitte schließen und <Enter> drücken!")    
-    
-import json                                               # Import json-module
+	traceback.print_exc()                               # Outputs the detailed error message
+    input ("File Open not possible - pls close and press <Enter>")    
+----
+   
+   
+   
+----
+### JSON format   
+import json                                         # Import json-module
 fn = "numbers.json"
-with open(fn,"w") as obj: json.dump(numbers, obj)         # Writing informations in json-format
-with open(fn) as obj: numbers = json.load(obj)            # Reading informations in json-format
+with open(fn) as data: info = json.loads(data)      # Reading informations in json-format
+#json-example										# Example for json-file	
+{
+	"name" : "Chuck",
+	"phone" = {
+		"type" : "int1"
+		"number" : "+1 734 555"
+	}
+	"email" : {
+		"hide" : "yes"
+	}	
+}
+info["name"]										# Read name value => "Chuck"
+info["email"]["hide"]								# Read hide value from email => yes	
+for item in info:									# Iterate trough the json-file (eg. many persons)
+with open(fn,"w") as data: json.dump(info, data)    # Writing informations in json-format (e.g. after updating the values/format)
 ----
 
+
+
+----
+### XML format
+import xml.etree.ElementTree as ET					# Import xml-module
+<persons>
+	<person>										# Example for xml-file
+		<name>Chuck</name>
+		<phone type="int1"> +1 734 555"</phone>
+		<email hide="yes"/>
+	</person>
+	...
+</persons>
+tree = ET.fromstring(data)							# Read xml-file into tree
+tree.find("name").text								# Read name text => "Chuck"
+tree.find("email".get("hide"))						# Read hide value from email => yes		
+lst = persons.findall("persons/person")				# Iterate trough xml-file (eg. many persons)
+for item in lst:
 
 
 ----
@@ -1101,7 +1138,7 @@ driver.quit ()                                                 # Close the chrom
 
 
 ----
-# MODULE - PYQT
+###### MODULE - PYQT
 pip install pyqt5                                      # Installation
 from PyQt5.QtWidgets import QApplication               # Defines Application
 from PyQt5.QtWidgets import QLabel                     # Defines Label
@@ -1145,23 +1182,25 @@ class Window(QMainWindow):                             # Defines a class Windows
 
 
 
-
 ----
 ###### MODULE - TKinter
 from tkinter import *										# Import tkinter module
 root = Tk()													# Create root window
 root.title("Header Title")                              	# Name of the window in the title
+root.iconbitmap("pic.ico")                                  # Define icon for the windows (left upper corner)
 myLabel = Label(root,text="Hello World!")               	# Creating a label widget
 myLabel.pack()												# Showing myLabel on the screen
-myLabel.grid(row=0, column=0)								# Showing myLabel on grid place 0/0 (left upper)
+myLabel.grid(row=0,column=0,pady=10)   						# Showing myLabel on grid place 0/0 (left upper corner) with 10pixel padding from above
+status = Label(root,text="St",bd=1,relief=SUNKEN,anchor=E   # Creating a status label widget with border (bd=1), sunken relief and anchor position right (east)
+status.grid(row=2,column=0,columnspan=3,sticky=W+E)         # Showing status bar - with using maximum space from left to right (west to east) with sticky
 myButton = Button(root,text="Click Me!")  					# Creating a button widget with a name
 myButton = Button(root,text="Click Me!",state=DISABLED) 	# Creating a deactivated, greyed button widget with a name
 myButton = Button(root,text="C",padx=50,pady=50)			# Creating a button widget with a name and size 50 * 50
 myButton = Button(root,text="T",command=myfunc)     		# Creating a button which will excute the myfunc-function when its clicked
 myButton = Button(root,text="T",command=lambda: func(nr))   # Creating a button which will excute the func-function with a numeric parameter
 myButton = Button(root,text="col",bg="blue",fg="white") 	# Creating a button with background blue and foreground white
-myEntry = Entry(root, width=50, borderwidth=5)          	# Creating a entry field - with width 50 and borderwidth 5
-myEntry.pack()												# Showing the entry field
+QuitButton = Button(root,text="exit",command=root.quit)		# Create a quit-button on the window
+myEntry = Entry(root, width=50, borderwidth=5).pack()       # Creating a entry field - with width 50 and borderwidth 5 - and showing the field
 myEntry.grid(row=0,column=0,columnspan=3)               	# Showing myEntry as grid in row/col = 0/0 and spanned over 3 columns
 e.grid(row=0,column=0,padx=10,pady=10)						# Showing myEntry as grid in row/col = 0/0 and with pading in x/y-axes 
 myEntry.get()												# Read content of the entry field
@@ -1170,17 +1209,39 @@ myEntry.insert(0, number)									# Insert a number into the entry field
 myEntry.delete(0,END)										# Delete content of the entry field
 root.mainloop()												# Mainloop of the program
 
+###Pics in Tkinter-Windows
+from PIL import ImageTk,Image								# Additional module Pillow neede (install with <pip install Pillow>
+my_img = ImageTk.PhotoImage(Image.open("demo.png"))			# Reads Image wiht Pillow-module (Tkinter can not read png/jpg files)
+my_label = Label(image=my_img)								# Creating a Label with the image
+my_label.pack()												# Showing the pic
+
+###Define Frame
+frame = LabelFrame(root,text="Name_Frame",padx=5,padx=5)	# Creating a frame with padding 5/5 (inside the frame)
+frame.pack(padx=10,pady=10)									# Showing the frame with padding 10/10 (outside the frame)	
+button = Button(frame,text="Name_Button")					# Creating button in the frame (not root window)
+button.grid(row=0, column=0)								# Showing the button in the frame as grid (with frames is mixing between pack and grid possible)
+
+###RadioButtons
+r = IntVar()												# Define variable for radio button - when string use StringVar()
+r.set("2")													# Choose default radio button	
+Radiobutton(root,text="Opt1",variable=r,value=1).pack()		# Define and show radiobutton 1
+Radiobutton(root,text="Opt2",variable=r,value=2).pack()		# Define and show radiobutton 2
+r.get()														# Get value from choosen radio button
+
+###MessageBox
+messagebox.showinfo("Title of PopUp", "Hello World!")		# Show Messagebox
+different boxes available: showinfo, showwarning, showerror, askquestion, askokcancel, askyesno
+response = messagebox.askquestion ("Bla", "BlaBla!")		# Show AskQuestion Box and store response
+if response == 1: Label(root, text= "YES").pack()			# Check about response of user in message box
+elif response == 0: Label(root, text= "NO").pack()
 
 ----
 
 
 
-
-
-
 ----
-# MODULE - PYGAME
-# http://pygame.org/docs/
+###### MODULE - PYGAME
+###http://pygame.org/docs/
 import pygame as pg                                      # Import of the pygame module
 pg.init()                                                # Initialize and setup screen
 screen_dim = (1200,800)                                  # Define dimension
@@ -1213,7 +1274,7 @@ event.type == pg.MOUSEBUTTONDOWN                         # Check if mousebutton 
 mouse_pos = pg.mouse.get_pos()                           # Findinig the mouse position
 button_rect.collidepoint(mouse_pos)                      # Check if mouse-cursor is ofer an object / rectangle
 
-# Pygame groups
+### Pygame groups
 from pygame.sprite import Sprite,Group                   # Group class for working with similar objects
 def Bullet(Sprite):                                      # Making and filling a group - must inherit from Sprite
     def draw_bullet(self):                               # Method from the new group
