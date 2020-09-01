@@ -1,16 +1,65 @@
-----
-### MODULE
+###########
+### TOC ###
+###########
+
+# MODULE (general)
+# VIRTUALENV
+# INTELLIJ IDEA IDE
+# OPERATORS and INPUTS
+# STRING
+# REGEX (regular expressions)
+# LISTS and TUPELS
+# DICTIONARY
+# SETS  
+# CONTROL STRUCTURES and ITERATIONS (if, for, while)
+# FUNCTIONS
+# CLASSES
+# TXT (handling txt files)
+# JSON (handling JSON)
+# XML (handling XML)
+# MODULE - CSV (handling CSV)
+# MODULE - GSPREAD (API for Google Sheets)
+# MODULE - OPENPYXL (working with excel worksheets)
+# MODULE - XLWINNGS (working on the fly with open excel worksheets)
+# MODULE - WIN32COM (creating worksheets as pdf from xlsx)
+# MODULE - PyPDF2 (working with pdfs)
+# SQL (working with MySQL / MariaDB)
+# SQL ALCHEMY
+# DATES, DATETIME, CALENDAR, TIMEIT, TIME, SYS, CTYPES
+# MODULE - Currencyconverter (currency conversion)
+# MODULE - Countries, Currency, Language (handling codes for countries, currency, language)
+# MODULES - SMTPLIB, MIMEText (sending emails)
+# MODULE - OS (interacting with the operating system)
+# MODULE - LOGGING
+# MODULE - UNITTEST
+# MODULE - COLLECTIONS (counter, defaultdic)
+# MOUDLE - ITERTOOLS (products, combinations)
+# MODULE - PANDAS (analyzing and working with data)
+# MATPLOTLIB (working with charts)
+# PYINSTALLER (generate python programs to executables)
+# VIRTUAL BOX (eg. for MacOS)
+# MODULE - SELENIUM (browser automatization)
+# MODULE - BEAUTIFUL SOAP (webscraping)
+# MODULE - PYQT (making GUIs)
+# MODULE - TKinter (making GUIs)
+# MODULE - PYGAME (making games)
+
+
+
+
+----------
+###### MODULE
 import math                      # Import python module
 from math import ceil            # Import specific function of a module
 import numpy as np               # Import a module with abbreviation
 if __name__ == '__main__':       # When directly called - programm is running from here
 python --version				 # Check which python version is installed
-----
+----------
 
 
 
-----
-### VIRTUALENV
+----------
+###### VIRTUALENV
 pip install virtualenv                                     # Install virtualenv
 pip list                                                   # Global packages installed
 where python                                               # Shows where the python-file is (Windows)
@@ -25,12 +74,12 @@ virtualenv -p C:\..path to..\Python37\python.exe py37_env  # Create new virtual 
 py37_env\Scripts\activate                                  # Activate new virtual env named py37_env
 python --version                                           # Shows the used python version in the virtual env
 pip install -r requirements.txt                            # Install all the packages from requirment.txt
-----
+----------
 
 
 
-----
-### Intellij IDEA IDE
+----------
+###### INTELLIJ IDEA IDE
 Ctrl + Alt + F7				# Find usages
 Ctrl + F    				# Find in File
 Ctrl + REGEX				# Replace in File
@@ -39,12 +88,12 @@ Ctrl + G					# Goto line
 Ctrl + E					# Recent files
 Ctrl + TABLE				# File switcher
 Ctrl + D					# Copy / Duplicate lines	
-----
+----------
 
 
 
-----
-### OPERATORS and INPUTS
+----------
+###### OPERATORS and INPUTS
 import math                     # Import module for math calculations
 5 // 2                          # Result without Decimals (=> 2)
 7 % 2                           # Modulo / Rest of the division (=> 1)
@@ -65,12 +114,12 @@ x = float("inf")                # Set var to max-value (float infinite)
 math.sqrt(9)                    # Calculates the sqrt of the value => 3
 if "myVar" in locals():         # Check if a variable exists
 sys.argv[1:].upper()            # Check for argument which is given when starting the program
-----
+----------
 
 
 
-----
-### STRING
+----------
+###### STRING
 s = "this is a test"
 "{} can be {}".format("Strings", "formated")                       # Insert variables
 "{0} like, {0} especially {0} but {1}".format("Joe", "noodles")    # Multiple use
@@ -96,22 +145,22 @@ hashlib.md5(s).encode('utf-8')).hexdigest()                        # Outputs has
 exec(print("hello"))                                               # Execute statement in a string => hello
 eval("2+2")                                                        # Gives the value of an expression => 4
 my_string[::-1]													   # Reverse a string
-----
+----------
 
 
 
-----
-### REGEX
+----------
+###### REGEX
 import re
 https://medium.com/factory-mind/regex-tutorial-a-simple-cheatsheet-by-examples-649dc1c3f285
 pattern = re.compile("^[0-9]{4}-[0-9]{2}$")                        # find str with 4xdigits + "-"char + 2xdigits
 pattern.match(s)                                                   # check if pattern matches - <> None when matches
-----
+----------
 
 
 
-----
-### LISTS and TUPELS
+----------
+###### LISTS and TUPELS
 l = []                                           # Define empty list
 l = [4,5,6]                                      # Define list with content
 l = list(range(20))                              # Define list - content is list from 0 to 19
@@ -162,12 +211,12 @@ def all_unique(lst):
 all_unique(l)
 
 
-----
+----------
 
 
 
-----
-### DICTIONARY                                          (key/value - content)
+----------
+###### DICTIONARY                                          (key/value - content)
 d = {}                                               # Define empty dict
 d = {"one": 1, "two": 2, "three": 3}                 # Define dict with content
 d = dict([("one",1),("two",2),("three",3)])          # Define dict with content (with dupels)
@@ -193,12 +242,13 @@ for key, val in d.items():                           # Iterate through keys and 
          key=lambda item: item[0], reverse=True)}  
 {k: v for k, v in sorted(chars.items(),              # Dict sorted: 1st value-desc (x[0]) - 2nd key-ascnd (-x[0])
          key=lambda x: (-x[1],x[0]))}
-----
+----------
 
 
 
-----
-### SETS                   (values can only occur one time in the set => difference to lists)
+----------
+###### SETS                   
+(values can only occur one time in the set => difference to lists)
 s = set()               # Define empty set
 s = {1,1,2,2,3,4}       # Define set with content
 s2 = {1,7,8}            # Define second set
@@ -211,12 +261,12 @@ s <= s2                 # True if s is subset from s2 (same as: s.issubset(s2))
 3 in s                  # Check if element is in set
 s.pop()                 # Delete lowest elmeent in set
 s.discard(5)            # Delete element 5 from setr (or s.remove(5) - but with that is key error possible)
-----
+----------
 
 
 
-----
-### CONTROL STRUCTURES and ITERATIONS
+----------
+###### CONTROL STRUCTURES and ITERATIONS
 if x>10: pass                # If / elif / else
 elif x> 10: pass
 else: pass
@@ -229,12 +279,12 @@ while x < 4:                 # While loop with break condition
 while True:                  # Endless while loop - has to be exited with break
 break                        # Break loop completely
 continue                     # Break actual loop run - continue with next loop run
-----
+----------
 
 
 
-----
-### FUNCTIONS
+----------
+###### FUNCTIONS
 def add(x=0,y=0):                # Define function - with default value 0 if no input is given
     erg = x+y                    # Calculatin in function
     return erg                   # Return value from the function
@@ -251,12 +301,12 @@ varargs(1,2,3)                   # Oututs (1,2,3)
 def keyword_args(**kwargs):
     print(kwargs)
 keyword_args("a"=3, "b"=4)       # Outputs {"a":3, "b":4}  
-----
+----------
 
 
 
-----
-### CLASSES
+----------
+###### CLASSES
 class Human(object):           # Define a class
     species = "Homo Sapiens"   # Fix variable / class variable for all instances of the class
     def __init__(self,name):   # Constructor - automatically applied when an instance is created
@@ -279,12 +329,12 @@ i.get_species()                # Output "Homo Sapiens"
 j.get_species()                # Same output  "Homo Sapiens"
 Human.species = "Was Neues"    # Change of the class variable - applies for all instances
 Human.grant()                  # Aufruf der statischen Methode => Ausgabe: "*grund*" 
-----
+----------
 
 
 
-----
-### FILES TXT
+----------
+###### TXT FILES
 fn = "test.txt"
 with open(fn) as f:                                     # Read textfile - stored in list per line
     lines = [x.strip() for x in f.readlines()]          # Whitespaces are eliminated with strip()
@@ -299,12 +349,12 @@ except Exception as e:
     print ("Error: ", e)
 	traceback.print_exc()                               # Outputs the detailed error message
     input ("File Open not possible - pls close and press <Enter>")    
-----
+----------
    
    
    
-----
-### JSON format   
+----------
+###### JSON format   
 import json                                         # Import json-module
 fn = "numbers.json"
 with open(fn) as data: info = json.loads(data)      # Reading informations in json-format
@@ -323,12 +373,12 @@ info["name"]										# Read name value => "Chuck"
 info["email"]["hide"]								# Read hide value from email => yes	
 for item in info:									# Iterate trough the json-file (eg. many persons)
 with open(fn,"w") as data: json.dump(info, data)    # Writing informations in json-format (e.g. after updating the values/format)
-----
+----------
 
 
 
-----
-### XML format
+----------
+###### XML format
 import xml.etree.ElementTree as ET					# Import xml-module
 <persons>
 	<person>										# Example for xml-file
@@ -345,8 +395,9 @@ lst = persons.findall("persons/person")				# Iterate trough xml-file (eg. many p
 for item in lst:
 
 
-----
-### MODULE - CSV
+
+----------
+###### MODULE - CSV
 import csv                       
 with open("test.csv","w",newline="") as fp:               # Open csv-file in writemode
     a = csv.writer (fp, delimiter=",")                    # Define csv-writer with ","-delimiter
@@ -359,12 +410,12 @@ import codecs
 url = link                                                      # direct link to a csv html file
 ftpstream = urllib.request.urlopen(url)
 csvfile = csv.reader(codecs.iterdecode(ftpstream, 'utf-8'))     # output is nested list
-----
+----------
 
 
 
-----
-### MODULE - GSPREAD
+----------
+###### MODULE - GSPREAD
 # API for GoogleSheets
 # Tutorial: https://techwithtim.net/tutorials/google-sheets-python-api-tutorial/
 # Create a project on https://console.cloud.google.com/
@@ -395,11 +446,11 @@ cell_list = worksheet.range('A1:G1')                                # Define cel
 new_values = [1,2,3,4,5]                                            # Define new values for area / row
 for i, val in enumerate(new_values): cell_list[i].value = val       # Write new values to cell area / cell row
 worksheet.update_cells(cell_list)                                   # Upate cell area / cell row    
-----
+----------
 
 
 
-----
+----------
 ###### MODULE - OPENPYXL
 from openpyxl import load_workbook                      # Import module
 wb = load_workbook(("Test.xlsx"))                       # Load xlsx
@@ -502,11 +553,11 @@ ws.sheet_properties.pageSetUpPr.fitToPage = True                   # fit xlsx to
 ws.page_setup.fitToHeight = False                                  # fit xlsx to one page for printing - 2nd part
 ws.set_printer_settings(paper_size=1, orientation = 'landscape')   # set page to landscape horizontal
 ws.set_printer_settings(paper_size=1, orientation = 'portrait')   # set page to landscape horizontal
-----
+----------
 
 
 
-----
+----------
 ###### MODULE - XLWINNGS
 ### Update XLSX in reealtime
 import xlwings as xw                                    # Import module
@@ -522,12 +573,12 @@ xl_col_sort(ws,1)                                       # Sort worksheet in the 
 def xl_col_sort(sheet,col_num):                         
     sheet.range((2,col_num)).api.SortKey1=sheet.range((2,col_num)).api, Order1=1)
     return
-----
+----------
 
 
 
-----
-### MODULE WIN32COM
+----------
+###### MODULE - WIN32COM
 # Create Worksheets as PDF from XLSX
 import win32com.client                                  # Import Module
 import os
@@ -546,12 +597,13 @@ ws.PageSetup.Zoom = False                               # No Zooming
 ws.PageSetup.FitToPagesTall = 1                         # Fit to 1 height
 ws.PageSetup.FitToPagesWide = 1                         # Fit to 1 width
 ws.PageSetup.PrintArea = "A1:G50"                       # Select specific print area
-----
+----------
 
 
 
-----
-### MODULE PyPDF2 (Working with PDFs)
+----------
+###### MODULE - PyPDF2
+(Working with PDFs)
 # Read PDF informations / metadata
 from PyPDF2 import PdfFileReader 						# Import Module for PDF Reading
 with open (fn, 'rb') as f:
@@ -584,11 +636,11 @@ with open(output_path, 'wb') as fileobj:				# Write merged PDF
 page.rotateClockwise(90)								# Rotate clockwise
 page.rotateCounterClockwise(90)							# Rotate counter clockwise
 page.mergePage(watermark_page)							# Overlaying / Watermarking two pages
-----
+----------
 
 
 
-----
+----------
 ###### MYSQL / SQL
 import mysql.connector                                     # Import module for mysql access
 mydb = mysql.connector.connect                             # Define connection
@@ -625,16 +677,16 @@ sql = "SELECT * FROM students ORDER BY name DESC"          # Output content - de
 sql = "DELETE FROM students WHERE name = 'xyz'"            # Delete row with name "xyz"
 sql = "DROP TABLE IF EXISTS students"                      # Drop whole table (if exists helps if there no table anymore)  
 
-##Read ticker for specific ticker                 
+###Read ticker for specific ticker                 
 sql = "SELECT ticker FROM stock_main where ticker=%s"      # Or Select * to get all values from the table
 cont = [(summary["symbol"])]
 c.execute(sql,cont)
 data = c.fetchall()                 
-----
+----------
 
 
 
-----
+----------
 ###### MYSQL / SQL ALCHEMY ######
 from sqlalchemy import create_engine                       # Import MODULE
 engine = create_engine("mysql+pymysql:                     # Define access to the MySQL-DB (username, pw, dbname)
@@ -643,7 +695,7 @@ conn = engine.connect()                                    # Establish connectio
 engine.table_names()                                       # Read all existing tables from the databasen - returns list
 conn.execute("SELECT * FROM actor").fetchall()             # Read data from db - returns list with tupels as rows
 
-## Tabelle anlegen in MySQL DB
+### Tabelle anlegen in MySQL DB
 from sqlalchemy import Table, Column, Integer, String, Float, MetaData
 meta = MetaData()                                          # Tabelle anlegen in MySQL DB
 students = Table(
@@ -654,7 +706,7 @@ students = Table(
 )
 meta.create_all(engine)
 
-## Create INSERT / UPDATE / DELETE / SELECT statements
+### Create INSERT / UPDATE / DELETE / SELECT statements
 students.insert()                                           # Creates INSERT Statement according due the whole students structure
 	=> shows: INSERT INTO students (id, name, lastname, floatvar) VALUES (:id, :name, :lastname, :floatvar)
 students.insert().values(name = 'Karan')                    # Creates INSERT Statement for specific attribute
@@ -666,7 +718,7 @@ students.delete()                                           # Creates DELETE Sta
 students.select()                                           # Creates SELECT Statement
 	=> shows: SELECT students.id, students.name, students.lastname, students.floatvar  FROM students
 
-## Execute SQL command - INSERT                             # Insert rows in table
+### Execute SQL command - INSERT                             # Insert rows in table
 conn = engine.connect()                                     # Insert one row
 ins = students.insert().values name = 'Brauneder', lastname = 'Karl')
 result = conn.execute(ins)
@@ -676,13 +728,13 @@ conn.execute(students.insert(), [                           # Insert more rows
    {'name':'Herzog','lastname' : 'Andreas'},
 ])
 
-## Execute SQL command - SELECT                             # Select rows from table
+### Execute SQL command - SELECT                             # Select rows from table
 s = students.select()                                       # Creates select statement for SELECT *
 result = conn.execute(s)                                    # Excenute select statement
 for row in result: print(row)                               # Outputs the result rows for select
 s = students.select().where(students.c.id > 10)             # Creates select statement with WHERE clausel
 
-## Execute SQL with Textual SQL                             # Select Statement with textual SQL
+### Execute SQL with Textual SQL                             # Select Statement with textual SQL
 from sqlalchemy.sql import text
 t = text("SELECT name FROM students")
 result = conn.execute(t)
@@ -690,32 +742,32 @@ for row in result: print(row)
 t = text("select students.name, students.lastname from students where students.name between :x and :y")
 result = conn.execute(t, x = 'A', y = 'L')                  # Select statement with where-parameters
 
-## Using Aliases
+### Using Aliases
 from sqlalchemy.sql import alias, select
 st = students.alias("a")
 s = select([st]).where(st.c.id > 2)
 conn.execute(s).fetchall()
 
-## Execute UPDATE statement
+### Execute UPDATE statement
 conn = engine.connect()
 stmt=students.update().where(students.c.lastname=='Khanna').values(lastname='Kapoor')
 conn.execute(stmt)
 s = students.select()
 conn.execute(s).fetchall()
 
-## Execute DELETE statementconn = engine.connect()
+### Execute DELETE statementconn = engine.connect()
 stmt = students.delete().where(students.c.lastname == 'Khanna')
 conn.execute(stmt)
 s = students.select()
 conn.execute(s).fetchall()
 
 
-----
+----------
 
 
 
-----
-# MODULES - DATES (DATETIME), CALENDAR, TIMEIT, TIME, SYS, CTYPES
+----------
+###### MODULES - DATES, DATETIME, CALENDAR, TIMEIT, TIME, SYS, CTYPES
 # Standardmodules from python no pip install necessary
 from datetime import datetime, timedelta                     # Import module datetime and timedelta
 from datetime import date                                    # Import module dat
@@ -741,17 +793,17 @@ datetime.fromisoformat('2020-07-10 02:00:00').timestamp()    # Generate ISO-form
 iso_dt = datetime.fromisoformat(str(datetime.now())).timestamp()   # Generate ISO-format from actual date
 date = datetime.fromtimestamp(1594339200000 / 1e3)           # Generate Datetime from ISO-format
 
-# Check last day of month & first weekday of month
+### Check last day of month & first weekday of month
 import calendar
 calendar.monthrange(year,month)                         # return tuple - 1st: weekday first day - 2nd: ultimo day
 
-# Timing a specific activity
+### Timing a specific activity
 import timeit
 start = timeit.default_timer()                          # Start timer
 stop = timeit.default_timer()                           # Stop timer
 round(stop-start/60,2)                                  # Stopped time in minutes and rounde for 2 decimals
 
-# Countdown while waiting
+### Countdown while waiting
 import time, import sys                                    
 time.sleep(3)                                           # Delay for 3 seconds
 for i in range (30, 0, -1):                             # Delay for 30 seconds - countdown in one row
@@ -759,23 +811,23 @@ for i in range (30, 0, -1):                             # Delay for 30 seconds -
     sys.stdout.flush ()
     time.sleep (1)
 
-# Check which os system running    
+### Check which os system running    
 from sys import platform
 if platform == "linux"                                  # Program is excecuting from Linux
 if platform == "win32":                                 # Program ix excecuting from Windows
 if platform == "darwin":                                # Program is excecuting from Mac
     
-# Read monitor resolution
+### Read monitor resolution
 import ctypes
 user32 = ctypes.windll.user32
 screensize = user32.GetSystemMetrics(0),                # 1st parameter is width, 2nd parameter is height
     user32.GetSystemMetrics(1)
-----
+----------
 
 
 
-----
-###### MODULE Currencyconverter
+----------
+###### MODULE - Currencyconverter
 from currency_converter import CurrencyConverter		# Import Module
 from datetime import date								# Import Module for rate-checks for specific date
 c = CurrencyConverter()
@@ -783,12 +835,12 @@ c.convert(100, 'USD', 'AUD')							# Convert 100 USD to AUD with for actual date
 c.convert(100, 'USD', 'AUD', date=date(2013, 3, 21))	# Convert 100 USD to AUD for date 2013-03-21
 first_date, last_date = c.bounds['BGN']					# Check begin and end-date for all rates for BGN
 c.currencies											# Read all possible currencies in a set	
-----
+----------
 
 
 
-----
-###### MOUDLE Countries, Currency, Language
+----------
+###### MODULE - Countries, Currency, Language
 Description: https://pypi.org/project/pycountry/
 import pycountry								# Install moduel
 list(pycountry.countries)                       # List of all countries with several informations
@@ -802,12 +854,13 @@ list(pycountry.currencies)						# List of all currencies
 list(pycountry.languages)						# List of all languages                            
 list(pycountry.historic_countries)              # List of all historic countries which not more exists
 list(pycountry.subdivisiones)                   # List of all subdivided countries
-----
+----------
 
 
 
-----
-# MODULES - SMTPLIB, MIMEText - Sending EMails
+----------
+####### MODULES - SMTPLIB, MIMEText
+# sending emails
 # if you have 2-Factor-Authentification you must generate a App-Password for GMail
 import smtplib
 from email.mime.text import MIMEText
@@ -824,12 +877,12 @@ msg['From'] = sender                                         # From
 msg['To'] = ", ".join(recipients)                            # One or more recipients
 s.sendmail(sender, recipients, msg.as_string())              # Sending email
 s.quit()                                                     # Closing connection
-----
+----------
 
 
 
-----
-# MODULE - OS
+----------
+###### MODULE - OS
 # interacting with the operating system
 print(dir(os))                                             # Shows alls attributs and methods of the library
 os.chdir("C:/temp")                                        # Change the directory
@@ -850,13 +903,13 @@ os.path.split("temp/file.txt")                             # Outputs filename an
 os.path.exists("temp/file.txt")                            # Checks if filename exists in the filesystem
 os.path.isdir("xyz")                                       # Checks if element is a dir
 os.path.isfile("xyz")                                      # Checks if element is a file
-----
+----------
 
 
 
-----
-# MODULE - LOGGING
-# basic logging
+----------
+###### MODULE - LOGGING
+### basic logging
 import logging                                               # importing module 
 logging.basicConfig(filename="fn.log",format='%(asctime)s    # Create & Config - w overwrites every time
                     %(message)s', filemode='w')                                       
@@ -872,7 +925,7 @@ logger.error("Did you try to divide by zero")                # Error message
 logger.critical("Internet is down")                          # Critical error message
                     
 
-# logging using RotatingFileHandler
+### logging using RotatingFileHandler
 # https://stackoverflow.com/questions/24505145/how-to-limit-log-file-size-in-python
 from logging.handlers import RotatingFileHandler             # importing file handler
 log_formatter = logging.Formatter('%(asctime)s               # Define format for output in logfile
@@ -885,12 +938,12 @@ my_handler.setLevel(logging.INFO)                            # Setting the thres
 logger = logging.getLogger('root')                           # Creating an object with name
 logger.setLevel(logging.INFO)                                # Setting the threshold of logger to INFO
 logger.addHandler(my_handler)                                # Define handler with definition above
-----
+----------
 
 
 
-----
-# MODULE - UNITTEST
+----------
+###### MODULE - UNITTEST
 import unittest                                              # Importing module
 from prg import func                                         # Import the function which will be tested
 class TestFunc(unittest.TestCase):                           # Define the class for testing the function
@@ -898,19 +951,20 @@ class TestFunc(unittest.TestCase):                           # Define the class 
         erg = func("x",3)                                    # call the function
         self.assertEqual("3x")                               # check if result is ok
 if __name__ == '__main__': unittest.main()                   # starting the unittest
-# many methods: https://docs.python.org/3/library/unittest.html
+### many methods: https://docs.python.org/3/library/unittest.html
 self.assertEqual(a,b)                                        # Check if equal
 self.assertNotEquale(a,b)                                    # Check if not equal
 self.assertTrue(x)                                           # Check if true
 self.assertFalse(x)                                          # Check if false
 self.assertIn(i,list)                                        # Check if i in list
 self.assertNotIn(i,list)                                     # Check if i not in list
-----
+----------
 
 
 
-----
-# MODULE - COLLECTIONS - COUNTER
+----------
+####### MODULE - COLLECTIONS
+### COUNTER
 from collections import Counter
 colors = ['blue', 'blue', 'red', 'red', "red"]
 counter = Counter(colors)
@@ -918,29 +972,29 @@ print(counter)                                               # Outputs counter (
 print(counter.most_common()[0][0])                           # Outputs the element with the most counts
 print(counter["red"})                                        # Outputs the occurence of the value "red" => 3
 
-# MOUDLE - COLLECTIONS - DEFAULTDIC
+### DEFAULTDIC
 from collections import defaultdict
 city_list = [('TX','Austin'), ('TX','Houston'), ('NY','Albany'), ('NY', 'Syracuse'),('GA', 'Atlanta')]
 cities_by_state = defaultdict(list)                 # Define Dict als DefaultDict with Default = list
 for state, city in city_list: cities_by_state[state].append(city)  # Fill the Dict - when Key not found take (list)-default
 => {'TX': ['Austin', 'Houston'], 'NY': ['Albany', 'Syracuse'], 'CA': ['Sacramento', 'Palo Alto'], 'GA': ['Atlanta']})        
-----
+----------
 
 
 
-----
-# MOUDLE - ITERTOOLS
+----------
+###### MOUDLE - ITERTOOLS
 from itertools import product, combinations, combinations_with_replacement, permutations
 product([0, 1], repeat=3)               # alle möglichen Kombis mit 3 Elemente => [(0,0,0),(0,0,1),(0,1,0),(0,1,1), usw.]
 product('ab', '12')                     # alle Kombis der beiden Strings => [("a","1"),("a","2"),("b","1"),("b","2")]
 combinations ("abc",2)                  # alle Kombis des einen String => [("a","b"),("a","c"),("b","c")]
 combinations_with_replacement('abc', 2) # alle Kombis des einen Strings inkl. Doppelverw. => [("a","a"),("a","b"),("a","c"),...]
-----
+----------
 
 
 
-----
-# MODULE - PANDAS
+----------
+###### MODULE - PANDAS
 https://gist.github.com/why-not/4582705                       # examples
 import pandas as pd                                           # Import Module
 df = pd.read_csv("file.csv")                                  # Read csv into dataframe
@@ -1003,12 +1057,12 @@ df.dropna(axis="columns",how="all")                           # Deleting all col
 df.dropna(axis="index",how="any",subset=["col1"])             # Checking only for one column - and deleting according to that
 df.isna()                                                     # Check where in the dataframe are NaN values
 df.fillna("MISSING")                                          # Relace NaN values with text     
-----
+----------
 
 
 
-----
-# MATPLOTLIB
+----------
+###### MATPLOTLIB
 import matplotlib.pyplot as plt                                     # Import module as plotter plt
 x_values = list(range(1000))                                        # Define x values
 squares = [x**2 for x in x_values]                                  # Define y values / squares
@@ -1027,12 +1081,12 @@ plt.axes().get_yaxis().set_visible(False)                           # Hide the c
 plt.figure(dpi=128, figsize=(10,6))                                 # Define custom figure size
 plt.show()                                                          # Show diagram
 plt.savefig("example.png",bbox_inches="tight")                      # Save diagram as png-picture-file
-----
+----------
 
 
 
-----
-# PYINSTALLER
+----------
+####### PYINSTALLER
 pip install pyinstaller                                       # Installation
 pyinstaller prg.py                                            # Generate the bundle in a subdirectory called dist.
 pyinstaller --onefile prg.py                                  # Generate only one file
@@ -1041,29 +1095,29 @@ pyinstaller --onefile prg.py                                  # Generate only on
 --exclude-module matplotlib                                   # when there is a depreciating warning from matlib        
 prg.exe                                                       # Open this file to start the python-program
 
-# Problems with path when executing from py and exe   
+### Problems with path when executing from py and exe   
 config_name = 'creds.json'                                    # Define the config file name
-# determine if application is a script file or frozen exe
+### determine if application is a script file or frozen exe
 if getattr(sys, 'frozen', False):                             # Get path when starting as executable
     application_path = os.path.dirname(sys.executable)
 elif __file__:                                                # Get path when running from IDE as py-file
     application_path = os.path.dirname(__file__)
 config_path = os.path.join(application_path, config_name)     # Final Config Path   
-----
+----------
 
 
 
-----
-# Virtual Box - MacOs
+----------
+####### Virtual Box - MacOs
 Right-Ctrl Home       					# Open Menü in VirtualBox
 Read USB-Stick							# Menü aufrufen => "Geräte" und "USB" auswählen
 
-----
+----------
 
 
 
-----
-# MODULE - SELENIUM
+----------
+####### MODULE - SELENIUM
 # chromedriver.exe in Ordner von py-file speichern
 from selenium import webdriver                                    # Import WebDriver für Zugriff auf URL
 import time                                                       # Import Time-Library für Verzögerungen wenn notwendig
@@ -1097,13 +1151,13 @@ elif platform in ["linux","darwin"]: options.add_argument('--kiosk')        # Wi
 
 options.add_experimental_option ('excludeSwitches', ['enable-logging'])     # No error messagegs when exec in cmd
 driver = webdriver.Chrome(os.getcwd() + '/chromedriver', options=options)
-----
+----------
 
 
 
-----
-# MODULE - BEAUTIFUL SOAP
-# siehe auch Detail Jupyter Notebook BEAUTIFUL SOAP.ipynb
+----------
+####### MODULE - BEAUTIFUL SOAP
+# see also details in BEAUTIFUL SOAP.ipynb
 from bs4 import BeautifulSoap
 page = requests.get("https://www.ariva.de/dax-30")             # Read url as page
 soup = BeautifulSoup (page.content,"html.parser")              # Read page with html.parser
@@ -1133,11 +1187,11 @@ time.sleep(2)                                                  # Wait till the f
 soup = BeautifulSoup(driver.page_source, 'html.parser')        # Read page with html.parser
 time.sleep (2)                                                 # Wait again 2 seconds before closing the site
 driver.quit ()                                                 # Close the chromedriver window
-----
+----------
 
 
 
-----
+----------
 ###### MODULE - PYQT
 pip install pyqt5                                      # Installation
 from PyQt5.QtWidgets import QApplication               # Defines Application
@@ -1178,12 +1232,13 @@ buttons = QDialogButtonBox()                           # Define buttons for a di
 buttons.setStandardButtons(QDialogButtons.OK)          # Defines a ok button on a dialog window
 layout_qv.addWidget(buttons)                           # Adds buttons to vertical layout
 class Window(QMainWindow):                             # Defines a class Windows which inherits from QMainWindow
-----
+----------
 
 
 
-----
+----------
 ###### MODULE - TKinter
+# https://www.youtube.com/watch?v=YXPyB4XeYLA
 from tkinter import *										# Import tkinter module
 root = Tk()													# Create root window
 root.title("Header Title")                              	# Name of the window in the title
@@ -1208,6 +1263,7 @@ myEntry.insert(0,"Default-Text")                        	# Shows a default value
 myEntry.insert(0, number)									# Insert a number into the entry field
 myEntry.delete(0,END)										# Delete content of the entry field
 root.mainloop()												# Mainloop of the program
+...command=wind.destroy										# Close window "wind"
 
 ###Pics in Tkinter-Windows
 from PIL import ImageTk,Image								# Additional module Pillow neede (install with <pip install Pillow>
@@ -1235,11 +1291,19 @@ response = messagebox.askquestion ("Bla", "BlaBla!")		# Show AskQuestion Box and
 if response == 1: Label(root, text= "YES").pack()			# Check about response of user in message box
 elif response == 0: Label(root, text= "NO").pack()
 
-----
+###More Windows
+def open()													# Function for opening the 2nd window
+	global my_img											# Global definition necessary - otherwise no pic would be drawn
+	sec = TopLevel()										# Define 2nd window
+	sec.title("2nd Window")									# Title for 2nd window
+    img = ImageTk.PhotoImage(Image.open("demo.png"))		# Define image
+    Label (top, image=img).pack()							# Show image in 2nd window	
+btn=Button(root,text="Open 2nd Window",command=open).pack()	# Button for opening 2nd window per click
+----------
 
 
 
-----
+----------
 ###### MODULE - PYGAME
 ###http://pygame.org/docs/
 import pygame as pg                                      # Import of the pygame module
@@ -1295,4 +1359,4 @@ msg_img = f.render(msg,True,msg_col,bg_col)              # Create an image of th
 msg_img_rect = msg_image.get_rect()                      # Read rect from message-image
 msg_img_rect.center = screen_rect.center                 # Pos the message-image in the middle of the window
 screen.blit(msg_img, msg_img_rect)                       # Display the positioned message-image
-----
+----------
