@@ -145,6 +145,7 @@ hashlib.md5(s).encode('utf-8')).hexdigest()                        # Outputs has
 exec(print("hello"))                                               # Execute statement in a string => hello
 eval("2+2")                                                        # Gives the value of an expression => 4
 my_string[::-1]													   # Reverse a string
+repr(s)															   # Print string with special characters
 ----------
 
 
@@ -160,13 +161,14 @@ pattern.match(s)                                                   # check if pa
 
 
 ----------
-###### LISTS and TUPELS
+###### LIST
 l = []                                           # Define empty list
 l = [4,5,6]                                      # Define list with content
 l = list(range(20))                              # Define list - content is list from 0 to 19
 l = ["" for x in range(8)]                       # Define list with 8 empyt strings
-l = [x.upper( for x in l)]                       # Uppercase the whole list
+l = [x.upper(for x in l)]                        # Uppercase the whole list
 l = [["" for x in range(5)] for x in range(5)]   # Define a nested list with 5x5
+l1 + l2											 # Add both lists together (to a new list)	
 l.append(1)                                      # Add 1 element to the list at the back
 l.extend([6,5,4])                                # Add several elements to the list at the back
 l.insert(3, "xyz")                               # Insert an element at the index-position 3
@@ -177,40 +179,57 @@ l.sort()                                         # Sort list ascending
 l.sort(reverse=True)                             # Sort list descending
 l_sort = sorted(l)                               # Sort list and store it in a different independent list
 l.reverse()                                      # Reverse the complete list
-l_reverse = revrsed(l)                               # Reverse complete list and store it in different independent list
-del l[2]                                             # Delete element at index position 2
-l.remove("abc")                                      # Delete element with this value from the list
-l.clear()                                            # Delete complete content of the list (same as l = [])
-min(l)                                               # Find smallest element in the list
-max(l)                                               # Fing biggest element in the list
-sum(l)                                               # Sum of all elements in the list
-2xls_sum  = [sum(pair) for pair in zip(l1, l2)]      # Pair Sorting from 2 lists (1 with 1, 2 with 2, 3 mit 3, aso.) 
-len(l)                                               # Count of elements in list
-l.count("a")										 # Count of occurence of the element "a" in the list	
-l2 = l[:]                                            # Copy of a list (with normal allocation - both lists are updated)
-l2 = list(l)                                         # Copy of a list (second variant)
-l.copy()                                             # 
-l[0]                                                 # First element
-l[-1]                                                # Last element
-l[-3:]                                               # Last 3 elements
-l[2:4]                                               # Elements from index position 2 to 3
-l[:2]                                                # Elements from 0 to 1 (exclusive index position 2)
-l[2:]                                                # Elements from index position 2 to the end of the list
-l[::2]                                               # Every second element [start:end:step]
-9 in l                                               # Check if element is in list
-if any(x in string for x in ["ab","cd","de"]):       # Check if any elements from the list are in the string
-if all(x in string for x in ["ab","cd","de"]):       # Check if all elements from the list are in the string    
-if all(x not in string for x in ["ab","cd","de"]):   # Check if all elements from the list are NOT in the string    
-for i in l:                                          # Iterate through list content
-for i in range(len(l)):                              # Iterate through list with index
-for idx, cont in enumerate(l):                       # Iterate through list with index and content
-print(', '.join(l))                                  # Print list without brackets ["a","b","c"] => a, b, c
-# Check if list is all unique						 # Check if list is all unique
+l_reverse = revrsed(l)                           # Reverse complete list and store it in different independent list
+del l[2]                                         # Delete element at index position 2
+l.remove("abc")                                  # Delete element with this value from the list
+l.clear()                                        # Delete complete content of the list (same as l = [])
+min(l)                                           # Find smallest element in the list
+max(l)                                           # Find greatest element in the list
+max(mylist, key=len)							 # Find longest string in the list
+len(max(mylist, key=len))						 # Find lenght of longest string in the list
+sum(l)                                           # Sum of all elements in the list
+2xls_sum  = [sum(pair) for pair in zip(l1, l2)]  # Pair Sorting from 2 lists (1 with 1, 2 with 2, 3 mit 3, aso.) 
+len(l)                                           # Count of elements in list
+l.count("a")									 # Count of occurence of the element "a" in the list	
+l2 = l1											 # No seperate copy of the list (updates in both lists)
+l2 = l.copy()                                    # Seperate individual copy of the list (no updates in both lists)
+l2 = l[:]                                        # Sepearte individual copy of the list - 2nd variant
+l2 = list(l)                                     # Sepearte individual copy of the list - 3rd variant
+l[0]                                             # First element
+l[-1]                                            # Last element
+l[-3:]                                           # Last 3 elements
+l[2:4]                                           # Elements from index position 2 to 3
+l[:2]                                            # Elements from 0 to 1 (exclusive index position 2)
+l[2:]                                            # Elements from index position 2 to the end of the list
+l[::2]                                           # Every second element [start:end:step]
+9 in l                                           # Check if element is in list
+if any(x in string for x in ["ab","cd","de"]):   # Check if any elements from the list are in the string
+if all(x in string for x in ["ab","cd","de"]):   # Check if all elements from the list are in the string    
+if all(x not in string for x in ["ab","cd""]):   # Check if all elements from the list are NOT in the string    
+for i in l:                                      # Iterate through list content
+for i in range(len(l)):                          # Iterate through list with index
+for idx, cont in enumerate(l):                   # Iterate through list with index and content
+print(', '.join(l))                              # Print list without brackets ["a","b","c"] => a, b, c
+
+# Check if list is all unique					 Check if list is all unique
 def all_unique(lst):
     return len(lst) == len(set(lst))
 all_unique(l)
+----------
 
 
+
+----------
+######TUPLE
+# immutable
+# working can be more efficient than with lists - especially with big data - regarding space and runtime
+t = (4,5,6)										# Create a tuple
+t = tuple([3,4,4]								# Create a tuple from a list
+t[]												# Selection / slicing of elements - same as with lists
+l = list(t)										# Change tuple to list
+t = tuple(l)									# Change list to tuples
+a,b,c = (0,1,2)									# Assigning vars to tuple-elements (a=0, b=1, c=2)
+f,*m,l = (0,1,2,3,4)							# Assigning to tuple-values (f=0, m=[1,2,3], l=4)
 ----------
 
 
@@ -222,7 +241,8 @@ d = {"one": 1, "two": 2, "three": 3}                 # Define dict with content
 d = dict([("one",1),("two",2),("three",3)])          # Define dict with content (with dupels)
 d = dict([["one",1],["two",2],["three",3]])          # Define dict with content (with pairs in nested list)
 d = dict(zip(["one","two","three"], [1,2,3]))        # Define dict with 2 different lists (1x keys and 1x values)
-d["two"]                                             # Access with key element
+d["two"]                                             # Access value with key element
+key = list(d.keys())[list(d.values()).index(v)]		 # Find key for specific value (v) in dict
 list(d.keys())                                       # Read keys from dict to list
 list(d.values())                                     # Read values from dict to list
 len(d)                                               # Count of entries in dict
@@ -306,29 +326,31 @@ keyword_args("a"=3, "b"=4)       # Outputs {"a":3, "b":4}
 
 
 ----------
-###### CLASSES
-class Human(object):           # Define a class
-    species = "Homo Sapiens"   # Fix variable / class variable for all instances of the class
-    def __init__(self,name):   # Constructor - automatically applied when an instance is created
-        self.name = name
-    def say(self, msg):        # Methode of the class
-        return "{name}: {message}".format(name=self.name, message=msg)
-    @classmethod               # Class methode - is used by all instances
-    def get_species(cls):
-        return cls.species
-    @staticmethod              # Static methode - is called without class or method
-    def grunt():
-        return "*grunt*"    
+###### CLASS
+class Human(object):          # Define a class
+  species = "Homo Sapiens"    # Fix variable / class variable for all instances of the class
+  def __init__(self,name):    # Constructor - automatically applied when an instance is created
+      self.name = name		  # Name is assigned to the instance of the classe (self.)
+	  self.tresor = []		  # Tresor is assigned as list to the instance of the class (self.)
+  def say(self, msg):         # Methode of the class
+      return "{name}: {message}".format(name=self.name, message=msg)
+	  elf.tresor.append(msg)  # Tesor of the instance gets a new value in the list
+  @classmethod                # Class methode - is used by all instances
+  def get_species(cls):
+      return cls.species
+  @staticmethod               # Static methode - is called without class or method
+  def grunt():
+      return "*grunt*"    
     
     
-i = Human(name="Ian")          # Create instance of the class
-print(i.say("Hi"))             # Call the methode of the class (output: "Ian: Hi")
-j = Human(name="Joel")         # Create additonal instance of the class
-print(i.say("Hallo"))          # Call the methode of the class (output: "Joel: Hallo")
-i.get_species()                # Output "Homo Sapiens"
-j.get_species()                # Same output  "Homo Sapiens"
-Human.species = "Was Neues"    # Change of the class variable - applies for all instances
-Human.grant()                  # Aufruf der statischen Methode => Ausgabe: "*grund*" 
+i = Human(name="Ian")         # Create instance of the class
+print(i.say("Hi"))            # Call the methode of the class (output: "Ian: Hi")
+j = Human(name="Joel")        # Create additonal instance of the class
+print(i.say("Hallo"))         # Call the methode of the class (output: "Joel: Hallo")
+i.get_species()               # Output "Homo Sapiens"
+j.get_species()               # Same output  "Homo Sapiens"
+Human.species = "Was Neues"   # Change of the class variable - applies for all instances
+Human.grunt()                 # Aufruf der statischen Methode => Ausgabe: "*grunt*" 
 ----------
 
 
@@ -641,7 +663,7 @@ page.mergePage(watermark_page)							# Overlaying / Watermarking two pages
 
 
 ----------
-###### MYSQL / SQL
+###### MYSQL / MARIADB / SQL
 import mysql.connector                                     # Import module for mysql access
 mydb = mysql.connector.connect                             # Define connection
     (host="localhost",user="root",passwd="pwd")
@@ -687,7 +709,7 @@ data = c.fetchall()
 
 
 ----------
-###### MYSQL / SQL ALCHEMY ######
+###### MYSQL / MARIADB / SQL ALCHEMY ######
 from sqlalchemy import create_engine                       # Import MODULE
 engine = create_engine("mysql+pymysql:                     # Define access to the MySQL-DB (username, pw, dbname)
 //user:pw@localhost/dbname?host=localhost?port=3306")
@@ -760,9 +782,22 @@ stmt = students.delete().where(students.c.lastname == 'Khanna')
 conn.execute(stmt)
 s = students.select()
 conn.execute(s).fetchall()
+----------
+
 
 
 ----------
+###### SQLITE3 SQL ######
+conn = sqlite3.connect("address_book.db")		# Create a database or connect to one
+c = conn.cursor()								# Create a cursor (for working with the db)
+c.execute("""CREATE TABLE tbl (					# Create a table in the database
+		attr1 text,
+		attr2 text,
+		attr3 integer)""")
+conn.commit()									# Commit Changes
+conn.close()									# Close Connection
+----------
+
 
 
 
@@ -791,7 +826,8 @@ daysDiff = (date2-date1).daysDiff                            # Difference in day
 minDiff = (date2-date1).total_seconds() / 60                 # Difference in minutes
 datetime.fromisoformat('2020-07-10 02:00:00').timestamp()    # Generate ISO-format from datetime
 iso_dt = datetime.fromisoformat(str(datetime.now())).timestamp()   # Generate ISO-format from actual date
-date = datetime.fromtimestamp(1594339200000 / 1e3)           # Generate Datetime from ISO-format
+date = datetime.fromtimestamp(1594339200000 / 1e3)           # Generate Datetime from ISO-format#
+sys.getsizeof(l) or sys.getsizeof(t)						 # Shows size of the list / tuple in bytes
 
 ### Check last day of month & first weekday of month
 import calendar
@@ -802,6 +838,7 @@ import timeit
 start = timeit.default_timer()                          # Start timer
 stop = timeit.default_timer()                           # Stop timer
 round(stop-start/60,2)                                  # Stopped time in minutes and rounde for 2 decimals
+timeit.timeit(stmt="[0,1,2]",number=1000000)     		# Checking the time for creating the list for 1mio times
 
 ### Countdown while waiting
 import time, import sys                                    
@@ -1243,6 +1280,7 @@ from tkinter import *										# Import tkinter module
 root = Tk()													# Create root window
 root.title("Header Title")                              	# Name of the window in the title
 root.iconbitmap("pic.ico")                                  # Define icon for the windows (left upper corner)
+root.geometry("400x400")									# Define size of the window
 myLabel = Label(root,text="Hello World!")               	# Creating a label widget
 myLabel.pack()												# Showing myLabel on the screen
 myLabel.grid(row=0,column=0,pady=10)   						# Showing myLabel on grid place 0/0 (left upper corner) with 10pixel padding from above
@@ -1299,6 +1337,29 @@ def open()													# Function for opening the 2nd window
     img = ImageTk.PhotoImage(Image.open("demo.png"))		# Define image
     Label (top, image=img).pack()							# Show image in 2nd window	
 btn=Button(root,text="Open 2nd Window",command=open).pack()	# Button for opening 2nd window per click
+
+###FileDialog
+root.filename = filedialog.askopenfilename(					# Define filname dialog
+    initialdir="/Users/Bla/images",							# Define initial dir for the file dialog				
+    title="Select file",									# Title of the file dialog
+    filetypes=(("png files","*.png"),("all files","*.*")))	# Define filetypes in dialog (first name, second which files, default first entry)
+my_label = Label(root, text=root.filename).pack()			# After choosing a file - show the filename + filepath
+
+###Slider
+vertical = Scale(root,from_=0,to=200)						# Define vertical slider
+vertical.pack()												# Showing vertical slider
+horizontal = Scale(root,from_=0,to=200,orient=HORIZONTAL)	# Define horizontal slider
+horizontal.pack()											# Showing horizontal slider
+
+###Checkboxes
+Checkbutton(root,text="Check1",variable=var).pack(			# Define and Show a checkbox
+c.select() or c.deselect()									# Select or Deselect per default the checkbox
+
+###DropDown
+options=["Mo","Tu","We","Th","Fr"]							# Define options for dropdown menue
+var = StringVar()											# Define variable for dropdown menue
+var.set("Mo")												# Set default for dropdown menue
+OptionMenu(root,var,*options).pack							# Define dropdown menue
 ----------
 
 

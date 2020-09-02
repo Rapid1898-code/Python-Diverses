@@ -2,21 +2,18 @@
 
 from tkinter import *
 from PIL import ImageTk, Image
-from tkinter import messagebox
+from tkinter import filedialog
 
 root = Tk ()
 root.title("Blablabla Title")
 root.iconbitmap ("FVCFull.ico")
 
-def open():
-    global img
-    top = Toplevel ()
-    top.title ("top Title")
-    Label (top, text="Hello!").pack()
-    img = ImageTk.PhotoImage(Image.open("demo.png"))
-    Label (top, image=img).pack()
+root.filename = filedialog.askopenfilename(
+    initialdir="/Users/Polzi/Documents/GitHub/Python-Diverses/Tkinter",
+    title="Select file",
+    filetypes=(("png files", "*.png"),("all files", "*.*"))
+)
+my_label = Label(root, text=root.filename).pack()
 
-btn = Button(root, text="2nd Window", command=open).pack()
-
-mainloop ()
+root.mainloop ()
 
