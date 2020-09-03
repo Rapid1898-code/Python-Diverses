@@ -162,6 +162,7 @@ pattern.match(s)                                                   # check if pa
 
 ----------
 ###### LIST
+#ordered, mutable, allows duplicate elements
 l = []                                           # Define empty list
 l = [4,5,6]                                      # Define list with content
 l = list(range(20))                              # Define list - content is list from 0 to 19
@@ -178,6 +179,7 @@ l.pop(0)                                         # Delete first element from lis
 l.sort()                                         # Sort list ascending
 l.sort(reverse=True)                             # Sort list descending
 l_sort = sorted(l)                               # Sort list and store it in a different independent list
+l.sort(key=len)									 # Sort list by len of elements
 l.reverse()                                      # Reverse the complete list
 l_reverse = revrsed(l)                           # Reverse complete list and store it in different independent list
 del l[2]                                         # Delete element at index position 2
@@ -192,9 +194,9 @@ sum(l)                                           # Sum of all elements in the li
 len(l)                                           # Count of elements in list
 l.count("a")									 # Count of occurence of the element "a" in the list	
 l2 = l1											 # No seperate copy of the list (updates in both lists)
-l2 = l.copy()                                    # Seperate individual copy of the list (no updates in both lists)
-l2 = l[:]                                        # Sepearte individual copy of the list - 2nd variant
-l2 = list(l)                                     # Sepearte individual copy of the list - 3rd variant
+l2 = l.copy()                                    # Separate individual copy of the list (no updates in both lists)
+l2 = l[:]                                        # Separate individual copy of the list - 2nd variant
+l2 = list(l)                                     # Separate individual copy of the list - 3rd variant
 l[0]                                             # First element
 l[-1]                                            # Last element
 l[-3:]                                           # Last 3 elements
@@ -221,7 +223,7 @@ all_unique(l)
 
 ----------
 ######TUPLE
-# immutable
+# ordered, immutable, allows duplicate elements
 # working can be more efficient than with lists - especially with big data - regarding space and runtime
 t = (4,5,6)										# Create a tuple
 t = tuple([3,4,4]								# Create a tuple from a list
@@ -235,9 +237,11 @@ f,*m,l = (0,1,2,3,4)							# Assigning to tuple-values (f=0, m=[1,2,3], l=4)
 
 
 ----------
-###### DICTIONARY                                          (key/value - content)
+###### DICTIONARY
+# key-value pairs, unordered, mutable
 d = {}                                               # Define empty dict
 d = {"one": 1, "two": 2, "three": 3}                 # Define dict with content
+d = dict(one=1,two=2,three=3)						 # 2nd way to defince a dict with content
 d = dict([("one",1),("two",2),("three",3)])          # Define dict with content (with dupels)
 d = dict([["one",1],["two",2],["three",3]])          # Define dict with content (with pairs in nested list)
 d = dict(zip(["one","two","three"], [1,2,3]))        # Define dict with 2 different lists (1x keys and 1x values)
@@ -251,6 +255,11 @@ d["four"] = 4                                        # New entry for dict (key =
 del d["one"]                                         # Delete specific key in dict
 mydict[new_key] = mydict.pop(old_key)                # Rename dict-keyname
 combined_dict = {**d1, **d2}                         # Combine 2 dicts
+if "xyz" in d:										 # Check if key is in dict
+d2 = d												 # Copying a dict (all changes will be made in BOTH dicts)
+d2 = d.copy()										 # Copying a dict (dicts will be handled seperate)
+d2 = dict(d)										 # Copying a dict 2nd method (dicts will be handled seperate)
+d.update(d2)										 # Dict d get updated with d2 (all existing keys are overwritten - and new added)
 for key in d.keys():                                 # Iterate through dict keys
 for key in sorted(d.keys()):                         # Iterate through sorted dict keys ascending
 for key in sorted(d.keys(),reverse=True):            # Iterate through sorted dict keys descending
@@ -267,10 +276,11 @@ for key, val in d.items():                           # Iterate through keys and 
 
 
 ----------
-###### SETS                   
-(values can only occur one time in the set => difference to lists)
-s = set()               # Define empty set
+###### SETS
+# unordered, mutable, no duplicates                   
+s=set()					# Define empty set - {} would define a dict and not a set
 s = {1,1,2,2,3,4}       # Define set with content
+s = set("Hello")        # Define empty set - returns: {"o","l","H","e"}
 s2 = {1,7,8}            # Define second set
 s.add(5)                # Add element in set1
 s.update([10,11,12])    # Add several elements to set1
@@ -279,8 +289,15 @@ s | s2                  # Untion of 2 sets (same as: s.union(s2))
 s - s2                  # Difference of 2 sets (same as: s.difference(s2))
 s <= s2                 # True if s is subset from s2 (same as: s.issubset(s2))
 3 in s                  # Check if element is in set
+s.clear()				# Clear the set
 s.pop()                 # Delete lowest elmeent in set
-s.discard(5)            # Delete element 5 from setr (or s.remove(5) - but with that is key error possible)
+s.remove(5)				# Delete element 5 from set - but key error possible
+s.discard(5)            # Delete element 5 from set - NO key error possible
+for i in s:             # Iterate through set content
+s2 = s1					# Copying a set (all changes will be made in BOTH sets)
+s2 = s.copy()			# Copying a set (set will be handled seperate)
+s2 = set(s)				# Copying a set 2nd method (set will be handled seperate)
+s = frozenset(1,2,3)	# Define a frozenset - no changes are possible in the set - union, intersection aso. will work
 ----------
 
 
@@ -794,6 +811,16 @@ c.execute("""CREATE TABLE tbl (					# Create a table in the database
 		attr1 text,
 		attr2 text,
 		attr3 integer)""")
+c.execute(INSERT INTO tbl VALUES (:attr1,:attr2,:attr3)",
+		{										# Insert rows into database	
+			"attr1": field1.get(),
+			"attr2": field2.get(),
+			"attr3": field3.get()
+		})
+c.execute"SELECT * FROM adresses")				# Select rows from databasen
+records = c.fetchall()							# Fetch all rows
+records = c.fetchone()							# Fetch only one row
+records = c.fetchmany(50)						# Fetch the first 50 rows
 conn.commit()									# Commit Changes
 conn.close()									# Close Connection
 ----------
