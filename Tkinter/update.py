@@ -9,6 +9,19 @@ root.title("Blablabla Title")
 root.iconbitmap ("FVCFull.ico")
 root.geometry("400x400")
 
+def edit():
+    editor = Tk ()
+    editor.title ("Update A Record")
+    editor.iconbitmap ("FVCFull.ico")
+    editor.geometry ("400x400")
+    conn = sqlite3.connect ("address_book.db")
+    c = conn.cursor ()
+
+
+    conn.commit()
+    conn.close()
+
+
 def delete():
     conn = sqlite3.connect ("address_book.db")
     c = conn.cursor ()
@@ -59,7 +72,7 @@ def query():
         print_records += str(record[0]) + " " + str(record[1]) + " " + str(record[6]) + "\n"
 
     query_label = Label(root,text=print_records)
-    query_label.grid(row=11,column=0,columnspan=2)
+    query_label.grid(row=12,column=0,columnspan=2)
 
     conn.commit()
     conn.close()
@@ -91,7 +104,7 @@ state_label = Label(root,text="State")
 state_label.grid(row=4,column=0)
 zipcode_label = Label(root,text="Zipcode")
 zipcode_label.grid(row=5,column=0)
-delete_box_label = Label(root,text="Delete ID")
+delete_box_label = Label(root,text="Select ID")
 delete_box_label.grid(row=9,column=0,pady=5)
 
 submit_btn = Button(root,text="Add",command=submit)
@@ -102,6 +115,9 @@ query_btn.grid(row=7,column=0,columnspan=2,pady=10,padx=10,ipadx=137)
 
 delete_btn = Button(root,text="Delete",command=delete)
 delete_btn.grid(row=10,column=0,columnspan=2,pady=10,padx=10,ipadx=136)
+
+edit_btn = Button(root,text="Edit Record",command=edit)
+edit_btn.grid(row=11,column=0,columnspan=2,pady=10,padx=10,ipadx=136)
 
 root.mainloop ()
 

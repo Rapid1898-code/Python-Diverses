@@ -6,13 +6,16 @@
 # VIRTUALENV
 # INTELLIJ IDEA IDE
 # OPERATORS and INPUTS
+# RANDOM, SECRETS
 # STRING
-# REGEX (regular expressions)
+# REGEX
 # LISTS and TUPELS
 # DICTIONARY
 # SETS  
 # CONTROL STRUCTURES and ITERATIONS (if, for, while)
-# FUNCTIONS
+# FUNCTIONS, DECORATORS
+# GENERATORS, YIELD
+# LAMBDA
 # CLASSES
 # TXT (handling txt files)
 # JSON (handling JSON)
@@ -33,17 +36,18 @@
 # MODULE - LOGGING
 # MODULE - UNITTEST
 # MODULE - COLLECTIONS (counter, defaultdic)
-# MOUDLE - ITERTOOLS (products, combinations)
+# MOUULE - ITERTOOLS (products, combinations)
+# MODULE - NUMPY (basis for different other modules)
 # MODULE - PANDAS (analyzing and working with data)
-# MATPLOTLIB (working with charts)
-# PYINSTALLER (generate python programs to executables)
-# VIRTUAL BOX (eg. for MacOS)
+# MODULE - MATPLOTLIB (working with charts)
 # MODULE - SELENIUM (browser automatization)
 # MODULE - BEAUTIFUL SOAP (webscraping)
+# MODULE - REQUESTS (workings with APIs)
 # MODULE - PYQT (making GUIs)
 # MODULE - TKinter (making GUIs)
 # MODULE - PYGAME (making games)
-
+# PYINSTALLER (generate python programs to executables)
+# VIRTUAL BOX (eg. for MacOS)
 
 
 
@@ -100,9 +104,8 @@ import math                     # Import module for math calculations
 d,e,f = 4,5,6                   # Assigment of several varaibles
 a,b = b,a                       # Change / swap 2 values
 a += 1                          # Increase value by one
+i = 1_000_000				    # For better readability - "_" are possible using long num-values (will be ignored)
 round (77.2321, 2)              # Value is rounded to two decimal places => 77.23
-random.randint(1,6)             # Random number between 1 and 6 like a cube (needs import random)
-random.choice(list)             # Random entry from a list (needs import random)
 str(5), float("5"), int("5")    # Conversion to String / Float / Int
 abs(-2)                         # Outputs absolute value => 2
 int(input("Alter?"))            # Input age and change to int
@@ -119,33 +122,68 @@ sys.argv[1:].upper()            # Check for argument which is given when startin
 
 
 ----------
-###### STRING
-s = "this is a test"
-"{} can be {}".format("Strings", "formated")                       # Insert variables
-"{0} like, {0} especially {0} but {1}".format("Joe", "noodles")    # Multiple use
-s.count ("i")                                                      # Counts the occurrence of a text
-s.find ("ist")                                                     # Returns the index where the text is found
-[x.start() for x in re.finditer('ist', s)]                         # Returns all indexwa as a list (needs import re)
-s = s.lower()                                                      # Reduce the whole string
-s = s.upper()                                                      # Capitalize the whole string
-s = s.capitalize()                                                 # Capitalize the first char
-s = s.title()                                                      # Capitalize the first char of all words
-s.split()                                                          # Split the words in a list
-s.splitlines()                                                     # Split sentences after line breaks
-s = s.strip()                                                      # Delete all whitespaces at the beginning and the end
-s= s.replace("e","X")                                              # Replacement of two strings
-s.isdigit()                                                        # TRUE if the whole string are digits
-s.isalpha()                                                        # True if the whole string are no digits
-s.find("txt")                                                      # Find position of string in string
-s2 in s                                                            # TRUE if string2 is in strings1
-l = list(s)                                                        # Change string to list with all single chars
-ord(char)                                                          # Convert char to ASCII value
-chr(ascii)                                                         # Convert ASCII value to char (eg. 65=A, 97=a)
-hashlib.md5(s).encode('utf-8')).hexdigest()                        # Outputs hashvalue oif the string (needs import hashlib)
-exec(print("hello"))                                               # Execute statement in a string => hello
-eval("2+2")                                                        # Gives the value of an expression => 4
-my_string[::-1]													   # Reverse a string
-repr(s)															   # Print string with special characters
+###### RANDOM, SECRETS
+# random: unsecure, reproducable with seeds
+# secret: secure, not reproducable
+import random					# Import random module - fast, but not very secure
+random.randint(1,6)             # Random number between 1 and 6 like a cube
+random.random()					# Random value between 0 and 1 in float format - eg. 0.16394553
+random.uniform(1,10)			# Random float in the range from 1 to 10
+random.normal(0,1)				# Random value for standard deviation
+random.choice(list)             # Choose random entry from a list
+random.sample(list,3)           # Choose 3 random (unique) entries from the list
+random.choices(list,k=3)	    # Choose 3 random entries from the list (possible to be the same)
+random.shuffle(l)				# Shuffle the content of a list
+random.seed(1)					# Can reproduce the same results (unsecure)
+
+import secrets					# Import secrets module - for security reasons (is slower)
+secrets.randbelow(10)			# Random int in the range from 0-10 (10 excluded)
+secrets.randbits(4)				# Random int with 4 bits (highest possible value is 15 - 1111)
+secrets.choice(l)				# Random choice (which is not reproducable)
+----------
+
+
+
+----------
+###### STRINGS
+# ordered, immutable, text representation
+s = "this is a test"							# Define a string
+s = "this \n text"								# String with linebreak \n
+s = "this \t text" 								# String with tab between the words
+s = """this \									# Define string over more lines in editor with
+	and this"""
+c = s[0]										# first char of a string
+c = s[-1]										# last char of a string
+s = "text %s bla" % var							# Insert variable in string oldest method (%s for string, %i for int, %f for float, %.2f for 2 decimals)
+s = "text {} bla".format(var)					# Insert variable in string old method (:.2f for 2 decimals)
+s = f"text {var} bla"							# Insert variable in string new method
+"{0} like, {0} especially {0} 					# Multiple use
+but {1}".format("Joe", "noodles")    							
+s.find ("ist")                                  # Returns the index where the text is found
+s.count ("i")                                   # Counts the occurrence of a text
+[n for n in range(len(txt)) if txt.find('/', n) == n]	# Return all findings of the search string ("/") in the other string (txt)
+[x.start() for x in re.finditer('ist', s)]      # Returns all indexwa as a list (needs import re)
+s = s.lower()                                   # Reduce the whole string
+s = s.upper()                                   # Capitalize the whole string
+s = s.capitalize()                              # Capitalize the first char
+s = s.title()                                   # Capitalize the first char of all words
+s.startswith("H")								# Check if the string is starting with char "H"
+s.endswith("H")	      							# Check if the string is ending with char "H"
+s.split()                                       # Split the words in a list
+s.splitlines()                                  # Split sentences after line breaks
+s = s.strip()                                   # Delete all whitespaces at the beginning and the end
+s = s.replace("e","X")                          # Replacement of two strings
+s.isdigit()                                     # TRUE if the whole string are digits
+s.isalpha()                                     # True if the whole string are no digits
+s2 in s                                         # TRUE if string2 is in strings1
+l = list(s)                                     # Change string to list with all single chars
+ord(char)                                       # Convert char to ASCII value
+chr(ascii)                                      # Convert ASCII value to char (eg. 65=A, 97=a)
+hashlib.md5(s).encode('utf-8')).hexdigest()     # Outputs hashvalue oif the string (needs import hashlib)
+exec(print("hello"))                            # Execute statement in a string => hello
+eval("2+2")                                     # Gives the value of an expression => 4
+my_string[::-1]									# Reverse a string
+repr(s)											# Print string with special characters
 ----------
 
 
@@ -211,9 +249,8 @@ if all(x not in string for x in ["ab","cd""]):   # Check if all elements from th
 for i in l:                                      # Iterate through list content
 for i in range(len(l)):                          # Iterate through list with index
 for idx, cont in enumerate(l):                   # Iterate through list with index and content
-print(', '.join(l))                              # Print list without brackets ["a","b","c"] => a, b, c
-
-# Check if list is all unique					 Check if list is all unique
+', '.join(l)                              		 # Create string with elements joined together with ", " eg. ["a","b","c"] => a, b, c
+# Check if list is all unique					 # Check if list is all unique
 def all_unique(lst):
     return len(lst) == len(set(lst))
 all_unique(l)
@@ -238,7 +275,7 @@ f,*m,l = (0,1,2,3,4)							# Assigning to tuple-values (f=0, m=[1,2,3], l=4)
 
 ----------
 ###### DICTIONARY
-# key-value pairs, unordered, mutable
+# key-value pairs, unordered (till version 3.7), mutable
 d = {}                                               # Define empty dict
 d = {"one": 1, "two": 2, "three": 3}                 # Define dict with content
 d = dict(one=1,two=2,three=3)						 # 2nd way to defince a dict with content
@@ -303,6 +340,46 @@ s = frozenset(1,2,3)	# Define a frozenset - no changes are possible in the set -
 
 
 ----------
+####### MODULE - COLLECTIONS
+#Counter, namedtuple, OrderedDict, defaultdict, deque
+### COUNTER
+from collections import Counter
+colors = ['blue', 'blue', 'red', 'red', "red"]
+counter = Counter(colors)									# Creates dict with counts => {'red': 3, 'blue': 2} in ordered form
+counter.most_common(1) 		                           		# Outputs the element with the most counts as tuple
+counter["red"})            		                            # Outputs the occurence of the value "red" => 3
+
+###NAMEDTUPLE
+from collections import namedtuple
+Point = namedtuple("Point","x,y")							# Creates class with tumple
+pt = Point(1,-4)											# Creates Point(x=1,y=-4)
+print(pt.x, pt.y)											# Shows 1 and -4
+
+###ORDEREDDICT
+not necessary anymore in the newer python versions
+is allready implemented in the regular dict-type) 
+
+### DEFAULTDIC
+d = defaultdict(int)	# Create defaultdict and define default-type
+d["xyz"]				# No key error when when key not in the dict => default-type value 0 is outputed
+
+### DEQUE
+from collections import deque
+d = deque()				# Create deque (optimized for working with elements at the end or beginning of the list)
+d.append(1)				# Add element at the end
+d.appendleft(2)			# Add element at the beginning
+d.extend([1,2]			# Add list of elements at the end
+d.extendleft([1,2])		# Add list of elements at the beginning (in reversed order so 2,1)
+d.pop()					# Delete element at the end
+d.popleft()				# Delete element at the beginning
+d.clear()				# Clear entire list
+d.rotate(2)				# Shift all elements 2 places to the right
+d.rotateleft(-1)			# Shift all elements 1 place to the left
+----------
+
+
+
+----------
 ###### CONTROL STRUCTURES and ITERATIONS
 if x>10: pass                # If / elif / else
 elif x> 10: pass
@@ -321,23 +398,108 @@ continue                     # Break actual loop run - continue with next loop r
 
 
 ----------
-###### FUNCTIONS
-def add(x=0,y=0):                # Define function - with default value 0 if no input is given
-    erg = x+y                    # Calculatin in function
-    return erg                   # Return value from the function
+###### FUNCTIONS, DECORATORS
+def add(x=0,y=0):               	# Define function - with default value 0 if no input is given
+    erg = x+y                   	# Calculatin in function
+    return erg                  	# Return value from the function
 
-def pet (animal,n1=None,n2="x")  # Optional argument in the funtction (first element is must - second optional)   
-pet("Cat")                       # Calling function with n1=None and n2 = "x"
-pet("Cat","name")				 # Calling function with n1=name and n2 = "X"
-pet("Cat",n2="xyz") 			 # Calling function with n1=None and n2 = "xyz" (third parameter has to be named when calling)
+def pet (animal,n1=None,n2="x") 	# Optional argument in the funtction (first element is must - second optional)   
+pet("Cat")                      	# Calling function with n1=None and n2 = "x"
+pet("Cat","name")					# Calling function with n1=name and n2 = "X"
+pet("Cat",n2="xyz") 				# Calling function with n1=None and n2 = "xyz" (third parameter has to be named when calling)
 
 
-def varargs(*args): print(args)  # Function with infinite arguments
-varargs(1,2,3)                   # Oututs (1,2,3)
+def varargs(*args): print(args) 	# Function with infinite arguments
+varargs(1,2,3)                  	# Oututs (1,2,3)
 
 def keyword_args(**kwargs):
     print(kwargs)
-keyword_args("a"=3, "b"=4)       # Outputs {"a":3, "b":4}  
+keyword_args("a"=3, "b"=4)      	# Outputs {"a":3, "b":4}  
+
+#decorator template
+def my_decorator(func):				# Define decorator
+  @functools.wraps(func)
+  def wrapper(*args,**kwargs):		# Decorator with * arguments
+	  #Do...					 	# Do something before the functions
+	  result=func(*args,**kwargs)	# Run the function
+	  #Do...					 	# Do something after the functions	  
+	  return result					# Return the results from the function
+  return wrapper
+
+#decorator
+extend behaviour of a function with a decorators
+def start_end_decorator(func):		# Define the decorator with function "func" as input-parameter
+	def wrapper():					# Inside the decorator a wrapper function has to be defined
+		print("Start")				# Decorated code which is executed before the core code from the function
+		func()						# Calling the function itself
+		print("End")				# Decorated code which is executed after the core code from the function
+	return wrapper					# Results from the decorator have to be given back
+@start_end_decorator				# Defines this decorator for the following function "print_name"
+def print_name():					# Normal content of the function
+	print("xyz")					# Core functionality of the function
+print_name()						# Now when the function is executed - outputs not only "xyz" - also "Start" before and "End" after 	
+
+#decorator with function arguments
+def start_end_decorator(func):		# Define the decorator with function "func" as input-parameter
+	def wrapper(*args,**kwargs):	# Inside the decorator a wrapper function has to be defined
+		print("Start")				# Decorated code which is executed before the core code from the function
+		result = (*args,**kwargs)	# Calling the function itself
+		print("End ")				# Decorated code which is executed after the core code from the function
+		return result
+	return wrapper					# Results from the decorator have to be given back
+@start_end_decorator				# Defines this decorator for the following function "add5"
+def add5(x):						# Normal content of the function with one argument
+	return x + 5					# Core functionality of the function
+result = add5(10)					# Outputs "Start" => "End" => 15
+print(result)		
+----------
+
+
+
+----------
+###### GENERATORS, YIELD
+# very memory efficient
+def mygenerator():					# Defines the generator with 3 yield statements
+	yield 3
+	yield 2
+	yield 1
+g = mygenerator()					# Creates the generator and stores in g (=generator type)
+for i in g: print(i)				# Outputs 3,2,1
+print(next(g))						# Outputs 3
+print(next(g))						# Outputs 2
+sum(g)								# Sum-Function can also use a generator => result is 6
+sorted(g)							# Sorted-Function can use generator => returns list with sorted elements [1,2,3]
+----------
+
+
+
+----------
+###### EXCEPTIONS
+try:
+	a = 5 / 0
+except Exception as e:
+	print("Exception: ",e)						# Prints exception "division by zero"	
+
+x = -5
+assert (x>=0), "x is not positive"				# Checks / Assert some condition => prints "x is not positive"
+if x<0: raise Exception("x should positive")	# Raises an exception => prints "Exception: x should be positive"
+----------
+
+
+
+----------
+###### LAMBDA, MAP, FILTER
+add10 = lambda x: x+10				# functions with one argument - add10(5) => 15
+mult = lambda x,y: x*y				# functions with two arguments for multiplying - mult(2,7) => 14	
+p = [(1,2),(15,1),(5,-1),(10,4)]
+sorted(p)							# output is sorted with first element then second element => [(1,2),(5,-1),(10,4),(15,1)]
+sorted(p,key=lambda x:x[1])			# output is sorted by the second element => [(5,-1),(15,1),(1,2),(10,4)]
+sorted(p,key=lambda x:x[0]+x[1])	# output is sorted by the sum of both => [(1,2),(5,-1),(10,4),(15,1)]
+a = [1,2,3,4,5]
+list(map(lambda x: x*2,a))			# list is mapped with the lambda function => [2,4,6,8,10]
+c=[x*2 for x in a]					# also possible with list comprehension => [2,4,6,8,10]
+list(filter(lambda x: x%2==0,a))		# list is filtered with lambda for even numbers => [2,4]
+c=[x for x in a if x%2==0]			# also possible with list comprehension => [2,4]
 ----------
 
 
@@ -397,21 +559,32 @@ except Exception as e:
 import json                                         # Import json-module
 fn = "numbers.json"
 with open(fn) as data: info = json.loads(data)      # Reading informations in json-format
+json_format = json.dumps(d,indent=4)				# Convert / Encode a dict to a json-file (with indent for better reading)
+json_format = json.dumps(d,sort_keys=True)			# Convert / Encode a dict to a json-file (with sorting the keys)
+with open(fn,"w") as data: json.dump(person, data)  # Writing information in json-format (e.g. after updating the values/format)
+person = json.loads(json_format)					# Convert / Decode a json-file to a dict
+with open(fn.json,"r") as data: d=json.load(file)	# Reading information in json-format
+
 #json-example										# Example for json-file	
 {
-	"name" : "Chuck",
-	"phone" = {
-		"type" : "int1"
-		"number" : "+1 734 555"
-	}
-	"email" : {
-		"hide" : "yes"
-	}	
+	"firstName" : "Chuck",
+	"lastName" : "Doe",
+	"hobbies": ["running","swimming","singing"],
+	"age": 28,
+	"hasChildren": true
+	"children" = [
+		{
+			"firstName" : "Alex"
+			"age" : 5
+		},
+		{
+			"firstName" : "Bob"
+			"age" : 7
+		}		
+	]	
 }
-info["name"]										# Read name value => "Chuck"
-info["email"]["hide"]								# Read hide value from email => yes	
-for item in info:									# Iterate trough the json-file (eg. many persons)
-with open(fn,"w") as data: json.dump(info, data)    # Writing informations in json-format (e.g. after updating the values/format)
+info["firstName"]									# Read name value => "Chuck"
+for item in children:								# Iterate trough the json-file (eg. many children)
 ----------
 
 
@@ -817,7 +990,9 @@ c.execute(INSERT INTO tbl VALUES (:attr1,:attr2,:attr3)",
 			"attr2": field2.get(),
 			"attr3": field3.get()
 		})
-c.execute"SELECT * FROM adresses")				# Select rows from databasen
+c.execute"SELECT * FROM adresses")				# Select rows from database
+c.execute("DELETE from addresses WHERE			# Delte row from database - get key from delete_box widget (eg. tkinter-module)
+		oid = " + delete_box.get())
 records = c.fetchall()							# Fetch all rows
 records = c.fetchone()							# Fetch only one row
 records = c.fetchmany(50)						# Fetch the first 50 rows
@@ -973,13 +1148,12 @@ os.path.isfile("xyz")                                      # Checks if element i
 
 ----------
 ###### MODULE - LOGGING
-### basic logging
+# general Logging Layers: debug => info => warning => error => critical
 import logging                                               # importing module 
 logging.basicConfig(filename="fn.log",format='%(asctime)s    # Create & Config - w overwrites every time
                     %(message)s', filemode='w')                                       
 logging.basicConfig(filename="fn.log",level=logging.INFO)    # Level every log > INFO possible (but not DEBUG)
 ...format="%(name)"s-%(levelname)s:%(asctime)s-%(message)s   # getLogger-Name / Level / Time / Message
-logger=logging.getLogger()                                   # Creating an object 
 logger=logging.getLogger(logname)                            # Creating an object with specific name
 logger.setLevel(logging.DEBUG)                               # Setting the threshold of logger to DEBUG 
 logger.debug("Harmless debug Message")                       # Debug message
@@ -987,7 +1161,20 @@ logger.info("Just an information")                           # Info message
 logger.warning("Its a Warning")                              # Warning message
 logger.error("Did you try to divide by zero")                # Error message
 logger.critical("Internet is down")                          # Critical error message
-                    
+
+###Example with 2 logging levels
+logger=logging.getLogger(__name__)							 # Creating an object with the name of the py-file	
+stream_h = logging.StreamHandler()							 # Defining a handler for streamdata in the console
+file_h = logging FileHandler("file.log"						 # Defining a handler for logging to a file
+stream_h.setLevel(logging.WARNING)							 # Set Stream-Logging to Warning-Level
+file_h.setLevel(logging.ERROR)								 # Set File-Logging to Error-Level
+	=> Error-Messages will go to both stream and file - Warning-Messages only to stream and not to file
+formatter = logging.formatter								 # Defining the format for outputting
+	"%(name)s - %(levelname)s - %(message)s")
+stream_h.setFormatter(formatter)							 # Setting format for stream-logging
+file_h.setFormatter(formatter)								 # Setting format for file-logging
+logger.addHandler(stream_h)									 # Adding Stream-handler to logger
+logger.addHandler(file_h)									 # Adding File-handler to logger                   
 
 ### logging using RotatingFileHandler
 # https://stackoverflow.com/questions/24505145/how-to-limit-log-file-size-in-python
@@ -1027,100 +1214,245 @@ self.assertNotIn(i,list)                                     # Check if i not in
 
 
 ----------
-####### MODULE - COLLECTIONS
-### COUNTER
-from collections import Counter
-colors = ['blue', 'blue', 'red', 'red', "red"]
-counter = Counter(colors)
-print(counter)                                               # Outputs counter ({'red': 3, 'blue': 2})
-print(counter.most_common()[0][0])                           # Outputs the element with the most counts
-print(counter["red"})                                        # Outputs the occurence of the value "red" => 3
-
-### DEFAULTDIC
-from collections import defaultdict
-city_list = [('TX','Austin'), ('TX','Houston'), ('NY','Albany'), ('NY', 'Syracuse'),('GA', 'Atlanta')]
-cities_by_state = defaultdict(list)                 # Define Dict als DefaultDict with Default = list
-for state, city in city_list: cities_by_state[state].append(city)  # Fill the Dict - when Key not found take (list)-default
-=> {'TX': ['Austin', 'Houston'], 'NY': ['Albany', 'Syracuse'], 'CA': ['Sacramento', 'Palo Alto'], 'GA': ['Atlanta']})        
-----------
-
-
-
-----------
 ###### MOUDLE - ITERTOOLS
-from itertools import product, combinations, combinations_with_replacement, permutations
-product([0, 1], repeat=3)               # alle möglichen Kombis mit 3 Elemente => [(0,0,0),(0,0,1),(0,1,0),(0,1,1), usw.]
-product('ab', '12')                     # alle Kombis der beiden Strings => [("a","1"),("a","2"),("b","1"),("b","2")]
-combinations ("abc",2)                  # alle Kombis des einen String => [("a","b"),("a","c"),("b","c")]
-combinations_with_replacement('abc', 2) # alle Kombis des einen Strings inkl. Doppelverw. => [("a","a"),("a","b"),("a","c"),...]
+# product, permutations, combinations, accumulate, groupby, infinite iterators
+from itertools import product, permutations, combinations, combinations_with_replacement, accumulate, groupby
+from itertools import count, cycle, repeat
+import operator 							# necessary for the func-operator
+product([1,2],[3,4])						# all combis for carthesian product => [(1,3),(1,4),(2,3),(2,4)]
+product([0, 1], repeat=3)               	# all with 3 elements => (0,0,0),(0,0,1),(0,1,0),(0,1,1), aso.
+product('ab', '12')                     	# all combis of this 2 strings => [("a","1"),("a","2"),("b","1"),("b","2")]
+permutations ([1,2,3])						# all different orderings => [(1,2,3),(1,3,2),(2,1,3),(2,3,1),(3,1,2),(3,2,1)]
+permutations([1,2,3],2)						# all different orderings with 2 elements => [(1,2),(1,3),(2,1),(2,3),(3,1),(3,2)]
+combinations([1,2,3,4],2)					# all possible combis for a defined length => [(1,2),(1,3),(1,4),(2,3),(2,4),(3,4)]
+combinations_with_replacement([1,2,3],2)	# all combis also with itself => [(1,1),(1,2),(1,3),(2,2),(2,3),(3,3)]
+accumulate([1,2,3,4])						# accumulates every number with the next => [1,3,6,10]
+accumulate([1,2,3,4], func=operator.mul) 	# using operator .mul for multiplication every number the next => [1,2,6,24]
+accumulate([1,2,5,3,4], func=max)			# compares every entry to the maximum => [1,2,5,5,5]	
+groupby([1,2,3],key=func_smaller3)          # gives interabel - groups by the func => True[1,2], False[3]
+grougpy([1,2,3],key=lambda x: x<3)			# same thing - with a lambda operation => True[1,2], False[3] 
+for i in count(10)							# infinite loop starting at 10 (has to be ended with break sometimes)
+for i in cycle([1,2,3])						# infinite cycle through the list (has to be ended with break sometimes)
+for i in repeat(1)							# infinite loop with 1
+for i in repeat(1,4)						# loop with 1 for 4 times
+----------
+
+
+
+----------
+###### NUMPY
+# memory efficient, working in the background used by other modules
+# using only the bits which are necessary for each column (1 is stored in python with 24bytes - in numpy with 1byte or lesser)
+# shape of array has to be consistent - otherwise it just fall back to regular python objects eg. [[12,11],[13]]
+import numpy as np						# Import numpy module with np abbreviation
+# Using arrays, types and slicing
+a = np.array([1,2,3,4])					# Define a numpy array (automatically with type int)
+a[[0,2,-1]]								# Multiindexing in arrays possible => gives array/[0.,1.,2.])
+np.array([1,2,3,4]),dtype=np.float)		# Defines a numpy array with datatype float (and not int)
+a = np.array([[1,2,3],[4,5,6],[7,8,9])	# Defines a 2d numpy array
+a.shape									# Returns dimension shape => (3,3)
+a.ndim									# Returns number of dimensions => 2
+a.size									# Returns total number of elements => 9
+a[1]									# Gives / slices the second row => [4,5,6]
+a[1,0]									# Gives / slices the second row and first element => 4
+a[0:2]									# Slices the first 2 rows => array([[1,2,3],[4,5,6]])
+a[:,:2]									# Slices all row with first 2 elements => array([[1,2],[4,5],[7,8]])
+a[:2,:2]								# Slices first 2 rows and first 2 elements => array([[1,2],[4,5]])
+a[:2,2:]								# Slices first 2 rows and last element => array([[3],[6]])
+a[1] = np.array([9,9,9])				# Changes content of second row => array([[1,2,3],[9,9,9],[7,8,9])
+a[2] = 8								# Changes content of third row (for all elements) => array([[1,2,3],[4,5,6],[8,8,8])
+a.sum()									# Builds the sum of all elements => 45
+a.mean()								# => 5.0
+a.std()									# Return standard deviation => 2.58198889774344
+a.sum(axis=0)							# Builds sum per columns => array([12,15,18])	
+a.sum(axis=1)							# Builds sum per rows => array([6,15,24])	
+
+# Vector handling
+a = np.array(4)							# Build array with this range => array([0,1,2,3])	
+a + 10									# Changes +10 to each element => array([10,11,12,13]) (creates new array - no changing a)
+a * 10									# Changes *10 to each element => array([0,10,20,30]) (creates new array - no changing a)
+a += 100								# Chagnes the existing array a => array([100,101,102,103])
+b = np.array([10,10,10,10])				# Defines second array babab6
+a + b									# Sums the 2 arrays to new array => array([10,11,12,13)
+a * b									# Multiplicates the 2 arrays to new array => array([0,10,20,30)
+
+# Boolean Array Operations
+a = np.array(4)							# Build array with this range => array([0,1,2,3])	
+a[True,False,False,True]				# Selecting items with boolean expressions - returns first and last element => array([0,3])
+a >= 2									# Use operation on the array => array([False,False,True,True])
+a[a >= 2]								# Using operation for slicing => array([2,3])
+a[a > a.mean()]				 			# Gives back all elements which are greater than the mean => array([2,3])
+a[~(a > a.mean())]						# Gives back all elements which are NOT greater than the mean => array([0,1])
+a[(a==0) | (a==1)]						# Gives back all elements which are equal to 0 OR 1 => array([0,1])
+a[(a <= 2) & (a % 2 == 0)]				# Gives back all elements which are <=2 and have no rest divided by 2 => array([0,2])
+
+
+# Creating random arrays
+np.random.rand(3)						# Random 1d float array with 3 entries => eg. (0.8377, 0.8720, 0,7784)
+np.random.rand(3,3)						# Random 2d array 3 entries => [[0.27,0.91,0.54],[0.68,0.87,0.36],[0.05,0.64,0.16]]
+np.random.randint(0,10,3)				# Random 1d int array 3 entries => [0,8,8]
+np.random.randint(0,10,(3,4))			# Random 2d int array 3x4 entries => [[2,6,4,5],[7,6,7,3],[7,0,4,0]]
+np.random.randint(100, size(3,3))		# Random 2d int array 3x3 entries with value form 0 to 99	
+np.random.shuffle(lst)					# Shuffeling a 2d list but only the first axes
+np.random.seed(1)						# Can reproduce the same results 
+
 ----------
 
 
 
 ----------
 ###### MODULE - PANDAS
-https://gist.github.com/why-not/4582705                       # examples
-import pandas as pd                                           # Import Module
-df = pd.read_csv("file.csv")                                  # Read csv into dataframe
-df = pd.read_excel("file.xlsx")                               # Read xlsx into dataframe
-df.shape                                                      # Show the shape of the dataframe (rows, columns)
-df.info()                                                     # Info about the columns (number, column name, data type)
-df.head(5)                                                    # Output of the first 5 rows
-df.tail(5)                                                    # Output of the last 5 rows
-df.columns                                                    # Output of all column names
-df["2010":"2020"]["Close"]                                    # Output for slice of rows for one column
-df.loc["2010":"2020", "Open":"Close"]                         # Output for slice of rows and slice of columns
-df[["Open","Close"]]["2010":"2020"]                           # Output of 2 columns for the column slice
-df[df.index.isin(["2020","2019"])][hist.columns[0:4]]         # Output specific rows and slice of columns
-df[df.index.isin(["2020","2019"])][["Open","Close"]]          # Output specific rows and columns
-df.["col1"] or df.row1                                        # Output of on column (= series)
-df["col1"].value_counts()                                     # Output of alle values with their count
-df["col1"].value_counts(normalize=True)                       # Output of alle values with their count in percentage
-df.iloc[0]                                                    # Output of the first row
-df.iloc[0,1]                                                  # Output of the first 2 rows
-df.iloc[[0,1],0]                                              # Output of the first 2 rows for the first column
-df.iloc[[0,1],[5,6]]                                          # Output of the first 2 rows for the columns 6 and 7
-df.loc[[0,1],["col1","col2"]]                                 # Output of the first 2 rows for the named columns
-df.loc["2020-07-20", :]                                       # Output all cols for specific row
-df.set_index("col1", inplace=True)                            # Define col1 as new index - with inplace it is permanently saved
-df.loc["xyz_col1"]                                            # Output for the before defined new index
-df.sort_index(inplace=True)                                   # Sorting the new index ascending
-df.sort_values(by="co1")                                      # Sorting by column ascending
-df.sort_values(by="co2",ascending=False)                      # Sorting by column descending
-df.sort_values(by=["col1","col2"],ascending=False)            # Sorting by 2 columns descending - first col1 and then col2
-df["col1"].sort_value(ascending=False)                        # Sorting a series for one specific col descending
-df.reset_index(inplace=True)                                  # Resets the index
-filt = (df["col1" == "col1_val1"])                            # Defines new filter
-filt2 = (df["col1"].isin(["val1","val2","val3"]))             # Defines new filter with several values
-filt3 = (df["col1"] > 123)                                    # Defines new filter with a > operator
-df[filt]                                                      # Outputs the result for the above filter
-df[filt,"col2"]                                               # Outputs the result for the above filter with only col2
-df.columns =) [x.upper() for x in df.columns]                 # Change the column titles to uppercase
-df.rename(columns ={"c1":"c1new","c2":"c2new"},inplace=True)  # Change the name of 2 columns
-df["c1"] = df["c1"].apply(lambda x: x.lower())                # Function lower is used for the whole column
-df.apply(lambda x: x.lower())                                 # Function lower is used for the whole dataframe
-df.apply(lambda x: x.lower(), axis="columns")[0:3]            # Function lower is used for the first 3 columns
-df["c1"].map({"val1":"val1new","val2":"val2new"})             # Change the names of the values - all others become NaN
-df["c1"].replace({"val1":"val1new","val2":"val2new"})         # Change the names of the values - all others are not touched
-df["cnew1"] = df["c1"] + df["c2"]                             # New column at the end
-df.drop(columns=["c1","c2"], inplace=True)                    # Deleting 2 columns
-df.append({"c1":"val1"},ignore_index=True)                    # Add new row (all other cols are defined as NaN for the row)
-df["col1"].nlargest(5)                                        # Outputs the 5 highest values in the column - only col1
-df.nlargest(5,"col1")                                         # Outputs the 5 highest values in the column - all columns
-df.nsmallest(5,"col1")                                        # Outputs the 5 lowest values in the column - all columns
-df["col1"].median()   .max()   .min()                         # Median / Max / Min of a specific column
-df.describe()                                                 # Several statistic for the dataframe (median,max,min,std,...)
-col1_grp = df.groupby["col1"]                                 # Grouping according to col1
-col1_grp.get_group("col1_value")                              # Access to one value from the group
-col1_grp["col2"].median()                                     # Grouping col1 and output median for col2
-col1_grp["col2"].median().loc[["A","B","C"]]                  # Grouping col1 and output median for col2 only for 3 group-values
-non_zero = df[df["col1"]!=0]                                  # Filtering all Values with 0
-df.dropna()                                                   # Deleting all rows with a NaN value in it
-df.dropna(axis="index",how="all")                             # Deleting all rows where all columns are NaN
-df.dropna(axis="columns",how="all")                           # Deleting all columns where all elements are NaN   
-df.dropna(axis="index",how="any",subset=["col1"])             # Checking only for one column - and deleting according to that
-df.isna()                                                     # Check where in the dataframe are NaN values
-df.fillna("MISSING")                                          # Relace NaN values with text     
+https://gist.github.com/why-not/4582705                     # examples
+import pandas as pd                                         # Import Module
+import numpy as np											# Also importing numpy-module necessary
+
+# SERIES
+s = pd.Series([35,63,81,61,127,65,319])						# Define a series
+print(s)													# Shows default-index in 1 row / values in 2 row - also the dtype: int64 at the bottom
+s.name = "G7 population in millions"						# Name the series (shows the name also when series i printed at the bottom
+s.dtype														# Shows the dtype of the series => dtype("int64")
+s.values													# Values of the series => array([35,63,81,61,127,65,319])
+s[0]														# Slicing element => 35
+s.index														# Shows the index of the series => RangeIndex(start=0, stop=7, step=1)
+s.index=["CAN","FRA","GER","ITA","JPN","UK","USA]			# Change the index of the series from default 0-6 to country-names
+s["GER"]													# Accessing now with the new index possible => 81
+s.iloc[0]													# Access with index still possible using iloc => 35
+s.iloc[-1]													# Access with index still possible using iloc => 319
+s.["GER","JPN"]												# Multiple selecting possible => GER 81 and JPN 127
+s.iloc[0,-1]												# Multiple selecting with index using iloc possible => CAN 35 and USA 319
+s.["CAN":"GER"]												# Multiple selecting with ":" - upper element is included => CAN 35, FRA 63, GER 81
+s + 10														# Add 10 for the every element in the series => ([45,73,91,71,137,75,329])
+s[s > 70]													# Using boolean operation to output every element => GER 81, JPN 127, USA 319
+s[s > s.mean()]												# Using boolean operation to output countries > mean => JPN 127, USA 319
+logical operator which can be used							# ~ for not, | for or, & for and
+s["CAN"] = 40												# Changing the value of a series element => CAN 40
+s.iloc[-1] = 500											# Changing the value of the last element => USA 500
+s[s < 70] = 99												# Changing the value with a specific operation => CAN,FRA,ITA,UK are changed to 99
+s = pd.Series([1,np.nan,7]									# Define a series with NaN values
+pd.isnull(s)												# Check for NaN values in the series => False,True,False
+pd.notnull(s)												# Check for NOT NaN values in the series => True,False,True
+pd.notnull(s).sum()											# Sum of not NaN values in the series => 2
+pd.isnull(s).sum()											# Sum of NaN values in the series => 1
+
+# DATAFRAMES 
+# are immutable, column is a series, dataframe = combination of multiple series
+df = pd.read_csv("file.csv")                                # Read csv into dataframe - first line will be col-names of the dataframe
+df = pd.read_csv("file.csv",header=None)                    # Read csv into dataframe - no headerline (col names will be default numeric)
+df = pd.read_csv("file.csv",								# Many operations can be directly done when reading the csv-file
+	header=None												# => no header in the csv available
+	names=["Timestamp","Price"],							# => name the columns
+	index_col=0								 	 	 	 	# => define which column will be the index
+	parse_dates=True)										# => read dates as date - and not as string
+df = pd.read_excel("file.xlsx")                             # Read xlsx into dataframe
+
+#example
+#https://www.freecodecamp.org/learn/data-analysis-with-python/data-analysis-with-python-course/pandas-condtitional-selection-and-modifying-dataframes
+		Popl	HDI		Continent
+	CAN	35		0,913	America
+	FRA	64		0,888	Europe
+	GER	81		0,916	Europe	
+	ITA 61		0,873	Europe
+	JPN 127		0,891	Asia
+	UK  65		0,907	Europe
+	USA 319		0,915	America
+df.shape                                                    # Show the shape of the dataframe (rows, columns) => (7,3)
+df.info()                                                   # Info about the columns (index, column name, data type)
+df.dtpyes()													# Shows datatype of every column
+df.describe()                                               # Several statistic for the dataframe (median,max,min,std,...)
+df.head()                                                   # Output of the first 5 rows per default
+df.head(22)                                                 # Output of the first 22 rows
+df.tail()                                                   # Output of the last 5 rows per default
+df.tail(22)                                                  # Output of the last 22 rows
+df.columns                                                  # Output of all column names
+df.columns["POPL","hdi","CONT"]								# Rename the columns
+df.index													# Outputs the index
+df.size														# Outputs the size of the dataframe	
+df.index = ["CAN","FRA","GER","ITA","JPN","UK","USA"]		# Assigning new index - replaces the default numeric index
+df.set_index("Popl", inplace=True)                          # Define "Popl" as new index - with inplace it is permanently saved
+df.loc["CAN"]												# Selecting Rows by index - showing the row with the index = "CAN"
+df.iloc[-1]													# Selecting Rows by position - showing the last row
+df["Popl"]													# Selecting Columns by title - showing the whole column "Population" for all rows
+df["Continent"].value_counts()                              # Output of alle values with their count
+df["Continent"].value_counts(normalize=True)                # Output of alle values with their count in percent
+df[["Popl","Continent"]]									# Showing cols Popl,Continent for all rows
+df[["Popl","Continent"]] / 100								# Showing cols Popl,Continent for all rows - values divided by 100
+df.loc["CAN":"ITA"]											# Show the rows from index CAN to ITA
+df.loc["CAN":"ITA","Popl"]									# Show the rows from index CAN to ITA - only with the column1
+df.loc["CAN":"ITA",["Popl","Continent"]]					# Show the rows from index CAN to ITA - only with the column1 + column3
+df.iloc[0,-1]												# Show the 1st and last row => CAN,USA
+df.iloc[1:3]												# Show 2nd and 3rd row for all cols => FRA,GER / Popl,HDI,Continent
+df.iloc[1:3,1]	 											# Show 2nd and 3rd row for 2nd col => FRA,GER / HDI
+df.iloc[1:3,[0,2]}											# Show 2nd and 3rd row for 1st and 3rd column => FRA,GER / Popl,Continent
+df.iloc[1:3,1:3]											# Show 2nd and 3rd row for the 2nd and 3rd col => FRA,GER / HDI,Continent
+df["Popl"] > 70												# Returns series with boolean True/False for every row (F,F,T,F,T,F,T)
+df.loc[df["Popl"]] > 70										# Returns GER,JPN,USA for all cols
+df.loc[df["Popl"] > 70, "Popl"]								# Returns GER,JPN,USA for col "Popl"
+df.loc[df["Popl"] > 70, ["Popl","Continent"]]				# Returns GER,JPN,USA for cols "Popl" and "Continent"
+df.drop("CAN")												# Drops the row CAN
+df.drop(["CAN","JPN"])										# Drops the rows CAN,JPN
+df.drop(["CAN","JPN"],axis=0)								# Drops the rows CAN,JPN (2nd method)
+df.drop(["CAN","JPN"],axis="rows")							# Drops the rows CAN,JPN (3rd method)
+df.drop(columns=["Popl","Continent"])						# Drops the cols Popl,Continent
+df.drop(["Popl","Continent"],axis=1)						# Drops the cols Popl,Continent (2nd method)
+df.drop(["Popl","Continent"],axis="columns")				# Drops the cols Popl,Continent (3rd method)
+crisis = pd.Series([-10,-0,3],index=["Popl","HDI"])			# Define series with same col-names as in the dataframe - with some correction values
+df[["Popl","HDI"]] + crisis									# Comines crisis-series to the df => all values in "Popl" -10 and "HDI" -0,3 in the df
+langs = pd.Series(											# Define new series for new column in dataframe
+	["FR","DE","IT"],										# => values of new column
+	index=["FRA","GER","ITA"],								# => existing index in dataframe
+	name= "lang")											# => name of the new column
+df["lang"] = langs											# Creates new column in the dataframe according to the series "langs" - other rows will get "NaN"
+df["lang"] = "GB"											# Values of all rows in the column "lang" will be changed to "GB"
+df.rename(columns={"Popl":"POPL","Continent":"CONT"})	    # Renames column names
+df.rename(index={"UK":"UnKi","USA":"US"})					# Renames index names
+df["Popl_HDI"] = df["Popl"] / df["HDI"]						# Creates new column by dividing col "Popl" with col "HDI"
+df["Popl"].median().max().min().sum().mean().qunatile()     # Different operations for the column in the dataframe
+df["Timestamp"]=pd.to_datetime(df["Timestamp"])				# Changes Timestamp-String to Timestamp-Type (eg. read from csv-file before)
+df.plot()													# Plotting the dataframe using the mathlib-module
+df.plot(figsize=(12,6))										# Plot the dataframe
+df.loc["2017-12-01":"2019-12-01"].plot(figsize=(12,6)))		# Plot the dataframe for the specific timeframe
+pd.isnull(df)												# Check for NaN values in the Dataframe => Matrix with True / False
+pd.notnull(df)												# Check for NOT NaN values in the Series => Matrix with True / False
+
+
+
+# more examples                                				
+df[["Open","Close"]]["2010":"2020"]                         # Output of 2 columns for the column slice
+df[df.index.isin(["2020","2019"])][hist.columns[0:4]]       # Output specific rows and slice of columns
+df[df.index.isin(["2020","2019"])][["Open","Close"]]        # Output specific rows and columns
+df.sort_index(inplace=True)                                 # Sorting the new index ascending
+df.sort_values(by="co1")                                    # Sorting by column ascending
+df.sort_values(by="co2",ascending=False)                    # Sorting by column descending
+df.sort_values(by=["col1","col2"],ascending=False)          # Sorting by 2 columns descending - first col1 and then col2
+df["col1"].sort_value(ascending=False)                      # Sorting a series for one specific col descending
+df.reset_index(inplace=True)                                # Resets the index
+filt = (df["col1" == "col1_val1"])                          # Defines new filter
+filt2 = (df["col1"].isin(["val1","val2","val3"]))           # Defines new filter with several values
+filt3 = (df["col1"] > 123)                                  # Defines new filter with a > operator
+df[filt]                                                    # Outputs the result for the above filter
+df[filt,"col2"]                                             # Outputs the result for the above filter with only col2
+df.columns =) [x.upper() for x in df.columns]               # Change the column titles to uppercase
+df["c1"] = df["c1"].apply(lambda x: x.lower())               # Function lower is used for the whole column
+df.apply(lambda x: x.lower())                               # Function lower is used for the whole dataframe
+df.apply(lambda x: x.lower(), axis="columns")[0:3]          # Function lower is used for the first 3 columns
+df["c1"].map({"val1":"val1new","val2":"val2new"})           # Change the names of the values - all others become NaN
+df["c1"].replace({"val1":"val1new","val2":"val2new"})       # Change the names of the values - all others are not touched
+df["cnew1"] = df["c1"] + df["c2"]                           # New column at the end
+df.drop(columns=["c1","c2"], inplace=True)                  # Deleting 2 columns
+df.append({"c1":"val1"},ignore_index=True)                  # Add new row (all other cols are defined as NaN for the row)
+df["col1"].nlargest(5)                                      # Outputs the 5 highest values in the column - only col1
+df.nlargest(5,"col1")                                       # Outputs the 5 highest values in the column - all columns
+df.nsmallest(5,"col1")                                      # Outputs the 5 lowest values in the column - all columns
+col1_grp = df.groupby["col1"]                               # Grouping according to col1
+col1_grp.get_group("col1_value")                            # Access to one value from the group
+col1_grp["col2"].median()                                   # Grouping col1 and output median for col2
+col1_grp["col2"].median().loc[["A","B","C"]]                # Grouping col1 and output median for col2 only for 3 group-values
+non_zero = df[df["col1"]!=0]                                # Filtering all Values with 0
+df.dropna()                                                 # Deleting all rows with a NaN value in it
+df.dropna(axis="index",how="all")                           # Deleting all rows where all columns are NaN
+df.dropna(axis="columns",how="all")                         # Deleting all columns where all elements are NaN   
+df.dropna(axis="index",how="any",subset=["col1"])           # Checking only for one column - and deleting according to that
+df.fillna("MISSING")                                        # Relace NaN values with text     
 ----------
 
 
@@ -1150,37 +1482,6 @@ plt.savefig("example.png",bbox_inches="tight")                      # Save diagr
 
 
 ----------
-####### PYINSTALLER
-pip install pyinstaller                                       # Installation
-pyinstaller prg.py                                            # Generate the bundle in a subdirectory called dist.
-pyinstaller --onefile prg.py                                  # Generate only one file
---icon=app.ico                                                # Generate file with icon
---hidden-import=pkg_resources.py2_warn                        # Generating under mac os sometimes only work with this params
---exclude-module matplotlib                                   # when there is a depreciating warning from matlib        
-prg.exe                                                       # Open this file to start the python-program
-
-### Problems with path when executing from py and exe   
-config_name = 'creds.json'                                    # Define the config file name
-### determine if application is a script file or frozen exe
-if getattr(sys, 'frozen', False):                             # Get path when starting as executable
-    application_path = os.path.dirname(sys.executable)
-elif __file__:                                                # Get path when running from IDE as py-file
-    application_path = os.path.dirname(__file__)
-config_path = os.path.join(application_path, config_name)     # Final Config Path   
-----------
-
-
-
-----------
-####### Virtual Box - MacOs
-Right-Ctrl Home       					# Open Menü in VirtualBox
-Read USB-Stick							# Menü aufrufen => "Geräte" und "USB" auswählen
-
-----------
-
-
-
-----------
 ####### MODULE - SELENIUM
 # chromedriver.exe in Ordner von py-file speichern
 from selenium import webdriver                                    # Import WebDriver für Zugriff auf URL
@@ -1205,6 +1506,7 @@ cookie = {"name": "token", "value": "23874kljdsjhfaökldjs"}       # Define an i
 driver.add_cookie(cookie)                                         # Use Cookie
 driver.get_cookie("token")                                        # Outputs a specific cookie
 driver.get_cookies())                                             # Outputs all cookies
+driver.current_url												  # Read current, actual url
 
 # Use Selenium with chrome windows hidden
 from selenium.webdriver.chrome.options import Options
@@ -1251,6 +1553,17 @@ time.sleep(2)                                                  # Wait till the f
 soup = BeautifulSoup(driver.page_source, 'html.parser')        # Read page with html.parser
 time.sleep (2)                                                 # Wait again 2 seconds before closing the site
 driver.quit ()                                                 # Close the chromedriver window
+----------
+
+
+
+----------
+# MODULE - REQUESTS (working with APIs)
+import requests										# import module requests
+import json
+api_request = requests.get ("apilink.html")			# Request api from the generated api-link
+api = json.loads(api_request.content)				# Read/parse api-data to a json-loadfil
+result = api[0]["xyz"]								# Read the value for the 1 element and the attribute xyz
 ----------
 
 
@@ -1447,4 +1760,35 @@ msg_img = f.render(msg,True,msg_col,bg_col)              # Create an image of th
 msg_img_rect = msg_image.get_rect()                      # Read rect from message-image
 msg_img_rect.center = screen_rect.center                 # Pos the message-image in the middle of the window
 screen.blit(msg_img, msg_img_rect)                       # Display the positioned message-image
+----------
+
+
+
+----------
+####### PYINSTALLER
+pip install pyinstaller                                       # Installation
+pyinstaller prg.py                                            # Generate the bundle in a subdirectory called dist.
+pyinstaller --onefile prg.py                                  # Generate only one file
+--icon=app.ico                                                # Generate file with icon
+--hidden-import=pkg_resources.py2_warn                        # Generating under mac os sometimes only work with this params
+--exclude-module matplotlib                                   # when there is a depreciating warning from matlib        
+prg.exe                                                       # Open this file to start the python-program
+
+### Problems with path when executing from py and exe   
+config_name = 'creds.json'                                    # Define the config file name
+### determine if application is a script file or frozen exe
+if getattr(sys, 'frozen', False):                             # Get path when starting as executable
+    application_path = os.path.dirname(sys.executable)
+elif __file__:                                                # Get path when running from IDE as py-file
+    application_path = os.path.dirname(__file__)
+config_path = os.path.join(application_path, config_name)     # Final Config Path   
+----------
+
+
+
+----------
+####### Virtual Box - MacOs
+Right-Ctrl Home       					# Open Menü in VirtualBox
+Read USB-Stick							# Menü aufrufen => "Geräte" und "USB" auswählen
+
 ----------
