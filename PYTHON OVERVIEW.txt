@@ -1348,6 +1348,7 @@ s.drop_duplicates(keep=False)								# Duplicates get dropped (no entry remains 
 
 # DATAFRAMES 
 # are immutable, column is a series, dataframe = combination of multiple series
+# reading data
 df = pd.read_csv("file.csv")                                # Read csv into dataframe - first line will be col-names of the dataframe
 df = pd.read_csv("file.csv",header=None)                    # Read csv into dataframe - no headerline (col names will be default numeric)
 df = pd.read_csv("file.csv",								# Many operations can be directly done when reading the csv-file
@@ -1467,7 +1468,7 @@ df.sort_values(by="co2",ascending=False)                    # Sorting by column 
 df.sort_values(by=["col1","col2"],ascending=False)          # Sorting by 2 columns descending - first col1 and then col2
 df["col1"].sort_value(ascending=False)                      # Sorting a series for one specific col descending
 df.columns =) [x.upper() for x in df.columns]               # Change the column titles to uppercase
-df["c1"] = df["c1"].apply(lambda x: x.lower())               # Function lower is used for the whole column
+df["c1"] = df["c1"].apply(lambda x: x.lower())              # Function lower is used for the whole column
 df["c1"].map({"val1":"val1new","val2":"val2new"})           # Change the names of the values - all others become NaN
 df["c1"].replace({"val1":"val1new","val2":"val2new"})       # Change the names of the values - all others are not touched
 df["cnew1"] = df["c1"] + df["c2"]                           # New column at the end
@@ -1493,6 +1494,7 @@ plt.plot(x, -1 * (x ** 2))											# Plot another line (in the other direction
 x_values = list(range(1000))                                        # Define x values
 squares = [x**2 for x in x_values]                                  # Define y values / squares
 plt.plot(x_values, squares)                                         # Plot diagram with x- and y-axes
+plt.subplot(1,2,2)													# Plot 1st row, 2nd col in the 2nd diagram (any line after that will only access the 2nd diagram)
 plt.scatter(x_values, squares, s=5)                                 # Sscatter diagram with x- and y-axes and line strenght = 5
 plt.title("Title", fontsize=24)                                     # Title with fontsize = 24
 plt.xlabel("X-Axe", fontsize=18)                                    # X-Axe title with fontsize = 18  
