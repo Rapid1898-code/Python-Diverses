@@ -536,11 +536,11 @@ Human.grunt()                 # Aufruf der statischen Methode => Ausgabe: "*grun
 
 ----------
 ###### TXT FILES
-fn = "test.txt"
-with open(fn) as f:                                     # Read textfile - stored in list per line
+with open ("fn.txt","r") as f: print(f)					# Read textfile - and print it
+with open("fn.txt","r") as f:                           # Read textfile - stored in list per line
     lines = [x.strip() for x in f.readlines()]          # Whitespaces are eliminated with strip()
-with open(fn,"w") as obj: obj.write("Ein neuer Text")   # Writing in textfile
-with open(fn,"a") as obj: obj.write("\nNoch ein Text")  # Append text in the next line
+with open("fn.txt","w") as obj: obj.write("Ein neuer Text")   # Writing in textfile
+with open("fn.txt","a") as obj: obj.write("\nNoch ein Text")  # Append text in the next line
     
 while True:                  							# Try/Except - checks if file can be saved
 try:                         							# otherwise outputs a error message
@@ -1343,12 +1343,15 @@ s.duplicated()												# Returns the duplicates (only the first entry for the
 s.duplicated(keep="last")									# Returns the duplicates (only the last entry for the same value is no duplicate - rest gets True)
 s.duplicated(keep=False)									# Returns the duplicates (when there are more than one value - all get flagged as duplicate with True)
 s.drop_duplicates()											# Duplicates get dropped (only the first entry remains)
-s.drop_duplicates(keep="last")								# Duplicates get dropped (only the last entry remains)
+s.drop_duplicates(keep="last")					 			# Duplicates get dropped (only the last entry remains)
 s.drop_duplicates(keep=False)								# Duplicates get dropped (no entry remains if there are duplicate entries for the value)
 
 # DATAFRAMES 
 # are immutable, column is a series, dataframe = combination of multiple series
 # reading data
+# possible reader: read_csv,read_excel,read_json,read_html,read_sql
+# possible writer: to_csv,to_excel,to_json,to_html,to_sql
+pf.read_csv?												# Shows all parameters for the reader
 df = pd.read_csv("file.csv")                                # Read csv into dataframe - first line will be col-names of the dataframe
 df = pd.read_csv("file.csv",header=None)                    # Read csv into dataframe - no headerline (col names will be default numeric)
 df = pd.read_csv("file.csv",								# Many operations can be directly done when reading the csv-file
