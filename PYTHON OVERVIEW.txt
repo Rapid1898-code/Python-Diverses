@@ -163,7 +163,7 @@ s.find ("ist")                                  # Returns the index where the te
 s.count ("i")                                   # Counts the occurrence of a text
 [n for n in range(len(txt)) if txt.find('/', n) == n]	# Return all findings of the search string ("/") in the other string (txt)
 [x.start() for x in re.finditer('ist', s)]      # Returns all indexwa as a list (needs import re)
-s = s.lower()                                   # Reduce the whole string
+s = s.lower()                                   # Lowercase the whole string
 s = s.upper()                                   # Capitalize the whole string
 s = s.capitalize()                              # Capitalize the first char
 s = s.title()                                   # Capitalize the first char of all words
@@ -498,7 +498,7 @@ sorted(p,key=lambda x:x[0]+x[1])	# output is sorted by the sum of both => [(1,2)
 a = [1,2,3,4,5]
 list(map(lambda x: x*2,a))			# list is mapped with the lambda function => [2,4,6,8,10]
 c=[x*2 for x in a]					# also possible with list comprehension => [2,4,6,8,10]
-list(filter(lambda x: x%2==0,a))		# list is filtered with lambda for even numbers => [2,4]
+list(filter(lambda x: x%2==0,a))	# list is filtered with lambda for even numbers => [2,4]
 c=[x for x in a if x%2==0]			# also possible with list comprehension => [2,4]
 ----------
 
@@ -776,9 +776,11 @@ import xlwings as xw                                    # Import module
 wb = xw.Book ("name.xlsx")                              # Read XLSX
 ws = wb.sheets["name_sheet"]                            # Read specific worksheet
 ws["A1"].value = "xyz"                                  # Updates specific cell
-l = ws.range("A2:A100").value                           # Read specific cell to list
-l[1].value = "new value"                                # Update a before read value
-ws.range("A2:A100").value = l                           # Update a 
+for i in ws.range("A3:A7"): i.value = ""				# Iterate trough cells an set them to "" / None
+l = ws.range("A2:A100").value                           # Read specific cells to list
+cells = ws.range("A2:A100")								# Read cells
+cells[1].value = "new value"                            # Update the value of a cell
+ws.range("A2:A100").value = l                           # Writeback the updates to cells
 xl_col_sort(ws,1)                                       # Sort worksheet in the first col (function see below)
 
 ### Sorting workssheet in given col
@@ -1016,8 +1018,9 @@ datetime.strftime((datetime.strptime(cont_tmp,"%m/%d/%Y")),"%Y-%m-%d")      # Co
 isinstance(x, datetime.date)								 # Check if variable is of type datetime.date                   
 date = date(2020,7,24)                                       # Define date as "2020-07-24"
 date_time = datetime(2020,3,5,19,27,23)                      # Define date+time as "2020-03-05 19:27:23"
+now = datetime.now().strftime("%Y-%m-%d %H:%M:%S")           # Actual date+time in format 2020-06-09 20:11:13
+now = datetime.now().strftime("%Y-%m-%d") 			         # Actual date in format 2020-06-09
 tday = datetime.today()                                      # Actual date in datetime format
-now = datetime.now().strftime("%Y-%m-%d %H:%M:%S")           # Actual daten+time in format 2020-06-09 20:11:13)
 tday.year, tday.month, tday.day                              # Year / month / day of the actual day
 tday.isoweekday()                                            # Returns weekday (monday=1, sunday=7)
 tdelta = timedelta(days=7)                                   # Creates timedelta for 7 days
@@ -1140,8 +1143,9 @@ os.path.basename("temp/file.txt")                          # Outputs only the fi
 os.path.dirname("temp/file.txt")                           # Outputs only the dir => temp/  
 os.path.split("temp/file.txt")                             # Outputs filename and dir as a tupel => ("temp/","file.txt")
 os.path.exists("temp/file.txt")                            # Checks if filename exists in the filesystem
-os.path.isdir("xyz")                                       # Checks if element is a dir
+os.path.isdir("xyz")                                       # Checks if folder exists
 os.path.isfile("xyz")                                      # Checks if element is a file
+os.listdir()											   # Put all filenames to a list from the actual working dir
 ----------
 
 
@@ -1266,15 +1270,25 @@ a.mean()								# => 5.0
 a.std()									# Return standard deviation => 2.58198889774344
 a.sum(axis=0)							# Builds sum per columns => array([12,15,18])	
 a.sum(axis=1)							# Builds sum per rows => array([6,15,24])	
+np.zeroes(5)							# Initialize numpy array with 5 zeros => array([0.,0.,0.,0.,0.])
+np.ones((2,3),dtype="int32")			# Initialize numpy array with 2x3 ones with int32 => array([[0,0,0],[0,0,0]])
+np.full((2,2,),99)						# Initialize np array with 2x2 with the value 99 => array([[99,99],[99,99]])
+np.identity(3)							# Initialize a square matrix with len 3 => array([[1.,0.,0.],[0.,1.,0.],[0.,0.,1.]])
+arr_b = arr_a.copy()					# Separate individual copy of the numpy array (no updates in both arrays)
+c = np.array([[1,2,3,4],[5,6,7,8]])		# Define 2d numpy array with 2,4 dimension
+c.reshape((4,2))						# Reshape the numpy array to 4,2 dimension => [[1,2],[3,4],[5,6],[7,8]]
+c.reshape((2,2,2))						# Reshape the numpy array to 3d with 2,2,2 dimension => [[[1,2],[3,4]],[5,6],[7,8]]]
 
 # Vector handling
 a = np.array(4)							# Build array with this range => array([0,1,2,3])	
 a + 10									# Changes +10 to each element => array([10,11,12,13]) (creates new array - no changing a)
 a * 10									# Changes *10 to each element => array([0,10,20,30]) (creates new array - no changing a)
-a += 100								# Chagnes the existing array a => array([100,101,102,103])
+a += 100								# Changes the existing array a => array([100,101,102,103])
 b = np.array([10,10,10,10])				# Defines second array babab6
 a + b									# Sums the 2 arrays to new array => array([10,11,12,13)
 a * b									# Multiplicates the 2 arrays to new array => array([0,10,20,30)
+np.sin(b)								# Make sinus of all entries
+np.cos(b)								# Make cosinus of all entries
 
 # Boolean Array Operations
 a = np.array(4)							# Build array with this range => array([0,1,2,3])	
@@ -1292,7 +1306,8 @@ np.random.rand(3)						# Random 1d float array with 3 entries => eg. (0.8377, 0.
 np.random.rand(3,3)						# Random 2d array 3 entries => [[0.27,0.91,0.54],[0.68,0.87,0.36],[0.05,0.64,0.16]]
 np.random.randint(0,10,3)				# Random 1d int array 3 entries => [0,8,8]
 np.random.randint(0,10,(3,4))			# Random 2d int array 3x4 entries => [[2,6,4,5],[7,6,7,3],[7,0,4,0]]
-np.random.randint(100, size(3,3))		# Random 2d int array 3x3 entries with value form 0 to 99	
+np.random.randint(100, size(3,3))		# Random 2d int array 3x3 entries with values from 0 to 99	
+np.random.randint(-4,8,size(3,3))		# Random 2d int array 3x3 entries with values from -4 to 7
 np.random.shuffle(lst)					# Shuffeling a 2d list but only the first axes
 np.random.seed(1)						# Can reproduce the same results 
 
@@ -1351,17 +1366,59 @@ s.drop_duplicates(keep=False)								# Duplicates get dropped (no entry remains 
 # reading data
 # possible reader: read_csv,read_excel,read_json,read_html,read_sql
 # possible writer: to_csv,to_excel,to_json,to_html,to_sql
+# CSV
 pf.read_csv?												# Shows all parameters for the reader
-df = pd.read_csv("file.csv")                                # Read csv into dataframe - first line will be col-names of the dataframe
-df = pd.read_csv("file.csv",header=None)                    # Read csv into dataframe - no headerline (col names will be default numeric)
-df = pd.read_csv("file.csv",								# Many operations can be directly done when reading the csv-file
+df = pd.read_csv("fn.csv")              	                # Read csv into dataframe - first line will be col-names of the dataframe
+df = pd.read_csv("fn.csv",header=None)	                    # Read csv into dataframe - no headerline (col names will be default numeric)
+df = pd.read_csv("fn.csv",sep="#")							# Read csv with sepeartor "#" instead of the default ";"
+df = pd.read_csv("fn.csv",									# Many operations can be directly done when reading the csv-file
 	header=None												# => no header in the csv available
 	names=["Timestamp","Price"],							# => name the columns
-	index_col=0								 	 	 	 	# => define which column will be the index
-	parse_dates=True)										# => read dates as date - and not as string
-df = pd.read_excel("file.xlsx")                             # Read xlsx into dataframe
+	index_col=0,							 	 	 	 	# => define which column will be the index
+	parse_dates=True,										# => read dates as date - and not as string
+	na_values["?","-",""],									# => treat this chars as NaN-values
+	dtype={"Price":"float"},								# => assign specific datatype to the column "Price"
+	decimal=",",											# => decimal-point is "," (and not ".")
+	skip_blank_lines=False),								# => read also blank lines (as default they are ignored)
+	usecols=[0,1,2],										# => use only the three columns when reading the csv (by position)
+	usecols=["first","last","age"])							# => use only the three columns when reading the csv (selected by name)
+df.to_csv("fn2.csv")										# Write dataframe to csv
+# XLSX
+df = pd.read_excel("file.xlsx")                             # Read xlsx (first worksheet) into dataframe
+df = pd.read_excel("file.xlsx",header=None)                 # Read xlsx (first worksheet) into dataframe - without headers
+df = pd.read_excel("file.xlsx",index_col=[0])				# Read xlsx and define the first column as index of the dataframe
+df = pd.read_excel("file.xlsx",sheet_name="Prod")			# Read xlsx (worksheet "Prod") into dataframe
+ef = pd.ExcelFile("file.xlsx")								# Read xlsx with the ExcelFile method
+ef.sheet_names												# Shows alle worksheet-names as a list => eg. ["Prod","Desc"]
+df = ef.parse("Prod")										# Read/Parse the worksheet "Prod" in a dataframe
+df.to_excel("file2.xlsx",									# Write dataframe to xlsx
+	sheet_name="Prod",										# Write to worksheet "Prod"
+	startrow=1,												# Start writing at row 1
+	startcol=2)												# Start writing at col 2
+w = pd.ExcelWriter("file2.xlsx")							# Write dataframe to xlsx with the ExcelWriter method
+with w: df.to_excel(w,sheet_name="Prod"						# Write dataframe to xlsx worksheet "Prod" with the ExcelWriter method 
+with pd.ExcelWriter("file2.xlsx") as writer:				# Write multiple worksheet to xlsx from dataframes
+	df1.to_excel(w, sheet_name="Prod")						# Dataframe1 stored in worksheet "Prod"
+	df2.to_excel(w, sheet_name="Desc")						# Dataframe2 stored in worksheet "Desc"
+# SQL
+conn = sqlite3.connect("data.db")							# Establish connection to the sql-db
+df = pd.read_sql("SELECT * FROM empl;",conn)				# Read data from sql-db into dataframe
+df = pd.read_sql("SELECT * FROM empl;",conn,				# Many operations can be directly done when reading the sql-db
+	index_col="EmplID",										# => define which column will be the index				
+	parse_dates["BirthDate","HireDate"])					# => read this columns as date
+from sqlalchemy import create_engine						# It is easier to read a complete table using sqlalechmy
+engine = create_engine("data.db")							# Create SQL Alchemy engine
+connection = engine.connect()								# Establish connection with SQL Alchemy
+df = pd.read_sql_table("empl",con=connection)				# Read whole table with SQL-Alechmy (many things are auto-done - e.g. Indexing,Parsing)
+df.to_sql("data.db",conn)									# Writes dataframe to the sql-db (breaks when table allready exists)
+df.to_sql("data.db",conn,if_exists="replace")				# Writes dataframe to the sql-db (with droping the table before inserting)
+df.to_sql("data.db",conn,if_exists="append")				# Writes dataframe to the sql-db (with inserting new values to existing table)
+# HTML
+df = pd.read_html(html_string)								# Read html into dataframe
+html_url"https://www.xyz.com"								# Assign html-varialbe
+df = pd.read_html(html_url)									# Read html-link to dataframe	
 
-#example
+# EXAMPLE
 #https://www.freecodecamp.org/learn/data-analysis-with-python/data-analysis-with-python-course/pandas-condtitional-selection-and-modifying-dataframes
 		Popl	HDI		Continent
 	CAN	35		0,913	America
@@ -1561,22 +1618,24 @@ driver = webdriver.Chrome(os.getcwd() + '/chromedriver', options=options)
 ----------
 ####### MODULE - BEAUTIFUL SOAP
 # see also details in BEAUTIFUL SOAP.ipynb
-from bs4 import BeautifulSoap
-page = requests.get("https://www.ariva.de/dax-30")             # Read url as page
-soup = BeautifulSoup (page.content,"html.parser")              # Read page with html.parser
-table  = soup.find(id="result_table_0")                        # Read specific invidual id
-name_box = soup.find("h1", attrs={"class": "99a4824b"})        # Read specific class
-for row in table.find_all("td"):                               # Read all table data cells
-for result in soup.find_all("tr", class_="arrow0"):            # Read all table rows
-for col_id, col_content in enumerate(result.find_all("td")):   # Read all table data cells with id and content
-entries = results.find_all("div", class_="col-xs-6")           # Read all divs with specific class
-if row.get("class") == ["ellipsis", "nobr", "new"]:            # Check if class has specific content
-for e in soup1.find_all("a"): e.get("href"))                   # Read all links from href element    
-content.text.strip()                                           # Outputs text without whitespaces
-url_i = rows[0].find('img')['src']                             # Read url from the image
-image = requests.get(f'https:{url_i}').content                 # Read image as content
-results.prettify()                                             # Formated Output with html indentations
-if "Kein Zugriff" in soup.text:                                # Check if specific text in soup text-output
+from bs4 import BeautifulSoap									# Import module for beautiul soap
+from fake_useragent import UserAgent							# Import moduel for fake useragent
+ua.random														# Create random useragent
+page = requests.get("https://www.ariva.de/dax-30")              # Read url as page
+soup = BeautifulSoup (page.content,"html.parser")               # Read page with html.parser
+table  = soup.find(id="result_table_0")                         # Read specific invidual id
+name_box = soup.find("h1", attrs={"class": "99a4824b"})         # Read specific class
+for row in table.find_all("td"):                                # Read all table data cells
+for result in soup.find_all("tr", class_="arrow0"):             #  Read all table rows
+for col_id, col_content in enumerate(result.find_all("td")):    # Read all table data cells with id and content
+entries = results.find_all("div", class_="col-xs-6")            # Read all divs with specific class
+if row.get("class") == ["ellipsis", "nobr", "new"]:             # Check if class has specific content
+for e in soup1.find_all("a"): e.get("href"))                    # Read all links from href element    
+content.text.strip()                                            # Outputs text without whitespaces
+url_i = rows[0].find('img')['src']                              # Read url from the image
+image = requests.get(f'https:{url_i}').content                  # Read image as content
+results.prettify()                                              # Formated Output with html indentations
+if "Kein Zugriff" in soup.text:                                 # Check if specific text in soup text-output
     
 # Read with Selenium when necessary due the specific homepage
 import time
