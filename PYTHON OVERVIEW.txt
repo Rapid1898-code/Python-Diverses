@@ -1558,6 +1558,7 @@ col1_grp.get_group("col1_value")                            # Access to one valu
 col1_grp["col2"].median()                                   # Grouping col1 and output median for col2
 col1_grp["col2"].median().loc[["A","B","C"]]                # Grouping col1 and output median for col2 only for 3 group-values
 non_zero = df[df["col1"]!=0]                                # Filtering all Values with 0
+df["newcol"]=["Y" if x > 50 else "N" for x in df["Sales"]]  # Add new column with Y/N depending if the value in col "Sales" is > 50
 ----------
 
 
@@ -1889,11 +1890,12 @@ prg.exe                                                       # Open this file t
 
 ### Problems with some added python modules (eg. pycountry)
 when trying to execute the compiled exe-file - there is an error about the pycountry-module - workaround:
-1) use pyinstaller to compile exe as above
+1) use command <pyi-makespec --onefile temp2.py> to generate a temp2.spec file
 2) change filename.spec
 	=> from PyInstaller.utils.hooks import copy_metadata (in the header)
-	=> in the a = Analysis(...) section change " datas = []," to "datas = copy_metadata("pycountry"),"
-3) run pyinstaller with: pyInstaller --clean temp2.spec
+	=> in the a = Analysis(...) section change " datas = []," to <datas = copy_metadata("pycountry"),>
+3) use pyinstaller to compile exe as above
+Alternative: compile program before - change spec - an use command <pyInstaller --clean temp2.spec>
 
 ### Problems with path when executing from py and exe   
 config_name = 'creds.json'                                    # Define the config file name
