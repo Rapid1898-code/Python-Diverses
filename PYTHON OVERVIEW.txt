@@ -252,6 +252,7 @@ if all(x not in string for x in ["ab","cd""]):   # Check if all elements from th
 for i in l:                                      # Iterate through list content
 for i in range(len(l)):                          # Iterate through list with index
 for idx, cont in enumerate(l):                   # Iterate through list with index and content
+for x,y in zip(l1,l2):							 # Iterate through 2 lists pair-wise (stops when the shorter list is reached)
 ', '.join(l)                              		 # Create string with elements joined together with ", " eg. ["a","b","c"] => a, b, c
 # Check if list is all unique					 # Check if list is all unique
 def all_unique(lst):
@@ -1559,6 +1560,8 @@ col1_grp["col2"].median()                                   # Grouping col1 and 
 col1_grp["col2"].median().loc[["A","B","C"]]                # Grouping col1 and output median for col2 only for 3 group-values
 non_zero = df[df["col1"]!=0]                                # Filtering all Values with 0
 df["newcol"]=["Y" if x > 50 else "N" for x in df["Sales"]]  # Add new column with Y/N depending if the value in col "Sales" is > 50
+df["col"]=["Y" if x > 50 else "N" for x in df["col"]]  		# Change existing column with Y/N depending if the value in col is > 50
+df["c"]=[1 if (x/y>9) else 0 for x,y in zip(df["c1"],df["c2])]	# Add/change column with 0/1 depending of calc of the variables x/y from 2 cols
 ----------
 
 
