@@ -1023,8 +1023,10 @@ dt = datetime(2020,3,5,19,27,23)                      		 # Define date+time as "
 now = datetime.now().strftime("%Y-%m-%d %H:%M:%S")           # Actual date+time in format 2020-06-09 20:11:13
 now = datetime.now().strftime("%Y-%m-%d") 			         # Actual date in format 2020-06-09
 tday = datetime.today()                                      # Actual date in datetime format
+tday = datetime.today().date()								 # Actual date as date format
 dt.year, dt.month, dt.day                              		 # Year / month / day from the datetime
 tday.isoweekday()                                            # Returns weekday (monday=1, sunday=7)
+last_friday = day - timedelta(days=tday.isoweekday() + 2)    # Calculates last friday (+2 for FR, +1 SA, 0 SU, -1 MO, -2 TU, -3 WE, -4 TH)
 tdelta = timedelta(days=7)                                   # Creates timedelta for 7 days
 tday + tdelta                                                # 7 days are added to the actual day
 newdate = date - timedelta(days=1)                           # Previous 1-day-back-date for date
@@ -1135,6 +1137,8 @@ os.getcwd()                                                # Current working dir
 for f in os.listdir(): print(f)                            # Outputs the entire content of the current working dir
 for f in os.listdir(): fn, ext = os.path.splitext(f)       # Outputs the elements seperated in name + extension
 os.rename(filename, new_name)                              # Change the filenmae
+os.rename(path1+fn, path2+fn)							   # Cut and paste file from path1 to path2
+os.system("copy source.txt destination.txt")			   # Copy file from source to destination
 os.mkdir("folder")                                         # Creates new folder (also possible with makedirs => is prefered)
 os.makedirs("folder/subfolder")                            # Creates new folder and subfolders
 os.rmdir ("folder")                                        # Delete folder (prefered cause deleting ist dangerous)
@@ -1322,6 +1326,8 @@ np.random.seed(1)						# Can reproduce the same results
 https://gist.github.com/why-not/4582705                     # examples
 import pandas as pd                                         # Import Module
 import numpy as np											# Also importing numpy-module necessary
+pd.set_option('display.max_columns',11)						# Show more information - count of the shown columns
+pd.set_option('display.width', None)						# Show more information - None is using the maximum width of the IDE
 
 # SERIES
 s = pd.Series([35,63,81,61,127,65,319])						# Define a series
@@ -1459,6 +1465,9 @@ df[["Popl","Continent"]] / 100								# Showing cols Popl,Continent for all rows
 df.loc["CAN":"ITA"]											# Show the rows from index CAN to ITA
 df.loc["CAN":"ITA","Popl"]									# Show the rows from index CAN to ITA - only with the column1
 df.loc["CAN":"ITA",["Popl","Continent"]]					# Show the rows from index CAN to ITA - only with the column1 + column3
+df.loc[:,"col1":"col4"]										# Show the columns col1 to col4 for all rows
+df.loc[0:2,"col1":"col4"]									# Show the columns col1 to col4 for 3 rows from index 0 to 2 (2 included)
+df.loc[0:2,["col1","col3"]]									# Show the columns cols 1 and 3 for the rows from index 0 to 2 (2 included)			
 df.iloc[0,-1]												# Show the 1st and last row => CAN,USA
 df.iloc[1:3]												# Show 2nd and 3rd row for all cols => FRA,GER / Popl,HDI,Continent
 df.iloc[1:3,1]	 											# Show 2nd and 3rd row for 2nd col => FRA,GER / HDI
@@ -1627,6 +1636,7 @@ driver = webdriver.Chrome(os.getcwd() + '/chromedriver', options=options)
 # see also details in BEAUTIFUL SOAP.ipynb
 from bs4 import BeautifulSoap									# Import module for beautiul soap
 from fake_useragent import UserAgent							# Import moduel for fake useragent
+ua = UserAgent()												# Define UserAgent
 ua.random														# Create random useragent
 page = requests.get("https://www.ariva.de/dax-30")              # Read url as page
 soup = BeautifulSoup (page.content,"html.parser")               # Read page with html.parser
@@ -1876,6 +1886,14 @@ pyinstaller --onefile prg.py                                  # Generate only on
 --hidden-import=pkg_resources.py2_warn                        # Generating under mac os sometimes only work with this params
 --exclude-module matplotlib                                   # when there is a depreciating warning from matlib        
 prg.exe                                                       # Open this file to start the python-program
+
+### Problems with some added python modules (eg. pycountry)
+when trying to execute the compiled exe-file - there is an error about the pycountry-module - workaround:
+1) use pyinstaller to compile exe as above
+2) change filename.spec
+	=> from PyInstaller.utils.hooks import copy_metadata (in the header)
+	=> in the a = Analysis(...) section change " datas = []," to "datas = copy_metadata("pycountry"),"
+3) run pyinstaller with: pyInstaller --clean temp2.spec
 
 ### Problems with path when executing from py and exe   
 config_name = 'creds.json'                                    # Define the config file name
