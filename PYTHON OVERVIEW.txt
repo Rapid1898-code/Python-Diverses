@@ -1445,7 +1445,8 @@ df.info()                                                   # Info for columns (
 df.dtpyes()													# Shows datatype of every column
 df.describe()                                               # Several statistic for the dataframe (median,max,min,std,...)
 df.head()                                                   # Output of the first 5 rows per default
-df.head(22)                                                 # Output of the first 22 rows
+df.h
+ead(22)                                                 # Output of the first 22 rows
 df.tail()                                                   # Output of the last 5 rows per default
 df.tail(22)                                                 # Output of the last 22 rows
 df.columns                                                  # Output of all column names
@@ -1488,6 +1489,7 @@ df.drop(["CAN","JPN"],axis="rows")							# Drops the rows CAN,JPN (3rd method)
 df.drop(columns=["Popl","Continent"])						# Drops the cols Popl,Continent
 df.drop(["Popl","Continent"],axis=1)						# Drops the cols Popl,Continent (2nd method)
 df.drop(["Popl","Continent"],axis="columns")				# Drops the cols Popl,Continent (3rd method)
+df.drop(df.index, inplace=True)								# Drops the whole dataframe
 crisis = pd.Series([-10,-0,3],index=["Popl","HDI"])			# Define series with same col-names as in the dataframe - with some correction values
 df[["Popl","HDI"]] + crisis									# Comines crisis-series to the df => all values in "Popl" -10 and "HDI" -0,3 in the df
 langs = pd.Series(											# Define new series for new column in dataframe
@@ -1526,6 +1528,8 @@ filt3 = (~df["col1"].isin(["val1","val2","val3"]))          # Defines new filter
 filt4 = (df["col1"] > 123)                                  # Defines new filter with a > operator
 df[filt]                                                    # Outputs the result for the above filter
 df[filt]["col2"]                                            # Outputs the result for the above filter with only col2
+df= df[(df['value'] >= df['value'].quantile (0.025))]		# Filter the elements for the top 2.5% of the dataset (quantile)
+df= df[(df['value'] < df['value'].quantile (0.975))]		# Filter the elements for the bottom 2.5% of the dataset (quantile)
 df.duplicated()												# Check duplicates for all rows (only first entry is not flagged as True)
 df.duplicated(keep="last")									# Check duplicates for all rows (only last entry is not flagged as True)
 df.duplicated(keep=False)									# Check duplicates for all rows (every entry is flagged as True)
@@ -1540,6 +1544,7 @@ de["Data"].str.replace(" ","")								# Replace / Deletes blanks " " in the stri
 df.apply(lambda x: x.lower())                               # Function lower is used for the whole dataframe
 df.apply(lambda x: x.lower(), axis="columns")[0:3]          # Function lower is used for the first 3 columns
 df.sort_index(inplace=True)                                 # Sorting the new index ascending
+df.reindex(sorted(df.columns), axis=1)						# Sorting the columns in dataframe	
 df.sort_values(by="co1")                                    # Sorting by column ascending
 df.sort_values(by="co2",ascending=False)                    # Sorting by column descending
 df.sort_values(by=["col1","col2"],ascending=False)          # Sorting by 2 columns descending - first col1 and then col2
@@ -1550,7 +1555,7 @@ df["c1"].map({"val1":"val1new","val2":"val2new"})           # Change the names o
 df["c1"].replace({"val1":"val1new","val2":"val2new"})       # Change the names of the values - all others are not touched
 df["cnew1"] = df["c1"] + df["c2"]                           # New column at the end
 df.drop(columns=["c1","c2"], inplace=True)                  # Deleting 2 columns
-df.append({"c1":"val1"},ignore_index=True)                  # Add new row (all other cols are defined as NaN for the row)
+df = df.append({"c1":"val1"},ignore_index=True)             # Add new row (all other cols are defined as NaN for the row)
 df["col1"].nlargest(5)                                      # Outputs the 5 highest values in the column - only col1
 df.nlargest(5,"col1")                                       # Outputs the 5 highest values in the column - all columns
 df.nsmallest(5,"col1")                                      # Outputs the 5 lowest values in the column - all columns
