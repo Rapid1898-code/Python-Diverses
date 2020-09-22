@@ -404,7 +404,7 @@ continue                     # Break actual loop run - continue with next loop r
 ----------
 ###### FUNCTIONS, DECORATORS
 def add(x=0,y=0):               	# Define function - with default value 0 if no input is given
-    erg = x+y                   	# Calculatin in function
+    erg = x+y                   	# Calculation in function
     return erg                  	# Return value from the function
 
 def pet (animal,n1=None,n2="x") 	# Optional argument in the funtction (first element is must - second optional)   
@@ -1440,6 +1440,7 @@ df = pd.read_html(html_url)									# Read html-link to dataframe
 	JPN 127		0,891	Asia
 	UK  65		0,907	Europe
 	USA 319		0,915	America
+df = pd.DataFrame(np.random.randint(0,5,size=(5, 2)), columns=list('AB'))	# Initialize a dataframe with random ints with 5 rows and 2 columns
 df.shape                                                    # Show the shape of the dataframe (rows, columns) => (7,3)
 df.info()                                                   # Info for columns (index,name,dtype) also count of NaN-values per column
 df.dtpyes()													# Shows datatype of every column
