@@ -1,9 +1,0 @@
-{
-    "apiFinance": {
-        "django_settings": "apiFinance.settings",
-        "profile_name": null,
-        "project_name": "scripts",
-        "runtime": "python3.7",
-        "s3_bucket": "zappa-cnj4kn6e8"
-    }
-}
