@@ -1,0 +1,50 @@
+###########
+### TOC ###
+###########
+
+#> BASICS, GITHUB
+#> GITIGNORE
+#> BRANCHES
+
+
+###### BASICS, GITHUB
+(INIT, STATUS, ADD, COMMIT, LOG)
+sudo apt-get install git 					=> Installation (linux)
+git init									=> Create repository in the actual directory
+git config --global user.name "Rapid1898"   => Config name for the repository
+git config --global user.email "x@gmx.com"  => Config mail for the repository
+git add file.xyz							=> Add file to the repository (prepared for later commit)
+git rm --cached file.xyz					=> Remove file from the repository (not planned for later commit)
+git add *.html 								=> Add alle html-files to the repo
+git add . 									=> Add everything to the repository from the directory
+git add *   								=> 2nd way to add everything to the repository from the directory
+git status 									=> Actual status in the git-directoy (eg. added files, changed files, not added,...)
+git commit -m "comment"						=> Commit files which are added / changed in the repo (with comment)
+git log 									=> Show overview about the last activities
+git clone github-link										=> Clone a repository in the actual path
+git remote add origin https://github.com/link/Test.git  	=> Link the acutal folder/repo to the github-repo
+git push -u origin master   								=> Push (update) files on GitHub
+git pull -u origin master  									=> Pull (update) files from GitHub
+(-u saves the paths - so at the next push - it must be only typed push)
+
+
+
+###### GITIGNORE
+create a file ".gitignore" in the root-folder of the respository
+	=> this files / folders will be ignored when comitting (and so for pushing to the remote repository)
+	=> github has for eg. some problems with files > 100MB
+add folder: /prg/dist/*						=> all files in this folder will be ignored
+add file: /prg.xlsx							=> this specific file will be ignored
+
+
+
+###### BRANCHES
+(BRANCH, CHECKOUT, DIFF, MERGE)
+git branch newFeature    					=> Create a new branch with the name "newFeature"
+git checkout newFeature 					=> Change to branch "newFeature" (from the master-branch)
+git checkout master							=> Return to the master-branch
+git branch -d newFeature	 				=> Delete branch
+git checkout -b new 						=> Create a new branch named "new"
+git diff head								=> Show the difference in the files
+git diff --staged							=> Show only the differences for the files which are not commited yet
+git merge newFeature						=> Merge the branch with the master
