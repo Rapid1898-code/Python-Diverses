@@ -1,0 +1,52 @@
+<LblTxt@BoxLayout>:
+    orientation: 'horizontal'
+    lblTxtIn: 'default'
+    theTxt: iAmTxt
+    Label:
+        text: root.lblTxtIn
+    TextInput:
+        id: iAmTxt
+        text: 'txt'
+
+<MyLayout@BoxLayout>:
+    orientation: 'vertical'
+
+    Label:
+        text: 'Some very long line which will be cut'
+        markup: True
+        shorten: True
+        ellipsis_options: {'color':(1,0.7,0.7,0),'underline':True}
+        background_color: 1, 0, 0, 1
+
+    LblTxt:
+        id: inp1
+        lblTxtIn: 'Stock Ticker'
+
+    LblTxt:
+        id: inp2
+        lblTxtIn: 'Index'
+
+    LblTxt:
+        id: inp3
+        lblTxtIn: 'Finance Stock'
+
+
+
+    LblTxt:
+        id: inp4
+        lblTxtIn: 'Earnings Info (optional)'
+
+    Button:
+        text: 'Calculate Levermann Score'
+        on_release:
+            print (inp1.theTxt.text, inp2.theTxt.text, inp3.theTxt.text)
+            out1.theTxt.text = "Calculate Levermann Score"
+
+    LblTxt:
+        id: out1
+        lblTxtIn: 'Output1'
+
+
+
+
+MyLayout
