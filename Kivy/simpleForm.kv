@@ -1,3 +1,9 @@
+<MainScreen>:
+    name: 'main'
+    canvas:
+        Color:
+            rgb: root.rgb
+
 <LblTxt@BoxLayout>:
     orientation: 'horizontal'
     lblTxtIn: 'default'
@@ -12,19 +18,49 @@
     orientation: 'vertical'
 
     Label:
+        italic: True
+        bold: True
+        color: (0,0,1,1)
         text: 'Some very long line which will be cut'
         markup: True
         shorten: True
+        font_size: 30
         ellipsis_options: {'color':(1,0.7,0.7,0),'underline':True}
-        background_color: 1, 0, 0, 1
+        background_color: (0, 1 , 1, 1)
+        canvas.before:
+            Color:
+                rgba: self.background_color
+            Rectangle:
+                size: self.size
+                pos: self.pos
 
     LblTxt:
+        italic: True
+        bold: True
+        color: (0,0,1,1)
         id: inp1
         lblTxtIn: 'Stock Ticker'
+        italic: True
 
     LblTxt:
+        text: "Name"
+        font_size: 30
+        bold: True
         id: inp2
         lblTxtIn: 'Index'
+        background_color: (0, 0 , 1, 1)
+        canvas.before:
+            Color:
+                rgba: self.background_color
+            Rectangle:
+                size: self.size
+                pos: self.pos
+        color: (0,0,1,1)
+
+    LblTxt:
+        text: "Name"
+        font_size: 45
+        background_color: (0, 0 , 1, 1)
 
     LblTxt:
         id: inp3

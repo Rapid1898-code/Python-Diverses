@@ -1,0 +1,54 @@
+<MyGridLayout>
+    stockTicker : stockTicker
+    index : index
+    financeFlag : financeFlag
+    earningsDate : earningsDate
+
+    GridLayout:
+        cols: 1
+        size: root.width, root.height
+        row_force_default: True
+        row_default_height: 120
+
+        GridLayout:
+            cols: 2
+            row_force_default: True
+            row_default_height: 40
+
+            Label:
+                text: "Stock Ticker"
+            TextInput:
+                id: stockTicker
+                multiline: False
+                background_normal: ""
+                background_color: (235/255,247/255,124/255,1)
+            Label:
+                text: "Index"
+            TextInput:
+                id: index
+                multiline: False
+                background_normal: ""
+                background_color: (235/255,247/255,124/255,1)
+            Label:
+                text: "Finance Stock (y/n)"
+            TextInput:
+                id: financeFlag
+                multiline: False
+                background_normal: ""
+                background_color: (235/255,247/255,124/255,1)
+            Label:
+                text: "Last Earnings Info Date (optional)"
+            TextInput:
+                id: earningsDate
+                multiline: False
+                background_normal: ""
+                background_color: (235/255,247/255,124/255,1)
+
+        Button:
+            text: "Lervermann Score"
+            font_size: 32
+            on_press: root.levermannCalc()
+            size_hint_y: None
+            height: 70
+            background_normal: ""
+            background_color: (48/255,140/255,252/255,1)

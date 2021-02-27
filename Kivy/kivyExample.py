@@ -15,7 +15,6 @@ class LblTxt(BoxLayout):
     theTxt = ObjectProperty(None)
 
 class MyApp(App):
-
     def build(self):
         self.root = Builder.load_file('simpleForm.kv')
         return self.root
