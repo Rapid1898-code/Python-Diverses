@@ -8,9 +8,9 @@ from kivy.uix.widget import Widget
 from kivy.properties import ObjectProperty
 from kivy.lang import Builder
 
-Builder.load_file("LevermannScore.kv")
+Builder.load_file("LevermannScore2.kv")
 
-class MyGridLayout(Widget):
+class MyLayout(Widget):
     stockTicker = ObjectProperty(None)
     index = ObjectProperty(None)
     financeFlag = ObjectProperty(None)
@@ -19,9 +19,9 @@ class MyGridLayout(Widget):
     def levermannCalc(self):
         print(f"Levermann-Score Result: xyz")
 
-class LevermannScore(App):
+class LevermannScore2(App):
     def build(self):
-        return MyGridLayout()
+        return MyLayout()
 
 if __name__ == "__main__":
-    LevermannScore().run()
+    LevermannScore2().run()
