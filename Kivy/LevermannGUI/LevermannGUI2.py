@@ -7,6 +7,7 @@ from kivy.uix.button import Button
 from kivy.uix.widget import Widget
 from kivy.properties import ObjectProperty
 from kivy.lang import Builder
+from kivy.core.window import Window
 
 Builder.load_file("LevermannScore2.kv")
 
@@ -15,6 +16,7 @@ class MyLayout(Widget):
     index = ObjectProperty(None)
     financeFlag = ObjectProperty(None)
     earningsDate = ObjectProperty(None)
+    Window.size = (550, 500)
 
     def levermannCalc(self):
         print(f"Levermann-Score Result: xyz")
