@@ -1,0 +1,20 @@
+<MyLayout>
+    BoxLayout:
+        orientation: "horizontal"
+        size: root.width, root.height
+        spacing: 20
+        padding: 50
+
+        GridLayout:
+            size_hint: (.3,1)
+            cols: 1
+            Button:
+                text: "Hello World!"
+
+        GridLayout:
+            size_hint: (1,1)
+            cols: 1
+            Button:
+                text: "Goodbye World!"
+
+
