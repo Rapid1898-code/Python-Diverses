@@ -2,8 +2,8 @@ import os, csv
 import talib
 import yfinance as yf
 import pandas
-from flask import Flask, escape, request, render_template
-from patterns import candlestick_patterns
+# from flask import Flask, escape, request, render_template
+# from patterns import candlestick_patterns
 
 candlestick_patterns = {
     'CDL2CROWS':'Two Crows',
@@ -69,5 +69,9 @@ candlestick_patterns = {
     'CDLXSIDEGAP3METHODS':'Upside/Downside Gap Three Methods'
 }
 
-
-
+df = yf.download("AAPL",start="2020-07-01",end="2021-2-28")
+real = talib.WMA(df["Close"], timeperiod=30)
+print(real["2021-02-24"])
+print(real[real.index[-1]])     # show last day WAM for 30 days
+cdl3inside = talib.CDL3INSIDE(df["Open"], df["High"], df["Low"], df["Close"])
+print(cdl3inside.iloc[-7:])

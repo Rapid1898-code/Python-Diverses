@@ -9,6 +9,5 @@ python-dateutil==2.8.1
 pytz==2021.1
 requests==2.25.1
 six==1.15.0
-TA-Lib @ file:///C:/Users/Polzi/Documents/GitHub/Python-Diverses/TA-Lib/TA_Lib-0.4.19-cp39-cp39-win_amd64.whl
 urllib3==1.26.4
 yfinance==0.1.59
