@@ -10,7 +10,7 @@ class MainApp(MDApp):
     def logger(self):
         self.root.ids.welcome_label.text = f'Sup {self.root.ids.user.text}!'
 
-    def clear(self):
+    def clear(self ):
         self.root.ids.welcome_label.text = "WELCOME"
         self.root.ids.user.text = ""
         self.root.ids.password.text = ""                
