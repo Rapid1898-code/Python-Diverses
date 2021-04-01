@@ -1,54 +1,44 @@
-Screen:
-    MDCard:
-        size_hint: None,None
-        size: 500, 600
-        pos_hint: {"center_x": 0.5, "center_y":0.5}
-        elevation: 10
-        padding: 25
-        spacing: 25
-        orientation: "vertical"
+MDScreen:
 
-        MDLabel:
-            id: welcome_label
-            text: "WELCOME"
-            font_size: 40
-            halign: "center"
-            size_hint_y: None
-            height: self.texture_size[1]
-            padding_y: 15
+    MDFlatButton:
+        text: 'MDFlatButton'
+        pos_hint: {'center_x': 0.5, 'center_y': 0.9}
 
-        MDTextFieldRound:
-            id: user
-            hint_text: "username"
-            text: "Test"
-            icon_right: "finance"
-            size_hint_x: None
-            width: 300
-            font_size: 18
-            pos_hint: {"center_x": 0.5}
+    MDRaisedButton:
+        text: 'MDRaisedButton'
+        pos_hint: {'center_x': 0.5, 'center_y': 0.8}
 
-        MDTextFieldRound:
-            id: password
-            hint_text: "password"
-            icon_right: "eye-off"
-            size_hint_x: None
-            width: 200
-            font_size: 18
-            pos_hint: {"center_x": 0.5}            
-            password: True
+    MDRectangleFlatButton:
+        text: 'MDRectangleFlatButton'
+        pos_hint: {'center_x': 0.5, 'center_y': 0.7}
 
-        MDRoundFlatButton:
-            text: "LOG IN"
-            font_size: 12
-            pos_hint: {"center_x":0.5}
-            on_press: app.logger()
+    MDRectangleFlatIconButton:
+        icon: 'language-python'
+        text: 'MDRectangleFlatIconButton'
+        pos_hint: {'center_x': 0.5, 'center_y': 0.6}
 
-        MDRoundFlatButton:
-            text: "CLEAR"
-            font_size: 12
-            pos_hint: {"center_x":0.5}       
-            on_press: app.clear()            
+    MDRoundFlatButton:
+        text: 'MDRoundFlatButton'
+        pos_hint: {'center_x': 0.5, 'center_y': 0.8}
 
-        Widget:
-            size_hint_y: None
-            height: 10
+    MDRoundFlatIconButton:
+        icon: 'language-python'
+        text: 'MDRoundFlatIconButton'
+        pos_hint: {'center_x': 0.5, 'center_y': 0.4}
+
+    MDFillRoundFlatIconButton:
+        icon: 'language-python'
+        text: 'MDFillRoundFlatIconButton'
+        pos_hint: {'center_x': 0.5, 'center_y': 0.3}
+
+    MDFillRoundFlatButton:
+        text: 'MDFillRoundButton'
+        pos_hint: {'center_x': 0.5, 'center_y': 0.2}
+
+    MDTextButton:
+        text: 'MDTextButton'
+        pos_hint: {'center_x': 0.3, 'center_y': 0.1}
+
+    MDIconButton:
+        icon: 'language-python'
+        pos_hint: {'center_x': 0.7, 'center_y': 0.1}

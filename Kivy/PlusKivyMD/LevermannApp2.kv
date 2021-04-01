@@ -1,98 +1,57 @@
 Screen:
-    stockTicker : stockTicker
-    spinnerIndex : spinnerIndex
-    financeFlag : financeFlag
-    earningsDate : earningsDate
-
-    BoxLayout:
+    MDCard:
+        size_hint: None,None
+        size: 550, 750
+        pos_hint: {"center_x": 0.5, "center_y":0.5}
+        elevation: 10
+        padding: 25
+        spacing: 25
         orientation: "vertical"
-        size: root.width, root.height
-        padding: 10
-        spacing: 15
-
-        #Image:
-        #    source: "../logoText.png"
-        #    allow_stretch: True
-        #    keep_ratio: True
-        #    size_hint: (None,None)
-        #    width: 100
-        #    height: 100
 
         GridLayout:
-            size_hint: (1, .5)
+            size_hint: (1, 1)
             cols: 1
-            MDTextFieldRound:
-                id: stockTicker
-                hint_text: "Stock Ticker"    
-                size_hint_x: None
-                width: 200
-                font_size: 18
-                spacing: 20
-                pos_hint: {"center_x": 0.5}
-                focus: True
-                multiline: False
-                background_normal: ""
-                background_color: (235/255,247/255,124/255,1)
-                padding: [10, (self.height-self.line_height)/2]
+            padding: 10
+            spacing: 15                    
+            #row_force_default: True
+            #row_default_height: 30
+
             MDTextFieldRound:
                 id: user
-                hint_text: "username"
+                hint_text: "stock ticker"
                 icon_right: "account"
-                size_hint_x: None
-                width: 200
+                #size_hint_x: None
+                width: 30
                 font_size: 18
-                pos_hint: {"center_x": 0.5}
-            Label:
-                text: "Index"
-                font_size: 18
-            Spinner:
-                id: spinnerIndex
-                text: "auto"
-                values: ["auto","AEX25","ASX200","ATX","BEL20","CAC40","DAX","DOWJONES","EUROSTOXX50","EUROSTOXX600","FTSE100","HANGSENG","IBEX35","MDAX","NASDAQ","NIFTY50","NIKKEI225","SDAX","SENSEX","SMI","SP500","TSX"]
-                on_text: root.spinnerIndexClicked(spinnerIndex.text)
-                multiline: False
-                background_normal: ""
-                background_color: (235/255,247/255,124/255,1)
-                font_size: 18
-                color: (0,0,0,1)
-                padding: [10, (self.height-self.line_height)/2]
-            Label:
-                text: "Finance Stock"
-                font_size: 18
-            Spinner:
-                id: financeFlag
-                text: "auto"
-                values: ["auto","Y","N"]
-                multiline: False
-                background_normal: ""
-                background_color: (235/255,247/255,124/255,1)
-                font_size: 18
-                color: (0,0,0,1)
-                padding: [10, (self.height-self.line_height)/2]
-            Label:
-                text: "Last Earnings"
-                font_size: 18
-            TextInput:
-                id: earningsDate
-                text: "auto"
-                multiline: False
-                background_normal: ""
-                background_color: (235/255,247/255,124/255,1)
-                padding: [10, (self.height-self.line_height)/2]
+                pos_hint: {"center_x": 0.2}   
 
-        GridLayout:
-            size_hint: (1, .1)
-            cols: 1
-            background_color: (48/255,140/255,252/255,.25)
-            canvas.before:
-                Color:
-                    rgba: self.background_color
-                Rectangle:
-                    size: self.size
-                    pos: self.pos
-            Label:
-                id: messageLabel
-                text: "...choose ticker and press calculate..."
+            MDTextFieldRound:
+                id: password
+                hint_text: "index"
+                icon_right: "eye-off"
+                #size_hint_x: None
+                width: 30
+                font_size: 18
+                pos_hint: {"center_x": 0.5}            
+
+            # TextInput:
+            #     id: stockTicker
+            #     focus: True
+            #     multiline: False
+            #     background_normal: ""
+            #     background_color: (235/255,247/255,124/255,1)
+            #     padding: [10, (self.height-self.line_height)/2]
+            # Spinner:
+            #     id: spinnerIndex
+            #     text: "auto"
+            #     values: ["auto","AEX25","ASX200","ATX","BEL20","CAC40","DAX","DOWJONES","EUROSTOXX50","EUROSTOXX600","FTSE100","HANGSENG","IBEX35","MDAX","NASDAQ","NIFTY50","NIKKEI225","SDAX","SENSEX","SMI","SP500","TSX"]
+            #     on_text: root.spinnerIndexClicked(spinnerIndex.text)
+            #     multiline: False
+            #     background_normal: ""
+            #     background_color: (235/255,247/255,124/255,1)
+            #     font_size: 18
+            #     color: (0,0,0,1)
+            #     padding: [10, (self.height-self.line_height)/2]
 
         BoxLayout:
             orientation: "horizontal"
@@ -104,239 +63,21 @@ Screen:
             GridLayout:
                 size_hint: (.3,1)
                 cols: 1
-                Button:
-                    id: buttonReset
-                    text: "Reset"
-                    font_size: 20
-                    on_release: root.pressReset()
-                    #size_hint: (None,None)
-                    #width: 110
-                    #height: 70
-                    background_normal: ""
-                    background_color: (48/255,140/255,252/255,1)
-                    #pos_hint: {"center_x": 0.5}
+                MDRoundFlatButton:
+                    text: "LOG IN"
+                    font_size: 12
+                    pos_hint: {"center_x":0.5}
+                    on_press: app.logger()
 
             GridLayout:
                 size_hint: (1,1)
                 cols: 1
-                Button:
-                    id: buttonCalculate
-                    text: "Calculate Score"
-                    font_size: 20
-                    on_press: root.pressButton()
-                    #size_hint: (None,None)
-                    #width: 360
-                    #height: 70
-                    background_normal: ""
-                    background_color: (48/255,140/255,252/255,1)
-                    #pos_hint: {"center_x": 0.5}
+                MDRoundFlatButton:
+                    text: "CLEAR"
+                    font_size: 12
+                    pos_hint: {"center_x":0.5}       
+                    on_press: app.clear()            
 
-        GridLayout:
-            cols: 3
-            size_hint: (1, .8)
-            #row_force_default: True
-            #row_default_height: 30
-
-            GridLayout:
-                cols: 1
-                Label:
-                    text: "Return on Equity ROE"
-                Label:
-                    text: "EBIT-Margin"
-                Label:
-                    text: "Equity Ratio"
-                Label:
-                    text: "P/E-Ratio 5 Year History"
-                Label:
-                    text: "P/E-Ratio Actual"
-                Label:
-                    text: "Analyst Options"
-                Label:
-                    text: "Reaction to quarter numbers"
-                Label:
-                    text: "Profit Revision"
-                Label:
-                    text: "Price Change for 6 month"
-                Label:
-                    text: "Price Change for 12 month"
-                Label:
-                    text: "Price Momentum"
-                Label:
-                    text: "3 Month Reversal Effect"
-                Label:
-                    text: "Profit Growth"
-
-            GridLayout:
-                cols: 1
-                size_hint: (.2, 1)
-                Label:
-                    id: valROE
-                    text: "Value"
-                Label:
-                    id: valEBIT
-                    text: "Value"
-                Label:
-                    id: valEqRatio
-                    text: "Value"
-                Label:
-                    id: valPE5YHist
-                    text: "Value"
-                Label:
-                    id: valPEAct
-                    text: "Value"
-                Label:
-                    id: valAnalystOpt
-                    text: "Value"
-                Label:
-                    id: valReactionQuartNumbers
-                    text: "Value"
-                Label:
-                    id: valProfitRevision
-                    text: "Value"
-                Label:
-                    id: valPriceChange6Month
-                    text: "Value"
-                Label:
-                    id: valPriceChange12Month
-                    text: "Value"
-                Label:
-                    id: valPriceCMomentum
-                    text: ""
-                Label:
-                    id: val3MonthReversal
-                    text: ""
-                Label:
-                    id: valProfitGrowth
-                    text: "Value"
-
-            GridLayout:
-                cols: 1
-                size_hint: (.2, 1)
-                Label:
-                    id: pointROE
-                    text: "Point"
-                Label:
-                    id: pointEBIT
-                    text: "Point"
-                Label:
-                    id: pointEqRatio
-                    text: "Point"
-                Label:
-                    id: pointPE5YHist
-                    text: "Point"
-                Label:
-                    id: pointPEAct
-                    text: "Point"
-                Label:
-                    id: pointAnalystOpt
-                    text: "Point"
-                Label:
-                    id: pointReactionQuartNumbers
-                    text: "Point"
-                Label:
-                    id: pointProfitRevision
-                    text: "Point"
-                Label:
-                    id: pointPriceChange6Month
-                    text: "Point"
-                Label:
-                    id: pointPriceChange12Month
-                    text: "Point"
-                Label:
-                    id: pointPriceMomentum
-                    text: "Point"
-                Label:
-                    id: point3MonthReversal
-                    text: "Point"
-                Label:
-                    id: pointProfitGrowth
-                    text: "Point"
-
-        GridLayout:
-            size_hint: (1,.5)
-            cols: 2
-            background_color: (102/255,1,102/255,0.8)
-            canvas.before:
-                Color:
-                    rgba: self.background_color
-                Rectangle:
-                    size: self.size
-                    pos: self.pos
-
-            Label:
-                text: "Ticker"
-                id: resultTicker
-                font_size: 16
-                color: (0,0,0,1)
-            Label:
-                text: "Name"
-                id: resultName
-                font_size: 16
-                color: (0,0,0,1)
-            Label:
-                text: "Sector"
-                id: resultSector
-                font_size: 16
-                color: (0,0,0,1)
-            Label:
-                text: "Industry"
-                id: resultIndustry
-                font_size: 16
-                color: (0,0,0,1)
-            Label:
-                text: "Cap"
-                id: resultCapSize
-                font_size: 16
-                color: (0,0,0,1)
-            Label:
-                text: "MarketCap"
-                id: resultMarketCap
-                font_size: 16
-                color: (0,0,0,1)
-            Label:
-                text: "Index"
-                id: resultIndex
-                font_size: 16
-                color: (0,0,0,1)
-            Label:
-                text: "Last Earnings"
-                id: resultLastEarnings
-                font_size: 16
-                color: (0,0,0,1)
-            Label:
-                text: "Finance"
-                id: resultFinanceFlag
-                font_size: 16
-                color: (0,0,0,1)
-            Label:
-                text: "Recommendation"
-                id: resultRecommend
-                font_size: 16
-                color: (0,0,0,1)
-            Label:
-                text: "LevermannScore"
-                font_size: 20
-                color: (0,0,0,1)
-                bold: True
-                italic: True
-            Label:
-                id: levermannScoreFull
-                text: "Score"
-                font_size: 20
-                color: (0,0,0,1)
-                bold: True
-                italic: True
-
-            #Label:
-            #    text: "LevermannScore Light"
-            #    font_size: 20
-            #    color: (0,0,0,1)
-            #    bold: True
-            #    italic: True
-            #Label:
-            #    id: levermannScoreLight
-            #    text: "Score"
-            #    font_size: 20
-            #    color: (0,0,0,1)
-            #    bold: True
-            #    italic: True
+        Widget:
+            size_hint_y: None
+            height: 10
