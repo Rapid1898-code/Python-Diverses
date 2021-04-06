@@ -25,33 +25,20 @@ Screen:
                 font_size: 18
                 pos_hint: {"center_x": 0.2}   
 
-            MDTextFieldRound:
-                id: password
-                hint_text: "index"
-                icon_right: "eye-off"
-                #size_hint_x: None
-                width: 30
+            MDDropDownItem:
+                id: spinnerIndex
+                current_item: "auto"
+                menu_items: ["auto","AEX25","ASX200","ATX","BEL20","CAC40","DAX","DOWJONES","EUROSTOXX50","EUROSTOXX600","FTSE100","HANGSENG","IBEX35","MDAX","NASDAQ","NIFTY50","NIKKEI225","SDAX","SENSEX","SMI","SP500","TSX"]
+                pos_hint: {'center_x': .5, 'center_y': .6}                
+                on_text: root.spinnerIndexClicked(spinnerIndex.text)
+                multiline: False
+                background_normal: ""
+                background_color: (235/255,247/255,124/255,1)
                 font_size: 18
-                pos_hint: {"center_x": 0.5}            
-
-            # TextInput:
-            #     id: stockTicker
-            #     focus: True
-            #     multiline: False
-            #     background_normal: ""
-            #     background_color: (235/255,247/255,124/255,1)
-            #     padding: [10, (self.height-self.line_height)/2]
-            # Spinner:
-            #     id: spinnerIndex
-            #     text: "auto"
-            #     values: ["auto","AEX25","ASX200","ATX","BEL20","CAC40","DAX","DOWJONES","EUROSTOXX50","EUROSTOXX600","FTSE100","HANGSENG","IBEX35","MDAX","NASDAQ","NIFTY50","NIKKEI225","SDAX","SENSEX","SMI","SP500","TSX"]
-            #     on_text: root.spinnerIndexClicked(spinnerIndex.text)
-            #     multiline: False
-            #     background_normal: ""
-            #     background_color: (235/255,247/255,124/255,1)
-            #     font_size: 18
-            #     color: (0,0,0,1)
-            #     padding: [10, (self.height-self.line_height)/2]
+                color: (0,0,0,1)
+                on_release: app.menu.open()
+                # padding: [10, (self.height-self.line_height)/2]     
+          
 
         BoxLayout:
             orientation: "horizontal"
