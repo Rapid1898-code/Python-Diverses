@@ -4,7 +4,7 @@ from datetime import date
 
 ticker = "AAPL"
 ticker = "CAT"
-# ticker = "1010.SR"
+ticker = "1010.SR"
 # ticker = "BTC-USD"
 
 dataYF = yf.Ticker(ticker)
@@ -14,6 +14,11 @@ dataYF = yf.Ticker(ticker)
 for key, val in dataYF.info.items ():
     if val not in [False,None]:
         print (f"{key} => {val} {type(val)}")
+print(type(dataYF.info))
+print(dataYF.info["logo_url"])
+print(dataYF.info.get("logo_url","N/A"))
+
+
 
 # # Price data
 # tday = datetime.today()
@@ -24,6 +29,7 @@ for key, val in dataYF.info.items ():
 
 # print(dataYF.financials.loc["Net Income",].iloc[0])
 
+# print(dataYF.financials)
 # print(dataYF.dividends)
 # print(dataYF.splits)
 # print(dataYF.major_holders)
