@@ -4,10 +4,8 @@ from datetime import datetime, timedelta
 from datetime import date
 
 ticker = "AAPL"
-# ticker = "CAT"
-# ticker = "FB"
-# ticker = "TSLA"
-# ticker = "1010.SR"
+ticker = "CAT"
+ticker = "1010.SR"
 # ticker = "BTC-USD"
 
 dataYF = yf.Ticker(ticker)
