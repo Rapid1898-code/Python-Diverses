@@ -10,10 +10,10 @@ ticker = "1010.SR"
 
 dataYF = yf.Ticker(ticker)
 
-# # Summary Infos
-# for key, val in dataYF.info.items ():
-#     if val not in [False,None]:
-#         print (f"{key} => {val} {type(val)}")
+# Summary Infos
+for key, val in dataYF.info.items ():
+    if val not in [False,None]:
+        print (f"{key} => {val} {type(val)}")
 
 # # Price data
 # tday = datetime.today()
@@ -33,7 +33,7 @@ dataYF = yf.Ticker(ticker)
 # print(dataYF.balance_sheet.loc["Total Stockholder Equity"][0])
 
 # print(dataYF.cashflow)
-print(dataYF.earnings)
+# print(dataYF.earnings)
 # print(dataYF.sustainability)
 
 # tday = datetime.today()
