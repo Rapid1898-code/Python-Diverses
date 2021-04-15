@@ -6,14 +6,15 @@ from datetime import date
 ticker = "AAPL"
 ticker = "CAT"
 ticker = "1010.SR"
+ticker = "ABNB.VI"
 # ticker = "BTC-USD"
 
 dataYF = yf.Ticker(ticker)
 
-# Summary Infos
-for key, val in dataYF.info.items ():
-    if val not in [False,None]:
-        print (f"{key} => {val} {type(val)}")
+# # Summary Infos
+# for key, val in dataYF.info.items ():
+#     if val not in [False,None]:
+#         print (f"{key} => {val} {type(val)}")
 
 # # Price data
 # tday = datetime.today()
@@ -92,7 +93,7 @@ for key, val in dataYF.info.items ():
 
 
 # print(dataYF.calendar)
-# print(dataYF.isin)
+print(dataYF.isin)
 
 
 
