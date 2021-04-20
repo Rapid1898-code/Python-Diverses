@@ -11,10 +11,10 @@ ticker = "AAPL"
 
 dataYF = yf.Ticker(ticker)
 
-# Summary Infos
-for key, val in dataYF.info.items ():
-    if val not in [False,None]:
-        print (f"{key} => {val} {type(val)}")
+# # Summary Infos
+# for key, val in dataYF.info.items ():
+#     if val not in [False,None]:
+#         print (f"{key} => {val} {type(val)}")
 
 # # Price data
 # tday = datetime.today()
@@ -87,13 +87,46 @@ for key, val in dataYF.info.items ():
 
 # else:
 #     print("No Rating")
- 
-
-
-
 
 # print(dataYF.calendar)
-print(dataYF.isin)
+# print(dataYF.isin)
+
+def readDayPriceYF(prices,date):
+    for idx in range(10):
+        findDate = (date - timedelta(days=idx)).date()
+        findDate = pandas.Timestamp(findDate)
+        if findDate in prices.index:
+            if prices.loc[findDate]['Close'] not in [None,"","N/A"]:
+                return(float(prices.loc[findDate]['Close']))
+            else:
+                return("N/A")
+    return("N/A")        
+
+# find specific price for date
+tday = datetime.today()
+startDay = tday - timedelta(days=365)        
+df = yf.download(ticker,start=startDay,end=tday)   
+findDate = (tday - timedelta(days=101))
+erg = readDayPriceYF(df,findDate)
+print(erg)
+print(type(erg))
+
+# print(findDate)
+# print(type(findDate))
+# print(df.index[-1])
+# print(type(df.index[-1]))
+# if findDate in df.index:
+#     print(df.loc[findDate]['Close'])
+
+
+
+exit()
+
+
+erg = readDayPriceYF(df,findDate)
+
+
+
 
 
 
