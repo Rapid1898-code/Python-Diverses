@@ -1,3 +1,4 @@
+
 import pandas as pd
 import pandas_ta as ta
 import yfinance as yf
@@ -6,7 +7,6 @@ from datetime import date
 
 # Create a DataFrame so 'ta' can be used.
 df = pd.DataFrame()
-
 # Help about this, 'ta', extension
 # help(df.ta)
 
