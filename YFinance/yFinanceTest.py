@@ -17,12 +17,14 @@ dataYF = yf.Ticker(ticker)
 #     if val not in [False,None]:
 #         print (f"{key} => {val} {type(val)}")
 
-# # Price data
-# tday = datetime.today()
+# Price data
+tday = datetime.today()
 # print(yf.download(ticker,"2020-01-01",end=tday))
+# print(yf.download(ticker,"1980-01-01",end=tday))
+print(yf.download(ticker))
 
 # Intraday Price data
-print(dataYF.history(period="12mo",interval="1h"))
+# print(dataYF.history(period="12mo",interval="1h"))
 
 # print(dataYF.financials)
 # print(dataYF.dividends)
