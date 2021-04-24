@@ -12,17 +12,17 @@ ticker = "AAPL"
 
 dataYF = yf.Ticker(ticker)
 
-# Summary Infos
-for key, val in dataYF.info.items ():
-    if val not in [False,None]:
-        print (f"{key} => {val} {type(val)}")
+# # Summary Infos
+# for key, val in dataYF.info.items ():
+#     if val not in [False,None]:
+#         print (f"{key} => {val} {type(val)}")
 
 # # Price data
 # tday = datetime.today()
 # print(yf.download(ticker,"2020-01-01",end=tday))
 
-# # Intraday Price data
-# print(dataYF.history(period="1mo",interval="2m"))
+# Intraday Price data
+print(dataYF.history(period="12mo",interval="1h"))
 
 # print(dataYF.financials)
 # print(dataYF.dividends)
