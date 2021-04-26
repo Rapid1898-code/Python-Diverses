@@ -1,6 +1,7 @@
 # Docu: https://www.quandl.com/databases/SF1/documentation
 # Time Dimensions: https://www.quandl.com/databases/SF1/documentation?anchor=dimensions
 # Data Organization: https://docs.quandl.com/docs/data-organization
+# EventCodes: https://www.quandl.com/tables/SF1/SHARADAR-INDICATORS - download excel and search for eventcodes
 import quandl
 import os
 from dotenv import load_dotenv, find_dotenv
@@ -10,6 +11,7 @@ QUANDL_TSTAPI = os.environ.get("QUANDL_TSTAPI")
 quandl.ApiConfig.api_key=QUANDL_TSTAPI
 
 erg = quandl.get_table('SHARADAR/SF1', ticker='AAPL')
+
 events = quandl.get_table('SHARADAR/EVENTS', ticker='AAPL')
 meta = quandl.get_table('SHARADAR/TICKERS', table='SF1', ticker='AAPL')
 indicator = quandl.get_table('SHARADAR/INDICATORS', table='SF1')
