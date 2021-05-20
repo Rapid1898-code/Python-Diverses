@@ -9,17 +9,18 @@ ticker = "AAPL"
 # ticker = "ABNB.VI"
 # ticker = "BTC-USD"
 # ticker = "%5EGDAXI"
+# ticker = "IPV"
 
 dataYF = yf.Ticker(ticker)
 
-# # Summary Infos
-# for key, val in dataYF.info.items ():
-#     if val not in [False,None]:
-#         print (f"{key} => {val} {type(val)}")
+# Summary Infos
+for key, val in dataYF.info.items ():
+    if val not in [False,None]:
+        print (f"{key} => {val} {type(val)}")
 
 # Price data
-tday = datetime.today()
-print(yf.download(ticker,"2020-01-01",end=tday))
+# tday = datetime.today()
+# print(yf.download(ticker,"2020-01-01",end=tday))
 # print(yf.download(ticker,"1980-01-01",end=tday))
 # print(yf.download(ticker))
 
