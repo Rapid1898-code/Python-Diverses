@@ -5,10 +5,6 @@ import time
 import os, sys
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.common.by import By
-from selenium.webdriver.common.keys import Keys
 from sys import platform 
 from datetime import datetime, timedelta
 from datetime import date
@@ -155,7 +151,7 @@ def clean_value(value, dp=".", tcorr=False, out="None"):
 # erg["currency"] = table.find (["span"]).text.strip()[-3:].upper()
 # erg["exchange"] = table.find (["span"]).text.split("-")[0].strip()
 # print(f"Data read with random proxy {proxy}...")
-# for key, val in erg.items ():
+# for key, val in erg.items ():https://www.rapidtech1898.com/docs/scores.txt
 #     print (f"{key} => {val} {type(val)}")
 
 
@@ -172,13 +168,15 @@ path = os.path.abspath (os.path.dirname (sys.argv[0]))
 
 proxy = proxy_generator()
 for key, value in proxy.items():
-    proxySelenium = value
+    proxySelenium = "http://"+value
 
 while True:
     # try:
-        # options.add_argument('--proxy-server=http://%s' %proxy)
-        # options.add_argument(f"--proxy-server={proxySelenium}")
+        # options.add_argument('--proxy-server=http://%s' %proxySelenium)
+        print(f"Try to access with Proxy {proxySelenium}...")
+        options.add_argument(f"--proxy-server={proxySelenium}")
         driver = webdriver.Chrome (path + cd, options=options)
+        driver.set_page_load_timeout(60)
         driver.get (link)
         break
     # except:
