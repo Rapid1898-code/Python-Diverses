@@ -16,6 +16,7 @@ ticker = "AAPL"
 # ticker = "IPV"
 
 dataYF = yf.Ticker(ticker, session=session)
+# dataYF = yf.Ticker(ticker)
 
 # Summary Infos
 # for key, val in dataYF.info.items ():
