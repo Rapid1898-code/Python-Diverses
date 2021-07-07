@@ -6,7 +6,9 @@ from dotenv import load_dotenv, find_dotenv
 from bs4 import BeautifulSoup
 from fake_useragent import UserAgent
 
-def getChromeDriver(useProxy=False,useUserAgent=False,headless=False):
+WAIT = 3
+
+def getSeleniumDriver(useProxy=False,useUserAgent=False,headless=False):
     path = os.path.abspath (os.path.dirname (sys.argv[0])) 
     if platform == "win32": cd = '/chromedriver.exe'
     elif platform == "linux": cd = '/chromedriver'
@@ -27,9 +29,12 @@ def getChromeDriver(useProxy=False,useUserAgent=False,headless=False):
         PROXY_PW= os.environ.get("PROXY_PW")
         PROXY_HOST= os.environ.get("PROXY_HOST")  # rotating proxy or host
         PROXY_PORT= os.environ.get("PROXY_PORT")
+        proxyLink = f'https://{PROXY_USER}:{PROXY_PW}@{PROXY_HOST}:{PROXY_PORT}'
+        print(f"DEBUG ProxyLink: {proxyLink}")
+        
         options_seleniumWire = {
             'proxy': {
-                'https': f'https://{PROXY_USER}:{PROXY_PW}@{PROXY_HOST}:{PROXY_PORT}',
+                'https': proxyLink,
             }
         }        
 
@@ -41,34 +46,9 @@ def getChromeDriver(useProxy=False,useUserAgent=False,headless=False):
     driver = webdriver.Chrome (path + cd, options=options, seleniumwire_options=options_seleniumWire)
     return driver
 
-WAIT = 3
-path = os.path.abspath (os.path.dirname (sys.argv[0]))
-cd = '/chromedriver.exe'
-load_dotenv(find_dotenv()) 
-PROXY_USER = os.environ.get("PROXY_USER")
-PROXY_PW= os.environ.get("PROXY_PW")
-PROXY_HOST= os.environ.get("PROXY_HOST")  # rotating proxy or host
-PROXY_PORT= os.environ.get("PROXY_PORT")
-
-ua = UserAgent()
-userAgent = ua.random
-
-options = Options()
-options.add_argument('--headless')
-options.add_argument("--window-size=1920x1080")
-options.add_argument('--no-sandbox')
-options.add_argument('--disable-gpu')
-options.add_argument(f'user-agent={userAgent}')        
-
-options_seleniumWire = {
-    'proxy': {
-        'https': f'https://{PROXY_USER}:{PROXY_PW}@{PROXY_HOST}:{PROXY_PORT}',
-    }
-}
- 
-driver = webdriver.Chrome (path + cd, options=options, seleniumwire_options=options_seleniumWire)
-
-
+driver = getSeleniumDriver(useProxy=True,useUserAgent=True,headless=True)
+# driver = getChromeDriver(useProxy=False,useUserAgent=False,headless=True)
+# driver = getChromeDriver(useProxy=False,useUserAgent=True,headless=True)
 
 driver.get("https://ifconfig.co/")
 
