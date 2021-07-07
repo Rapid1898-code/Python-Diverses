@@ -34,6 +34,7 @@ import os
 import zipfile
 
 from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
 
 PROXY_HOST = 'proxy.proxy-cheap.com'  # rotating proxy or host
 PROXY_PORT = 31112 # port
@@ -95,10 +96,9 @@ chrome.webRequest.onAuthRequired.addListener(
 
 def get_chromedriver(use_proxy=False, user_agent=None):
     path = os.path.dirname(os.path.abspath(__file__))
-    chrome_options = webdriver.ChromeOptions()
+    chrome_options = webdriver.Options()
     if use_proxy:
         pluginfile = 'proxy_auth_plugin.zip'
-
         with zipfile.ZipFile(pluginfile, 'w') as zp:
             zp.writestr("manifest.json", manifest_json)
             zp.writestr("background.js", background_js)
