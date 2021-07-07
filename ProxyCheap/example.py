@@ -13,14 +13,22 @@
 # driver = webdriver.Chrome (path + cd, options=options)
 # driver.get("https://whatismyipaddress.com")
 
-
 from selenium import webdriver
 import os
 from dotenv import load_dotenv, find_dotenv
+import requests
 
 load_dotenv(find_dotenv()) 
 PROXY_CHEAP_USER = os.environ.get("PROXY_CHEAP_USER")
 PROXY_CHEAP_PW= os.environ.get("PROXY_CHEAP_PW")
+
+
+
+url = f"http://{PROXY_CHEAP_USER}:{PROXY_CHEAP_PW}@proxy.proxy-cheap.com:31112 https://ifconfig.co/json"
+data = requests.get(url).json
+print(data)
+exit()
+
 
 import os
 import zipfile
