@@ -1,14 +1,16 @@
 import requests_cache
+import requests
 import yfinance as yf
 import pandas
 from datetime import datetime, timedelta
 from datetime import date
 
-session = requests_cache.CachedSession('yfinance.cache')
+# session = requests_cache.CachedSession('yfinance.cache')
+session = requests.Session()
 session.headers['User-agent'] = 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
 
 ticker = "AAPL"
-ticker = "1561.HK"
+# ticker = "1561.HK"
 # ticker = "CAT"
 # ticker = "1010.SR"
 # ticker = "ABNB.VI"
@@ -16,13 +18,13 @@ ticker = "1561.HK"
 # ticker = "%5EGDAXI"
 # ticker = "IPV"
 
-dataYF = yf.Ticker(ticker, session=session)
-# dataYF = yf.Ticker(ticker)
+# dataYF = yf.Ticker(ticker, session=session)
+dataYF = yf.Ticker(ticker)
 
 # Summary Infos
-for key, val in dataYF.info.items ():
-    if val not in [False,None]:
-        print (f"{key} => {val} {type(val)}")
+# for key, val in dataYF.info.items ():
+#     if val not in [False,None]:
+#         print (f"{key} => {val} {type(val)}")
 
 # Price data
 # tday = datetime.today()
